@@ -1,0 +1,32 @@
+name: 1 - Write scripts
+on:
+  schedule:
+    - cron: "30 16 * * 0"      # every Sunday at 10:00 pm India time
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: |
+          git config user.name "Manzi Studio"
+          git config user.email "manzi-studio@users.noreply.github.com"
+      - run: python pipeline/write.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      - name: Tell me if something went wrong
+        if: failure()
+        run: |
+          python -c "import sys; sys.path.insert(0,'pipeline'); import mail, common, os; mail.send(common.config(), '[Manzi Studio] Something went wrong', '<p>The job <b>${{ github.workflow }}</b> failed. Open <a href=\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\">this run</a>, tap the red step and send Claude a screenshot.</p>')"
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
