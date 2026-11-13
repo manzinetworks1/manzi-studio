@@ -1,0 +1,41 @@
+name: 2 - Make videos
+on:
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week folder (leave empty for the newest)"
+        required: false
+        default: ""
+permissions:
+  contents: write
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+      - run: python pipeline/make.py ${{ github.event.inputs.week && format('--week {0}', github.event.inputs.week) || '' }}
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
+          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tell me if something went wrong
+        if: failure()
+        run: |
+          python -c "import sys; sys.path.insert(0,'pipeline'); import mail, common, os; mail.send(common.config(), '[Manzi Studio] Something went wrong', '<p>The job <b>${{ github.workflow }}</b> failed. Open <a href=\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\">this run</a>, tap the red step and send Claude a screenshot.</p>')"
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
