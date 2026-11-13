@@ -1,0 +1,50 @@
+{
+  "language": "english",
+  "qnum": 2,
+  "course": "LLB Semester 5",
+  "subject": "Administrative Law",
+  "topic": "Judicial Review of Discretionary Powers",
+  "question": "Discuss the main grounds on which the court reviews the exercise of discretionary powers by the administration.",
+  "marks": "15",
+  "asked_years": ["2019", "2022", "2023", "2025"],
+  "years_range": ["2020", "2021", "2022", "2023", "2024", "2025"],
+  "long": {
+    "sections": [
+      {"heading": "Introduction", "paras": [
+        "Administrative authorities are often given **discretionary powers**: the freedom to choose between different courses of action. But this freedom is not unlimited. Through **judicial review**, courts make sure that the power is used lawfully, reasonably and in good faith."
+      ]},
+      {"heading": "Grounds of Judicial Review", "points": [
+        {"title": "Abuse of discretion", "text": "Discretion is abused when the authority uses its power for an **improper purpose**, acts in **bad faith (mala fides)**, or takes **irrelevant considerations** into account while ignoring relevant ones."},
+        {"title": "Failure to exercise discretion", "text": "The authority fails to use its discretion when it **acts under dictation** of a superior, **fetters its discretion** with rigid rules, or **delegates** it without authority."},
+        {"title": "Unreasonableness", "text": "A decision that is **so unreasonable** that no sensible authority could have taken it can be struck down. This is the **Wednesbury principle**."},
+        {"title": "Proportionality", "text": "Where fundamental rights are affected, courts also ask whether the action is **proportionate** to the aim it seeks to achieve."}
+      ], "tip": "Write each ground as a **heading**, explain it in two lines, and add **one case** under it."},
+      {"heading": "Case Law", "cases": [
+        {"name": "Rohtas Industries v. S.D. Agarwal (1969)", "text": "The Supreme Court held that even when an authority acts on its **subjective satisfaction**, the court can examine whether the circumstances it relied on were **relevant** to the purpose of the power."},
+        {"name": "Associated Provincial Picture Houses v. Wednesbury Corporation (1948)", "text": "The English Court of Appeal held that a decision can be struck down if it is **so unreasonable** that no reasonable authority could ever have come to it."}
+      ]},
+      {"heading": "Conclusion", "paras": [
+        "Judicial review keeps discretionary power within the **rule of law**. The authority may choose, but it must choose **fairly**, **reasonably** and for the **right purpose**."
+      ]}
+    ]
+  },
+  "shorts": {
+    "datadrop": {"thumb": "Judicial review of discretionary powers"},
+    "myth": {"myth": "Police can arrest anyone without a warrant.", "law": "Without a warrant, police can arrest only in **cognizable offences**, and only on the conditions in **Section 35 of the BNSS**.", "source": "Section 35, BNSS 2023 (earlier Section 41 CrPC)", "source_say": "Section 35 of the Bharatiya Nagarik Suraksha Sanhita, which replaced Section 41 of the CrPC.", "thumb": "Can police arrest without a warrant?"},
+    "quiz": {"question": "Which case gave us the **basic structure** doctrine?", "options": ["Golaknath (1967)", "Kesavananda Bharati (1973)", "Minerva Mills (1980)", "Maneka Gandhi (1978)"], "answer": 1, "explain": "In **Kesavananda Bharati v. State of Kerala (1973)**, a 13-judge bench held that Parliament cannot change the **basic structure** of the Constitution.", "thumb": "Basic structure: which case?"},
+    "case": {"name": "D.K. Basu v. State of West Bengal (1997)", "facts": "Letters to the Supreme Court reported deaths in police custody.", "issue": "What must the police do every time they arrest a person?", "held": "The Court laid down **11 guidelines**: arrest memo, informing a friend or relative, medical check-up, meeting a lawyer, and more.", "principle": "Custodial violence violates **Article 21**. Every arrest must follow the **D.K. Basu guidelines**.", "thumb": "D.K. Basu: 11 arrest rules"},
+    "compare": {"title": "Murder: old law vs new law", "title_say": "Murder. Old law versus new law.", "left": {"name": "IPC", "sub": "Indian Penal Code, 1860"}, "right": {"name": "BNS", "sub": "Bharatiya Nyaya Sanhita, 2023"},
+      "rows": [
+        {"label": "Definition", "left": "Section 300", "right": "Section 101", "say": "Murder was defined in Section 300 of the IPC. It is now Section 101 of the BNS."},
+        {"label": "Punishment", "left": "Section 302", "right": "Section 103(1)", "say": "Punishment was in Section 302. Now it is Section 103, sub-section 1."},
+        {"label": "Mob lynching", "left": "No separate offence", "right": "Section 103(2)", "say": "And mob lynching, which had no separate offence, is now covered by Section 103, sub-section 2."}
+      ], "thumb": "Murder: IPC vs BNS sections"},
+    "flow": {"title": "How a criminal case moves", "steps": [
+        {"title": "FIR", "sub": "Section 173, BNSS", "say": "The FIR is registered under Section 173 of the BNSS."},
+        {"title": "Investigation", "sub": "Police collect evidence", "say": "The police investigate and collect evidence."},
+        {"title": "Police report", "sub": "Chargesheet, Section 193 BNSS", "say": "The police file their report, the chargesheet, under Section 193."},
+        {"title": "Charges framed", "sub": "By the court", "say": "The court frames the charges."},
+        {"title": "Trial & judgment", "sub": "Evidence, arguments, verdict", "say": "Then comes the trial, and finally the judgment."}
+      ], "thumb": "FIR to judgment in 5 steps"}
+  }
+}

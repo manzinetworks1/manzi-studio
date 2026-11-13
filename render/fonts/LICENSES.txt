@@ -1,0 +1,5 @@
+Fonts used by Manzi Studio, all under free licences that allow use in videos and redistribution:
+- Inter, Inter Display: SIL Open Font License 1.1 (LICENSE-Inter.txt)
+- Poppins (Latin + Devanagari): SIL Open Font License 1.1 (LICENSE-Poppins.txt)
+- Lora: SIL Open Font License 1.1
+- Liberation Mono: SIL Open Font License 1.1

@@ -1,0 +1,27 @@
+{
+  "channel": "The LLB Guide",
+  "course": "LLB Semester 5",
+  "subject": "",
+  "language": "english",
+  "topics_per_week": 2,
+  "shorts_per_topic": 4,
+  "shorts": ["datadrop", "myth", "quiz", "case", "compare", "flow"],
+  "topics_csv_url": "",
+  "email_to": "",
+  "voice": {
+    "engine": "edge",
+    "edge_voice": "en-IN-PrabhatNeural",
+    "edge_voice_hindi": "hi-IN-MadhurNeural",
+    "edge_rate": "+8%",
+    "sarvam_model": "bulbul:v3",
+    "sarvam_speaker": "shubh",
+    "sarvam_pace": 1.05
+  },
+  "gemini_model": "",
+  "music": true,
+  "fps": 30,
+  "long_time": "18:00",
+  "short_time": "13:00",
+  "short_time_2": "20:00",
+  "drive_folder_id": ""
+}
