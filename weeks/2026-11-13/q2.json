@@ -1,0 +1,155 @@
+{
+  "language": "english",
+  "qnum": 2,
+  "course": "LLB Semester 5",
+  "subject": "Administrative Law",
+  "topic": "Quasi-Judicial Function in Administrative Law",
+  "question": "What is quasi-judicial function? Explain with the help of decided cases.",
+  "marks": "15",
+  "asked_years": [],
+  "years_range": [],
+  "long": {
+    "sections": [
+      {
+        "heading": "Introduction",
+        "paras": [
+          "Modern welfare states give wide powers to the executive to regulate social and economic activities. Along with rule-making and pure execution, administrative authorities often decide disputes affecting citizens' rights. Such **adjudicatory functions** performed by non-judicial bodies are called **quasi-judicial functions**. The word 'quasi' means 'as if' or 'similar to', showing that the authority acts like a court without being a regular court."
+        ]
+      },
+      {
+        "heading": "Meaning and Essentials of Quasi-Judicial Function",
+        "points": [
+          {
+            "title": "Legal Authority by Statute",
+            "text": "The administrative body or tribunal must derive its power from a valid **statute or statutory rule**. Without **legal authority**, no official can claim to decide legal rights or impose binding liabilities on citizens."
+          },
+          {
+            "title": "Determination of Rights",
+            "text": "The authority must be empowered to determine questions affecting the **legal rights** or **civil liabilities** of individuals. Mere preliminary inquiries or policy recommendations that do not finally affect rights are not quasi-judicial."
+          },
+          {
+            "title": "Duty to Act Judicially",
+            "text": "There must be an express or implied **duty to act judicially**. This requires the authority to decide objectively based on **evidence and law**, rather than personal whims or administrative expediency."
+          },
+          {
+            "title": "Presence of a Lis",
+            "text": "Often there is a **lis**, meaning a dispute between two **opposing parties**, or a contest between a citizen and the department. Even without a formal dispute, a duty to act judicially may arise."
+          },
+          {
+            "title": "Observance of Natural Justice",
+            "text": "The authority must follow the **principles of natural justice**, namely the rule against bias (**nemo judex in causa sua**) and the right to a fair hearing (**audi alteram partem**), before passing any adverse order."
+          }
+        ],
+        "tip": "Draw a neat flowchart showing the four elements laid down in Khushaldas Advani's case to fetch extra marks."
+      },
+      {
+        "heading": "Quasi-Judicial vs Administrative and Judicial Functions",
+        "paras": [
+          "A **pure judicial function** is exercised by regular courts strictly bound by technical rules of evidence and procedure. In contrast, a **quasi-judicial authority** is not bound by strict courtroom rules like the Bharatiya Sakshya Adhiniyam, 2023, so long as it follows fairness and **natural justice**.",
+          "While a **pure administrative function** is guided mainly by government policy, expediency, and subjective satisfaction, a **quasi-judicial function** demands objective assessment of facts and law. However, modern Indian courts hold that **fairness in action** applies even to administrative decisions having civil consequences."
+        ]
+      },
+      {
+        "heading": "Leading Decided Cases",
+        "cases": [
+          {
+            "name": "Province of Bombay v. Khushaldas S. Advani (1950)",
+            "text": "The Supreme Court laid down the classic **four-fold test** for a quasi-judicial act: a body of persons having **legal authority** to determine questions affecting rights of subjects, and having the **duty to act judicially**. Requisitioning property was held administrative on facts."
+          },
+          {
+            "name": "A.K. Kraipak v. Union of India (1969)",
+            "text": "The Supreme Court held that the dividing line between **administrative** and **quasi-judicial** powers is very thin and gradually disappearing. Even an administrative selection board must follow **natural justice** when its decision affects rights and carries civil consequences."
+          },
+          {
+            "name": "Indian National Congress (I) v. Institute of Social Welfare (2002)",
+            "text": "The Court clarified that where a statutory authority is required to act **judicially** while deciding a dispute or affecting rights, its function is **quasi-judicial**, even if there is no **lis** between two private parties."
+          }
+        ]
+      },
+      {
+        "heading": "Conclusion",
+        "paras": [
+          "To sum up, **quasi-judicial functions** bridge the gap between pure administration and formal courts, ensuring speedy yet fair justice. Though courts have blurred the strict distinction between administrative and quasi-judicial acts through the doctrine of **fairness**, identifying a function as quasi-judicial remains vital for claiming **certiorari**, reasoned orders, and strict adherence to natural justice."
+        ]
+      }
+    ]
+  },
+  "shorts": {
+    "myth": {
+      "myth": "Only regular courts and judges can perform quasi-judicial functions and pass legally binding orders.",
+      "law": "**Administrative authorities** and **tribunals** also perform **quasi-judicial functions** when empowered by statute to decide **legal rights** objectively after following natural justice.",
+      "source": "Constitution of India, Articles 136 and 226",
+      "source_say": "Under Articles 136 and 226 of the Constitution, courts review tribunal and quasi-judicial orders.",
+      "thumb": "Can Officers Act Like Judges?"
+    },
+    "quiz": {
+      "question": "In which landmark case did the Supreme Court hold that the dividing line between administrative and quasi-judicial powers is very thin?",
+      "options": [
+        "A.K. Kraipak v. Union of India (1969)",
+        "Maneka Gandhi v. Union of India (1978)",
+        "Kesavananda Bharati v. State of Kerala (1973)",
+        "Kharak Singh v. State of UP (1962)"
+      ],
+      "answer": 0,
+      "explain": "In **A.K. Kraipak**, the Supreme Court ruled that the boundary between administrative and quasi-judicial powers is blurring, requiring natural justice in both.",
+      "thumb": "Guess This Landmark Admin Case!"
+    },
+    "case": {
+      "name": "Province of Bombay v. Khushaldas S. Advani (1950)",
+      "facts": "Bombay Government requisitioned a flat under the 1947 Ordinance without hearing the tenant. The tenant challenged it through a writ of certiorari.",
+      "issue": "Whether the government order requisitioning property was a quasi-judicial act amenable to a writ of certiorari.",
+      "held": "The Court held it was an **administrative act** based on subjective satisfaction, so a **writ of certiorari** could not be issued.",
+      "principle": "An act is **quasi-judicial** only when a body with **legal authority** determines rights and has a statutory **duty to act judicially**.",
+      "thumb": "When Is Power Quasi-Judicial?"
+    },
+    "compare": {
+      "left": {
+        "name": "Quasi-Judicial",
+        "sub": "Duty to act judicially"
+      },
+      "right": {
+        "name": "Administrative",
+        "sub": "Policy and discretion"
+      },
+      "rows": [
+        {
+          "label": "Basis of Decision",
+          "left": "Objective facts and law",
+          "right": "Policy and expediency",
+          "say": "Quasi-judicial decisions rely on objective law and facts, while administrative ones rely on policy."
+        },
+        {
+          "label": "Fair Hearing",
+          "left": "Strictly mandatory",
+          "right": "Required if civil consequences",
+          "say": "A hearing is mandatory in quasi-judicial acts, and applies to administrative acts only when civil consequences follow."
+        },
+        {
+          "label": "Writ Remedy",
+          "left": "Certiorari or Prohibition",
+          "right": "Mandamus for duty",
+          "say": "Courts issue certiorari against quasi-judicial errors, whereas mandamus compels administrative duties."
+        },
+        {
+          "label": "Reasoned Order",
+          "left": "Speaking order essential",
+          "right": "Not always required",
+          "say": "Quasi-judicial bodies must pass speaking orders with reasons, unlike routine administrative orders."
+        }
+      ],
+      "thumb": "Quasi-Judicial vs Administrative Power",
+      "title": "Quasi-Judicial vs Administrative Function",
+      "title_say": "Here is the key difference between quasi-judicial and administrative functions for your LLB exam."
+    },
+    "datadrop": {
+      "thumb": "Quasi-Judicial Power Explained Simply"
+    }
+  },
+  "check": [
+    "Verify exact citation and year of Province of Bombay v. Khushaldas S. Advani (AIR 1950 SC 222).",
+    "Verify exact year of A.K. Kraipak v. Union of India (decided 1969, reported AIR 1970 SC 150).",
+    "Verify exact citation of Indian National Congress (I) v. Institute of Social Welfare ((2002) 5 SCC 685).",
+    "Verify the statute name in Khushaldas Advani: Bombay Land Requisition Ordinance, 1947."
+  ],
+  "approved": false
+}

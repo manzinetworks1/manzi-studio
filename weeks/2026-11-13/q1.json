@@ -1,0 +1,156 @@
+{
+  "language": "english",
+  "qnum": 1,
+  "course": "LLB Semester 5",
+  "subject": "Administrative Law",
+  "topic": "Judicial Review of Discretionary Powers",
+  "question": "Discuss the main grounds on which the court reviews the exercise of discretionary powers by the administration.",
+  "marks": "15",
+  "asked_years": [],
+  "years_range": [],
+  "long": {
+    "sections": [
+      {
+        "heading": "Introduction",
+        "paras": [
+          "Modern welfare states give wide **discretionary powers** to administrative authorities to handle complex social and economic tasks. However, unlimited power can easily lead to arbitrary action and violate citizen rights.",
+          "Therefore, Indian courts exercise **judicial review** under Articles 32 and 226 of the **Constitution of India** to ensure that officials act fairly, reasonably, and within legal boundaries."
+        ]
+      },
+      {
+        "heading": "Meaning of Administrative Discretion",
+        "paras": [
+          "**Administrative discretion** means the freedom of an officer to choose among two or more lawful alternatives based on personal judgment. As Lord Halsbury stated, discretion must follow **rule of reason** and justice, not personal whim or private opinion. Courts do not act as appellate bodies over merits; they only examine the **decision-making process**."
+        ]
+      },
+      {
+        "heading": "Main Grounds of Judicial Review",
+        "points": [
+          {
+            "title": "Ultra Vires and Excess Power",
+            "text": "When an authority crosses the limits set by the **parent statute**, its action becomes **ultra vires**. Courts strike down any decision taken without legal authority or beyond statutory jurisdiction."
+          },
+          {
+            "title": "Mala Fide or Bad Faith",
+            "text": "Discretion exercised with **dishonest intention**, personal malice, or spite is invalid. **Mala fide** action vitiates the entire decision because public power exists only for public welfare."
+          },
+          {
+            "title": "Improper Purpose",
+            "text": "Even without personal malice, using a statutory power for a goal different from what Parliament intended is unlawful. An **improper purpose** defeats the **legislative intent** behind the law."
+          },
+          {
+            "title": "Irrelevant Considerations",
+            "text": "An officer must consider all **relevant factors** and ignore **extraneous considerations**. If a decision relies on unrelated facts or omits vital legal factors, the court will quash it."
+          },
+          {
+            "title": "Non-Application of Mind",
+            "text": "The authority must independently evaluate the facts before deciding. Passing **mechanical orders** without reading records or blindly copying standard templates shows a clear **failure to exercise discretion**."
+          },
+          {
+            "title": "Acting Under Dictation",
+            "text": "When law vests discretion in a specific officer, that officer must decide personally. Surrendering judgment to a **superior officer** or political boss amounts to **acting under dictation** and is illegal."
+          },
+          {
+            "title": "Unreasonableness and Proportionality",
+            "text": "Under the **Wednesbury principle**, a decision so absurd that no sensible person could make it is void. Today, Indian courts also apply **proportionality** when fundamental rights are restricted."
+          }
+        ],
+        "tip": "Group these grounds into two clear headings in your exam sheet: Failure to Exercise Discretion and Abuse of Discretion, with one case each."
+      },
+      {
+        "heading": "Leading Case Laws",
+        "cases": [
+          {
+            "name": "Commissioner of Police v. Gordhandas Bhanji (1952)",
+            "text": "The Police Commissioner cancelled a cinema license merely on the **State Government's direction**. The Supreme Court quashed the order, holding that statutory discretion must be exercised **independently** by the empowered authority, not under dictation."
+          },
+          {
+            "name": "Barium Chemicals Ltd. v. Company Law Board (1967)",
+            "text": "The Supreme Court held that even when a statute uses **subjective satisfaction** phrases like 'in the opinion of', the authority must have **objective material** on record showing relevant grounds for its action."
+          },
+          {
+            "name": "Om Kumar v. Union of India (2001)",
+            "text": "The Supreme Court explained that while **Wednesbury unreasonableness** applies to ordinary administrative acts, the stricter **doctrine of proportionality** applies whenever administrative discretion infringes **fundamental rights** under Articles 14, 19, or 21."
+          }
+        ]
+      },
+      {
+        "heading": "Conclusion",
+        "paras": [
+          "Administrative discretion is necessary for efficient governance, but absolute discretion destroys the **rule of law**. Through judicial review, courts balance administrative flexibility with **individual liberty**. By checking illegality, irrationality, and procedural unfairness, Indian courts ensure that discretionary power always remains accountable to **constitutional values**."
+        ]
+      }
+    ]
+  },
+  "shorts": {
+    "myth": {
+      "myth": "If a law says an officer 'may decide in their opinion', courts cannot question their order at all.",
+      "law": "Even **subjective satisfaction** is not absolute. Courts can quash orders based on **no evidence**, **mala fide** intent, or **irrelevant considerations**.",
+      "source": "Constitution of India, Articles 14 and 226",
+      "source_say": "Under Articles 14 and 226 of the Constitution of India, arbitrary administrative orders are always open to judicial review.",
+      "thumb": "Officer's Discretion Is Above Courts?"
+    },
+    "quiz": {
+      "question": "Which ground applies when a licensed authority cancels a permit solely because a Minister ordered it to do so?",
+      "options": [
+        "Irrelevant considerations",
+        "Acting under dictation",
+        "Proportionality",
+        "Promissory estoppel"
+      ],
+      "answer": 1,
+      "explain": "When a statutory officer surrenders independent judgment to a superior or Minister, it is called **acting under dictation**, as held in Gordhandas Bhanji.",
+      "thumb": "Test Your Admin Law IQ!"
+    },
+    "case": {
+      "name": "Commissioner of Police v. Gordhandas Bhanji (1952)",
+      "facts": "The Police Commissioner granted a cinema license, then cancelled it solely because the Bombay Government directed him to cancel it.",
+      "issue": "Can an authority empowered by law exercise its discretion on the orders of a superior government body?",
+      "held": "The Supreme Court **quashed** the cancellation because the Commissioner did not apply his **own mind** to the matter.",
+      "principle": "Statutory discretion vested in a specific officer must be exercised **independently**; **acting under dictation** makes the order void.",
+      "thumb": "Why This License Cancellation Failed"
+    },
+    "compare": {
+      "left": {
+        "name": "Failure to Exercise",
+        "sub": "Officer does not use discretion"
+      },
+      "right": {
+        "name": "Abuse of Discretion",
+        "sub": "Officer misuses discretion"
+      },
+      "rows": [
+        {
+          "label": "Core Defect",
+          "left": "No real decision by the officer",
+          "right": "Decision taken for wrong reasons",
+          "say": "In failure to exercise, the officer avoids deciding, whereas in abuse of discretion, the officer decides for improper reasons."
+        },
+        {
+          "label": "Key Examples",
+          "left": "Dictation, mechanical orders, fettering",
+          "right": "Mala fide, improper purpose, irrationality",
+          "say": "Examples of failure include acting under dictation and mechanical orders, while abuse includes mala fide intent and improper purpose."
+        },
+        {
+          "label": "Mental State",
+          "left": "Non-application of mind",
+          "right": "Biased, arbitrary, or extraneous mind",
+          "say": "Failure shows non-application of mind, whereas abuse reflects a biased or arbitrary mindset."
+        }
+      ],
+      "thumb": "Failure vs Abuse of Discretion",
+      "title": "Two Branches of Judicial Review",
+      "title_say": "Let us compare the two main branches of judicial review over administrative discretion."
+    },
+    "datadrop": {
+      "thumb": "7 Grounds to Quash Admin Orders"
+    }
+  },
+  "check": [
+    "Verify citation year for Barium Chemicals Ltd. v. Company Law Board: decided in 1966, reported as AIR 1967 SC 295 (often cited as 1967 in LLB textbooks).",
+    "Verify citation year for Om Kumar v. Union of India: decided in November 2000, reported as (2001) 2 SCC 386.",
+    "Verify citation year for Commissioner of Police v. Gordhandas Bhanji: AIR 1952 SC 16."
+  ],
+  "approved": false
+}
