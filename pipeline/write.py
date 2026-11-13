@@ -34,17 +34,19 @@ def state():
 
 
 # ------------------------------------------------------------------ Gemini
-def pick_model(key, cfg):
-    if cfg.get("gemini_model"): return cfg["gemini_model"]
+def pick_models(key, cfg):
+    """Gemini models to try, best first: newest version first, Pro before Flash. If one is unavailable or over the free
+    limit, the next one is used automatically."""
+    if cfg.get("gemini_model"): return [cfg["gemini_model"]]
     data = http_json(f"{GEMINI}/models?pageSize=1000", headers={"x-goog-api-key": key})
     names = [m["name"].split("/")[-1] for m in data.get("models", []) if "generateContent" in m.get("supportedGenerationMethods", [])
-             and "gemini" in m["name"] and not re.search(r"image|tts|live|audio|embed|native|exp|computer|robot|lite|nano", m["name"])]
+             and "gemini" in m["name"] and not re.search(r"image|tts|live|audio|embed|native|exp|computer|robot|lite|nano|learn", m["name"])]
     def rank(n):
         v = re.search(r"gemini-(\d+(?:\.\d+)?)", n)
-        return ("pro" in n, "preview" not in n, float(v.group(1)) if v else 0)     # best (pro) model first: accuracy matters for law
+        return (float(v.group(1)) if v else 0, "pro" in n, "latest" not in n)
     names.sort(key=rank, reverse=True)
     if not names: raise SystemExit("No Gemini model available for this key.")
-    return names[0]
+    return names[:8]
 
 
 S = lambda **p: {"type": "OBJECT", "properties": p, "required": list(p)}
@@ -99,21 +101,30 @@ ACCURACY RULES (very important, this is law):
 """
 
 
-def gemini_pack(key, model, row, cfg):
+def gemini_pack(key, models, row, cfg):
     lang = (row.get("language") or cfg.get("language", "english")).lower()
     rule = ("Hindi: write all text in simple Hindi (Devanagari). Keep case names, Act names and section numbers in English letters."
             if lang == "hindi" else "English (Indian English, simple words).")
     body = {"contents": [{"parts": [{"text": PROMPT.format(question=row["question"], subject=row.get("subject") or cfg.get("subject", ""),
                                                             course=cfg.get("course", "LLB"), marks=row.get("marks") or "not given", language_rule=rule)}]}],
             "generationConfig": {"responseMimeType": "application/json", "responseSchema": SCHEMA, "temperature": 0.3}}
-    for k in range(3):
-        res = http_json(f"{GEMINI}/models/{model}:generateContent", body, {"x-goog-api-key": key}, timeout=600)
+    errors = []
+    while models:
+        model = models[0]
         try:
-            txt = "".join(p.get("text", "") for p in res["candidates"][0]["content"]["parts"])
-            pack = json.loads(txt); validate(pack); return pack, lang
-        except Exception as e:
-            log(f"  Gemini answer not usable ({e}), asking again…")
-    raise RuntimeError("Gemini didn't give a usable topic pack after 3 tries.")
+            for k in range(3):
+                res = http_json(f"{GEMINI}/models/{model}:generateContent", body, {"x-goog-api-key": key}, timeout=600, tries=2)
+                try:
+                    txt = "".join(p.get("text", "") for p in res["candidates"][0]["content"]["parts"])
+                    pack = json.loads(txt); validate(pack); log(f"  written by {model}"); return pack, lang
+                except Exception as e:
+                    log(f"  {model}: answer not usable ({e}), asking again…")
+            raise RuntimeError("no usable answer after 3 tries")
+        except RuntimeError as e:
+            msg = str(e); errors.append(f"{model}: {msg[:160]}")
+            log(f"  {model} can't be used ({msg[:160]}), trying the next model…")
+            models.pop(0)          # this model is unavailable / over its free limit / not giving usable answers
+    raise RuntimeError("No Gemini model could write the topic pack:\n" + "\n".join(errors))
 
 
 def validate(p):
@@ -151,30 +162,30 @@ def approval_email(cfg, week, packs, files):
     repo = os.environ.get("GITHUB_REPOSITORY", "your-name/manzi-studio"); gh = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
     run_url = f"{gh}/{repo}/actions/workflows/make.yml"
     esc = lambda s: re.sub(r"\*\*(.+?)\*\*", r"<b style='background:#fff2a8'>\1</b>", (s or "").replace("&", "&amp;").replace("<", "&lt;"))
-    parts = [f"<h2 style='margin:0'>📝 {len(packs)} topic{'s' if len(packs) > 1 else ''} ready for your check</h2>",
+    parts = [f"<h2 style='margin:0'>?? {len(packs)} topic{'s' if len(packs) > 1 else ''} ready for your check</h2>",
              f"<p>Week of {week}. Read the scripts below. If something is wrong, tap <b>Fix</b> under that topic, correct the text and Commit. "
              f"When everything is right, tap the button and then <b>Run workflow</b>.</p>",
-             f"<p><a href='{run_url}' style='background:#1f8a3b;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold'>✅ Approve and make the videos</a></p>"]
+             f"<p><a href='{run_url}' style='background:#1f8a3b;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold'>? Approve and make the videos</a></p>"]
     for p, f in zip(packs, files):
         parts.append(f"<hr><h3>Q{p['qnum']}. {esc(p['question'])}</h3><p>{esc(p['subject'])} · {esc(p.get('marks') or '')} marks"
                      f"{' · asked ' + ', '.join(p['asked_years']) if p['asked_years'] else ''}</p>"
-                     f"<p><a href='{gh}/{repo}/edit/main/{f}'>✏️ Fix this topic</a></p>")
+                     f"<p><a href='{gh}/{repo}/edit/main/{f}'>?? Fix this topic</a></p>")
         if p.get("check"):
-            parts.append("<div style='background:#fdecea;padding:10px;border-radius:8px'><b>⚠️ Please double-check:</b><ul>" + "".join(f"<li>{esc(c)}</li>" for c in p["check"]) + "</ul></div>")
+            parts.append("<div style='background:#fdecea;padding:10px;border-radius:8px'><b>?? Please double-check:</b><ul>" + "".join(f"<li>{esc(c)}</li>" for c in p["check"]) + "</ul></div>")
         for s in p["long"]["sections"]:
             parts.append(f"<h4 style='margin-bottom:4px'>{esc(s['heading'])}</h4>")
             for x in s.get("paras", []): parts.append(f"<p>{esc(x)}</p>")
             if s.get("points"): parts.append("<ol>" + "".join(f"<li><b>{esc(x['title'])}</b>: {esc(x['text'])}</li>" for x in s["points"]) + "</ol>")
-            for c in s.get("cases", []): parts.append(f"<p>📌 <i>{esc(c['name'])}</i>: {esc(c['text'])}</p>")
-            if s.get("tip"): parts.append(f"<p>✍️ Tip: {esc(s['tip'])}</p>")
+            for c in s.get("cases", []): parts.append(f"<p>?? <i>{esc(c['name'])}</i>: {esc(c['text'])}</p>")
+            if s.get("tip"): parts.append(f"<p>?? Tip: {esc(s['tip'])}</p>")
         sh = p["shorts"]; parts.append("<h4>Shorts</h4><ul>")
-        if sh.get("myth"): parts.append(f"<li><b>Myth:</b> {esc(sh['myth']['myth'])} → <b>Law:</b> {esc(sh['myth']['law'])} ({esc(sh['myth']['source'])})</li>")
-        if sh.get("quiz"): q = sh["quiz"]; parts.append(f"<li><b>Quiz:</b> {esc(q['question'])} → <b>{esc(q['options'][int(q['answer'])])}</b>. {esc(q['explain'])}</li>")
+        if sh.get("myth"): parts.append(f"<li><b>Myth:</b> {esc(sh['myth']['myth'])} ? <b>Law:</b> {esc(sh['myth']['law'])} ({esc(sh['myth']['source'])})</li>")
+        if sh.get("quiz"): q = sh["quiz"]; parts.append(f"<li><b>Quiz:</b> {esc(q['question'])} ? <b>{esc(q['options'][int(q['answer'])])}</b>. {esc(q['explain'])}</li>")
         if sh.get("case"): c = sh["case"]; parts.append(f"<li><b>Case:</b> {esc(c['name'])}: {esc(c['held'])}</li>")
-        if sh.get("compare"): parts.append(f"<li><b>Compare:</b> {esc(sh['compare']['title'])}: " + "; ".join(f"{esc(r['label'])}: {esc(r['left'])} → {esc(r['right'])}" for r in sh['compare']['rows']) + "</li>")
-        if sh.get("flow"): parts.append(f"<li><b>Steps:</b> " + " → ".join(esc(s['title']) for s in sh['flow']['steps']) + "</li>")
+        if sh.get("compare"): parts.append(f"<li><b>Compare:</b> {esc(sh['compare']['title'])}: " + "; ".join(f"{esc(r['label'])}: {esc(r['left'])} ? {esc(r['right'])}" for r in sh['compare']['rows']) + "</li>")
+        if sh.get("flow"): parts.append(f"<li><b>Steps:</b> " + " ? ".join(esc(s['title']) for s in sh['flow']['steps']) + "</li>")
         parts.append("</ul>")
-    parts.append(f"<p><a href='{run_url}'>✅ Approve and make the videos</a></p>")
+    parts.append(f"<p><a href='{run_url}'>? Approve and make the videos</a></p>")
     mail.send(cfg, f"[{cfg['channel']}] Check this week's scripts ({week})", "\n".join(parts))
 
 
@@ -184,12 +195,12 @@ def main():
     n = a.topics or int(cfg.get("topics_per_week", 2))
     todo = [r for r in load_topics(cfg) if qid(r["question"]) not in st["used"]][:n]
     if not todo: mail.send(cfg, f"[{cfg['channel']}] Topic list is empty", "<p>All topics in your list are done. Add new rows to your topic list.</p>") if not a.no_email else None; log("no topics left"); return
-    key = secret("GEMINI_API_KEY"); model = pick_model(key, cfg); log("Gemini model:", model)
+    key = secret("GEMINI_API_KEY"); models = pick_models(key, cfg); log("Gemini models to try:", ", ".join(models))
     week = datetime.date.today().isoformat(); wdir = os.path.join(ROOT, "weeks", week); os.makedirs(wdir, exist_ok=True)
     packs, files = [], []
     for i, row in enumerate(todo, 1):
         log(f"writing topic {i}: {row['question'][:70]}")
-        raw, lang = gemini_pack(key, model, row, cfg)
+        raw, lang = gemini_pack(key, models, row, cfg)
         st["qnum"] = st.get("qnum", 0) + 1
         pack = to_pack(raw, row, lang, cfg, row.get("qnum") or st["qnum"])
         f = f"weeks/{week}/q{i}.json"; json.dump(pack, open(os.path.join(ROOT, f), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
