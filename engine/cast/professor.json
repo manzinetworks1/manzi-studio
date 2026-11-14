@@ -1,0 +1,19 @@
+{
+  "name": "professor_voiceA_take3",
+  "approved_by_user": "2026-11-14 (voice + pace approved)",
+  "engine": "AIQUEST run_h3_2k.py make_preview (FL2VA pruned INT8 + PDMD 4-step), Wan2GP b8b18f8114e432eea8f3d7e853a51dd91fa99571",
+  "seed": 552052728,
+  "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+  "dialogue": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
+  "language": "English",
+  "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+  "music": "",
+  "aspect": "16:9 Landscape",
+  "duration": "5 s",
+  "frames": 124,
+  "size": "672x384",
+  "steps": 4,
+  "sampler": "euler",
+  "shift": 12.0,
+  "loras": []
+}

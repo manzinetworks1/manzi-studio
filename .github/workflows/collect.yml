@@ -1,0 +1,38 @@
+name: 3b - Collect engine results
+
+# Picks up a Manzi Engine run that finished after "3 - Manzi Engine" stopped waiting.
+# Quick and cheap when nothing is waiting (it only checks engine/state/pending.json).
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: manzi-engine
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Anything waiting?
+        id: check
+        run: |
+          if [ -f engine/state/pending.json ]; then echo "pending=yes" >> "$GITHUB_OUTPUT"; else echo "Nothing waiting."; fi
+      - name: Collect
+        if: steps.check.outputs.pending == 'yes'
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          KERNEL: ${{ secrets.KAGGLE_USERNAME }}/manzi-engine
+          GH_TOKEN: ${{ github.token }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          pip install -q "kaggle>=1.7.4"
+          python engine/collect.py

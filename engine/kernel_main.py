@@ -1,0 +1,125 @@
+"""Manzi Engine — Kaggle job script (built by engine/build_kernel.py; do not edit the built copy).
+
+Runs headless on Kaggle GPU T4 x2, started by the GitHub workflow "3 - Manzi Engine":
+  1. AIQUEST's Step 1, unchanged: pinned Wan2GP + H3 weights (MiniMax H3 pruned INT8, PDMD 4-step LoRA,
+     NVIDIA Open-H3-Regenerate-2K)
+  2. AIQUEST's engine (tensor-parallel H3 on both T4s) with our headless job runner in place of its web page:
+     every scene of the job -> 384p preview with sound (+ 720p regenerate when asked)
+  3. the voice stage: narration read in the Professor's cloned voice, checked by Whisper
+Results go to /kaggle/working/manzi_out (the kernel's Output), which GitHub downloads when the run is complete.
+
+Credits: AIQUEST Academy's "MiniMax H3 + Open-H3 Regenerate 2K" notebook (Apache 2.0), Wan2GP by DeepBeepMeep,
+MiniMax H3 (MiniMax H3 Community License: credit "MiniMax H3"), NVIDIA Open-H3-Regenerate-2K, PDMD.
+"""
+import base64
+import json
+import os
+import subprocess
+import sys
+import time
+
+T_START = time.time()
+JOB = json.loads(base64.b64decode("__JOB_B64__").decode())
+STEP1 = base64.b64decode("__STEP1_B64__").decode()
+ENGINE = base64.b64decode("__ENGINE_B64__").decode()
+VOICE_STAGE = base64.b64decode("__VOICE_B64__").decode()
+
+OUT = "/kaggle/working/manzi_out"
+WORK = "/kaggle/tmp/manzi"
+os.makedirs(OUT, exist_ok=True)
+os.makedirs(WORK, exist_ok=True)
+os.chdir(WORK)  # Wan2GP and the engine live here, not in /kaggle/working (which is saved as the kernel output)
+SUMMARY = {"run_id": JOB.get("run_id"), "stages": {}, "errors": []}
+
+
+def save_summary():
+    SUMMARY["total_s"] = round(time.time() - T_START)
+    with open(os.path.join(OUT, "summary.json"), "w") as f:
+        json.dump(SUMMARY, f, indent=2)
+
+
+def stage(name):
+    print(f"\n{'#' * 70}\n# {name}\n{'#' * 70}", flush=True)
+    return time.time()
+
+
+def done(name, t0, ok=True, note=""):
+    SUMMARY["stages"][name] = {"ok": ok, "seconds": round(time.time() - t0), "note": note}
+    save_summary()
+
+
+# ---- 0. Hardware check: the engine splits H3 across two T4s ----
+t = stage("0. Hardware")
+gpus = subprocess.run(["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader"],
+                      capture_output=True, text=True).stdout.strip().splitlines()
+print("\n".join(gpus) or "no GPU", flush=True)
+SUMMARY["gpus"] = gpus
+if len(gpus) < 2:
+    SUMMARY["errors"].append("Needs Kaggle GPU T4 x2; this run got: " + (", ".join(gpus) or "no GPU"))
+    done("hardware", t, False)
+    sys.exit(1)
+done("hardware", t)
+
+# ---- 1. AIQUEST Step 1: pinned code, dependencies, weights (models from an attached dataset are reused) ----
+t = stage("1. Setup: pinned Wan2GP + H3 weights")
+try:
+    exec(compile(STEP1, "aiquest_step1.py", "exec"), {"__name__": "aiquest_step1"})
+    done("setup", t)
+except BaseException as e:  # SystemExit included: Step 1 exits on missing GPUs / disk
+    SUMMARY["errors"].append(f"setup: {e!r}")
+    done("setup", t, False)
+    sys.exit(1)
+
+# ---- 2. Video engine: every scene of the job ----
+job_file = os.path.join(WORK, "job.json")
+with open(job_file, "w") as f:
+    json.dump(JOB, f)
+if JOB.get("scenes"):
+    t = stage("2. Scenes (MiniMax H3 engine)")
+    with open("run_manzi.py", "w", encoding="utf-8") as f:
+        f.write(ENGINE)
+    env = dict(os.environ, MANZI_JOB=job_file, MANZI_OUT=OUT, PYTHONWARNINGS="ignore", TQDM_DISABLE="1",
+               PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
+    rc = subprocess.call([sys.executable, "-u", "run_manzi.py"], env=env)
+    if rc != 0:
+        SUMMARY["errors"].append(f"scene engine exit code {rc}")
+    done("scenes", t, rc == 0)
+
+# ---- 3. Voice stage: narration in the cloned Professor voice, Whisper-checked ----
+if JOB.get("narration"):
+    t = stage("3. Voice: environment (Python 3.11 via uv)")
+    env_dir = "/kaggle/tmp/voice_env"
+    ok = True
+    try:
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "uv"], check=True)
+        subprocess.run(["uv", "venv", "-q", "-p", "3.11", env_dir], check=True)
+        done("voice_env", t)
+    except Exception as e:
+        ok = False
+        SUMMARY["errors"].append(f"voice env: {e!r}")
+        done("voice_env", t, False)
+    with open(os.path.join(WORK, "voice_stage.py"), "w", encoding="utf-8") as f:
+        f.write(VOICE_STAGE)
+    packages = {"chatterbox": ["chatterbox-tts", "faster-whisper", "soundfile"],
+                "qwen3": ["qwen-tts", "faster-whisper", "soundfile"]}
+    for engine in JOB["narration"].get("engines", ["chatterbox"]):
+        if not ok:
+            break
+        t = stage(f"3. Voice: {engine}")
+        py = os.path.join(env_dir + "_" + engine, "bin", "python")
+        try:
+            subprocess.run(["uv", "venv", "-q", "-p", "3.11", env_dir + "_" + engine], check=True)
+            subprocess.run(["uv", "pip", "install", "-q", "--python", py, *packages[engine]], check=True,
+                           timeout=1200)
+            rc = subprocess.call([py, "-u", os.path.join(WORK, "voice_stage.py"), job_file, OUT, engine],
+                                 timeout=2400)
+            if rc != 0:
+                SUMMARY["errors"].append(f"voice {engine}: exit code {rc}")
+            done(f"voice_{engine}", t, rc == 0)
+        except Exception as e:
+            SUMMARY["errors"].append(f"voice {engine}: {e!r}")
+            done(f"voice_{engine}", t, False)
+
+save_summary()
+print(f"\n✅ Manzi Engine run {JOB.get('run_id')} finished in {round((time.time() - T_START) / 60, 1)} min",
+      flush=True)
