@@ -28,6 +28,7 @@ jobs:
     env:
       KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
       KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KAGGLE_API_TOKEN: ${{ secrets.KAGGLE_KEY }}
       KERNEL: ${{ secrets.KAGGLE_USERNAME }}/manzi-engine
       MANZI_KERNEL_ID: ${{ secrets.KAGGLE_USERNAME }}/manzi-engine
       GH_TOKEN: ${{ github.token }}
@@ -72,10 +73,12 @@ jobs:
 
       - name: Send the job to Kaggle (GPU T4 x2)
         run: |
-          if ! kaggle kernels push -p build --accelerator NvidiaTeslaT4 2>&1 | tee push.log; then
-            echo "retrying without --accelerator (older CLI)"; kaggle kernels push -p build | tee push.log
+          kaggle kernels push -p build --accelerator NvidiaTeslaT4 2>&1 | tee push.log || true
+          if ! grep -qi "successfully" push.log && grep -qi "unrecognized arguments" push.log; then
+            echo "Older Kaggle tool: pushing without --accelerator (kernel-metadata asks for T4)"
+            kaggle kernels push -p build 2>&1 | tee push.log || true
           fi
-          grep -qi "error" push.log && { echo "::error::Kaggle push failed"; exit 1; } || true
+          grep -qi "successfully" push.log || { echo "::error::Kaggle did not accept the job (see the lines above)"; exit 1; }
           mkdir -p engine/state
           printf '{"run_id": "%s", "job": "%s", "pushed_at": "%s"}\n' "$RUN_ID" "${{ inputs.job }}" "$(date -u +%FT%TZ)" > engine/state/pending.json
           git config user.name "manzi-studio-bot"
