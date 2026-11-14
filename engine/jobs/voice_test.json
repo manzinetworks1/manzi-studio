@@ -6,7 +6,6 @@
     "ref_text": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
     "speed": 1.0,
     "engines": [
-      "chatterbox",
       "qwen3"
     ],
     "pieces": [

@@ -1,0 +1,40 @@
+{
+  "run_id": "court-lipsync-test",
+  "purpose": "Courtroom lip-sync test: camera behind the judge's shoulder, same seed, made 3 ways.",
+  "scenes": [
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama shot inside a wood-panelled Indian High Court in daylight, filmed from behind the judge's shoulder: in the near foreground, slightly out of focus at the left edge of the frame, the back of a grey-haired judge's head and the shoulder of his black robe, above the edge of the raised wooden bench. Below the bench, in sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, black coat and white bands stands at the lectern, waist-up and filling a third of the frame, looking up at the judge (towards the camera), holding a thin file, and speaks firmly with clear, precise lip movements. Behind him, out of focus, a young woman advocate in a black coat with her hair in a bun takes notes at the bar table. Static camera, warm window light, ceiling fans.",
+      "dialogue": "My Lord, the licence was cancelled without even hearing my client.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, papers rustling, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "id": "court_a_fast",
+      "preset": "Fast",
+      "note": "(a) Fast 720p sharpening"
+    },
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama shot inside a wood-panelled Indian High Court in daylight, filmed from behind the judge's shoulder: in the near foreground, slightly out of focus at the left edge of the frame, the back of a grey-haired judge's head and the shoulder of his black robe, above the edge of the raised wooden bench. Below the bench, in sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, black coat and white bands stands at the lectern, waist-up and filling a third of the frame, looking up at the judge (towards the camera), holding a thin file, and speaks firmly with clear, precise lip movements. Behind him, out of focus, a young woman advocate in a black coat with her hair in a bun takes notes at the bar table. Static camera, warm window light, ceiling fans.",
+      "dialogue": "My Lord, the licence was cancelled without even hearing my client.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, papers rustling, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "id": "court_b_balanced",
+      "preset": "Balanced",
+      "note": "(b) Balanced 720p sharpening"
+    },
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama shot inside a wood-panelled Indian High Court in daylight, filmed from behind the judge's shoulder: in the near foreground, slightly out of focus at the left edge of the frame, the back of a grey-haired judge's head and the shoulder of his black robe, above the edge of the raised wooden bench. Below the bench, in sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, black coat and white bands stands at the lectern, waist-up and filling a third of the frame, looking up at the judge (towards the camera), holding a thin file, and speaks firmly with clear, precise lip movements. Behind him, out of focus, a young woman advocate in a black coat with her hair in a bun takes notes at the bar table. Static camera, warm window light, ceiling fans.",
+      "dialogue": "My Lord, the licence was cancelled without even hearing my client.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, papers rustling, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "id": "court_c_balanced_face",
+      "preset": "Balanced",
+      "lora": "Natural Face",
+      "note": "(c) Balanced + Natural Face & Speech add-on"
+    }
+  ]
+}

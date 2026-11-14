@@ -37,10 +37,16 @@ def _mz_run_job():
             _start = None
             if _sc.get("start_image"):
                 _start = _MzImage.open(_MZ_FRAMES[_sc["start_image"]]).convert("RGB")
+            _lora, _ls = NO_LORA, 1.0
+            if _sc.get("lora"):  # e.g. "Natural Face" -> AIQUEST's catalog entry (strength from the catalog unless given)
+                _lora = next((k for k in LORA_CATALOG if _sc["lora"].lower() in k.lower()), NO_LORA)
+                if _lora != NO_LORA:
+                    _ls = float(_sc.get("lora_strength", LORA_CATALOG[_lora]["scale"]))
+            _rec["lora"] = None if _lora == NO_LORA else f"{_lora} @ {_ls}"
             _path, _status, _name = make_preview(
                 _sc.get("scene", ""), _sc.get("dialogue", ""), _sc.get("language", "English"), _sc.get("sound", ""),
                 _sc.get("music", ""), _start, None, _sc.get("aspect", "16:9 Landscape"), _sc.get("duration", "5 s"),
-                int(_sc.get("seed", -1)), NO_LORA, 1.0, NO_LORA, 1.0, "", None, 0.0, True, "euler",
+                int(_sc.get("seed", -1)), _lora, _ls, NO_LORA, 1.0, "", None, 0.0, True, "euler",
                 float(_sc.get("shift", 12.0)), 0)
             _rec["preview_status"] = _status
             if not _path:
@@ -60,7 +66,9 @@ def _mz_run_job():
                 _rec["audio"] = os.path.basename(_wp)
             if _sc.get("output") in OUTPUTS:
                 _t1 = time.time()
-                _up, _ustatus = make_upscale(_name, _sc["output"], _sc.get("preset", DEFAULT_PRESET), -1, True)
+                _preset = next((k for k in REFINE_PRESETS if _sc.get("preset", "Fast").lower() in k.lower()), DEFAULT_PRESET)
+                _rec["preset"] = _preset
+                _up, _ustatus = make_upscale(_name, _sc["output"], _preset, -1, True)
                 _rec["upscale_status"] = _ustatus
                 if _up:
                     _d2 = os.path.join(_MZ_OUT, f"{_sid}_{_sc['output'].split()[0]}.mp4")
