@@ -1,0 +1,51 @@
+{
+  "run_id": "court-lipsync-test-2",
+  "purpose": "Courtroom lip-sync test 2: close-up from behind the judge; timing check with automatic retakes; 384p vs 544p preview.",
+  "scenes": [
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama close-up inside a wood-panelled Indian High Court in daylight, filmed from just behind the judge's shoulder: at the far left edge of the frame, out of focus, the back of the grey-haired judge's head and his black robe. In sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, brown skin, black coat and white bands, framed from the chest up so his face fills about half of the frame height, looks up at the judge (towards the camera) and speaks firmly and clearly, with crisp, well-articulated mouth movements and no long pauses. Softly blurred Indian courtroom behind him. Static camera, warm window light.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "preset": "Fast",
+      "min_end_silence": 0.4,
+      "retries": 2,
+      "id": "court1_short_5s_384p",
+      "dialogue": "My Lord, my client was never even heard.",
+      "duration": "5 s",
+      "preview": "384p",
+      "note": "(1) short line, 5 s, 384p preview"
+    },
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama close-up inside a wood-panelled Indian High Court in daylight, filmed from just behind the judge's shoulder: at the far left edge of the frame, out of focus, the back of the grey-haired judge's head and his black robe. In sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, brown skin, black coat and white bands, framed from the chest up so his face fills about half of the frame height, looks up at the judge (towards the camera) and speaks firmly and clearly, with crisp, well-articulated mouth movements and no long pauses. Softly blurred Indian courtroom behind him. Static camera, warm window light.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "preset": "Fast",
+      "min_end_silence": 0.4,
+      "retries": 2,
+      "id": "court2_long_6s5_384p",
+      "dialogue": "My Lord, the licence was cancelled without even hearing my client.",
+      "duration": "6.5 s",
+      "preview": "384p",
+      "note": "(2) original line, 6.5 s, 384p preview"
+    },
+    {
+      "kind": "scene",
+      "seed": 771204,
+      "scene": "Courtroom drama close-up inside a wood-panelled Indian High Court in daylight, filmed from just behind the judge's shoulder: at the far left edge of the frame, out of focus, the back of the grey-haired judge's head and his black robe. In sharp focus, a tall Indian advocate in his fifties with silver hair, a thick moustache, brown skin, black coat and white bands, framed from the chest up so his face fills about half of the frame height, looks up at the judge (towards the camera) and speaks firmly and clearly, with crisp, well-articulated mouth movements and no long pauses. Softly blurred Indian courtroom behind him. Static camera, warm window light.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, the advocate's clear Indian-accented voice.",
+      "output": "720p",
+      "preset": "Fast",
+      "min_end_silence": 0.4,
+      "retries": 2,
+      "id": "court3_short_5s_544p",
+      "dialogue": "My Lord, my client was never even heard.",
+      "duration": "5 s",
+      "preview": "544p",
+      "note": "(3) short line, 5 s, 544p preview"
+    }
+  ]
+}

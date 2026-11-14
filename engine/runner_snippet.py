@@ -20,6 +20,23 @@ def _mz_ffmpeg(*args):
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *args], check=True)
 
 
+_MZ_PREVIEW_AREAS = {"384p": 672 * 384, "480p": 832 * 480, "544p": 960 * 544}
+
+
+def _mz_speech_tail(mp4):
+    """(seconds of silence after the last spoken word, clip length): a line that runs into the last frames is
+    usually where lip-sync falls apart, so such takes are made again."""
+    out = subprocess.run(["ffmpeg", "-hide_banner", "-i", mp4, "-af", "silencedetect=n=-35dB:d=0.15", "-f", "null", "-"],
+                         capture_output=True, text=True).stderr
+    length = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", mp4],
+                                  capture_output=True, text=True).stdout.strip() or 0)
+    starts = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", out)]
+    ends = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", out)]
+    if starts and len(starts) > len(ends):  # the last silence runs to the end of the clip
+        return round(length - starts[-1], 2), round(length, 2)
+    return 0.0, round(length, 2)
+
+
 def _mz_save():
     with open(os.path.join(_MZ_OUT, "engine_results.json"), "w") as f:
         _mz_json.dump(_MZ_RESULTS, f, indent=2)
@@ -43,15 +60,38 @@ def _mz_run_job():
                 if _lora != NO_LORA:
                     _ls = float(_sc.get("lora_strength", LORA_CATALOG[_lora]["scale"]))
             _rec["lora"] = None if _lora == NO_LORA else f"{_lora} @ {_ls}"
-            _path, _status, _name = make_preview(
-                _sc.get("scene", ""), _sc.get("dialogue", ""), _sc.get("language", "English"), _sc.get("sound", ""),
-                _sc.get("music", ""), _start, None, _sc.get("aspect", "16:9 Landscape"), _sc.get("duration", "5 s"),
-                int(_sc.get("seed", -1)), _lora, _ls, NO_LORA, 1.0, "", None, 0.0, True, "euler",
-                float(_sc.get("shift", 12.0)), 0)
+            # ---- preview, remade (new seed) when the spoken line runs into the clip's last moments ----
+            _area = _MZ_PREVIEW_AREAS.get(_sc.get("preview", "384p"), 672 * 384)
+            _min_tail = float(_sc.get("min_end_silence", 0.4)) if _sc.get("dialogue") else 0.0
+            _seed0 = int(_sc.get("seed", -1))
+            _best, _takes = None, []
+            for _try in range(1 + (int(_sc.get("retries", 2)) if _min_tail else 0)):
+                _seed = _seed0 + _try if _seed0 >= 0 else -1
+                globals()["PREVIEW_AREA"] = _area  # AIQUEST's preview_size() reads this module-level setting
+                try:
+                    _path, _status, _name = make_preview(
+                        _sc.get("scene", ""), _sc.get("dialogue", ""), _sc.get("language", "English"),
+                        _sc.get("sound", ""), _sc.get("music", ""), _start, None, _sc.get("aspect", "16:9 Landscape"),
+                        _sc.get("duration", "5 s"), _seed, _lora, _ls, NO_LORA, 1.0, "", None, 0.0, True, "euler",
+                        float(_sc.get("shift", 12.0)), 0)
+                finally:
+                    globals()["PREVIEW_AREA"] = 672 * 384
+                if not _path:
+                    raise RuntimeError(_status)
+                _tail, _len = _mz_speech_tail(_path) if _min_tail else (None, None)
+                _takes.append({"seed_status": _status.splitlines()[0], "end_silence_s": _tail, "clip_s": _len})
+                print(f"   🗣️ take {_try + 1}: silence after the last word {_tail}s (need {_min_tail}s)")
+                sys.stdout.flush()
+                if _best is None or (_tail or 0) > (_best[3] or 0):
+                    _best = (_path, _status, _name, _tail)
+                if not _min_tail or (_tail or 0) >= _min_tail:
+                    break
+            _path, _status, _name, _tail = _best
+            _rec["takes"] = _takes
+            _rec["end_silence_s"] = _tail
+            _rec["timing_ok"] = (not _min_tail) or (_tail or 0) >= _min_tail
             _rec["preview_status"] = _status
-            if not _path:
-                raise RuntimeError(_status)
-            _dst = os.path.join(_MZ_OUT, f"{_sid}_384p.mp4")
+            _dst = os.path.join(_MZ_OUT, f"{_sid}_{_sc.get('preview', '384p')}.mp4")
             _mz_shutil.copy(_path, _dst)
             _rec["preview"] = os.path.basename(_dst)
             _rec["preview_s"] = round(time.time() - _t0)
