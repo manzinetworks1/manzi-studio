@@ -41,7 +41,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install the Kaggle tool
-        run: pip install -q "kaggle>=1.7.4"
+        run: pip install -q "kaggle>=1.7.4" six
 
       - name: Check the Kaggle secrets
         run: |
