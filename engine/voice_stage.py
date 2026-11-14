@@ -18,6 +18,19 @@ import subprocess
 import sys
 import time
 
+import ctypes
+import glob
+import site
+
+# faster-whisper (CTranslate2) dlopens libcublas.so.12 / cuDNN 9 by name: load the pip-installed NVIDIA copies first.
+for _pattern in ("nvidia/cublas/lib/libcublasLt.so.12", "nvidia/cublas/lib/libcublas.so.12", "nvidia/cudnn/lib/libcudnn*.so.9"):
+    for _sp in site.getsitepackages():
+        for _lib in sorted(glob.glob(os.path.join(_sp, _pattern))):
+            try:
+                ctypes.CDLL(_lib, mode=ctypes.RTLD_GLOBAL)
+            except OSError:
+                pass
+
 import soundfile as sf
 import torch
 

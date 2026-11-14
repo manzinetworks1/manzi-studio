@@ -1,0 +1,24 @@
+{
+  "run_id": "voice-test",
+  "purpose": "Narration in the Professor's cloned voice (Voice A, from approved Take 3) with 2 cloning engines + Whisper check.",
+  "narration": {
+    "ref_audio": "professor_voiceA.wav",
+    "ref_text": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
+    "speed": 1.0,
+    "engines": [
+      "chatterbox",
+      "qwen3"
+    ],
+    "pieces": [
+      "When the law gives an officer discretion, it means a choice between several lawful options. But discretion is never unlimited. Courts can step in through judicial review to check how that choice was made.",
+      "In India, this power comes from Article thirty-two for the Supreme Court and Article two twenty-six for the High Courts. Judicial review looks at the decision-making process, not whether the court would have decided differently.",
+      "Lord Diplock, in the famous GCHQ case of nineteen eighty-five, grouped the grounds into three heads: illegality, irrationality, and procedural impropriety. Remember these three words for your exam.",
+      "Illegality means the authority misunderstood or went beyond its power. For example, it acted for an improper purpose, relied on irrelevant considerations, ignored relevant ones, or acted under someone else's dictation.",
+      "Irrationality comes from the Wednesbury case of nineteen forty-eight. A decision is struck down if it is so unreasonable that no sensible authority, applying its mind, could ever have reached it.",
+      "Procedural impropriety means the authority broke the rules of natural justice or the procedure laid down by law. The most common example is deciding against someone without giving them a fair hearing.",
+      "Indian courts also test discretion under Article fourteen. In E. P. Royappa's case, the Supreme Court held that arbitrariness is the very opposite of equality, so an arbitrary decision is unconstitutional.",
+      "And in Om Kumar versus Union of India, the court explained proportionality: when fundamental rights are affected, the action must not be more drastic than needed. That's judicial review of discretion in a nutshell."
+    ],
+    "ref_audio_file": "engine/cast/professor_voiceA.wav"
+  }
+}

@@ -23,6 +23,7 @@ JOB = json.loads(base64.b64decode("__JOB_B64__").decode())
 STEP1 = base64.b64decode("__STEP1_B64__").decode()
 ENGINE = base64.b64decode("__ENGINE_B64__").decode()
 VOICE_STAGE = base64.b64decode("__VOICE_B64__").decode()
+CAST = json.loads(base64.b64decode("__CAST_B64__").decode())  # {file name: base64} e.g. the Professor's voice
 
 OUT = "/kaggle/working/manzi_out"
 WORK = "/kaggle/tmp/manzi"
@@ -30,6 +31,9 @@ os.makedirs(OUT, exist_ok=True)
 os.makedirs(WORK, exist_ok=True)
 os.chdir(WORK)  # Wan2GP and the engine live here, not in /kaggle/working (which is saved as the kernel output)
 SUMMARY = {"run_id": JOB.get("run_id"), "stages": {}, "errors": []}
+for _name, _data in CAST.items():
+    with open(os.path.join(OUT, _name), "wb") as _f:
+        _f.write(base64.b64decode(_data))
 
 
 def save_summary():
@@ -61,14 +65,15 @@ if len(gpus) < 2:
 done("hardware", t)
 
 # ---- 1. AIQUEST Step 1: pinned code, dependencies, weights (models from an attached dataset are reused) ----
-t = stage("1. Setup: pinned Wan2GP + H3 weights")
-try:
-    exec(compile(STEP1, "aiquest_step1.py", "exec"), {"__name__": "aiquest_step1"})
-    done("setup", t)
-except BaseException as e:  # SystemExit included: Step 1 exits on missing GPUs / disk
-    SUMMARY["errors"].append(f"setup: {e!r}")
-    done("setup", t, False)
-    sys.exit(1)
+if JOB.get("scenes"):
+    t = stage("1. Setup: pinned Wan2GP + H3 weights")
+    try:
+        exec(compile(STEP1, "aiquest_step1.py", "exec"), {"__name__": "aiquest_step1"})
+        done("setup", t)
+    except BaseException as e:  # SystemExit included: Step 1 exits on missing GPUs / disk
+        SUMMARY["errors"].append(f"setup: {e!r}")
+        done("setup", t, False)
+        sys.exit(1)
 
 # ---- 2. Video engine: every scene of the job ----
 job_file = os.path.join(WORK, "job.json")
@@ -100,8 +105,9 @@ if JOB.get("narration"):
         done("voice_env", t, False)
     with open(os.path.join(WORK, "voice_stage.py"), "w", encoding="utf-8") as f:
         f.write(VOICE_STAGE)
-    packages = {"chatterbox": ["chatterbox-tts", "faster-whisper", "soundfile"],
-                "qwen3": ["qwen-tts", "faster-whisper", "soundfile"]}
+    common = ["faster-whisper", "soundfile", "setuptools<80", "nvidia-cublas-cu12", "nvidia-cudnn-cu12==9.*"]
+    packages = {"chatterbox": ["chatterbox-tts", *common],  # setuptools: Perth watermarker needs pkg_resources
+                "qwen3": ["qwen-tts", *common]}
     for engine in JOB["narration"].get("engines", ["chatterbox"]):
         if not ok:
             break
