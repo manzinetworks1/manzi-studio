@@ -23,18 +23,20 @@ def _mz_ffmpeg(*args):
 _MZ_PREVIEW_AREAS = {"384p": 672 * 384, "480p": 832 * 480, "544p": 960 * 544}
 
 
-def _mz_speech_tail(mp4):
-    """(seconds of silence after the last spoken word, clip length): a line that runs into the last frames is
-    usually where lip-sync falls apart, so such takes are made again."""
-    out = subprocess.run(["ffmpeg", "-hide_banner", "-i", mp4, "-af", "silencedetect=n=-35dB:d=0.15", "-f", "null", "-"],
-                         capture_output=True, text=True).stderr
-    length = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", mp4],
-                                  capture_output=True, text=True).stdout.strip() or 0)
-    starts = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", out)]
-    ends = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", out)]
-    if starts and len(starts) > len(ends):  # the last silence runs to the end of the clip
-        return round(length - starts[-1], 2), round(length, 2)
-    return 0.0, round(length, 2)
+def _mz_speech_tail(mp4, drop_db=18.0):
+    """(seconds after the last loud speech sound, clip length). Level-based: speech is found as 50 ms frames within
+    `drop_db` of the loudest frame, so room tone / ambience doesn't count (ffmpeg silencedetect did not work here:
+    it reports a closing silence_end at the end of the file)."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", mp4, "-vn", "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                         capture_output=True).stdout
+    a = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
+    if len(a) < 1600:
+        return 0.0, 0.0
+    frames = a[: len(a) // 800 * 800].reshape(-1, 800)
+    db = 20 * np.log10(np.sqrt((frames ** 2).mean(axis=1)) + 1e-9)
+    loud = np.where(db > db.max() - drop_db)[0]
+    length = len(a) / 16000
+    return round(length - (int(loud[-1]) + 1) * 0.05, 2), round(length, 2)
 
 
 def _mz_save():
@@ -65,7 +67,7 @@ def _mz_run_job():
             _min_tail = float(_sc.get("min_end_silence", 0.4)) if _sc.get("dialogue") else 0.0
             _seed0 = int(_sc.get("seed", -1))
             _best, _takes = None, []
-            for _try in range(1 + (int(_sc.get("retries", 2)) if _min_tail else 0)):
+            for _try in range(1 + (int(_sc.get("retries", 0)) if _min_tail else 0)):
                 _seed = _seed0 + _try if _seed0 >= 0 else -1
                 globals()["PREVIEW_AREA"] = _area  # AIQUEST's preview_size() reads this module-level setting
                 try:
