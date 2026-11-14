@@ -1,0 +1,62 @@
+{
+  "run_id": "step1-test",
+  "purpose": "Step 1 test: recreate the approved Professor take, check face/voice consistency, one 720p courtroom scene, 2 min narration in the cloned voice (2 cloning engines), with timings.",
+  "scenes": [
+    {
+      "id": "prof_ref",
+      "kind": "professor",
+      "note": "Recreates the approved Take 3 (same seed, prompt and settings). Its voice becomes Voice A; its first frame becomes the Professor picture.",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+      "save_frame": true,
+      "frame_time": 0.0,
+      "save_audio": true
+    },
+    {
+      "id": "prof_a_startframe",
+      "kind": "professor",
+      "note": "Consistency test 1: same seed and description, new line, starts from the Professor picture.",
+      "seed": 552052728,
+      "start_image": "prof_ref",
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Remember this for your exam: courts check how power is used, not the decision itself.",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice."
+    },
+    {
+      "id": "prof_b_seedonly",
+      "kind": "professor",
+      "note": "Consistency test 2: same seed and description, new line, no start picture.",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "So, what makes a government decision unreasonable? Let's find out with a real example.",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice."
+    },
+    {
+      "id": "court_01",
+      "kind": "scene",
+      "note": "Courtroom hook at 720p (Fast) to measure the upscale time. Fictional characters only.",
+      "scene": "Cinematic shot inside a wood-panelled Indian High Court courtroom in daylight. In the foreground, a tall Indian advocate in his fifties with silver hair, a black coat and white bands stands facing the bench and the camera, holding a thin file, speaking firmly. Behind him, out of focus, a young woman advocate in a black coat with her hair in a bun takes notes at the bar table. On the raised bench in the background, seen from the side, a grey-haired judge in a black robe listens, chin on hand. Slow push-in on the speaking advocate.",
+      "dialogue": "My Lord, the licence was cancelled without even hearing my client.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning, papers rustling, the advocate's clear Indian-accented voice.",
+      "output": "720p"
+    }
+  ],
+  "narration": {
+    "ref_audio": "prof_ref_voice.wav",
+    "ref_text": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
+    "speed": 1.0,
+    "engines": ["chatterbox", "qwen3"],
+    "pieces": [
+      "When the law gives an officer discretion, it means a choice between several lawful options. But discretion is never unlimited. Courts can step in through judicial review to check how that choice was made.",
+      "In India, this power comes from Article thirty-two for the Supreme Court and Article two twenty-six for the High Courts. Judicial review looks at the decision-making process, not whether the court would have decided differently.",
+      "Lord Diplock, in the famous GCHQ case of nineteen eighty-five, grouped the grounds into three heads: illegality, irrationality, and procedural impropriety. Remember these three words for your exam.",
+      "Illegality means the authority misunderstood or went beyond its power. For example, it acted for an improper purpose, relied on irrelevant considerations, ignored relevant ones, or acted under someone else's dictation.",
+      "Irrationality comes from the Wednesbury case of nineteen forty-eight. A decision is struck down if it is so unreasonable that no sensible authority, applying its mind, could ever have reached it.",
+      "Procedural impropriety means the authority broke the rules of natural justice or the procedure laid down by law. The most common example is deciding against someone without giving them a fair hearing.",
+      "Indian courts also test discretion under Article fourteen. In E. P. Royappa's case, the Supreme Court held that arbitrariness is the very opposite of equality, so an arbitrary decision is unconstitutional.",
+      "And in Om Kumar versus Union of India, the court explained proportionality: when fundamental rights are affected, the action must not be more drastic than needed. That's judicial review of discretion in a nutshell."
+    ]
+  }
+}

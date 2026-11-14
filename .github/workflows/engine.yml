@@ -1,0 +1,108 @@
+name: 3 - Manzi Engine (Kaggle GPU)
+
+# Sends a job (scenes + narration) to Kaggle's free GPU T4 x2, waits for it, and puts the results on a Release.
+# Needs repository secrets KAGGLE_USERNAME and KAGGLE_KEY (kaggle.com → Settings → API → Create New Token).
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "Job file in engine/jobs/"
+        default: "step1_test.json"
+        required: true
+      wait_minutes:
+        description: "How long this run waits for Kaggle before handing over to '3b - Collect'"
+        default: "120"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: manzi-engine
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KERNEL: ${{ secrets.KAGGLE_USERNAME }}/manzi-engine
+      MANZI_KERNEL_ID: ${{ secrets.KAGGLE_USERNAME }}/manzi-engine
+      GH_TOKEN: ${{ github.token }}
+      GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the Kaggle tool
+        run: pip install -q "kaggle>=1.7.4"
+
+      - name: Check the Kaggle secrets
+        run: |
+          if [ -z "$KAGGLE_USERNAME" ] || [ -z "$KAGGLE_KEY" ]; then
+            echo "::error::Add the KAGGLE_USERNAME and KAGGLE_KEY secrets (repo Settings → Secrets and variables → Actions)"
+            exit 1
+          fi
+
+      - name: Freeze AIQUEST's notebook (first run only)
+        run: |
+          if [ ! -f engine/vendor/aiquest_h3.ipynb ]; then
+            mkdir -p /tmp/aiq
+            kaggle kernels pull unlockbulk/minimax-h3-open-h3-regenerate-2k -p /tmp/aiq
+            mkdir -p engine/vendor
+            cp /tmp/aiq/*.ipynb engine/vendor/aiquest_h3.ipynb
+            git config user.name "manzi-studio-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add engine/vendor/aiquest_h3.ipynb
+            git commit -m "Freeze AIQUEST MiniMax H3 notebook (Apache 2.0) for the Manzi Engine"
+            git push
+          fi
+
+      - name: Build the Kaggle job
+        run: |
+          python engine/build_kernel.py "engine/jobs/${{ inputs.job }}" build
+          RUN_ID=$(python -c "import json;print(json.load(open('engine/jobs/${{ inputs.job }}'))['run_id'])")
+          echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
+
+      - name: Send the job to Kaggle (GPU T4 x2)
+        run: |
+          if ! kaggle kernels push -p build --accelerator NvidiaTeslaT4 2>&1 | tee push.log; then
+            echo "retrying without --accelerator (older CLI)"; kaggle kernels push -p build | tee push.log
+          fi
+          grep -qi "error" push.log && { echo "::error::Kaggle push failed"; exit 1; } || true
+          mkdir -p engine/state
+          printf '{"run_id": "%s", "job": "%s", "pushed_at": "%s"}\n' "$RUN_ID" "${{ inputs.job }}" "$(date -u +%FT%TZ)" > engine/state/pending.json
+          git config user.name "manzi-studio-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull -q --rebase
+          git add engine/state/pending.json
+          git commit -m "Manzi Engine: run $RUN_ID sent to Kaggle"
+          git push
+
+      - name: Wait for Kaggle
+        id: wait
+        run: |
+          end=$(( $(date +%s) + ${{ inputs.wait_minutes }} * 60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            status=$(kaggle kernels status "$KERNEL" 2>&1 | tr 'A-Z' 'a-z')
+            echo "$(date -u +%T) $status"
+            case "$status" in
+              *complete*) echo "state=complete" >> "$GITHUB_OUTPUT"; exit 0 ;;
+              *error*|*cancel*) echo "state=error" >> "$GITHUB_OUTPUT"; exit 0 ;;
+            esac
+            sleep 120
+          done
+          echo "state=waiting" >> "$GITHUB_OUTPUT"
+          echo "Still running on Kaggle; '3b - Collect engine results' will pick it up."
+
+      - name: Collect the results
+        if: steps.wait.outputs.state == 'complete' || steps.wait.outputs.state == 'error'
+        run: python engine/collect.py
+
+  # The same collector runs on a schedule in collect.yml for runs that outlast the wait above.
