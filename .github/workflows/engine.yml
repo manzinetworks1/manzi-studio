@@ -83,10 +83,10 @@ jobs:
           printf '{"run_id": "%s", "job": "%s", "pushed_at": "%s"}\n' "$RUN_ID" "${{ inputs.job }}" "$(date -u +%FT%TZ)" > engine/state/pending.json
           git config user.name "manzi-studio-bot"
           git config user.email "actions@users.noreply.github.com"
-          git pull -q --rebase
           git add engine/state/pending.json
-          git commit -m "Manzi Engine: run $RUN_ID sent to Kaggle"
-          git push
+          git commit -q -m "Manzi Engine: run $RUN_ID sent to Kaggle" || true
+          git pull -q --rebase
+          git push -q
 
       - name: Wait for Kaggle
         id: wait

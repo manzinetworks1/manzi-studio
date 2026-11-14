@@ -95,10 +95,11 @@ def main():
     os.remove(PENDING)
     sh("git", "config", "user.name", "manzi-studio-bot")
     sh("git", "config", "user.email", "actions@users.noreply.github.com")
-    sh("git", "pull", "-q", "--rebase")
     sh("git", "add", "-A", "engine/state", check=False)
-    sh("git", "commit", "-m", f"Manzi Engine: run {run_id} collected ({tag})", check=False)
-    sh("git", "push", check=False)
+    sh("git", "commit", "-q", "-m", f"Manzi Engine: run {run_id} collected ({tag})", check=False)
+    sh("git", "pull", "-q", "--rebase", check=False)
+    pushed = sh("git", "push", "-q", check=False)
+    print("state saved" if pushed.returncode == 0 else f"⚠️ could not save state: {pushed.stderr}")
 
 
 if __name__ == "__main__":
