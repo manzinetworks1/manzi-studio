@@ -65,7 +65,7 @@ if len(gpus) < 2:
 done("hardware", t)
 
 # ---- 1. AIQUEST Step 1: pinned code, dependencies, weights (models from an attached dataset are reused) ----
-if JOB.get("scenes"):
+if JOB.get("scenes") or JOB.get("save_models"):
     t = stage("1. Setup: pinned Wan2GP + H3 weights")
     try:
         exec(compile(STEP1, "aiquest_step1.py", "exec"), {"__name__": "aiquest_step1"})
@@ -74,6 +74,37 @@ if JOB.get("scenes"):
         SUMMARY["errors"].append(f"setup: {e!r}")
         done("setup", t, False)
         sys.exit(1)
+
+# ---- 1b. One-time: save the downloaded weights as a private Kaggle dataset (later runs attach it) ----
+if JOB.get("save_models"):
+    t = stage("1b. Save models to a private Kaggle dataset")
+    try:
+        from kaggle_secrets import UserSecretsClient
+        token = UserSecretsClient().get_secret("KAGGLE_API_TOKEN")  # a Kaggle secret on this notebook, never in code
+        env = dict(os.environ, KAGGLE_API_TOKEN=token)
+        ds_dir = "/kaggle/tmp/models_dataset"
+        os.makedirs(ds_dir, exist_ok=True)
+        for root in ("/kaggle/tmp/h3_models", "/kaggle/tmp/h3_regen"):
+            for dirpath, _, files in os.walk(root):
+                for name in files:
+                    src = os.path.join(dirpath, name)
+                    dst = os.path.join(ds_dir, name)
+                    if not os.path.exists(dst) and not name.endswith((".part", ".lock")) and ".cache" not in src:
+                        os.link(src, dst) if os.stat(src).st_dev == os.stat(ds_dir).st_dev else os.symlink(src, dst)
+        slug = JOB["save_models"]
+        with open(os.path.join(ds_dir, "dataset-metadata.json"), "w") as f:
+            json.dump({"title": "Manzi H3 Models", "id": slug, "licenses": [{"name": "other"}]}, f)
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "kaggle>=1.7.4", "six"], check=True)
+        files = sorted(os.listdir(ds_dir))
+        print(f"Uploading {len(files)} files to private dataset {slug}: {files}", flush=True)
+        r = subprocess.run(["kaggle", "datasets", "create", "-p", ds_dir, "--dir-mode", "skip"], env=env,
+                           capture_output=True, text=True)
+        print(r.stdout[-3000:], r.stderr[-3000:], flush=True)
+        ok = r.returncode == 0 and "error" not in (r.stdout + r.stderr).lower()
+        done("save_models", t, ok, note=slug)
+    except Exception as e:
+        SUMMARY["errors"].append(f"save models: {e!r}")
+        done("save_models", t, False)
 
 # ---- 2. Video engine: every scene of the job ----
 job_file = os.path.join(WORK, "job.json")

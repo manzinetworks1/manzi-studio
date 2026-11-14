@@ -25,6 +25,11 @@ def b64(text):
 def main():
     job_path, build_dir = sys.argv[1], sys.argv[2]
     datasets = []
+    settings_file = os.path.join(ROOT, "settings.json")
+    if os.path.exists(settings_file):
+        ds = json.load(open(settings_file)).get("models_dataset")
+        if ds:
+            datasets.append(ds)
     if "--gpu-dataset" in sys.argv:
         datasets.append(sys.argv[sys.argv.index("--gpu-dataset") + 1])
     with open(job_path) as f:

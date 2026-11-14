@@ -63,6 +63,14 @@ def _mz_run_job():
                     _ls = float(_sc.get("lora_strength", LORA_CATALOG[_lora]["scale"]))
             _rec["lora"] = None if _lora == NO_LORA else f"{_lora} @ {_ls}"
             # ---- preview, remade (new seed) when the spoken line runs into the clip's last moments ----
+            # house rules (lip-sync tests, 15 Nov 2026): on-screen speech -> 544p preview; about 7 words per 5 s at most
+            if not _sc.get("preview"):
+                _sc["preview"] = "544p" if _sc.get("dialogue") else "384p"
+            _words = len((_sc.get("dialogue") or "").split())
+            _secs = float(str(_sc.get("duration", "5 s")).split()[0])
+            if _words > 1.5 * _secs:
+                _rec["warning"] = f"{_words} words in {_secs:g} s: lip-sync may drift (aim for <= {int(1.5 * _secs)})"
+                print(f"   ⚠️ {_rec['warning']}")
             _area = _MZ_PREVIEW_AREAS.get(_sc.get("preview", "384p"), 672 * 384)
             _min_tail = float(_sc.get("min_end_silence", 0.4)) if _sc.get("dialogue") else 0.0
             _seed0 = int(_sc.get("seed", -1))

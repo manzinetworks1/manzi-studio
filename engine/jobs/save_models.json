@@ -1,0 +1,5 @@
+{
+  "run_id": "save-models",
+  "purpose": "One-time: download the H3 weights and save them as a private Kaggle dataset.",
+  "save_models": "manojpobox/manzi-h3-models"
+}
