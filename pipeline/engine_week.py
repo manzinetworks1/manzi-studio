@@ -10,7 +10,7 @@ python pipeline/engine_week.py --week 2026-11-15 [--no-ai]
   collector publishes the results and starts "2 - Make videos" again by itself.
 Writes "ai=<off|ready|sent>" to $GITHUB_OUTPUT when run in GitHub Actions.
 """
-import argparse, glob, json, os, subprocess, sys, urllib.request
+import argparse, datetime, glob, json, os, subprocess, sys, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import ROOT, config, log
 from specs import planned_specs, plain
@@ -107,13 +107,24 @@ def main():
     path = os.path.join(ROOT, "engine", "jobs", f"week-{week}.json")
     json.dump(job, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     log(f"job: {len(job['scenes'])} scenes, {len(job.get('narration', {}).get('pieces', []))} voice sentences")
-    subprocess.run(["git", "add", path], cwd=ROOT, check=True)
+    # Kaggle's free GPUs are least busy in the Indian late morning (night in the USA): the job waits for that slot
+    now = datetime.datetime.now(datetime.timezone.utc)
+    start_utc = datetime.time(5, 30)                     # 11:00 am India time
+    in_slot = start_utc <= now.time() <= datetime.time(9, 30)
+    waiting = os.path.join(ROOT, "engine", "state", "waiting.json")
+    if not in_slot:
+        os.makedirs(os.path.dirname(waiting), exist_ok=True)
+        json.dump({"job": f"week-{week}.json", "week": week, "created_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")},
+                  open(waiting, "w"), indent=2)
+    subprocess.run(["git", "add", "-A", path, os.path.dirname(waiting)], cwd=ROOT, check=True)
     subprocess.run(["git", "commit", "-q", "-m", f"Manzi Engine job for week {week}"], cwd=ROOT, check=False)
     subprocess.run(["git", "pull", "-q", "--rebase"], cwd=ROOT, check=False)
     subprocess.run(["git", "push", "-q"], cwd=ROOT, check=True)
-    subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job=week-{week}.json", "-f", "wait_minutes=170",
-                    "-f", f"then_make={week}"], cwd=ROOT, check=True)
-    say("sent")
+    if in_slot:
+        subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job=week-{week}.json", "-f", "wait_minutes=170",
+                        "-f", f"then_make={week}"], cwd=ROOT, check=True)
+        return say("sent")
+    say("waiting")
 
 
 if __name__ == "__main__":

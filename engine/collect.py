@@ -62,6 +62,13 @@ def main():
     if "complete" not in status:
         notes.append(f"⚠️ Kaggle reports: {status.strip()}")
     notes.append(f"Total time on Kaggle: {round(summary.get('total_s', 0) / 60, 1)} min")
+    if summary.get("started_at"):
+        import calendar
+        fmt = "%Y-%m-%dT%H:%M:%SZ"
+        wait_min = (calendar.timegm(time.strptime(summary["started_at"], fmt)) - calendar.timegm(time.strptime(pending["pushed_at"], fmt))) / 60
+        notes.append(f"Waited in Kaggle's queue: {wait_min:.0f} min (sent {pending['pushed_at']} UTC)")
+        with open("engine/state/queue_log.csv", "a") as f:  # learn which hours are quiet
+            f.write(f"{pending['pushed_at']},{summary['started_at']},{wait_min:.0f},{run_id}\n")
     for name, st in summary.get("stages", {}).items():
         notes.append(f"- {'✅' if st['ok'] else '❌'} {name}: {round(st['seconds'] / 60, 1)} min {st.get('note', '')}")
     for err in summary.get("errors", []):

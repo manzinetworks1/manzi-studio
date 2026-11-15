@@ -30,7 +30,8 @@ WORK = "/kaggle/tmp/manzi"
 os.makedirs(OUT, exist_ok=True)
 os.makedirs(WORK, exist_ok=True)
 os.chdir(WORK)  # Wan2GP and the engine live here, not in /kaggle/working (which is saved as the kernel output)
-SUMMARY = {"run_id": JOB.get("run_id"), "stages": {}, "errors": []}
+SUMMARY = {"run_id": JOB.get("run_id"), "stages": {}, "errors": [],
+           "started_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(T_START))}
 for _name, _data in CAST.items():
     with open(os.path.join(OUT, _name), "wb") as _f:
         _f.write(base64.b64decode(_data))

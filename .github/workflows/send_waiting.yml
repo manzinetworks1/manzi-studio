@@ -1,0 +1,30 @@
+name: 3c - Send the waiting AI job (11 am India time)
+
+# Weekly AI jobs wait for Kaggle's quiet hours (late night in the USA). This sends a waiting job at 11:00 am IST.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * *"      # 05:30 UTC = 11:00 am India time
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Send the job if one is waiting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          F=engine/state/waiting.json
+          if [ ! -f "$F" ]; then echo "Nothing waiting."; exit 0; fi
+          JOB=$(python3 -c "import json;print(json.load(open('$F'))['job'])")
+          WEEK=$(python3 -c "import json;print(json.load(open('$F'))['week'])")
+          gh workflow run engine.yml -f "job=$JOB" -f wait_minutes=170 -f "then_make=$WEEK"
+          git config user.name "manzi-studio-bot"; git config user.email "actions@users.noreply.github.com"
+          git rm -q "$F" && git commit -q -m "Manzi Engine: sent waiting job $JOB" && git push -q
+          echo "Sent $JOB for week $WEEK"

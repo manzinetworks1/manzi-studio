@@ -42,13 +42,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Tell me the AI part is on its way
-        if: steps.ai.outputs.ai == 'sent'
-        run: |
-          python -c "import sys; sys.path.insert(0,'pipeline'); import mail, common; mail.send(common.config(), '[Manzi Studio] Making the AI scenes for week ${{ steps.week.outputs.week }}', '<p>✅ Scripts approved. The opening scenes, the Professor clips and the Professor voice are being made on Kaggle\'s free GPU now.</p><p>When they are ready, the videos are made automatically and you get the usual <b>videos ready</b> email. If Kaggle is too busy for more than 4 hours, the videos are made without the AI part so nothing is late.</p>')"
+        if: steps.ai.outputs.ai == 'sent' || steps.ai.outputs.ai == 'waiting'
+        run: python pipeline/mail_ai_started.py "${{ steps.week.outputs.week }}" "${{ steps.ai.outputs.ai }}"
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-      - if: steps.ai.outputs.ai != 'sent'
+      - if: steps.ai.outputs.ai != 'sent' && steps.ai.outputs.ai != 'waiting'
         run: python pipeline/make.py --week "${{ steps.week.outputs.week }}" ${{ steps.ai.outputs.ai == 'off' && '--no-ai' || '' }}
         env:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
