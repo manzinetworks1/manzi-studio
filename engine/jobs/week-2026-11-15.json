@@ -1,0 +1,88 @@
+{
+  "run_id": "week-2026-11-15",
+  "purpose": "AI scenes and Professor voice for week 2026-11-15",
+  "scenes": [
+    {
+      "id": "q3_hook",
+      "kind": "scene",
+      "scene": "Cinematic close-up inside a crowded Indian wholesale market godown, in daylight, filmed from just behind the nervous middle-aged shopkeeper: at the far left edge of the frame, out of focus, the back of the nervous middle-aged shopkeeper's head and shoulder. In sharp focus, the speaker: a stern 45-year-old Trade Tax Officer, medium build, neat black hair, crisp white shirt, determined mood, clearly Indian with brown skin, framed from the chest up so the face fills about half of the frame height, looks at the nervous middle-aged shopkeeper (towards the camera) and speaks clearly, with crisp, well-articulated mouth movements and no long pauses. Softly blurred background with other Indian people. Static camera, natural light.",
+      "dialogue": "Show me your stock register right now.",
+      "sound": "rustling paper ledgers, distant traffic horns, ceiling fan humming, the speaker's clear Indian-accented voice.",
+      "duration": "5 s",
+      "output": "720p",
+      "preset": "Fast"
+    },
+    {
+      "id": "q3_prof_intro",
+      "kind": "professor",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Hello students! Today: Trade Tax Officer powers, made simple. Let's begin.",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+      "preview": "384p",
+      "duration": "5 s",
+      "output": "720p",
+      "preset": "Fast"
+    },
+    {
+      "id": "q3_prof_outro",
+      "kind": "professor",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Comment NOTES for the free PDF. See you next time!",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+      "preview": "384p",
+      "duration": "5 s",
+      "output": "720p",
+      "preset": "Fast"
+    }
+  ],
+  "narration": {
+    "ref_audio_file": "engine/cast/professor_voiceA.wav",
+    "ref_audio": "professor_voiceA.wav",
+    "ref_text": "Hello students, welcome back! Today we'll make judicial review super simple, so let's begin.",
+    "speed": 1.0,
+    "engines": [
+      "qwen3"
+    ],
+    "pieces": [
+      "Question 3. Discuss the powers and functions of Trade Tax Officer.",
+      "A Trade Tax Officer is the primary assessing and enforcing authority appointed by the State Government under state trade tax or sales tax laws, such as the Uttar Pradesh Trade Tax Act, 1948. Before the Goods and Services Tax (GST) regime, Trade Tax Officers played a vital role in collecting indirect revenue on the sale and purchase of goods within a state.",
+      "They act as quasi-judicial authorities while assessing tax liability and as executive officers while preventing tax evasion. Understanding their powers is essential for LLB taxation exams, as these principles still shape GST administration.",
+      "Under state trade tax statutes, the State Government appoints Trade Tax Officers to assist the Commissioner of Trade Tax. While conducting assessment proceedings, the officer functions as a quasi-judicial authority and must follow the principles of natural justice, such as giving the dealer a fair hearing before passing any adverse order.",
+      "Power of Assessment. The officer examines returns filed by dealers and determines the taxable turnover and tax payable. If returns are incomplete or not filed, the officer can make a best judgment assessment based on available material.",
+      "Reassessment of Escaped Turnover. If the officer has reason to believe that any turnover escaped assessment or was under-assessed, they can reopen the assessment within the prescribed limitation period after issuing a valid notice.",
+      "Inspection, Search, and Seizure. To detect tax evasion, the officer can enter business premises, inspect books of account, verify stock, and seize incriminating documents by recording reasons in writing.",
+      "Power to Summon Evidence. Like a civil court under the Code of Civil Procedure, 1908, the officer can summon witnesses, enforce attendance, and compel the production of documents on oath.",
+      "Imposition of Penalties. The officer can impose monetary penalties on dealers for late filing of returns, concealment of turnover, operating without registration, or failing to issue tax invoices.",
+      "Exam tip: Quote exact powers like best judgment assessment and procedural safeguards during search and seizure to score high marks.",
+      "Registration of Dealers. The officer grants, amends, and cancels registration certificates for dealers whose turnover crosses the statutory threshold, ensuring they enter the formal tax net.",
+      "Tax Collection and Recovery. The officer ensures timely deposit of assessed tax, issues demand notices, and initiates recovery proceedings, including attachment of property or recovery as arrears of land revenue.",
+      "Granting Refunds and Exemptions. When excess tax is paid or an assessment is reduced in appeal, the officer processes tax refunds and verifies claims for statutory exemptions and concessions.",
+      "Maintaining Records and Compliance. The officer monitors regular tax returns, maintains dealer assessment files, conducts surveys of new businesses, and assists appellate authorities by defending assessment orders.",
+      "State of Kerala versus C. Velukutty (1966). The Supreme Court held that while making a best judgment assessment, a tax officer cannot act arbitrarily or on mere guesswork. There must be a rational nexus between the material gathered and the estimated turnover.",
+      "Commissioner of Commercial Taxes versus Ramkishan Shrikishan Jhaver (1967). The Supreme Court ruled that a tax officer's power of search and seizure is valid to prevent evasion, provided statutory safeguards like recording reasons and search procedures under criminal law are strictly followed.",
+      "State of U.P. versus Aryaverth Chawal Udyog (2015). The Supreme Court clarified that reassessment of escaped turnover requires tangible material forming a reason to believe. A mere change of opinion on the same facts does not justify reopening a completed assessment.",
+      "The Trade Tax Officer serves as the backbone of state indirect tax administration, balancing revenue protection with taxpayer fairness. While vested with wide powers of assessment, inspection, and penalty, these powers are strictly bounded by statutory safeguards and judicial review. Although replaced by GST officers for most goods today, these core principles remain fundamental to Indian tax law.",
+      "If this helped you, comment NOTES for the free PDF of this answer, and subscribe to The LLB Guide. All the best for your exams!",
+      "Myth: A Trade Tax Officer can guess any random amount during best judgment assessment.",
+      "That's not true.",
+      "The officer cannot act arbitrarily; best judgment assessment must have a rational nexus to actual material and follow natural justice.",
+      "According to Section 7 of the U.P. Trade Tax Act, 1948, and Supreme Court rulings, assessments cannot be arbitrary.",
+      "Save this for your exam, and follow The LLB Guide for a new question every day.",
+      "What must a Trade Tax Officer have before reopening an already completed assessment for escaped turnover?",
+      "A, Mere change of opinion. B, Tangible material for reason to believe. C, Oral complaint from a competitor. D, Permission from the local police.",
+      "The answer is B: Tangible material for reason to believe.",
+      "Under tax law, reassessment requires tangible material forming a reason to believe that turnover escaped tax, not a mere change of opinion.",
+      "Case file: Commissioner of Commercial Taxes versus Ramkishan Shrikishan Jhaver (1967).",
+      "Facts. Tax officers searched a dealer's premises and seized account books under the Madras General Sales Tax Act without following regular search safeguards.",
+      "Issue. Whether a sales tax officer's wide power to search premises and seize documents violates constitutional property and business rights.",
+      "Held. The Supreme Court upheld the power of search, ruling that officers must follow statutory search safeguards and record reasons in writing.",
+      "Tax inspection powers are valid to stop evasion, but officers remain strictly bound by procedural safeguards and fairness.",
+      "How does the old Trade Tax Officer compare to today's GST Proper Officer?",
+      "A Trade Tax Officer taxed intra-state sale of goods, while a GST Proper Officer handles both goods and services.",
+      "Trade tax relied mostly on manual scrutiny, whereas GST officers work through an automated digital portal.",
+      "While Trade Tax Officers conducted state-level surveys, GST officers enforce unified audits and national e-way bill checks."
+    ]
+  }
+}
