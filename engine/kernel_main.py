@@ -76,6 +76,28 @@ if JOB.get("scenes") or JOB.get("save_models"):
         done("setup", t, False)
         sys.exit(1)
 
+# ---- 1a. Weights from the attached dataset: copy them to the local disk ----
+# AIQUEST's Step 1 links files from /kaggle/input. That disk is network-backed and very slow at the random reads the
+# engine does while splitting the DiT across the GPUs (it took ~10 min per block instead of ~1.5 s), so each linked
+# file is copied once to /kaggle/tmp (a sequential read: a few minutes for 43 GB).
+if JOB.get("scenes"):
+    t = stage("1a. Copy the saved models to the local disk")
+    import shutil
+    copied = 0
+    for root in ("/kaggle/tmp/h3_models", "/kaggle/tmp/h3_regen", "/kaggle/tmp/h3_loras"):
+        for dirpath, _, files in os.walk(root):
+            for name in files:
+                path = os.path.join(dirpath, name)
+                if os.path.islink(path) and os.path.realpath(path).startswith("/kaggle/input"):
+                    src = os.path.realpath(path)
+                    os.remove(path)
+                    with open(src, "rb") as fi, open(path + ".part", "wb") as fo:
+                        shutil.copyfileobj(fi, fo, 64 * 1024 * 1024)
+                    os.replace(path + ".part", path)
+                    copied += os.path.getsize(path)
+    print(f"✅ {copied / 1e9:.1f} GB copied in {time.time() - t:.0f}s", flush=True)
+    done("copy_models", t, note=f"{copied / 1e9:.1f} GB")
+
 # ---- 1b. One-time: save the downloaded weights as a private Kaggle dataset (later runs attach it) ----
 if JOB.get("save_models"):
     t = stage("1b. Save models to a private Kaggle dataset")
