@@ -5,10 +5,11 @@ python pipeline/make.py [--week 2026-11-15] [--only long,myth] [--no-upload] [--
 import argparse, datetime, glob, html, json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "render"))
 from common import ROOT, config, log, slug
-from specs import all_specs, add_pops, plain
+from specs import planned_specs, add_pops, plain
 from voice import voice_spec
 from render import render
 import meta, notes, deliver, mail
+import ai_assemble
 
 
 def latest_week():
@@ -39,29 +40,54 @@ def schedule(items, week, cfg):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--week"); ap.add_argument("--only"); ap.add_argument("--no-upload", action="store_true"); ap.add_argument("--no-email", action="store_true")
+    ap.add_argument("--no-ai", action="store_true")
     a = ap.parse_args(); cfg = config(); week = a.week or latest_week(); ch = cfg["channel"]
     out = os.path.join(ROOT, "out", week); os.makedirs(out, exist_ok=True)
+    engine_dir = os.path.join(out, "engine")
+    ai = os.path.isdir(engine_dir) and not a.no_ai          # the Manzi Engine's scenes + Professor voice for this week
+    premade = ai_assemble.premade_voices(engine_dir) if ai else {}
+    if ai: log(f"AI part: {len(premade)} sentences in the Professor's voice + scenes from {os.path.relpath(engine_dir, ROOT)}")
     only = set(a.only.split(",")) if a.only else None
     order = cfg.get("shorts", ["datadrop", "myth", "quiz", "case", "compare", "flow"]); per = int(cfg.get("shorts_per_topic", 4))
     items, files, cache, t_all = [], [], {}, time.time()
     from playwright.sync_api import sync_playwright
     for f, pack in load_packs(week):
-        specs = all_specs(pack, ch)
-        longs = [s for s in specs if s["format"] == "long"]
-        shorts = sorted([s for s in specs if s["format"] == "short"], key=lambda s: order.index(s["template"]) if s["template"] in order else 99)
-        shorts = [s for s in shorts if s["template"] in order][:per]
+        planned = planned_specs(pack, cfg, ch)
+        longs = [s for s in planned if s["format"] == "long"]
+        shorts = [s for s in planned if s["format"] == "short"]
         base = slug(" ".join([plain(pack["topic"]), pack.get("subject", ""), "llb"]), 80)
         for s in longs + shorts:
             if only and s["name"] not in only: continue
             kind = "long" if s["format"] == "long" else s["template"]
             name = base if kind == "long" else slug(plain(s["meta"].get("thumbTitle") or pack["topic"]), 50) + f"-{kind}-shorts"
             log(f"Q{pack['qnum']} {kind}: voice…"); wav = os.path.join(out, name + ".voice.wav")
-            voice_spec(s, cfg, wav, cache); add_pops(s)
+            vcfg = cfg
+            if premade and pack.get("language", "english") != "hindi":   # the Professor's cloned voice (missing sentences: Microsoft voice)
+                vcfg = dict(cfg, voice=dict(cfg["voice"], engine="manzi"))
+                for text, data in premade.items(): cache[("manzi", text)] = (data, [])
+            voice_spec(s, vcfg, wav, cache); add_pops(s)
             log(f"Q{pack['qnum']} {kind}: video ({s['duration']:.0f}s)…")
             mp4, png = os.path.join(out, name + ".mp4"), os.path.join(out, name + "-thumbnail.png")
             render(s, mp4, voice=wav, thumb=png, fps=int(cfg.get("fps", 30)), music=cfg.get("music", True), log=lambda *x: None)
             os.remove(wav)
+            extra_files = []
+            if ai and kind == "long":
+                joined = os.path.join(out, name + ".ai.mp4")
+                added = ai_assemble.assemble_long(mp4, engine_dir, pack["qnum"], joined, fps=int(cfg.get("fps", 30)))
+                if added is not None:
+                    os.replace(joined, mp4)
+                    for b in s["beats"]:                     # chapter times move by the opening scene + Professor start
+                        b["t0"] = round(b.get("t0", 0) + added, 3); b["t1"] = round(b.get("t1", 0) + added, 3)
+                    s["duration"] = ai_assemble.duration(mp4)
+                scene_png = os.path.join(out, name + "-thumbnail-scene.png")
+                if ai_assemble.scene_thumbnail(engine_dir, pack["qnum"], plain(pack["topic"]), scene_png,
+                                               os.path.join(ROOT, "render", "fonts", "Poppins-Bold.ttf")):
+                    extra_files.append(scene_png)
             m = meta.long_meta(pack, s, ch) if kind == "long" else meta.short_meta(pack, s, ch)
+            if ai:
+                m["description"] += "\n\n" + ai_assemble.CREDITS
+                m["ai_disclosure"] = "YES (realistic AI scenes / AI voice)" if kind == "long" else "YES (AI voice)"
+            files += extra_files
             items.append({"kind": kind, "q": pack["qnum"], "file": os.path.basename(mp4), "thumb": os.path.basename(png), "duration": s["duration"], **m})
             files += [mp4, png]
         tg = meta.tags(pack)
@@ -74,7 +100,11 @@ def main():
     for it in items:
         d, tm = it["when"]
         plan_txt += [f"=== {d.strftime('%a %d %b')} {tm} | {it['file']} ===", "TITLE:", it["title"], "", "DESCRIPTION:", it["description"], "",
-                     "TAGS:", it["tags"], "", "PINNED COMMENT:", it["pinned_comment"], "", "THUMBNAIL: " + it["thumb"], "", ""]
+                     "TAGS:", it["tags"], "", "PINNED COMMENT:", it["pinned_comment"], "", "THUMBNAIL: " + it["thumb"]]
+        if it.get("ai_disclosure"):
+            plan_txt += [f"ALSO TRY THUMBNAIL: {it['thumb'].replace('-thumbnail.png', '-thumbnail-scene.png')}" if it["kind"] == "long" else "",
+                         "ALTERED OR SYNTHETIC CONTENT (YouTube Studio → Details): " + it["ai_disclosure"]]
+        plan_txt += ["", ""]
     plan = os.path.join(out, f"publish-plan-{week}.txt"); open(plan, "w", encoding="utf-8").write("\n".join(plan_txt)); files.append(plan)
     log(f"all made in {(time.time() - t_all) / 60:.1f} min")
     where, links = ("(not uploaded)", {})

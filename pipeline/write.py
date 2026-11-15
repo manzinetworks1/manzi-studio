@@ -65,6 +65,7 @@ SCHEMA = S(
                                                                     "rows": ARR(S(label=STR, left=STR, right=STR, say=STR)), "thumb": STR}},
         flow={"type": "OBJECT", "nullable": True, "properties": {"title": STR, "steps": ARR(S(title=STR, sub=STR, say=STR)), "thumb": STR}},
         datadrop_thumb=STR),
+    ai=S(hook=S(place=STR, speaker=STR, listener=STR, line=STR, sound=STR), professor_intro=STR, professor_outro=STR),
     check=ARR(STR))
 
 PROMPT = """You are an expert Indian law teacher who writes exam answers for LLB students, and a YouTube Shorts editor.
@@ -93,6 +94,19 @@ THE SHORTS (each must make sense on its own, without the long video):
 - flow: ONLY if the topic is a procedure with steps (3-6 steps). Otherwise null.
 - "thumb" fields: a 3-7 word thumbnail headline (curiosity, no clickbait lies). "datadrop_thumb" likewise for the topic.
 - "topic": the topic in 3-7 words, topic-first, for the YouTube title (e.g. "Judicial Review of Discretionary Powers").
+
+THE AI SCENES (short, realistic video clips made by an AI video model, in English):
+- hook: a 5-second dramatic scene that opens the long video and shows the topic in real life (usually an Indian courtroom;
+  it can also be a police station, government office, college or home if that fits better). Fictional people only: never
+  a real judge, lawyer, party or case name.
+  - "place": the setting in a few words, e.g. "an Indian High Court courtroom", "a district collector's office".
+  - "speaker": ONE speaking person, clearly Indian, described in about 15 words: role, age, build, hair, clothes, mood.
+  - "listener": the person being spoken to (e.g. "the grey-haired judge"); they are only seen from behind.
+  - "line": what the speaker says: AT MOST 7 WORDS, natural spoken English, no names of real people or cases.
+  - "sound": 6-12 words of background sound (no music).
+- professor_intro: what the Professor (the channel's presenter) says on camera before the answer: AT MOST 12 words,
+  warm and lively, e.g. "Hello students! Today: judicial review, made simple. Let's begin."
+- professor_outro: what he says at the very end: AT MOST 12 words, e.g. "Comment NOTES for the free PDF. See you next time!"
 
 ACCURACY RULES (very important, this is law):
 - Criminal law: use the new laws (Bharatiya Nyaya Sanhita, 2023; Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Sakshya Adhiniyam, 2023) and give the old IPC / CrPC / Evidence Act section in brackets.
@@ -154,7 +168,7 @@ def to_pack(raw, row, lang, cfg, qnum):
     return {"language": lang, "qnum": qnum, "course": cfg.get("course", "LLB"), "subject": row.get("subject") or cfg.get("subject", ""),
             "topic": raw["topic"], "question": row["question"].rstrip(), "marks": row.get("marks", ""), "asked_years": hits,
             "years_range": [str(y) for y in range(last - 5, last + 1)] if hits else [], "long": {"sections": secs}, "shorts": sh,
-            "check": raw.get("check", []), "approved": False}
+            "ai": raw.get("ai"), "check": raw.get("check", []), "approved": False}
 
 
 # ------------------------------------------------------------------ approval email
@@ -178,6 +192,14 @@ def approval_email(cfg, week, packs, files):
             if s.get("points"): parts.append("<ol>" + "".join(f"<li><b>{esc(x['title'])}</b>: {esc(x['text'])}</li>" for x in s["points"]) + "</ol>")
             for c in s.get("cases", []): parts.append(f"<p>?? <i>{esc(c['name'])}</i>: {esc(c['text'])}</p>")
             if s.get("tip"): parts.append(f"<p>?? Tip: {esc(s['tip'])}</p>")
+        ai = p.get("ai") or {}
+        if ai.get("hook"):
+            h = ai["hook"]
+            parts.append("<h4>🎬 AI scenes (made on Kaggle after you approve)</h4><ul>"
+                         f"<li><b>Opening scene:</b> {esc(h['place'])}. {esc(h['speaker'])} says to {esc(h['listener'])}: "
+                         f"<i>“{esc(h['line'])}”</i></li>"
+                         f"<li><b>Professor (start):</b> <i>“{esc(ai.get('professor_intro'))}”</i></li>"
+                         f"<li><b>Professor (end):</b> <i>“{esc(ai.get('professor_outro'))}”</i></li></ul>")
         sh = p["shorts"]; parts.append("<h4>Shorts</h4><ul>")
         if sh.get("myth"): parts.append(f"<li><b>Myth:</b> {esc(sh['myth']['myth'])} ? <b>Law:</b> {esc(sh['myth']['law'])} ({esc(sh['myth']['source'])})</li>")
         if sh.get("quiz"): q = sh["quiz"]; parts.append(f"<li><b>Quiz:</b> {esc(q['question'])} ? <b>{esc(q['options'][int(q['answer'])])}</b>. {esc(q['explain'])}</li>")

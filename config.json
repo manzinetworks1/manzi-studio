@@ -5,7 +5,14 @@
   "language": "english",
   "topics_per_week": 2,
   "shorts_per_topic": 4,
-  "shorts": ["datadrop", "myth", "quiz", "case", "compare", "flow"],
+  "shorts": [
+    "datadrop",
+    "myth",
+    "quiz",
+    "case",
+    "compare",
+    "flow"
+  ],
   "topics_csv_url": "",
   "email_to": "",
   "voice": {
@@ -23,5 +30,14 @@
   "long_time": "18:00",
   "short_time": "13:00",
   "short_time_2": "20:00",
-  "drive_folder_id": ""
+  "drive_folder_id": "",
+  "ai": {
+    "enabled": true,
+    "hook": true,
+    "professor": true,
+    "voice": true,
+    "voice_engine": "qwen3",
+    "voice_speed": 1.0,
+    "_note": "Manzi Engine on Kaggle: opening scene + Professor start/end clips + Professor voice. Set enabled to false to switch it off."
+  }
 }

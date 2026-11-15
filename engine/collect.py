@@ -28,7 +28,20 @@ def main():
     status = sh("kaggle", "kernels", "status", KERNEL, check=False).stdout.lower()
     print(f"Kaggle status: {status.strip()}")
     if "complete" not in status and "error" not in status and "cancel" not in status:
-        print("Still queued or running; try again later.")
+        import calendar
+        waited_h = (time.time() - calendar.timegm(time.strptime(pending["pushed_at"], "%Y-%m-%dT%H:%M:%SZ"))) / 3600
+        week = pending.get("then_make")
+        if week and "queued" in status and waited_h > 4:
+            # Kaggle is too busy: make the week's videos without the AI part so nothing is late
+            print(f"Queued for {waited_h:.1f} h: making week {week} without the AI part")
+            sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", "-f", "no_ai=true", check=False)
+            notify(f"[Manzi Engine] Kaggle was busy: week {week} made without AI scenes",
+                   f"<p>Kaggle kept the job in its queue for {waited_h:.1f} hours, so this week's videos are being made "
+                   f"without the AI scenes and with the usual voice. You'll get the normal <b>videos ready</b> email.</p>")
+            os.remove(PENDING)
+            save_state(f"Manzi Engine: run {pending['run_id']} skipped (Kaggle queue)")
+        else:
+            print(f"Still {('queued' if 'queued' in status else 'running')} after {waited_h:.1f} h; try again later.")
         return
 
     out = "engine_out"
@@ -80,23 +93,35 @@ def main():
     sh("gh", "release", "create", tag, "--title", f"Manzi Engine: {run_id}", "--notes-file", "release_notes.md",
        "--prerelease", *assets)
     print(f"✅ Published {len(assets)} files on release {tag}")
-    try:  # "results ready" email through the existing Manzi Studio mailer
+    url = f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{os.environ.get('GITHUB_REPOSITORY', '')}" \
+          f"/releases/tag/{tag}"
+    week = pending.get("then_make")
+    if week:  # the weekly flow: make the videos now (make.py downloads this release)
+        r = sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", check=False)
+        print("started '2 - Make videos'" if r.returncode == 0 else f"⚠️ could not start '2 - Make videos': {r.stderr}")
+    else:
+        body = "".join(f"<p>{line}</p>" for line in notes if line and not line.startswith("#"))
+        notify(f"[Manzi Engine] Run {run_id} is ready",
+               f"<p><a href='{url}'><b>Open the results</b></a> (videos, voices and the report).</p>{body}")
+    os.remove(PENDING)
+    save_state(f"Manzi Engine: run {run_id} collected ({tag})")
+
+
+def notify(subject, html):
+    try:  # through the existing Manzi Studio mailer
         sys.path.insert(0, "pipeline")
         import common
         import mail
-        url = f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{os.environ.get('GITHUB_REPOSITORY', '')}" \
-              f"/releases/tag/{tag}"
-        body = "".join(f"<p>{line}</p>" for line in notes if line and not line.startswith("#"))
-        mail.send(common.config(), f"[Manzi Engine] Run {run_id} is ready",
-                  f"<p><a href='{url}'><b>Open the results</b></a> (videos, voices and the report).</p>{body}")
+        mail.send(common.config(), subject, html)
     except Exception as e:
         print(f"⚠️ Email not sent: {e}")
 
-    os.remove(PENDING)
+
+def save_state(message):
     sh("git", "config", "user.name", "manzi-studio-bot")
     sh("git", "config", "user.email", "actions@users.noreply.github.com")
     sh("git", "add", "-A", "engine/state", check=False)
-    sh("git", "commit", "-q", "-m", f"Manzi Engine: run {run_id} collected ({tag})", check=False)
+    sh("git", "commit", "-q", "-m", message, check=False)
     sh("git", "pull", "-q", "--rebase", check=False)
     pushed = sh("git", "push", "-q", check=False)
     print("state saved" if pushed.returncode == 0 else f"⚠️ could not save state: {pushed.stderr}")

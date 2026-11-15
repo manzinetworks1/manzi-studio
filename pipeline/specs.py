@@ -142,6 +142,16 @@ def all_specs(pack, channel="The LLB Guide"):
     return res
 
 
+def planned_specs(pack, cfg, channel):
+    """The videos make.py will render for this pack: the long video + the chosen Shorts (same order every time, so the
+    Manzi Engine can prepare the Professor's voice for exactly these sentences)."""
+    order = cfg.get("shorts", ["datadrop", "myth", "quiz", "case", "compare", "flow"]); per = int(cfg.get("shorts_per_topic", 4))
+    specs = all_specs(pack, channel)
+    longs = [s for s in specs if s["format"] == "long"]
+    shorts = sorted([s for s in specs if s["format"] == "short"], key=lambda s: order.index(s["template"]) if s["template"] in order else 99)
+    return longs + [s for s in shorts if s["template"] in order][:per]
+
+
 def estimate_timing(spec, wps=2.5):
     """Without a voice: give each beat a time from its number of words."""
     t = 0.4

@@ -13,9 +13,14 @@ on:
         description: "How long this run waits for Kaggle before handing over to '3b - Collect'"
         default: "120"
         required: true
+      then_make:
+        description: "Week to make videos for when the results are in (set by '2 - Make videos')"
+        default: ""
+        required: false
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: manzi-engine
@@ -80,7 +85,7 @@ jobs:
           fi
           grep -qi "successfully" push.log || { echo "::error::Kaggle did not accept the job (see the lines above)"; exit 1; }
           mkdir -p engine/state
-          printf '{"run_id": "%s", "job": "%s", "pushed_at": "%s"}\n' "$RUN_ID" "${{ inputs.job }}" "$(date -u +%FT%TZ)" > engine/state/pending.json
+          printf '{"run_id": "%s", "job": "%s", "pushed_at": "%s", "then_make": "%s"}\n' "$RUN_ID" "${{ inputs.job }}" "$(date -u +%FT%TZ)" "${{ inputs.then_make }}" > engine/state/pending.json
           git config user.name "manzi-studio-bot"
           git config user.email "actions@users.noreply.github.com"
           git add engine/state/pending.json
