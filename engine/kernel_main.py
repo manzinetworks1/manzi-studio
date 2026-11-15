@@ -117,8 +117,13 @@ if JOB.get("scenes"):
         f.write(ENGINE)
     env = dict(os.environ, MANZI_JOB=job_file, MANZI_OUT=OUT, PYTHONWARNINGS="ignore", TQDM_DISABLE="1",
                PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True")
-    rc = subprocess.call([sys.executable, "-u", "run_manzi.py"], env=env)
-    if rc != 0:
+    limit = int(JOB.get("scene_time_limit_min", 150)) * 60  # a stuck run must not eat the week's GPU hours
+    try:
+        rc = subprocess.call([sys.executable, "-u", "run_manzi.py"], env=env, timeout=limit)
+    except subprocess.TimeoutExpired:
+        rc = "timeout"
+        SUMMARY["errors"].append(f"scene engine stopped after {limit // 60} min (time limit)")
+    if rc not in (0, "timeout"):
         SUMMARY["errors"].append(f"scene engine exit code {rc}")
     done("scenes", t, rc == 0)
 
