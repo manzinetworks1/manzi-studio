@@ -176,22 +176,22 @@ def approval_email(cfg, week, packs, files):
     repo = os.environ.get("GITHUB_REPOSITORY", "your-name/manzi-studio"); gh = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
     run_url = f"{gh}/{repo}/actions/workflows/make.yml"
     esc = lambda s: re.sub(r"\*\*(.+?)\*\*", r"<b style='background:#fff2a8'>\1</b>", (s or "").replace("&", "&amp;").replace("<", "&lt;"))
-    parts = [f"<h2 style='margin:0'>?? {len(packs)} topic{'s' if len(packs) > 1 else ''} ready for your check</h2>",
+    parts = [f"<h2 style='margin:0'>📝 {len(packs)} topic{'s' if len(packs) > 1 else ''} ready for your check</h2>",
              f"<p>Week of {week}. Read the scripts below. If something is wrong, tap <b>Fix</b> under that topic, correct the text and Commit. "
              f"When everything is right, tap the button and then <b>Run workflow</b>.</p>",
-             f"<p><a href='{run_url}' style='background:#1f8a3b;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold'>? Approve and make the videos</a></p>"]
+             f"<p><a href='{run_url}' style='background:#1f8a3b;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:bold'>✅ Approve and make the videos</a></p>"]
     for p, f in zip(packs, files):
         parts.append(f"<hr><h3>Q{p['qnum']}. {esc(p['question'])}</h3><p>{esc(p['subject'])} · {esc(p.get('marks') or '')} marks"
                      f"{' · asked ' + ', '.join(p['asked_years']) if p['asked_years'] else ''}</p>"
-                     f"<p><a href='{gh}/{repo}/edit/main/{f}'>?? Fix this topic</a></p>")
+                     f"<p><a href='{gh}/{repo}/edit/main/{f}'>✏️ Fix this topic</a></p>")
         if p.get("check"):
-            parts.append("<div style='background:#fdecea;padding:10px;border-radius:8px'><b>?? Please double-check:</b><ul>" + "".join(f"<li>{esc(c)}</li>" for c in p["check"]) + "</ul></div>")
+            parts.append("<div style='background:#fdecea;padding:10px;border-radius:8px'><b>⚠️ Please double-check:</b><ul>" + "".join(f"<li>{esc(c)}</li>" for c in p["check"]) + "</ul></div>")
         for s in p["long"]["sections"]:
             parts.append(f"<h4 style='margin-bottom:4px'>{esc(s['heading'])}</h4>")
             for x in s.get("paras", []): parts.append(f"<p>{esc(x)}</p>")
             if s.get("points"): parts.append("<ol>" + "".join(f"<li><b>{esc(x['title'])}</b>: {esc(x['text'])}</li>" for x in s["points"]) + "</ol>")
-            for c in s.get("cases", []): parts.append(f"<p>?? <i>{esc(c['name'])}</i>: {esc(c['text'])}</p>")
-            if s.get("tip"): parts.append(f"<p>?? Tip: {esc(s['tip'])}</p>")
+            for c in s.get("cases", []): parts.append(f"<p>⚖️ <i>{esc(c['name'])}</i>: {esc(c['text'])}</p>")
+            if s.get("tip"): parts.append(f"<p>💡 Tip: {esc(s['tip'])}</p>")
         ai = p.get("ai") or {}
         if ai.get("hook"):
             h = ai["hook"]
@@ -201,13 +201,13 @@ def approval_email(cfg, week, packs, files):
                          f"<li><b>Professor (start):</b> <i>“{esc(ai.get('professor_intro'))}”</i></li>"
                          f"<li><b>Professor (end):</b> <i>“{esc(ai.get('professor_outro'))}”</i></li></ul>")
         sh = p["shorts"]; parts.append("<h4>Shorts</h4><ul>")
-        if sh.get("myth"): parts.append(f"<li><b>Myth:</b> {esc(sh['myth']['myth'])} ? <b>Law:</b> {esc(sh['myth']['law'])} ({esc(sh['myth']['source'])})</li>")
-        if sh.get("quiz"): q = sh["quiz"]; parts.append(f"<li><b>Quiz:</b> {esc(q['question'])} ? <b>{esc(q['options'][int(q['answer'])])}</b>. {esc(q['explain'])}</li>")
+        if sh.get("myth"): parts.append(f"<li><b>Myth:</b> {esc(sh['myth']['myth'])} → <b>Law:</b> {esc(sh['myth']['law'])} ({esc(sh['myth']['source'])})</li>")
+        if sh.get("quiz"): q = sh["quiz"]; parts.append(f"<li><b>Quiz:</b> {esc(q['question'])} → <b>{esc(q['options'][int(q['answer'])])}</b>. {esc(q['explain'])}</li>")
         if sh.get("case"): c = sh["case"]; parts.append(f"<li><b>Case:</b> {esc(c['name'])}: {esc(c['held'])}</li>")
-        if sh.get("compare"): parts.append(f"<li><b>Compare:</b> {esc(sh['compare']['title'])}: " + "; ".join(f"{esc(r['label'])}: {esc(r['left'])} ? {esc(r['right'])}" for r in sh['compare']['rows']) + "</li>")
-        if sh.get("flow"): parts.append(f"<li><b>Steps:</b> " + " ? ".join(esc(s['title']) for s in sh['flow']['steps']) + "</li>")
+        if sh.get("compare"): parts.append(f"<li><b>Compare:</b> {esc(sh['compare']['title'])}: " + "; ".join(f"{esc(r['label'])}: {esc(r['left'])} → {esc(r['right'])}" for r in sh['compare']['rows']) + "</li>")
+        if sh.get("flow"): parts.append(f"<li><b>Steps:</b> " + " → ".join(esc(s['title']) for s in sh['flow']['steps']) + "</li>")
         parts.append("</ul>")
-    parts.append(f"<p><a href='{run_url}'>? Approve and make the videos</a></p>")
+    parts.append(f"<p><a href='{run_url}'>✅ Approve and make the videos</a></p>")
     mail.send(cfg, f"[{cfg['channel']}] Check this week's scripts ({week})", "\n".join(parts))
 
 

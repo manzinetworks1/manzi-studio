@@ -2,7 +2,12 @@ name: 1 - Write scripts
 on:
   schedule:
     - cron: "30 16 * * 0"      # every Sunday at 10:00 pm India time
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      topics:
+        description: "How many topics (leave empty for the usual number)"
+        required: false
+        default: ""
 permissions:
   contents: write
 jobs:
@@ -18,7 +23,7 @@ jobs:
       - run: |
           git config user.name "Manzi Studio"
           git config user.email "manzi-studio@users.noreply.github.com"
-      - run: python pipeline/write.py
+      - run: python pipeline/write.py ${{ github.event.inputs.topics && format('--topics {0}', github.event.inputs.topics) || '' }}
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
