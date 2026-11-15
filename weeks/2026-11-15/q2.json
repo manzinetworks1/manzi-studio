@@ -1,0 +1,161 @@
+{
+  "language": "english",
+  "qnum": 5,
+  "course": "LLB Semester 5",
+  "subject": "Law of Torts",
+  "topic": "Negligence in Tort Law: Essentials & Cases",
+  "question": "What is negligence? Explain its essentials with the help of decided cases.",
+  "marks": "15",
+  "asked_years": [],
+  "years_range": [],
+  "long": {
+    "sections": [
+      {
+        "heading": "Introduction",
+        "paras": [
+          "In everyday life, everyone must act with reasonable care so others are not harmed. Under the **Law of Torts**, **negligence** is a civil wrong that arises when a person fails to take such care. Unlike intentional torts like assault or battery, negligence does not require any bad intention. Simple carelessness that causes injury to another person is enough to create **legal liability**.",
+          "Indian courts apply English common law principles of negligence in tort cases, as there is no separate codified Tort Act in India. From road accidents to medical mistakes, **tortious negligence** protects citizens by providing **unliquidated damages** as compensation to the injured victim."
+        ]
+      },
+      {
+        "heading": "Meaning and Definition",
+        "paras": [
+          "The word negligence means **carelessness** or failure to do what a reasonable person would do. According to **Winfield**, negligence as a tort is the breach of a **legal duty to take care** which results in undesired damage to the plaintiff. It is judged objectively by comparing the defendant's conduct with that of an ordinary prudent person in similar circumstances.",
+          "In **Blyth v. Birmingham Waterworks Co. (1856)**, Baron Alderson defined negligence as the omission to do something which a **reasonable man** would do, or doing something which a prudent and reasonable man would not do. Thus, negligence has two forms: a careless act or a careless **omission**."
+        ]
+      },
+      {
+        "heading": "Essentials of Negligence",
+        "points": [
+          {
+            "title": "Duty of Care to Plaintiff",
+            "text": "The plaintiff must prove the defendant owed a **legal duty of care**, not merely a moral duty. Under the **neighbour principle**, you must take reasonable care to avoid acts or omissions you can foresee would likely injure your neighbour."
+          },
+          {
+            "title": "Breach of Legal Duty",
+            "text": "Once a duty exists, the plaintiff must show the defendant **breached** it by failing to meet the **standard of care** expected of a reasonable person. Higher risk requires a higher degree of care from the defendant."
+          },
+          {
+            "title": "Actual Damage or Injury",
+            "text": "Negligence is not actionable per se without proof of harm. The plaintiff must suffer **actual damage**, such as physical injury, property loss, or **nervous shock**, for the court to award compensation."
+          },
+          {
+            "title": "Causation and Remoteness",
+            "text": "There must be a direct link between the defendant's breach and the injury suffered. Using the **but-for test**, the harm must be the **proximate cause** and not too remote a consequence of the careless act."
+          },
+          {
+            "title": "Burden of Proof and Res Ipsa Loquitur",
+            "text": "Generally, the **burden of proof** lies on the plaintiff. However, under **res ipsa loquitur** (the thing speaks for itself), when an accident clearly implies carelessness under the defendant's control, negligence is presumed."
+          }
+        ],
+        "tip": "Write all four core essentials as bold headings, draw a quick flowchart, and mention the Latin maxim res ipsa loquitur for extra marks."
+      },
+      {
+        "heading": "Leading Decided Cases",
+        "cases": [
+          {
+            "name": "Donoghue v. Stevenson (1932) [House of Lords]",
+            "text": "A woman fell ill after drinking ginger beer containing a decomposed snail. The House of Lords held the manufacturer liable despite no contract, establishing the **neighbour principle** and modern **duty of care**."
+          },
+          {
+            "name": "Municipal Corporation of Delhi v. Subhagwanti (1966) [Supreme Court]",
+            "text": "An 80-year-old clock tower in Chandni Chowk collapsed, killing three people. The Supreme Court applied **res ipsa loquitur**, holding the municipal corporation liable for **breach of duty** to maintain the structure safely."
+          },
+          {
+            "name": "Jacob Mathew v. State of Punjab (2005) [Supreme Court]",
+            "text": "The Supreme Court clarified **professional negligence** for doctors, holding that a medical practitioner is liable only when they lack ordinary skill or fail to exercise **reasonable competence** expected in that profession."
+          }
+        ]
+      },
+      {
+        "heading": "Conclusion",
+        "paras": [
+          "To conclude, **negligence** under the Law of Torts balances personal freedom with social responsibility. Liability arises only when **duty of care**, **breach of duty**, causation, and actual damage are all proved together. Through landmark precedents, Indian courts have made negligence an effective remedy to compensate victims of careless conduct."
+        ]
+      }
+    ]
+  },
+  "shorts": {
+    "myth": {
+      "myth": "Careless driving or medical mistakes are only civil matters and can never land you in jail.",
+      "law": "While **civil negligence** brings compensation, **rash or negligent** acts causing death are punishable crimes with imprisonment.",
+      "source": "Section 106, Bharatiya Nyaya Sanhita, 2023 (earlier Section 304A, IPC); Law of Torts",
+      "source_say": "Section 106 of the Bharatiya Nyaya Sanhita, 2023, which replaced Section 304A of the IPC.",
+      "thumb": "Can Negligence Send You To Jail?"
+    },
+    "quiz": {
+      "question": "What does the Latin maxim 'res ipsa loquitur' mean in the law of negligence?",
+      "options": [
+        "Let the buyer beware",
+        "The thing speaks for itself",
+        "No one is above the law",
+        "Damage without legal injury"
+      ],
+      "answer": 1,
+      "explain": "It means the accident itself proves **negligence** because it would not normally happen without carelessness under the defendant's control.",
+      "thumb": "Test Your Tort Law Basics!"
+    },
+    "case": {
+      "name": "Donoghue v. Stevenson (1932) [House of Lords]",
+      "facts": "A woman drank ginger beer from an opaque bottle bought by her friend and found a dead snail inside, causing shock and illness.",
+      "issue": "Did the manufacturer owe a legal duty of care to the ultimate consumer even without a direct contract between them?",
+      "held": "Yes. The House of Lords held the manufacturer **liable for negligence** even though there was **no contract** with the consumer.",
+      "principle": "Established the **neighbour principle**: take reasonable care to avoid acts you can **reasonably foresee** would injure people closely affected.",
+      "thumb": "The Snail That Changed Tort Law"
+    },
+    "compare": {
+      "left": {
+        "name": "Civil Negligence",
+        "sub": "Law of Torts"
+      },
+      "right": {
+        "name": "Criminal Negligence",
+        "sub": "Section 106 BNS (304A IPC)"
+      },
+      "rows": [
+        {
+          "label": "Degree of Carelessness",
+          "left": "Simple failure to take reasonable care",
+          "right": "Gross and reckless disregard for life",
+          "say": "Civil negligence needs only ordinary carelessness, while criminal negligence requires gross recklessness."
+        },
+        {
+          "label": "Main Purpose",
+          "left": "Compensate the victim with damages",
+          "right": "Punish the offender with jail or fine",
+          "say": "Tort law aims to compensate the victim, whereas criminal law punishes the offender."
+        },
+        {
+          "label": "Burden of Proof",
+          "left": "Balance of probabilities",
+          "right": "Beyond reasonable doubt",
+          "say": "Civil cases are proved on balance of probabilities, while criminal cases require proof beyond reasonable doubt."
+        }
+      ],
+      "thumb": "Civil vs Criminal Negligence Explained",
+      "title": "Civil vs Criminal Negligence",
+      "title_say": "How is civil negligence in tort different from criminal negligence?"
+    },
+    "datadrop": {
+      "thumb": "4 Essentials of Negligence Explained"
+    }
+  },
+  "ai": {
+    "hook": {
+      "place": "a busy Indian district court corridor outside a courtroom",
+      "speaker": "An anxious middle-aged Indian shopkeeper, thin build, greying hair, wearing a crumpled white shirt, pleading.",
+      "listener": "a young woman advocate holding a thick black case file",
+      "line": "Ma'am, I never meant to hurt anyone!",
+      "sound": "distant courtroom chatter, footsteps on marble floor, rustling paper files"
+    },
+    "professor_intro": "Hello students! Today: negligence in tort law, made simple. Let's begin!",
+    "professor_outro": "Comment NOTES for the free PDF. See you next time!"
+  },
+  "check": [
+    "Blyth v. Birmingham Waterworks Co. (1856) - verify year and Baron Alderson quote paraphrase",
+    "Municipal Corporation of Delhi v. Subhagwanti (1966) - verify exact age of clock tower (80 years) and number of deaths (3) in Chandni Chowk",
+    "Jacob Mathew v. State of Punjab (2005) - verify year and note that it primarily involved Section 304A IPC while laying down general principles of medical negligence",
+    "Section 106 of Bharatiya Nyaya Sanhita, 2023 (causing death by negligence, replacing Section 304A IPC) - verify exact section number"
+  ],
+  "approved": false
+}
