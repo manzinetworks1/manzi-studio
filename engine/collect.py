@@ -31,7 +31,7 @@ def main():
         import calendar
         waited_h = (time.time() - calendar.timegm(time.strptime(pending["pushed_at"], "%Y-%m-%dT%H:%M:%SZ"))) / 3600
         week = pending.get("then_make")
-        if week and "queued" in status and waited_h > 4:
+        if week and not week.startswith("landmark:") and "queued" in status and waited_h > 4:
             # Kaggle is too busy: make the week's videos without the AI part so nothing is late
             print(f"Queued for {waited_h:.1f} h: making week {week} without the AI part")
             sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", "-f", "no_ai=true", check=False)
@@ -103,7 +103,11 @@ def main():
     url = f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{os.environ.get('GITHUB_REPOSITORY', '')}" \
           f"/releases/tag/{tag}"
     week = pending.get("then_make")
-    if week:  # the weekly flow: make the videos now (make.py downloads this release)
+    if week and week.startswith("landmark:"):  # a landmark case: make its video now (it downloads this release)
+        case = week.split(":", 1)[1]
+        r = sh("gh", "workflow", "run", "landmark_make.yml", "-f", f"case={case}", check=False)
+        print("started 'L2 - Make landmark video'" if r.returncode == 0 else f"⚠️ could not start 'L2': {r.stderr}")
+    elif week:  # the weekly flow: make the videos now (make.py downloads this release)
         r = sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", check=False)
         print("started '2 - Make videos'" if r.returncode == 0 else f"⚠️ could not start '2 - Make videos': {r.stderr}")
     else:
