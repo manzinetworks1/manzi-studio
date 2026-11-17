@@ -1,0 +1,578 @@
+{
+  "slug": "maneka-gandhi-v-union-of-india-1978",
+  "language": "english",
+  "case": "Maneka Gandhi v. Union of India",
+  "citation": "AIR 1978 SC 597; (1978) 1 SCC 248; 1978 SCR (2) 621",
+  "year": 1978,
+  "court": "Supreme Court of India",
+  "bench": "7 judges",
+  "subject": "Constitutional Law",
+  "topic": "Article 21 and fair procedure",
+  "principle": "A law that takes away personal liberty must lay down a procedure that is just, fair and reasonable.",
+  "look": "Warm 1970s Indian film look, muted earthy colours, soft natural window light, 35mm lens, gentle film grain, calm and serious documentary mood.",
+  "cast": [
+    {
+      "id": "petitioner",
+      "label": "the petitioner",
+      "look": "Indian woman in her early twenties, slim, oval face, long black hair in a low bun, plain light-blue cotton saree, small round bindi, determined eyes"
+    },
+    {
+      "id": "officer",
+      "label": "the passport officer",
+      "look": "Indian man in his late forties, stocky, thick black moustache, oiled side-parted hair, grey half-sleeve bush shirt, black-rimmed spectacles"
+    },
+    {
+      "id": "lawyer",
+      "label": "the petitioner's lawyer",
+      "look": "Indian man in his sixties, tall and thin, neat white hair, clean-shaven, gold-rimmed glasses, black coat, white bands and black gown"
+    },
+    {
+      "id": "govt_counsel",
+      "label": "the government's counsel",
+      "look": "Indian man in his fifties, heavy build, balding with grey sides, short grey beard, black coat, white bands and black gown"
+    },
+    {
+      "id": "judge",
+      "label": "a senior judge",
+      "look": "Indian man in his sixties, broad face, thick grey hair combed back, bushy eyebrows, black judge's robe with white bands"
+    }
+  ],
+  "beats": [
+    {
+      "type": "professor",
+      "id": "p_intro",
+      "chapter": "Introduction",
+      "line": "One passport changed the meaning of Article 21 forever.",
+      "narration": []
+    },
+    {
+      "type": "scene",
+      "id": "s01",
+      "chapter": "The passport",
+      "narration": [
+        "Delhi, July 1977. A young journalist opens a letter from the Regional Passport Office.",
+        "The Government of India has decided to impound her passport. She must surrender it within seven days.",
+        "It is the summer after the Emergency, and many people are still wary of unchecked government power."
+      ],
+      "scene": "Morning in a modest Delhi flat in 1977, soft light through a window with cotton curtains. Slow push-in on the petitioner standing beside a wooden dining table as she tears open an official brown envelope and reads the typed letter inside, her expression turning from calm to worried. A ceiling fan turns above.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Ceiling fan whirring, distant scooters and street hawkers",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c01",
+      "chapter": "The passport",
+      "narration": [
+        "This is the story of Maneka Gandhi versus Union of India.",
+        "It is the case that changed the meaning of Article 21, and every LLB student must know it."
+      ],
+      "card": {
+        "style": "title",
+        "heading": "Maneka Gandhi v. Union of India",
+        "sub": "1978 · Supreme Court of India",
+        "items": [
+          {
+            "label": "Bench",
+            "text": "7 judges"
+          },
+          {
+            "label": "Decided",
+            "text": "25 January 1978"
+          },
+          {
+            "label": "Key Article",
+            "text": "Article 21"
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s02",
+      "chapter": "The passport",
+      "narration": [
+        "The letter gives only one reason: the public interest.",
+        "No facts, no explanation, and no chance to say a single word in her defence."
+      ],
+      "scene": "The same flat a moment later. Medium close-up of the petitioner lowering the letter and looking out of the window, thinking hard, morning light on her face. She folds the letter slowly. Static camera.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Ceiling fan, a pressure cooker whistle far away",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s03",
+      "chapter": "The passport",
+      "narration": [
+        "So she writes back and asks a simple question. Why?"
+      ],
+      "scene": "The same room. The petitioner sits down at the wooden table, pulls a sheet of paper towards her and starts writing with a fountain pen, her jaw set firmly. Close-up from the side, warm window light.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Fountain pen scratching on paper, ceiling fan",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s04",
+      "chapter": "The passport",
+      "narration": [
+        "The government replies that it will not give reasons.",
+        "Once again, it says that keeping the reasons secret is in the interest of the general public.",
+        "She is left with no reasons, no hearing, and no passport."
+      ],
+      "scene": "A crowded 1970s Indian government office with tall steel cupboards and stacks of files tied with red tape. The passport officer sits at a wooden desk, reads a handwritten letter, then closes the file and puts it on a pile. Medium shot, tube light and daylight.",
+      "cast": [
+        "officer"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Typewriters clacking, ceiling fans, low office chatter",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c02",
+      "chapter": "The law",
+      "narration": [
+        "The order was made under Section 10(3)(c) of the Passports Act, 1967.",
+        "It allows a passport to be impounded in the interests of the general public.",
+        "And under Section 10(5), the government could refuse to give reasons, on the same ground."
+      ],
+      "card": {
+        "style": "law",
+        "heading": "Passports Act, 1967 · Section 10(3)(c)",
+        "sub": "The power used against her",
+        "items": [
+          {
+            "label": "Impound",
+            "text": "The authority may impound a passport if it thinks it necessary, among other grounds, **in the interests of the general public**."
+          },
+          {
+            "label": "Reasons",
+            "text": "Under **Section 10(5)** reasons must be recorded, but they can be refused in the same interests."
+          },
+          {
+            "label": "Hearing",
+            "text": "The Act said **nothing about hearing the passport holder** first."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s05",
+      "chapter": "To the Supreme Court",
+      "narration": [
+        "She files a writ petition directly in the Supreme Court, under Article 32 of the Constitution.",
+        "Her argument is powerful. She was never heard, never told why, and her liberty was taken by an unfair procedure.",
+        "She also challenges Section 10(3)(c) itself, saying it gives the government vague and unguided power.",
+        "And she says it hits her freedom of speech and her right to practise her profession, under Article 19."
+      ],
+      "scene": "A lawyer's chamber in Delhi lined with old law books on wooden shelves. The petitioner sits across a desk from the petitioner's lawyer, who turns the pages of a thick bound volume and nods slowly. Warm lamp light, static medium shot.",
+      "cast": [
+        "petitioner",
+        "lawyer"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Pages turning, a wall clock ticking",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s06",
+      "chapter": "The old law",
+      "narration": [
+        "To see why this mattered, go back to 1950 and A.K. Gopalan versus State of Madras.",
+        "There, the Court read Article 21 narrowly. Any procedure written in a valid law was enough, even if it was unfair.",
+        "Each fundamental right was treated like a separate box, never read together.",
+        "So, under Gopalan, if a law existed, the Court would not ask whether its procedure was fair."
+      ],
+      "scene": "Flashback to 1950, faded sepia colours. A wide shot of an old Indian courtroom with high ceilings and wooden benches; an Indian man in his forties in a white khadi kurta and dhoti stands in the dock, head bowed, while lawyers in black gowns sit in front. Slow push-in.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Old ceiling fans, quiet murmur, a gavel tap far away",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c03",
+      "chapter": "The old law",
+      "narration": [
+        "Then the law began to change.",
+        "In 1967, Satwant Singh Sawhney held that the right to travel abroad is part of personal liberty.",
+        "In 1970, the R.C. Cooper case rejected the idea that fundamental rights live in separate boxes."
+      ],
+      "card": {
+        "style": "timeline",
+        "heading": "The road to Maneka Gandhi",
+        "items": [
+          {
+            "label": "1950",
+            "text": "A.K. Gopalan: narrow Article 21"
+          },
+          {
+            "label": "1967",
+            "text": "Satwant Singh: travel abroad is liberty"
+          },
+          {
+            "label": "1970",
+            "text": "R.C. Cooper: rights are not boxes"
+          },
+          {
+            "label": "1978",
+            "text": "Maneka Gandhi: fair procedure"
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s07",
+      "chapter": "The hearing",
+      "narration": [
+        "Her petition reaches a bench of seven judges of the Supreme Court."
+      ],
+      "scene": "Wide exterior shot of a grand Indian court building with a domed roof and red sandstone and cream walls, on a clear winter morning in the late 1970s. Lawyers in black gowns walk up the wide steps; old Ambassador cars are parked in front. Slow push-in.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Birds, car doors, footsteps on stone steps",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s08",
+      "chapter": "The hearing",
+      "narration": [
+        "The question before them sounds simple, but it is huge.",
+        "Is any procedure enough to take away a person's liberty, or must the procedure itself be fair?",
+        "If the answer was any procedure, then Parliament could take away liberty by any method it liked.",
+        "That is why this case still matters to every citizen."
+      ],
+      "scene": "Inside a large wood-panelled Indian courtroom, filmed from the back of the room. Seven judges in black robes sit behind a high wooden bench in the distance, faces small and unrecognisable; lawyers in black gowns fill the front rows. Static wide shot, daylight from tall windows.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Courtroom murmur, ceiling fans, papers rustling",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s09",
+      "chapter": "The hearing",
+      "narration": [
+        "Her lawyers argued that the order broke Articles 14, 19 and 21.",
+        "It also broke a basic rule of natural justice: no one should be condemned unheard."
+      ],
+      "scene": "Courtroom drama close-up inside a wood-panelled Indian courtroom in daylight, filmed from just behind a judge's shoulder: at the far left edge of the frame, out of focus, the back of the judge's grey head and black robe. In sharp focus, the petitioner's lawyer, framed from the chest up so his face fills about half of the frame height, looks up at the judge, towards the camera.",
+      "cast": [
+        "lawyer"
+      ],
+      "speaker": "lawyer",
+      "dialogue": "My Lords, she was never even heard.",
+      "sound": "Quiet courtroom murmur, a ceiling fan turning",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s10",
+      "chapter": "The hearing",
+      "narration": [
+        "The government replied that the Passports Act was a valid law with its own procedure.",
+        "Under the old reading of Article 21, it said, that was enough.",
+        "It also argued that a hearing before impounding could defeat the purpose, because the person might simply leave the country."
+      ],
+      "scene": "Courtroom drama close-up inside the same wood-panelled courtroom, filmed from just behind a judge's shoulder: at the far right edge of the frame, out of focus, the back of the judge's head and black robe. In sharp focus, the government's counsel, framed from the chest up so his face fills about half of the frame height, looks up at the judge, towards the camera, calm and confident.",
+      "cast": [
+        "govt_counsel"
+      ],
+      "speaker": "govt_counsel",
+      "dialogue": "The Act lays down the procedure, My Lords.",
+      "sound": "Quiet courtroom murmur, papers rustling",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s11",
+      "chapter": "The judgment",
+      "narration": [
+        "On 25 January 1978, the Court gave its answer.",
+        "Justice P.N. Bhagwati wrote the leading opinion, and it changed constitutional law in India.",
+        "Several judges wrote their own opinions, but the majority agreed on this central idea."
+      ],
+      "scene": "A quiet judge's chamber at night lined with law reports. A senior judge sits at a large desk under a green desk lamp, reading a thick bound volume, then takes off his glasses and looks up thoughtfully. Close-up, warm lamp light, slow push-in.",
+      "cast": [
+        "judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "A clock ticking, pages turning, crickets outside",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c04",
+      "chapter": "The judgment",
+      "narration": [
+        "The procedure under Article 21 cannot be just any procedure.",
+        "It must be right and just and fair, and not arbitrary, fanciful or oppressive.",
+        "In other words, the words procedure established by law now carry a promise of fairness."
+      ],
+      "card": {
+        "style": "quote",
+        "heading": "Right and just and fair",
+        "sub": "Justice P.N. Bhagwati, on the procedure under Article 21",
+        "items": []
+      }
+    },
+    {
+      "type": "card",
+      "id": "c05",
+      "chapter": "The judgment",
+      "narration": [
+        "The Court also said that Articles 14, 19 and 21 are not separate boxes.",
+        "A law that takes away personal liberty must pass the test of all three.",
+        "Students often call this the golden triangle of the Constitution.",
+        "So if a law fails the test of Article 14 because it is arbitrary, it cannot be a valid procedure under Article 21 either."
+      ],
+      "card": {
+        "style": "triangle",
+        "heading": "Articles 14, 19 and 21 work together",
+        "items": [
+          {
+            "label": "Article 14",
+            "text": "No arbitrariness"
+          },
+          {
+            "label": "Article 19",
+            "text": "Reasonable restrictions"
+          },
+          {
+            "label": "Article 21",
+            "text": "Fair procedure"
+          }
+        ]
+      }
+    },
+    {
+      "type": "card",
+      "id": "c06",
+      "chapter": "The judgment",
+      "narration": [
+        "So, four holdings to remember.",
+        "Personal liberty is wide. Procedure must be fair. The rights are read together.",
+        "And natural justice applies: if an order is urgent, the hearing can come soon after it.",
+        "The Court also said that the authority must give reasons, unless there is a genuine and serious reason not to."
+      ],
+      "card": {
+        "style": "holding",
+        "heading": "What the Court held",
+        "items": [
+          {
+            "label": "Wide liberty",
+            "text": "**Personal liberty** in Article 21 is wide and includes the right to go abroad."
+          },
+          {
+            "label": "Fair procedure",
+            "text": "The procedure must be **just, fair and reasonable**."
+          },
+          {
+            "label": "Read together",
+            "text": "Articles **14, 19 and 21** are read together."
+          },
+          {
+            "label": "Natural justice",
+            "text": "A **hearing** is part of fair procedure, even if given soon after an urgent order."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s12",
+      "chapter": "The outcome",
+      "narration": [
+        "And the passport itself? The Attorney General told the Court that she would be given a hearing quickly.",
+        "So the majority did not quash the order. The passport stayed with the authorities until that hearing."
+      ],
+      "scene": "The wood-panelled courtroom in daylight, medium wide shot from the side. The government's counsel rises from the front row, bows slightly towards the bench, places a typed paper on the table and sits down again. Lawyers around him watch quietly.",
+      "cast": [
+        "govt_counsel"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Chairs creaking, papers, quiet courtroom murmur",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s13",
+      "chapter": "The outcome",
+      "narration": [
+        "It was not an instant win for her.",
+        "But it was a huge win for every Indian, because Article 21 now protected against unfair procedure.",
+        "Courts across India still rely on this judgment today."
+      ],
+      "scene": "Bright winter afternoon outside a grand Indian court building. The petitioner walks down the wide stone steps beside the petitioner's lawyer, holding a cloth bag, and pauses to look up at the sky with a quiet, hopeful smile. Medium tracking shot, warm sunlight.",
+      "cast": [
+        "petitioner",
+        "lawyer"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Birds, distant traffic, footsteps on stone",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s14",
+      "chapter": "What changed",
+      "narration": [
+        "This judgment opened the door for Article 21 to grow.",
+        "Olga Tellis in 1985 linked it to livelihood, and D.K. Basu in 1997 gave safeguards on arrest.",
+        "In 2017, Puttaswamy held that privacy is a fundamental right, again building on this idea.",
+        "That is why Maneka Gandhi is often called the case that brought Article 21 alive."
+      ],
+      "scene": "Early morning on a busy Indian city pavement in the 1980s: families in simple clothes fold bedding beside small roadside shelters while workers walk past with tiffin boxes, and a bus passes in the background. Wide shot, golden low sunlight, slow pan.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "City morning bustle, bus engine, bicycle bells",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s15",
+      "chapter": "Exam recap",
+      "narration": [
+        "Today, almost every answer on Article 21 starts with this case.",
+        "So here is your quick exam recap."
+      ],
+      "scene": "A modern Indian law college library in daylight. A young Indian woman law student in her twenties, with short wavy hair, a mustard kurta and a denim jacket, sits at a long table and turns the pages of a constitutional law textbook, then underlines a line with a pencil. Close-up, soft daylight, shallow focus.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Quiet library, pages turning, soft air conditioning",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c07",
+      "chapter": "Exam recap",
+      "narration": [
+        "Facts: her passport was impounded under Section 10(3)(c), with no reasons and no hearing.",
+        "Issue: is any procedure enough under Article 21?",
+        "Held: the procedure must be just, fair and reasonable, and Articles 14, 19 and 21 are read together.",
+        "Write the citation, AIR 1978 Supreme Court 597, and mention that the narrow Gopalan view was left behind."
+      ],
+      "card": {
+        "style": "exam",
+        "heading": "Exam recap",
+        "items": [
+          {
+            "label": "Facts",
+            "text": "Passport impounded in 1977 under **Section 10(3)(c)**, no reasons, no hearing."
+          },
+          {
+            "label": "Issue",
+            "text": "Is **any procedure** enough under Article 21?"
+          },
+          {
+            "label": "Held",
+            "text": "Procedure must be **just, fair and reasonable**."
+          },
+          {
+            "label": "Principle",
+            "text": "Articles **14, 19 and 21** are read together."
+          },
+          {
+            "label": "Overruled",
+            "text": "The narrow view of **A.K. Gopalan** (1950)."
+          },
+          {
+            "label": "Citation",
+            "text": "**AIR 1978 SC 597**; (1978) 1 SCC 248."
+          }
+        ]
+      }
+    },
+    {
+      "type": "professor",
+      "id": "p_outro",
+      "chapter": "Recap",
+      "line": "Comment the next landmark case you want. See you next time!",
+      "narration": []
+    }
+  ],
+  "thumbnail": {
+    "scene": "s02",
+    "text": "One passport changed Article 21"
+  },
+  "shorts": [
+    {
+      "title": "The passport that changed Article 21",
+      "start": "s01",
+      "end": "s03"
+    },
+    {
+      "title": "Right, just and fair: Article 21's big test",
+      "start": "c04",
+      "end": "c05"
+    },
+    {
+      "title": "Maneka Gandhi case in 60 seconds",
+      "start": "s15",
+      "end": "c07"
+    }
+  ],
+  "title": "Maneka Gandhi v. Union of India (1978) | Article 21 Explained | Landmark Case",
+  "summary": "In 1977 a passport was impounded with no reasons and no hearing. The Supreme Court's answer in Maneka Gandhi v. Union of India made fair procedure the heart of Article 21 and tied Articles 14, 19 and 21 together.",
+  "tags": [
+    "maneka gandhi case",
+    "maneka gandhi v union of india",
+    "article 21",
+    "article 21 explained",
+    "landmark judgments",
+    "landmark cases india",
+    "constitutional law",
+    "constitutional law llb",
+    "golden triangle article 14 19 21",
+    "procedure established by law",
+    "ak gopalan case",
+    "right to life and personal liberty",
+    "llb",
+    "law students",
+    "judiciary exam",
+    "upsc polity"
+  ],
+  "pinned_comment": "Which landmark case should we turn into a story next? Comment below!",
+  "check": [
+    "Letter dated 2 July 1977, received 4 July 1977; surrender within 7 days",
+    "Government refused reasons under Section 10(5), 'in the interest of the general public'",
+    "Writ petition under Article 32 (W.P. No. 231 of 1977)",
+    "Judgment 25 January 1978; leading opinion by Justice P.N. Bhagwati",
+    "Quote card: 'right and just and fair' and 'not arbitrary, fanciful or oppressive' (Bhagwati J.)",
+    "Outcome: on the Attorney General's statement that a hearing would be given, the majority did not quash the order (Beg CJ and Kailasam J wrote separately)",
+    "Satwant Singh Sawhney (1967) and R.C. Cooper (1970) in the timeline",
+    "'Golden triangle' is a commentators' name, not the Court's words in this case",
+    "Our narration calls the petitioner a 'young journalist' (she worked as a journalist then)",
+    "Narration: reasons may be withheld only in rare cases (Bhagwati J's view on Section 10(5))"
+  ],
+  "approved": true,
+  "written_by": "Claude (chat), approved by Manzi 18 Nov 2026"
+}
