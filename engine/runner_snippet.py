@@ -54,8 +54,9 @@ def _mz_run_job():
         _rec = {"id": _sid, "kind": _sc.get("kind", "scene")}
         try:
             _start = None
-            if _sc.get("start_image"):
+            if _sc.get("start_image") in _MZ_FRAMES:  # (if that scene failed, this one starts from the text alone)
                 _start = _MzImage.open(_MZ_FRAMES[_sc["start_image"]]).convert("RGB")
+                _rec["start_image"] = _sc["start_image"]
             _lora, _ls = NO_LORA, 1.0
             if _sc.get("lora"):  # e.g. "Natural Face" -> AIQUEST's catalog entry (strength from the catalog unless given)
                 _lora = next((k for k in LORA_CATALOG if _sc["lora"].lower() in k.lower()), NO_LORA)
@@ -107,7 +108,10 @@ def _mz_run_job():
             _rec["preview_s"] = round(time.time() - _t0)
             if _sc.get("save_frame"):
                 _fp = os.path.join(_MZ_OUT, f"{_sid}_frame.png")
-                _mz_ffmpeg("-ss", str(_sc.get("frame_time", 0.0)), "-i", _dst, "-frames:v", "1", _fp)
+                if str(_sc.get("frame_time", "")) == "end":  # last frame: the next scene can start from it
+                    _mz_ffmpeg("-sseof", "-0.2", "-i", _dst, "-update", "1", "-frames:v", "1", _fp)
+                else:
+                    _mz_ffmpeg("-ss", str(_sc.get("frame_time", 0.0)), "-i", _dst, "-frames:v", "1", _fp)
                 _MZ_FRAMES[_sid] = _fp
                 _rec["frame"] = os.path.basename(_fp)
             if _sc.get("save_audio"):

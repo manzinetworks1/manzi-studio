@@ -1,0 +1,67 @@
+name: L2 - Make landmark video
+# Landmark Cases series: after you approve the storyboard. Sends the AI scenes + narration to Kaggle, and when they
+# are back (started again by '3b - Collect'), builds the long video, Shorts, thumbnails and posting plan.
+on:
+  workflow_dispatch:
+    inputs:
+      case:
+        description: "Case code (from the storyboard email). Leave empty for the newest storyboard"
+        required: false
+        default: ""
+permissions:
+  contents: write
+  actions: write
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Which case
+        id: case
+        run: |
+          C="${{ github.event.inputs.case }}"
+          [ -z "$C" ] && C=$(python3 -c "import json;print(json.load(open('landmark/latest.json'))['latest'])")
+          echo "case=$C" >> "$GITHUB_OUTPUT"; echo "Case: $C"
+      - run: pip install -r requirements.txt
+      - name: AI scenes and Professor voice (Manzi Engine on Kaggle)
+        id: ai
+        run: |
+          git config user.name "Manzi Studio"; git config user.email "manzi-studio@users.noreply.github.com"
+          python landmark/job.py --case "${{ steps.case.outputs.case }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tell me the AI part is on its way
+        if: steps.ai.outputs.ai == 'sent' || steps.ai.outputs.ai == 'waiting'
+        run: python landmark/mail_started.py "${{ steps.case.outputs.case }}" "${{ steps.ai.outputs.ai }}"
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      - name: Install the video tools
+        if: steps.ai.outputs.ai == 'ready'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji
+          python -m playwright install --with-deps chromium
+      - name: Make the video
+        if: steps.ai.outputs.ai == 'ready'
+        run: python landmark/make.py --case "${{ steps.case.outputs.case }}"
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
+          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tell me if something went wrong
+        if: failure()
+        run: |
+          python -c "import sys; sys.path.insert(0,'pipeline'); import mail, common; mail.send(common.config(), '[Manzi Studio] Something went wrong', '<p>The job <b>${{ github.workflow }}</b> failed. Open <a href=\"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\">this run</a>, tap the red step and send Claude a screenshot.</p>')"
+        env:
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}

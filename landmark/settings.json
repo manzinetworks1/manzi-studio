@@ -1,0 +1,13 @@
+{
+  "minutes": 8,
+  "scenes_min": 14,
+  "scenes_max": 18,
+  "languages": ["english"],
+  "scene_output": "720p",
+  "scene_preset": "Fast",
+  "music": true,
+  "fallback_voice": "en-IN-PrabhatNeural",
+  "fallback_voice_hindi": "hi-IN-MadhurNeural",
+  "post_time": "18:00",
+  "_note": "Landmark Cases series. minutes = target length; scenes = AI clips per video (about 10 min of Kaggle GPU each). Hindi narration comes later: add \"hindi\" to languages once it is built."
+}

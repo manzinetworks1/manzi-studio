@@ -42,14 +42,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Is the Manzi Engine busy with another run?
+        id: busy
+        run: |
+          # Kaggle keeps only one run of the engine notebook: a second job waits until the first one is collected
+          if [ -f engine/state/pending.json ]; then
+            RUN_ID=$(python3 -c "import json;print(json.load(open('engine/jobs/${{ inputs.job }}'))['run_id'])")
+            python3 -c "import json,time;json.dump({'job':'${{ inputs.job }}','week':'${{ inputs.then_make }}','created_at':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())},open('engine/state/waiting-$RUN_ID.json','w'),indent=2)"
+            git config user.name "manzi-studio-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add engine/state
+            git commit -q -m "Manzi Engine busy: job ${{ inputs.job }} waits" || true
+            git pull -q --rebase
+            git push -q
+            echo "busy=yes" >> "$GITHUB_OUTPUT"
+            echo "::notice::Another engine run is still waiting to be collected; '3c - Send the waiting AI job' sends this one later."
+          fi
+
       - uses: actions/setup-python@v5
+        if: steps.busy.outputs.busy != 'yes'
         with:
           python-version: "3.12"
 
       - name: Install the Kaggle tool
+        if: steps.busy.outputs.busy != 'yes'
         run: pip install -q "kaggle>=1.7.4" six
 
       - name: Check the Kaggle secrets
+        if: steps.busy.outputs.busy != 'yes'
         run: |
           if [ -z "$KAGGLE_USERNAME" ] || [ -z "$KAGGLE_KEY" ]; then
             echo "::error::Add the KAGGLE_USERNAME and KAGGLE_KEY secrets (repo Settings → Secrets and variables → Actions)"
@@ -57,6 +77,7 @@ jobs:
           fi
 
       - name: Freeze AIQUEST's notebook (first run only)
+        if: steps.busy.outputs.busy != 'yes'
         run: |
           if [ ! -f engine/vendor/aiquest_h3.ipynb ]; then
             mkdir -p /tmp/aiq
@@ -71,12 +92,14 @@ jobs:
           fi
 
       - name: Build the Kaggle job
+        if: steps.busy.outputs.busy != 'yes'
         run: |
           python engine/build_kernel.py "engine/jobs/${{ inputs.job }}" build
           RUN_ID=$(python -c "import json;print(json.load(open('engine/jobs/${{ inputs.job }}'))['run_id'])")
           echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
 
       - name: Send the job to Kaggle (GPU T4 x2)
+        if: steps.busy.outputs.busy != 'yes'
         run: |
           kaggle kernels push -p build --accelerator NvidiaTeslaT4 2>&1 | tee push.log || true
           if ! grep -qi "successfully" push.log && grep -qi "unrecognized arguments" push.log; then
@@ -94,6 +117,7 @@ jobs:
           git push -q
 
       - name: Wait for Kaggle
+        if: steps.busy.outputs.busy != 'yes'
         id: wait
         run: |
           end=$(( $(date +%s) + ${{ inputs.wait_minutes }} * 60 ))

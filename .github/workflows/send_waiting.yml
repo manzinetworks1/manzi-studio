@@ -19,12 +19,4 @@ jobs:
       - name: Send the job if one is waiting
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          F=engine/state/waiting.json
-          if [ ! -f "$F" ]; then echo "Nothing waiting."; exit 0; fi
-          JOB=$(python3 -c "import json;print(json.load(open('$F'))['job'])")
-          WEEK=$(python3 -c "import json;print(json.load(open('$F'))['week'])")
-          gh workflow run engine.yml -f "job=$JOB" -f wait_minutes=170 -f "then_make=$WEEK"
-          git config user.name "manzi-studio-bot"; git config user.email "actions@users.noreply.github.com"
-          git rm -q "$F" && git commit -q -m "Manzi Engine: sent waiting job $JOB" && git push -q
-          echo "Sent $JOB for week $WEEK"
+        run: python3 engine/send_waiting.py
