@@ -1,7 +1,7 @@
 {
   "minutes": 8,
-  "scenes_min": 14,
-  "scenes_max": 18,
+  "scenes_min": 20,
+  "scenes_max": 24,
   "languages": ["english"],
   "scene_output": "720p",
   "scene_preset": "Fast",

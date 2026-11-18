@@ -27,6 +27,7 @@ from cards import render_cards, W, H  # noqa: E402
 
 FPS = 30
 LEAD, GAP, TAIL = 0.35, 0.35, 0.5          # seconds of quiet before, between and after narration sentences
+XF = 0.4                                   # dissolve between beats (seconds)
 FONT = os.path.join(REPO, "render", "fonts", "Poppins-Bold.ttf")
 CREDITS = ("🎬 AI scenes made with MiniMax H3 (MiniMax H3 Community License) · built with Wan2GP "
            "(https://github.com/deepbeepmeep/Wan2GP) and AIQUEST Academy's Kaggle H3 engine (Apache 2.0)")
@@ -58,11 +59,41 @@ V_OUT = ["-c:v", "libx264", "-preset", "veryfast", "-crf", "19", "-pix_fmt", "yu
 SCALE = f"scale={W}:{H}:force_original_aspect_ratio=decrease:flags=lanczos,pad={W}:{H}:(ow-iw)/2:(oh-ih)/2,setsar=1"
 
 
-def kenburns(index, frames, label, z_from=1.0, z_to=1.06):
-    """A still picture (input `index`) with a slow, smooth zoom towards the centre."""
-    return (f"[{index}:v]scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase:flags=lanczos,crop={W * 2}:{H * 2},"
+def kenburns(index, frames, label, z_from=1.0, z_to=1.06, w=W, h=H):
+    """A still picture (input `index`) with a slow, smooth zoom towards the centre (drawn at 2x, so it never steps)."""
+    return (f"[{index}:v]scale={w * 2}:{h * 2}:force_original_aspect_ratio=increase:flags=lanczos,crop={w * 2}:{h * 2},"
             f"zoompan=z='{z_from}+({z_to}-{z_from})*on/{max(1, frames)}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-            f":d={max(1, frames)}:s={W}x{H}:fps={FPS},setsar=1,format=yuv420p[{label}]")
+            f":d={max(1, frames)}:s={w}x{h}:fps={FPS},setsar=1,format=yuv420p[{label}]")
+
+
+def exact_duration(path):
+    return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path],
+                                capture_output=True, text=True).stdout or 0)
+
+
+def dissolve_join(paths, tmp, tag, x=XF):
+    """Parts -> ffmpeg input args + graph that joins them with short dissolves, labels [cv][ca].
+    Each dissolve is made separately as a small clip (the last `x` seconds of one part over the first `x` of the
+    next), so the final join only plays the pieces one after another and needs little memory.
+    Returns (input args, graph, total seconds)."""
+    durs = [exact_duration(p) for p in paths]
+    args, n = [], 0
+    for k, (p, d) in enumerate(zip(paths, durs)):
+        if k:
+            mix = os.path.join(tmp, f"{tag}_x{k:03d}.mp4")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{durs[k - 1] - x:.3f}", "-i", paths[k - 1],
+                 "-t", f"{x:.3f}", "-i", p, "-filter_complex",
+                 f"[0:v]settb=AVTB,fps={FPS},format=yuv420p,setsar=1[a];[1:v]settb=AVTB,fps={FPS},format=yuv420p,setsar=1[b];"
+                 f"[a][b]xfade=transition=fade:duration={x:.3f}:offset=0[v];"
+                 f"[0:a]aresample=48000,apad=whole_dur={x:.3f}[p];[1:a]aresample=48000,apad=whole_dur={x:.3f}[q];"
+                 f"[p][q]acrossfade=d={x - 0.02:.3f}:c1=tri:c2=tri,apad=whole_dur={x:.3f}[s]",
+                 "-map", "[v]", "-map", "[s]", "-t", f"{x:.3f}", *V_OUT, mix])
+            args += ["-i", mix]; n += 1
+        start = x if k else 0.0
+        end = d - x if k < len(paths) - 1 else d
+        args += ["-ss", f"{start:.3f}", "-t", f"{max(0.05, end - start):.3f}", "-i", p]; n += 1
+    graph = "".join(f"[{i}:v][{i}:a]" for i in range(n)) + f"concat=n={n}:v=1:a=1[cv][ca]"
+    return args, graph, sum(durs) - x * (len(paths) - 1), n
 
 
 # ------------------------------------------------------------------ narration
@@ -115,20 +146,19 @@ def seg_still(png, nar_wav, dur, out, fade=False):
 
 
 def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.5):
-    """The clip (slowed down up to 1.5x to fit the narration), then its last picture with a slow zoom for the rest;
-    the scene's own sound stays underneath, quietly."""
+    """The clip, slowed down up to 1.5x to fit the narration; if the narration is longer still, its last picture
+    stays on. One smooth zoom runs over the whole beat, from the first frame until the next beat, so the picture never
+    stops moving. The scene's own sound stays underneath, quietly."""
     clen = ai_assemble.duration(clip) or 5.0
     f = min(max(dur / clen, 1.0), slow_max)
     shown = clen * f
     tail = max(0.0, dur - shown)
-    inputs = ["-i", clip, "-i", nar_wav]
-    graph = [f"[0:v]setpts={f:.4f}*PTS,{SCALE},fps={FPS},format=yuv420p[c]"]
-    if tail > 0.05:
-        inputs += ["-i", last_frame(clip, os.path.join(tmp, "last.png"))]
-        graph.append(kenburns(2, int(round(tail * FPS)) + 2, "k", 1.0, 1.05))
-        graph.append("[c][k]concat=n=2:v=1:a=0[v]")
-    else:
-        graph.append("[c]null[v]")
+    frames = int(round(dur * FPS)) + 2
+    zoom = min(0.16, 0.04 + 0.006 * dur)            # longer beats travel further, but stay gentle
+    graph = [f"[0:v]setpts={f:.4f}*PTS,fps={FPS},tpad=stop_mode=clone:stop_duration={tail + 0.3:.3f},"
+             f"scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase:flags=lanczos,crop={W * 2}:{H * 2},"
+             f"zoompan=z='1+{zoom:.4f}*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},"
+             f"setsar=1,format=yuv420p[v]"]
     graph.append("[1:a]aresample=48000,aformat=channel_layouts=stereo,apad[n]")
     if has_audio(clip):
         graph.append(f"[0:a]atempo={1 / f:.4f},volume=0.22,aresample=48000,aformat=channel_layouts=stereo,"
@@ -136,7 +166,7 @@ def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.5):
         graph.append("[n][m]amix=inputs=2:duration=first:normalize=0[a]")
     else:
         graph.append("[n]anull[a]")
-    run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", ";".join(graph),
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", clip, "-i", nar_wav, "-filter_complex", ";".join(graph),
          "-map", "[v]", "-map", "[a]", "-t", f"{dur:.3f}", *V_OUT, out])
     return dur
 
@@ -334,8 +364,7 @@ def short_piece(kind, src, a, d, long_mp4, out):
     a scene fills the screen (centre crop of the long video's picture); a card is its upright version."""
     if kind == "card":
         frames = int(round(d * FPS))
-        graph = (f"[0:v]scale={SW}:{SH},zoompan=z='1+0.03*on/{max(1, frames)}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-                 f":d={max(1, frames)}:s={SW}x{SH}:fps={FPS},setsar=1,format=yuv420p[v]")
+        graph = kenburns(0, frames + 2, "v", 1.0, 1.05, SW, SH)
         run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-ss", f"{a:.3f}", "-t", f"{d:.3f}",
              "-i", long_mp4, "-filter_complex", graph, "-map", "[v]", "-map", "1:a", "-t", f"{d:.3f}", *V_OUT, out])
     else:
@@ -355,19 +384,21 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
         if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title"):
             continue
         a, e = beat_times[b["id"]]
+        if a > 0:
+            a += XF          # start after the long video's dissolve into this beat
         d = min(e - a, SHORT_MAX - END_CARD - t)
         if d < 1.0:
             break
         kind = "card" if b["type"] == "card" or b["id"] in missing else "scene"
         piece = os.path.join(tmp, f"short{k}_{b['id']}.mp4")
         short_piece(kind, pcard.get(b["id"]), a, d, long_mp4, piece)
-        pieces.append(piece); remap.append((a, a + d, t)); t += d
+        pieces.append(piece); remap.append((a, a + d, t)); t += d - XF
     if not pieces:
         return None, 0
     endp = os.path.join(tmp, f"short{k}_end.mp4")
-    run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-i", pcard["__end__"], "-f", "lavfi", "-i",
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", pcard["__end__"], "-f", "lavfi", "-i",
          "anullsrc=r=48000:cl=stereo", "-filter_complex",
-         f"[0:v]scale={SW}:{SH},setsar=1,fps={FPS},format=yuv420p[v]",
+         kenburns(0, int(END_CARD * FPS) + 2, "v", 1.0, 1.04, SW, SH),
          "-map", "[v]", "-map", "1:a", "-t", f"{END_CARD}", *V_OUT, endp])
     pieces.append(endp); total = t + END_CARD
 
@@ -384,6 +415,8 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
             if cb <= a or ca >= e:
                 continue
             s0, s1 = max(ca, a) - a + off, min(cb, e) - a + off
+            if cb >= e - 0.01:
+                s1 -= XF        # the next piece dissolves in over the last XF seconds: hand over to its caption
             if s1 - s0 < 0.6 and not (ca >= a and cb <= e):
                 continue        # only the tail of a caption from a beat that is left out: skip it
             for j, line in enumerate(short_lines(text, 28, 3)):
@@ -391,9 +424,8 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
                 draws.append(f"drawtext=fontfile='{FONT}':textfile='{f}':fontsize=58:fontcolor=white:borderw=6:"
                              f"bordercolor=black:x=(w-text_w)/2:y={1400 + j * 78}:enable='between(t,{s0:.2f},{s1:.2f})'")
             n += 1
-    inputs = sum((["-i", pth] for pth in pieces), [])
-    graph = "".join(f"[{i}:v][{i}:a]" for i in range(len(pieces))) + f"concat=n={len(pieces)}:v=1:a=1[cv][ca]"
-    graph += ";[cv]" + ",".join(draws) + "[v]" if draws else ";[cv]null[v]"
+    inputs, graph, total, _ = dissolve_join(pieces, tmp, f"short{k}")
+    graph += ";[cv]" + (",".join(draws) if draws else "null") + "[v]"
     graph += f";[ca]afade=t=out:st={max(0, total - END_CARD - 0.6):.2f}:d=0.6,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]"
     script = os.path.join(tmp, f"short{k}.txt"); open(script, "w", encoding="utf-8").write(graph)
     run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex_script", script, "-map", "[v]", "-map", "[a]",
@@ -447,13 +479,13 @@ def main():
             clip = ai_assemble.clip(engine_dir, b["id"])
             if not clip:
                 log(f"  {b['id']}: no Professor clip, left out"); beat_times[b["id"]] = (t, t); continue
-            out = os.path.join(tmp, f"seg{i:03d}.mp4"); seg_professor(clip, out); d = ai_assemble.duration(out); segs.append(out)
-            cues.append((b["line"], t + 0.3, t + d - 0.3)); t += d
+            out = os.path.join(tmp, f"seg{i:03d}.mp4"); seg_professor(clip, out); d = exact_duration(out); segs.append(out)
+            cues.append((b["line"], t + 0.3, t + d - 0.3)); t += d - XF
         else:
             if b["type"] == "scene" and b.get("dialogue") and b["id"] not in missing:
                 out = os.path.join(tmp, f"seg{i:03d}a.mp4"); seg_dialogue(ai_assemble.clip(engine_dir, b["id"]), out)
-                d = ai_assemble.duration(out)
-                segs.append(out); cues.append((b["dialogue"], t + 0.4, t + d - 0.3)); t += d
+                d = exact_duration(out)
+                segs.append(out); cues.append((b["dialogue"], t + 0.4, t + d - 0.3)); t += d - XF
             if b["type"] == "scene" and b.get("dialogue") and not b.get("narration"):
                 beat_times[b["id"]] = (start, t); continue
             wav = os.path.join(tmp, f"nar{i:03d}.wav")
@@ -469,18 +501,14 @@ def main():
                 seg_still(card_png[b["id"]], wav, dur, out)
             segs.append(out)
             cues += [(s, t + x, t + y) for s, x, y in times]
-            t += ai_assemble.duration(out)
+            t += exact_duration(out) - XF
         beat_times[b["id"]] = (start, t)
         log(f"  {b['id']:>8} {b['type']:<9} {t - start:5.1f}s  (total {mmss(t)})")
 
     # 3. join (the concat filter keeps sound and picture in step), music, loudness
     long_mp4 = os.path.join(out_dir, base + ".mp4")
-    inputs, chains = [], []
-    for k, sp in enumerate(segs):
-        inputs += ["-i", sp]
-        chains.append(f"[{k}:v][{k}:a]")
-    n = len(segs)
-    graph = "".join(chains) + f"concat=n={n}:v=1:a=1[v][j]"
+    inputs, graph, _, n = dissolve_join(segs, tmp, "long")
+    graph += ";[cv]null[v];[ca]anull[j]"
     if lcfg.get("music", True):
         from render import make_music
         mus = os.path.join(tmp, "music.wav"); make_music(mus, t + 2)

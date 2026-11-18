@@ -40,8 +40,9 @@ Kaggle engine as the weekly videos.
   invented and Indian.
 - `beats`: in order. Each beat is one of:
   - `professor`: on camera, the intro and outro
-  - `scene`: one 5-second H3 clip. It is slowed down up to 1.5x to fit the narration, then its last picture is held
-    with a slow zoom. So a scene carries at most 2 short sentences (22 words); longer moments are split over 2-3 shots.
+  - `scene`: one 5-second H3 clip. It is slowed down up to 1.5x to fit the narration, then its last picture stays
+    on; one smooth zoom runs over the whole beat, so the picture never stops moving. Beats are joined with 0.4 s
+    dissolves (long video and Shorts). So a scene carries at most 2 short sentences (22 words); longer moments are split over 2-3 shots.
     Prompts forbid signboards and readable letters (the AI writes nonsense on them).
   - `card`: a graphic
 - `cont: true`: the scene starts from the previous scene's last picture, so the same people and place carry on.
