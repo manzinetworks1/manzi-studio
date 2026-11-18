@@ -1,0 +1,16 @@
+{
+  "clip_seconds": 8,
+  "aspect": "9:16 Portrait",
+  "language": "Hindi",
+  "preview": "544p",
+  "preview_fallback": ["480p", "384p"],
+  "output": "720p",
+  "preset": "Fast",
+  "max_words_per_clip": 12,
+  "max_cast_per_scene": 3,
+  "scenes_for_duration": {"1:00": [7, 9], "1:30": [10, 13], "2:00": [14, 17], "2:30": [17, 21]},
+  "music": true,
+  "music_volume": 0.06,
+  "post_time": "19:00",
+  "_note": "Masala Shorts (Entertainment With Manzi). One AI clip per scene, made upright (9:16) for 8 s, with the Hindi line spoken inside the clip: nothing is stretched or frozen. max_words_per_clip comes from the lip-sync tests (about 1.5 words a second). About 10-12 min of Kaggle GPU per clip."
+}

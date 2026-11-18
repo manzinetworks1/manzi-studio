@@ -78,17 +78,25 @@ def _mz_run_job():
             _best, _takes = None, []
             for _try in range(1 + (int(_sc.get("retries", 0)) if _min_tail else 0)):
                 _seed = _seed0 + _try if _seed0 >= 0 else -1
-                globals()["PREVIEW_AREA"] = _area  # AIQUEST's preview_size() reads this module-level setting
-                try:
-                    _path, _status, _name = make_preview(
-                        _sc.get("scene", ""), _sc.get("dialogue", ""), _sc.get("language", "English"),
-                        _sc.get("sound", ""), _sc.get("music", ""), _start, None, _sc.get("aspect", "16:9 Landscape"),
-                        _sc.get("duration", "5 s"), _seed, _lora, _ls, NO_LORA, 1.0, "", None, 0.0, True, "euler",
-                        float(_sc.get("shift", 12.0)), 0)
-                finally:
-                    globals()["PREVIEW_AREA"] = 672 * 384
+                # a size that does not fit the T4s' memory (e.g. a long upright clip) falls back to the next smaller one
+                _sizes = [_sc["preview"]] + [p for p in _sc.get("preview_fallback", []) if p != _sc["preview"]]
+                for _size in _sizes:
+                    globals()["PREVIEW_AREA"] = _MZ_PREVIEW_AREAS.get(_size, _area)  # read by AIQUEST's preview_size()
+                    try:
+                        _path, _status, _name = make_preview(
+                            _sc.get("scene", ""), _sc.get("dialogue", ""), _sc.get("language", "English"),
+                            _sc.get("sound", ""), _sc.get("music", ""), _start, None, _sc.get("aspect", "16:9 Landscape"),
+                            _sc.get("duration", "5 s"), _seed, _lora, _ls, NO_LORA, 1.0, "", None, 0.0, True, "euler",
+                            float(_sc.get("shift", 12.0)), 0)
+                    finally:
+                        globals()["PREVIEW_AREA"] = 672 * 384
+                    if _path or not any(k in (_status or "") for k in ("VRAM", "GPU memory")):
+                        break
+                    print(f"   ↘️ {_size} does not fit the GPU memory: trying a smaller size")
+                    _rec.setdefault("size_fallbacks", []).append(_size)
                 if not _path:
                     raise RuntimeError(_status)
+                _sc["preview"] = _size
                 _tail, _len = _mz_speech_tail(_path) if _min_tail else (None, None)
                 _takes.append({"seed_status": _status.splitlines()[0], "end_silence_s": _tail, "clip_s": _len})
                 print(f"   🗣️ take {_try + 1}: silence after the last word {_tail}s (need {_min_tail}s)")

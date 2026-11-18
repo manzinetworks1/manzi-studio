@@ -1,0 +1,69 @@
+{
+  "slug": "moti-aur-nakli-bank-wala",
+  "title": "नकली Bank Agent vs वफादार कुत्ता 😱 | Dog Saves Grandma's Pension | Hindi Story",
+  "duration": "1:00",
+  "category": "Wild And Domestic Animals Helping Humans In Their Life",
+  "hook_text": "नकली बैंक वाला आया… पर मोती ने पहचान लिया!",
+  "end_text": "Part 2 चाहिए? Comment करो 👇",
+  "look": "Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, warm morning sunlight in a small-town North Indian home, shallow depth of field",
+  "characters": [
+    {
+      "id": "kamla",
+      "name": "Kamla Devi",
+      "age": 68,
+      "gender": "woman",
+      "role": "widow who lives alone with her street dog",
+      "face": "thin, gentle oval face with deep laugh lines, warm dark-brown eyes behind round gold-rimmed glasses, wheatish-brown wrinkled skin, silver-grey hair in a low bun with a centre parting, small red bindi, slightly stooped, slim build, about 5 feet tall",
+      "voice": "an elderly woman's soft, slightly shaky, warm voice"
+    },
+    {
+      "id": "ramesh",
+      "name": "Ramesh",
+      "age": 35,
+      "gender": "man",
+      "role": "con man pretending to be a bank agent",
+      "face": "sharp narrow face, thin trimmed moustache, small shifty dark eyes, medium-brown skin with light acne marks on the cheeks, short oiled black hair combed to the side, lean build, about 5 feet 8 inches, a fake polite smile",
+      "voice": "a smooth, fast-talking, falsely polite male voice"
+    },
+    {
+      "id": "moti",
+      "name": "Moti",
+      "age": 4,
+      "gender": "street dog",
+      "role": "Kamla's loyal pet",
+      "face": "medium-sized Indian pariah dog with a short golden-brown coat, white chest patch, pointed upright ears, curled tail, alert amber eyes and a black nose, lean and athletic, a red cloth collar"
+    },
+    {
+      "id": "sunil",
+      "name": "Constable Sunil",
+      "age": 42,
+      "gender": "man",
+      "role": "neighbourhood police constable",
+      "face": "broad square face, thick black moustache, kind but stern dark eyes, dark-brown sun-tanned skin, short greying hair under a khaki beret, sturdy heavy build, about 5 feet 10 inches",
+      "voice": "a deep, firm, authoritative male voice"
+    }
+  ],
+  "wardrobe": {
+    "1": {
+      "kamla": "a plain off-white cotton saree with a thin maroon border, a grey woollen shawl, thin gold bangles",
+      "ramesh": "a light-blue formal shirt, dark trousers, a black office bag and a blank blue lanyard card on his chest",
+      "moti": "his red cloth collar",
+      "sunil": "a khaki Indian police uniform with a brown leather belt and a khaki beret"
+    }
+  },
+  "scenes": [
+    {"id": "s01", "day": 1, "place": "a small courtyard of an old North Indian house with a tulsi pot and a hand pump, morning", "action": "Medium shot: Kamla Devi sits on a low wooden stool and lovingly feeds a roti to Moti, stroking his head; the dog wags his tail", "cast": ["kamla", "moti"], "speaker": "kamla", "line": "खा ले मोती, आज तेरी पसंद की रोटी है।", "sound": "Morning birds and a distant pressure cooker whistle"},
+    {"id": "s02", "day": 1, "place": "the wooden front door of the same house, morning", "action": "Over-the-shoulder shot from behind Kamla Devi: Ramesh stands at the open door with a fake polite smile, holding up a blank card, speaking to her", "cast": ["ramesh", "kamla"], "speaker": "ramesh", "line": "अम्मा जी, बैंक से आया हूँ, आपका खाता बंद हो रहा है।", "sound": "Quiet street sounds"},
+    {"id": "s03", "day": 1, "place": "the wooden front door of the same house, morning", "action": "Close-up of Kamla Devi, filmed from just behind Ramesh's shoulder: her face fills with fear, she clutches her shawl", "cast": ["kamla", "ramesh"], "speaker": "kamla", "line": "हाय राम! मेरी पूरी पेंशन उसी खाते में है बेटा।", "sound": "Quiet street sounds"},
+    {"id": "s04", "day": 1, "place": "inside the small sitting room of the house, morning", "action": "Medium two-shot: Ramesh leans in towards Kamla Devi and holds out his open palm, speaking softly and urgently", "cast": ["ramesh", "kamla"], "speaker": "ramesh", "line": "बस अपना ATM कार्ड और पिन दे दीजिए, मैं ठीक कर दूँगा।", "sound": "A ceiling fan turning"},
+    {"id": "s05", "day": 1, "place": "inside the small sitting room of the house, morning", "action": "Low-angle shot from the floor: Moti steps between Kamla Devi and Ramesh, ears back, baring his teeth and growling at Ramesh, who steps back nervously", "cast": ["moti", "ramesh", "kamla"], "sound": "A low, menacing dog growl and a ceiling fan", "continue": true},
+    {"id": "s06", "day": 1, "place": "inside the small sitting room of the house, morning", "action": "Moti leaps up, snatches the blank lanyard card from Ramesh's chest with his teeth and dashes out of the door; Ramesh lunges after him and shouts", "cast": ["moti", "ramesh"], "speaker": "ramesh", "line": "अरे! मेरा कार्ड लौटा, कुत्ते!", "sound": "Running paws, a door banging"},
+    {"id": "s07", "day": 1, "place": "a narrow sunlit lane of a small Indian town with parked scooters, morning", "action": "Moti drops the card at Constable Sunil's feet; Sunil picks it up, looks at it, then glares down the lane as Ramesh comes running and freezes", "cast": ["sunil", "moti", "ramesh"], "speaker": "sunil", "line": "ये तो वही ठग है, जिसकी फोटो थाने में लगी है!", "sound": "A busy lane, a distant bicycle bell"},
+    {"id": "s08", "day": 1, "place": "the courtyard of the house with the tulsi pot, late morning", "action": "Kamla Devi kneels and hugs Moti tightly with tears of relief, kissing his head; the dog licks her cheek", "cast": ["kamla", "moti"], "speaker": "kamla", "line": "आज तूने मेरी ज़िंदगी भर की कमाई बचा ली, मोती।", "sound": "Soft birdsong"}
+  ],
+  "thumbnail": {"scene": "s05", "text": "कुत्ते ने पकड़ा ठग!"},
+  "youtube": {
+    "description": "एक नकली बैंक वाला अकेली अम्मा जी की पेंशन लूटने आया… पर उनके वफादार कुत्ते मोती ने सब बदल दिया! 🐕\nA fake bank agent tries to steal a lonely grandmother's pension, but her loyal street dog sees through him.\n\n#HindiStory #DogStory #MoralStory #FamilyDrama #Shorts",
+    "tags": ["hindi story", "dog story", "loyal dog", "bank fraud", "moral story", "emotional story", "hindi kahani"]
+  }
+}

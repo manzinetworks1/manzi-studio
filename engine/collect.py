@@ -31,7 +31,7 @@ def main():
         import calendar
         waited_h = (time.time() - calendar.timegm(time.strptime(pending["pushed_at"], "%Y-%m-%dT%H:%M:%SZ"))) / 3600
         week = pending.get("then_make")
-        if week and not week.startswith("landmark:") and "queued" in status and waited_h > 4:
+        if week and ":" not in week and "queued" in status and waited_h > 4:
             # Kaggle is too busy: make the week's videos without the AI part so nothing is late
             print(f"Queued for {waited_h:.1f} h: making week {week} without the AI part")
             sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", "-f", "no_ai=true", check=False)
@@ -107,6 +107,10 @@ def main():
         case = week.split(":", 1)[1]
         r = sh("gh", "workflow", "run", "landmark_make.yml", "-f", f"case={case}", check=False)
         print("started 'L2 - Make landmark video'" if r.returncode == 0 else f"⚠️ could not start 'L2': {r.stderr}")
+    elif week and week.startswith("masala:"):  # a Masala Short: put it together now (it downloads this release)
+        slug = week.split(":", 1)[1]
+        r = sh("gh", "workflow", "run", "masala_make.yml", "-f", f"story={slug}", check=False)
+        print("started 'M - Make masala short'" if r.returncode == 0 else f"⚠️ could not start 'M': {r.stderr}")
     elif week:  # the weekly flow: make the videos now (make.py downloads this release)
         r = sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", check=False)
         print("started '2 - Make videos'" if r.returncode == 0 else f"⚠️ could not start '2 - Make videos': {r.stderr}")
