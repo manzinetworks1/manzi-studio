@@ -1,0 +1,747 @@
+{
+  "slug": "kesavananda-bharati-v-state-of-kerala-1973",
+  "language": "english",
+  "case": "Kesavananda Bharati v. State of Kerala",
+  "citation": "(1973) 4 SCC 225; AIR 1973 SC 1461",
+  "year": 1973,
+  "court": "Supreme Court of India",
+  "bench": "13 judges",
+  "subject": "Constitutional Law",
+  "topic": "Basic Structure Doctrine and Article 368",
+  "principle": "Parliament can amend any part of the Constitution under Article 368, except altering or destroying its basic structure.",
+  "look": "Warm 1973 archival film look, muted earthy tones and rich wooden browns, soft natural and tungsten lighting, 35mm cinematic lens, dignified, contemplative, historically grounded courtroom drama mood.",
+  "cast": [
+    {
+      "id": "petitioner",
+      "label": "the monk",
+      "look": "Indian man in his early thirties, medium build, brown skin, clean-shaven face, short black hair, wearing simple saffron robes."
+    },
+    {
+      "id": "counsel_pet",
+      "label": "the senior advocate",
+      "look": "Indian man in his late forties, slim build, brown skin, sharp nose, combed greying hair, wearing black gown and white bands."
+    },
+    {
+      "id": "counsel_gov",
+      "label": "the government counsel",
+      "look": "Indian man in his fifties, sturdy build, brown skin, thick black-rimmed spectacles, receding hair, wearing black coat over white shirt."
+    },
+    {
+      "id": "chief_judge",
+      "label": "the chief judge",
+      "look": "Elderly Indian man in his early sixties, dignified posture, brown skin, silver hair, trimmed white moustache, wearing dark judicial robes."
+    },
+    {
+      "id": "deciding_judge",
+      "label": "the thoughtful judge",
+      "look": "Indian man in his late fifties, average build, brown skin, calm eyes, parted salt-and-pepper hair, wearing formal black court robes."
+    }
+  ],
+  "beats": [
+    {
+      "type": "professor",
+      "id": "p_intro",
+      "chapter": "Introduction",
+      "line": "Can Parliament rewrite the entire Constitution? Let us explore Kesavananda Bharati.",
+      "narration": []
+    },
+    {
+      "type": "scene",
+      "id": "s01",
+      "chapter": "The Mutt Dispute",
+      "narration": [
+        "In nineteen seventy, new state laws threatened a quiet Kerala monastery.",
+        "Nobody imagined this local dispute would protect the Indian Constitution."
+      ],
+      "scene": "Warm morning sunlight filters through tall coconut palms onto a quiet stone courtyard in rural Kerala. The monk walks slowly across the veranda holding a bundle of old land deeds wrapped in cloth, looking deeply worried. Static wide shot capturing timeless 1973 Indian monastery architecture with no writing visible anywhere.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft rustling palm leaves and distant morning temple bells.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c01",
+      "chapter": "The Mutt Dispute",
+      "narration": [
+        "Welcome to our study of Kesavananda Bharati v. State of Kerala, decided on twenty-fourth April nineteen seventy-three by the Supreme Court.",
+        "This historic constitutional dispute was heard by a thirteen-judge Constitution Bench, which remains the largest bench ever assembled in Indian history.",
+        "By a razor-thin majority of seven to six, the judges placed a permanent limit on Parliament's power to amend the Indian Constitution.",
+        "To understand how a quiet monastery's land dispute gave birth to the basic structure doctrine, let us travel back to nineteen seventy."
+      ],
+      "card": {
+        "style": "title",
+        "heading": "Kesavananda Bharati v. State of Kerala",
+        "items": [
+          {
+            "label": "Bench",
+            "text": "13 judges"
+          },
+          {
+            "label": "Majority",
+            "text": "7 to 6"
+          },
+          {
+            "label": "Principle",
+            "text": "Basic structure doctrine"
+          }
+        ],
+        "sub": "1973 · Supreme Court of India"
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s02",
+      "chapter": "The Mutt Dispute",
+      "narration": [
+        "Swami Kesavananda Bharati headed the Edneer Mutt in Kerala.",
+        "New state land reform laws suddenly restricted his monastery's property rights."
+      ],
+      "scene": "Inside a dimly lit wooden study with carved pillars, the monk sits cross-legged on a mat beside a low wooden desk. Warm oil-lamp light illuminates his troubled expression as he unties the red cloth covering a stack of property papers. Slow push-in medium close-up, no text visible.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Crackling oil lamp and gentle rustle of unfolding paper.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s03",
+      "chapter": "The Mutt Dispute",
+      "narration": [
+        "He approached the Supreme Court under Article 32.",
+        "He claimed the state laws violated his fundamental rights to religion and property."
+      ],
+      "scene": "Continuing in the same dim wooden study, close-up from just behind the monk's shoulder as he leans forward holding the bundled papers. Across the low desk sits the senior advocate, listening intently with a calm and focused expression in the warm lamplight.",
+      "cast": [
+        "petitioner",
+        "counsel_pet"
+      ],
+      "speaker": "counsel_pet",
+      "dialogue": "We must challenge this in Delhi.",
+      "sound": "Quiet evening crickets outside and soft spoken voice.",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s04",
+      "chapter": "The Mutt Dispute",
+      "narration": [
+        "While his petition was pending, Parliament stepped in and changed the rules.",
+        "New constitutional amendments shielded those Kerala laws from courts."
+      ],
+      "scene": "Outside a grand sandstone courthouse in New Delhi under bright 1973 afternoon sunlight, a vintage black Ambassador car pulls up slowly near stone steps. The senior advocate steps out carrying a thick leather briefcase, looking determined. Wide static shot angled away from any entrance signs.",
+      "cast": [
+        "counsel_pet"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Vintage car engine idling and footsteps on stone steps.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s05",
+      "chapter": "The Legal Question",
+      "narration": [
+        "The Twenty-ninth Amendment placed the Kerala laws into the Ninth Schedule.",
+        "The Twenty-fourth and Twenty-fifth Amendments also expanded Parliament's power greatly."
+      ],
+      "scene": "Inside a wood-panelled library in 1973, dusty afternoon light beams across tall bookshelves. The senior advocate stands near a heavy table, flipping carefully through a thick leather-bound law book with a furrowed brow. Slow tracking shot from the side, keeping book pages unreadable.",
+      "cast": [
+        "counsel_pet"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Heavy pages turning and soft ticking of a wall clock.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c02",
+      "chapter": "The Legal Question",
+      "narration": [
+        "Suddenly, a local property dispute transformed into a fierce constitutional battle over Parliament's power to rewrite the fundamental law of India.",
+        "The Twenty-fourth Amendment altered Article 368 to declare that Parliament could amend any provision freely without facing limits from Article 13.",
+        "The Twenty-fifth Amendment inserted Article 31C, which prevented courts from reviewing laws that claimed to implement Directive Principles of State Policy.",
+        "Therefore, the Supreme Court faced one monumental legal question: is Parliament's amending power under Article 368 unlimited, or are some boundaries unbreakable?"
+      ],
+      "card": {
+        "style": "law",
+        "heading": "Article 368 and Article 13",
+        "items": [
+          {
+            "label": "Article 368",
+            "text": "Gives Parliament power to amend the Constitution through a special procedure."
+          },
+          {
+            "label": "Article 13",
+            "text": "Declares void any law that takes away or abridges Fundamental Rights."
+          },
+          {
+            "label": "Article 26",
+            "text": "Protects the right of religious denominations to manage their own property."
+          },
+          {
+            "label": "Article 31C",
+            "text": "Inserted by Twenty-fifth Amendment to shield certain laws from judicial review."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s06",
+      "chapter": "The Legal Question",
+      "narration": [
+        "Because earlier rulings clashed on this question, the Supreme Court formed a thirteen-judge bench.",
+        "Never before had so many judges sat together."
+      ],
+      "scene": "Inside an ornate dark-wood courtroom, warm overhead light falls on a raised bench where the chief judge sits reading thick bound volumes. His expression is deeply serious as he adjusts his posture and glances down toward the bar. Static medium shot with no readable papers.",
+      "cast": [
+        "chief_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Hushed courtroom murmur settling into heavy silence.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c03",
+      "chapter": "The Earlier Battles",
+      "narration": [
+        "To grasp the intense tension in nineteen seventy-three, we must trace twenty years of constitutional conflict between Parliament and the courts.",
+        "In nineteen fifty-one, in Shankari Prasad v. Union of India, the Court ruled that constitutional amendments are not ordinary laws under Article 13.",
+        "Fourteen years later, Sajjan Singh v. State of Rajasthan repeated that view, though two judges warned that basic features might remain protected.",
+        "Then in nineteen sixty-seven, Golaknath v. State of Punjab reversed course by six to five, forbidding Parliament from curtailing Fundamental Rights."
+      ],
+      "card": {
+        "style": "timeline",
+        "heading": "The Road to 1973",
+        "items": [
+          {
+            "label": "1951",
+            "text": "Shankari Prasad upholds Parliament's power to amend rights."
+          },
+          {
+            "label": "1965",
+            "text": "Sajjan Singh confirms the rule with two dissents."
+          },
+          {
+            "label": "1967",
+            "text": "Golaknath bars Parliament from amending Fundamental Rights."
+          },
+          {
+            "label": "1971",
+            "text": "Twenty-fourth Amendment overrides Golaknath through Article 368."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s07",
+      "chapter": "The Earlier Battles",
+      "narration": [
+        "Furious over the Golaknath ruling, Parliament passed the Twenty-fourth Amendment in nineteen seventy-one.",
+        "It claimed full power to alter any Fundamental Right."
+      ],
+      "scene": "In a quiet 1973 government office with cream walls and a slow ceiling fan, the government counsel sits at a wooden desk stacked with thick files. He leans over the files, tapping his fountain pen thoughtfully as afternoon light streams through venetian blinds. Slow push-in medium shot.",
+      "cast": [
+        "counsel_gov"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Steady hum of ceiling fan and distant street traffic.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s08",
+      "chapter": "The Earlier Battles",
+      "narration": [
+        "Now the thirteen judges had to decide whether Golaknath was right.",
+        "Could Parliament rewrite even the soul of the Constitution?"
+      ],
+      "scene": "In a sunlit corridor outside the courtroom, the thoughtful judge walks slowly alongside the chief judge, both in dark robes. They speak softly in earnest tones without gesturing wildly, moving past tall arched stone columns. Smooth tracking shot keeping both faces clear and no signs visible.",
+      "cast": [
+        "deciding_judge",
+        "chief_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft footsteps echoing down a long stone corridor.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s09",
+      "chapter": "The Earlier Battles",
+      "narration": [
+        "Hearings began on thirty-first October nineteen seventy-two.",
+        "They lasted sixty-eight working days, becoming one of the longest hearings in Supreme Court history."
+      ],
+      "scene": "Inside the grand courtroom, wide static shot showing the long curved wooden dais where the chief judge and the thoughtful judge sit at the centre of the bench. Below them, both advocates stand near wooden lecterns under soft warm indoor lighting.",
+      "cast": [
+        "chief_judge",
+        "deciding_judge",
+        "counsel_pet",
+        "counsel_gov"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Rustle of judicial robes and gentle cough in the gallery.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s10",
+      "chapter": "The Great Hearing",
+      "narration": [
+        "Nani Palkhivala argued for the petitioners for thirty-one days.",
+        "He warned that unlimited amending power would destroy Indian democracy."
+      ],
+      "scene": "Close-up inside the courtroom from behind the government counsel's shoulder, looking directly at the senior advocate standing at the lectern. Wearing his black gown and white bands, he raises one hand calmly while making a pointed legal argument in soft courtroom light.",
+      "cast": [
+        "counsel_pet",
+        "counsel_gov"
+      ],
+      "speaker": "counsel_pet",
+      "dialogue": "Amendment cannot mean destruction of the Constitution.",
+      "sound": "Clear calm courtroom voice and faint creak of wooden chairs.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s11",
+      "chapter": "The Great Hearing",
+      "narration": [
+        "He argued that the word amend means to improve or adjust.",
+        "It cannot mean wiping out the essential features of the Constitution."
+      ],
+      "scene": "Continuing in the same courtroom angle, medium shot focusing on the senior advocate's earnest face as he leans slightly over the wooden lectern, holding a bound constitution volume closed in his hands. Warm ambient light highlights his determined expression.",
+      "cast": [
+        "counsel_pet"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Quiet rustle of thick paper inside a hushed courtroom.",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s12",
+      "chapter": "The Great Hearing",
+      "narration": [
+        "Parliament was created by the Constitution, he told the judges.",
+        "A creature of the Constitution cannot destroy its own creator."
+      ],
+      "scene": "Medium close-up on the bench where the chief judge and the thoughtful judge listen attentively, leaning slightly forward with hands resting on their desk. Warm tungsten courtroom light casts soft shadows across the dark wood panelling behind them. Static shot.",
+      "cast": [
+        "chief_judge",
+        "deciding_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Scratching of fountain pens taking notes on paper.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s13",
+      "chapter": "The Great Hearing",
+      "narration": [
+        "The government counsel fiercely opposed any implied limits on Article 368.",
+        "He argued that Parliament represents the sovereign will of the people."
+      ],
+      "scene": "Close-up inside the courtroom from behind the senior advocate's shoulder, facing the government counsel standing firmly at his lectern. Adjusting his black-rimmed spectacles, he gestures steadily with open palms as he addresses the judges in warm, even light.",
+      "cast": [
+        "counsel_gov",
+        "counsel_pet"
+      ],
+      "speaker": "counsel_gov",
+      "dialogue": "Elected representatives must have power for reform.",
+      "sound": "Firm steady voice echoing softly in the wooden hall.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s14",
+      "chapter": "The Great Hearing",
+      "narration": [
+        "Without broad amending power, the state argued, socio-economic reforms would stall.",
+        "Future generations should not be chained forever to past legal rules."
+      ],
+      "scene": "Continuing in the same courtroom, medium wide shot of the government counsel turning slightly toward the bench with both hands resting on a tall stack of law books. Behind him, rows of seated lawyers listen quietly in the warm 1973 light.",
+      "cast": [
+        "counsel_gov"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Subdued murmur of listening lawyers and distant footsteps.",
+      "cont": true
+    },
+    {
+      "type": "card",
+      "id": "c04",
+      "chapter": "The Core Conflict",
+      "narration": [
+        "Here stood the deepest conflict in Indian constitutional law, pulling two vital principles of democratic governance in completely opposite directions.",
+        "If Article 368 carried no limits whatsoever, a temporary parliamentary majority could abolish free elections, silence courts, or erase Fundamental Rights.",
+        "On the other hand, if Golaknath remained untouched, Parliament could never adjust Fundamental Rights even to pass urgent land and social reforms.",
+        "The thirteen judges needed a wise middle path that respected both elected parliamentary lawmaking and the lasting supremacy of the Constitution."
+      ],
+      "card": {
+        "style": "triangle",
+        "heading": "The Constitutional Dilemma",
+        "items": [
+          {
+            "label": "Article 368",
+            "text": "Parliament's broad amending power"
+          },
+          {
+            "label": "Fundamental Rights",
+            "text": "Citizens' protected core liberties"
+          },
+          {
+            "label": "Basic Structure",
+            "text": "Unalterable constitutional identity"
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s15",
+      "chapter": "The Core Conflict",
+      "narration": [
+        "For weeks after the hearings ended, the thirteen judges worked on separate opinions.",
+        "The bench was deeply divided right down the middle."
+      ],
+      "scene": "Late evening inside a quiet judicial chamber bathed in golden desk-lamp glow. The thoughtful judge sits alone at a polished teak desk covered with open volumes, resting his chin on his hand in deep reflection. Slow push-in medium shot with no readable text.",
+      "cast": [
+        "deciding_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft night breeze against wooden shutters and pen scratching.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s16",
+      "chapter": "The Core Conflict",
+      "narration": [
+        "Six judges leaned firmly toward broad parliamentary amending power.",
+        "Six other judges insisted that Fundamental Rights could never be curtailed."
+      ],
+      "scene": "Continuing in the same golden-lit chamber, tight close-up on the thoughtful judge's calm eyes and silver-streaked hair as he dips his fountain pen and writes steadily on crisp blank paper. Only the wooden desk edge and soft lamplight fill the background.",
+      "cast": [
+        "deciding_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Steady rhythmic glide of fountain pen nib across paper.",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s17",
+      "chapter": "The Split Verdict",
+      "narration": [
+        "On twenty-fourth April nineteen seventy-three, the courtroom was packed to capacity.",
+        "Eleven separate opinions running over seven hundred pages were delivered."
+      ],
+      "scene": "Bright morning sunlight streams through tall arched courtroom windows on judgment day. A wide static shot shows the packed wooden benches of the courtroom filled with waiting advocates in black gowns, looking eagerly toward the empty raised dais.",
+      "cast": [
+        "counsel_pet",
+        "counsel_gov"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Excited low chatter across a crowded courtroom.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s18",
+      "chapter": "The Split Verdict",
+      "narration": [
+        "Justice Hans Raj Khanna's opinion held the crucial deciding vote.",
+        "He rejected Golaknath, yet created a vital safeguard for the Constitution."
+      ],
+      "scene": "Medium close-up of the thoughtful judge seated on the high bench beside the chief judge, looking composed and resolute in formal black robes. Soft morning light illuminates his face as he reads calmly from thick white pages held slightly below frame.",
+      "cast": [
+        "deciding_judge",
+        "chief_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Clear measured reading inside a completely silent hall.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c05",
+      "chapter": "The Split Verdict",
+      "narration": [
+        "First, the thirteen-judge bench overruled Golaknath and upheld the Twenty-fourth Amendment, confirming that Parliament can indeed amend Fundamental Rights under Article 368.",
+        "Second, by seven to six, the Court declared that the power to amend does not include the power to destroy the basic structure.",
+        "Features like constitutional supremacy, republican democracy, secularism, separation of powers, and federalism were highlighted by various judges as part of this core identity.",
+        "Third, while upholding the Twenty-ninth Amendment, the Court struck down the second part of Article 31C that tried to block judicial review."
+      ],
+      "card": {
+        "style": "holding",
+        "heading": "What the Court Held (7 to 6)",
+        "items": [
+          {
+            "label": "Golaknath Overruled",
+            "text": "Parliament can amend any part of the Constitution, including Fundamental Rights, under Article 368."
+          },
+          {
+            "label": "Twenty-fourth Amendment",
+            "text": "Upheld as valid because Article 368 always included the power to amend Fundamental Rights."
+          },
+          {
+            "label": "Basic Structure Doctrine",
+            "text": "Amending power cannot be used to alter or destroy the basic structure of the Constitution."
+          },
+          {
+            "label": "Article 31C Struck Down",
+            "text": "Second part of Article 31C barring judicial review was declared unconstitutional and void."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s19",
+      "chapter": "The Split Verdict",
+      "narration": [
+        "Ironically, the monk lost his immediate challenge to Kerala's land laws.",
+        "Yet his name forever protected the soul of Indian liberty."
+      ],
+      "scene": "Outside on the sun-drenched courthouse steps, the senior advocate walks slowly beside the monk, both looking deeply relieved though exhausted. Warm afternoon light highlights the saffron robes against black lawyer attire. Slow tracking shot from the front, keeping background pillars clean.",
+      "cast": [
+        "counsel_pet",
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Warm outdoor breeze and soft distant birdsong.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s20",
+      "chapter": "The Aftermath",
+      "narration": [
+        "The sharp political reaction arrived the very next morning.",
+        "On twenty-fifth April nineteen seventy-three, three senior majority judges were superseded."
+      ],
+      "scene": "Inside an old-fashioned 1973 newspaper press room or wooden office, warm desk light falls on a rotary black telephone ringing loudly beside a stack of plain folders. A man's brown hand reaches quickly to lift the receiver. Static close-up shot with no readable print.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Sharp mechanical telephone bell ringing twice before click.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s21",
+      "chapter": "The Aftermath",
+      "narration": [
+        "A fourth-ranking judge was appointed Chief Justice of India instead.",
+        "Justices Shelat, Hegde, and Grover resigned from the bench in protest."
+      ],
+      "scene": "Inside a shadowed corridor of the courthouse, the thoughtful judge stands motionless near a tall stone window, looking out into pale dusk light with quiet dignity. No other person is present. Slow push-in medium shot showing his calm, unshaken expression.",
+      "cast": [
+        "deciding_judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Distant evening traffic and quiet hollow corridor air.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c06",
+      "chapter": "The Aftermath",
+      "narration": [
+        "Despite fierce political backlash after the verdict, the basic structure doctrine survived and grew much stronger over the next four decades.",
+        "In nineteen seventy-five, in Indira Nehru Gandhi v. Raj Narain, the Court applied it to strike down an amendment shielding election disputes.",
+        "In nineteen eighty, Minerva Mills v. Union of India struck down clauses of the Forty-second Amendment that claimed unlimited parliamentary amending power.",
+        "Later, in nineteen ninety-four and two thousand seven, the Court reaffirmed secularism, federalism, and review of Ninth Schedule laws passed after nineteen seventy-three."
+      ],
+      "card": {
+        "style": "timeline",
+        "heading": "Basic Structure in Action",
+        "items": [
+          {
+            "label": "1975",
+            "text": "Indira Nehru Gandhi strikes down election immunity."
+          },
+          {
+            "label": "1980",
+            "text": "Minerva Mills protects judicial review as basic feature."
+          },
+          {
+            "label": "1994",
+            "text": "S.R. Bommai affirms federalism and secularism."
+          },
+          {
+            "label": "2007",
+            "text": "I.R. Coelho opens Ninth Schedule to review."
+          }
+        ]
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s22",
+      "chapter": "The Aftermath",
+      "narration": [
+        "Today, every constitutional amendment is tested against the basic structure.",
+        "Parliament can amend the Constitution, but never erase its soul."
+      ],
+      "scene": "Back in the peaceful Kerala monastery courtyard, warm golden sunset light washes over the stone veranda and coconut trees. The monk stands serenely watching the evening sky, his expression peaceful and reflective. Slow pull-back wide shot capturing calm atmosphere without any text.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Gentle evening wind and distant chirping of birds.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s23",
+      "chapter": "The Aftermath",
+      "narration": [
+        "For law students, this case marks the triumph of constitutional supremacy.",
+        "It remains the ultimate shield of our fundamental rights."
+      ],
+      "scene": "Inside a sunlit modern-looking Indian law library with warm wooden tables, young Indian students in simple casual 1970s clothes sit quietly reading thick bound constitutional books. Static wide shot from the corner, keeping book covers and walls completely free of readable letters.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft turning pages and faint footsteps on wooden floor.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s24",
+      "chapter": "The Aftermath",
+      "narration": [
+        "No matter how big a parliamentary majority grows, the Constitution stands above it.",
+        "That is the enduring promise of Kesavananda Bharati."
+      ],
+      "scene": "Wide static exterior shot of a grand domed sandstone courthouse bathed in golden morning sunlight under clear blue skies. A few tiny figures of advocates in black robes walk calmly up the stone steps in the distance, with no text or signs visible.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Gentle morning breeze and distant chirping birds.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c07",
+      "chapter": "Exam Recap",
+      "narration": [
+        "Let us do a quick exam revision of Kesavananda Bharati v. State of Kerala, the greatest cornerstone of Indian constitutional law.",
+        "On the facts, the Edneer Mutt challenged Kerala land reforms along with the Twenty-fourth, Twenty-fifth, and Twenty-ninth Amendments before thirteen judges.",
+        "The Court overruled Golaknath and allowed Parliament to amend Fundamental Rights, yet held seven to six that the basic structure cannot be destroyed.",
+        "In your answer, always cite Article 368 alongside Indira Nehru Gandhi and Minerva Mills to show how basic structure protects judicial review."
+      ],
+      "card": {
+        "style": "exam",
+        "heading": "Exam Recap: Kesavananda Bharati (1973)",
+        "items": [
+          {
+            "label": "Facts",
+            "text": "Edneer Mutt challenged Kerala land reforms and the 24th, 25th, and 29th Amendments."
+          },
+          {
+            "label": "Issue",
+            "text": "Can Parliament amend any part of the Constitution under Article 368 without limits?"
+          },
+          {
+            "label": "Held",
+            "text": "By 7 to 6, Golaknath overruled, but Parliament cannot alter or destroy basic structure."
+          },
+          {
+            "label": "Principle",
+            "text": "Amending power under Article 368 is wide, yet subject to basic structure limits."
+          },
+          {
+            "label": "Cited In",
+            "text": "Indira Nehru Gandhi 1975, Minerva Mills 1980, and I.R. Coelho 2007."
+          }
+        ]
+      }
+    },
+    {
+      "type": "professor",
+      "id": "p_outro",
+      "chapter": "Recap",
+      "line": "Comment the next landmark case you want. See you next time!",
+      "narration": []
+    }
+  ],
+  "thumbnail": {
+    "scene": "s15",
+    "text": "LIMITS ON PARLIAMENT"
+  },
+  "shorts": [
+    {
+      "title": "How a Kerala Monk Saved India's Constitution",
+      "start": "s01",
+      "end": "c01"
+    },
+    {
+      "title": "Can Parliament Destroy the Constitution? 1973 Debate",
+      "start": "s10",
+      "end": "s14"
+    },
+    {
+      "title": "The 7-6 Verdict That Created Basic Structure",
+      "start": "s18",
+      "end": "c05"
+    }
+  ],
+  "title": "Kesavananda Bharati v. State of Kerala (1973) | Basic Structure Doctrine | Constitutional Law",
+  "summary": "Explore the full story of Kesavananda Bharati v. State of Kerala (1973), the landmark 13-judge Supreme Court judgment that gave India the Basic Structure Doctrine. Designed for LLB and judiciary aspirants, this documentary explains the facts, the clash over Article 368 and Article 13, the 7 to 6 holding, and its lasting legacy.",
+  "tags": [
+    "Kesavananda Bharati",
+    "Basic Structure Doctrine",
+    "Constitutional Law",
+    "Article 368",
+    "Article 13",
+    "Supreme Court of India",
+    "Landmark Cases India",
+    "LLB Exam Preparation",
+    "Indian Constitution",
+    "Golaknath Case",
+    "Minerva Mills",
+    "Judiciary Preparation",
+    "CLAT PG",
+    "Fundamental Rights",
+    "1973 Supreme Court"
+  ],
+  "pinned_comment": "Which feature of the Constitution do you think is the most important part of the Basic Structure Doctrine, and why?",
+  "check": [
+    "Verify exact reporter citations: (1973) 4 SCC 225 and AIR 1973 SC 1461.",
+    "Confirm hearing dates: started 31 October 1972 and lasted 68 working days; Nani Palkhivala argued for 31 days.",
+    "Confirm judgment date (24 April 1973), 13-judge bench, 7:6 majority, and 11 separate opinions exceeding 700 pages.",
+    "Verify Justice H.R. Khanna's pivotal opinion overruling Golaknath, upholding the 24th Amendment, striking down the second part of Article 31C, and affirming basic structure.",
+    "Verify supersession date (25 April 1973) of Justices J.M. Shelat, K.S. Hegde, and A.N. Grover by Justice A.N. Ray.",
+    "Verify follow-up case years: Indira Nehru Gandhi (1975), Minerva Mills (1980), S.R. Bommai (1994), and I.R. Coelho (2007)."
+  ],
+  "approved": false
+}
