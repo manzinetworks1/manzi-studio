@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.join(REPO, "pipeline")); sys.path.insert(0, os.path.j
 from common import ROOT, config, log  # noqa: E402
 import ai_assemble, deliver, mail  # noqa: E402
 from story import SETTINGS, check, load  # noqa: E402
-from job import plan  # noqa: E402
+from job import plan as clip_plan  # noqa: E402
 
 W, H, FPS = 1080, 1920, 30
 FONTS = os.path.join(REPO, "render", "fonts")
@@ -179,7 +179,7 @@ def main():
     check(st)  # fills each scene's cast from its stage
     info = json.load(open(os.path.join(engine_dir, "clips.json"))) if os.path.exists(os.path.join(engine_dir, "clips.json")) else {}
     mode = a.mode or info.get("mode", "final")
-    cids = {s["id"]: cid for s, cid, _, _ in plan(st)}
+    cids = {s["id"]: cid for s, cid, _, _ in clip_plan(st)}
     timing = []
 
     # 1. one segment per scene, in order
