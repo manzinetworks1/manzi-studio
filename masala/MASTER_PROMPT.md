@@ -33,8 +33,15 @@ ahead.
   than the Flow prompt's 140–150 a minute: about 90. Fit the story to the clips, never the other way round.)
 - Lines in **Devanagari** (H3 speaks Hindi best from it); English words like "ATM" are fine.
 - No readable text anywhere in a shot (no signboards, phone screens with words, name plates).
-- Describe camera, action, emotion and light in each scene's `action`, in English. Close-ups for emotional lines,
-  over-the-shoulder for conversations (the speaker faces the camera, the listener's shoulder in front).
+- **A blocking card (`stage`) for every scene** (format in `masala/README.md`): pick a shot from the library, and for
+  each person give `where` (spot in the frame), `faces` (which way the body turns), `eyes` (who or what they look at:
+  the listener, the dog, the roti; **never the camera**) and `does` (action), plus `expression`. Two people talking:
+  put them on opposite sides, facing each other, eyes on each other. A listener reacts silently. For an
+  over-the-shoulder shot use `clean-over-shoulder` with the listener as `"shoulder"` (never also in `people`). Plan
+  the eye-lines across the scene: if Kamla is on the left looking right in s01, keep her on the left in the next
+  shot of the same conversation. `action` is one English sentence of what happens.
+- New stories are made as a **draft** first (544p clips + picture sheet). Fix what Manzi points out by changing only
+  those scenes' `stage`, `action` or line, and give the whole file again.
 
 ## Steps
 

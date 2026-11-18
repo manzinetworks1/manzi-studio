@@ -1,12 +1,18 @@
 """M, Kaggle step: the AI clips of a Masala Short (Manzi Engine on Kaggle).
 
-python masala/job.py --story <slug> [--build-only]
+python masala/job.py --story <slug> --mode draft|final [--build-only]
 
-- Results already published (Release "engine-masala-<slug>-<hash>-..."): downloads them to out/masala/<slug>/engine/
-  and prints ai=ready.
-- Otherwise builds the job (one upright 8 s clip per scene, the Hindi line spoken inside the clip), sends it to
-  "3 - Manzi Engine" in the 11 am-3 pm IST slot or leaves it waiting for "3c", and prints ai=sent or ai=waiting.
-  When Kaggle is done, "3b - Collect" publishes the results and starts "M - Make masala short" again by itself.
+Each scene's clip is named <scene>-<key> (e.g. s02-3fa91c): the key changes when anything that shapes the clip
+changes (its prompt, line, sound, seed, size, or the scene it continues from). Clips already made in any earlier run
+of this story (its "engine-masala-<slug>-..." Releases) are re-used, so only new or changed scenes use the GPU.
+
+- draft: every scene at 544p, no 720p sharpening, no second takes (about 11 min a clip). The latents are kept.
+- final: every scene sharpened to 720p. An approved draft is sharpened itself (about 9 min a clip, the same clip you
+  approved); a scene with no draft is made from scratch.
+
+When everything needed already exists, downloads it to out/masala/<slug>/engine/ and prints ai=ready. Otherwise
+sends the missing scenes to "3 - Manzi Engine" (in the 11 am-3 pm IST slot, or straight away with "send_now") and
+prints ai=sent or ai=waiting; "3b - Collect" starts "M - Make masala short" again when Kaggle is done.
 Writes "ai=<ready|sent|waiting>" to $GITHUB_OUTPUT when run in GitHub Actions.
 """
 import argparse, datetime, hashlib, json, os, subprocess, sys
@@ -15,53 +21,84 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "pipeline"))
 sys.path.insert(0, HERE)
 from common import ROOT, log  # noqa: E402
-from story import SETTINGS, load, story_hash  # noqa: E402
+from story import SETTINGS, SHOTS, check, load  # noqa: E402
 
 LOOK = ("Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture and pores, "
         "real human actors, warm practical lighting, shallow depth of field")
-
-
-def run_id(st):
-    return f"masala-{st['slug']}-{story_hash(st)}"
-
-
-def release_for(st):
-    from engine_week import gh
-    rels = json.loads(gh("releases?per_page=100"))
-    rels = [r for r in rels if r["tag_name"].startswith(f"engine-{run_id(st)}-")]
-    return sorted(rels, key=lambda r: r["created_at"])[-1] if rels else None
+SPOT = {"left": "On the LEFT of the frame", "right": "On the RIGHT of the frame", "centre": "In the CENTRE of the frame",
+        "foreground-left": "In the FOREGROUND on the left", "foreground-right": "In the FOREGROUND on the right",
+        "background": "In the BACKGROUND", "background-left": "In the BACKGROUND on the left",
+        "background-right": "In the BACKGROUND on the right"}
+TURN = {"left": "body and face turned towards the left of the frame",
+        "right": "body and face turned towards the right of the frame",
+        "camera-left": "turned three-quarters towards the camera, angled to the left of the frame",
+        "camera-right": "turned three-quarters towards the camera, angled to the right of the frame",
+        "camera": "facing the camera", "away": "back to the camera"}
 
 
 def seed_for(slug, sid):
     return int(hashlib.sha1(f"masala/{slug}/{sid}".encode()).hexdigest()[:8], 16) % 900_000_000 + 10_000
 
 
-def person(c, outfit):
+def who(c, outfit=None):
     g = c.get("gender", "")
-    who = f"{c['name']}, a {c['age']}-year-old Indian {g}".replace("  ", " ").strip()
-    return f"{who}: {c['face'].strip().rstrip('.')}; wearing {outfit.strip().rstrip('.')}"
+    d = f"{c['name']} (a {c['age']}-year-old Indian {g}: {c['face'].strip().rstrip('.')}"
+    return d + (f"; wearing {outfit.strip().rstrip('.')})" if outfit else ")")
+
+
+def is_animal(c):
+    return any(w in c.get("gender", "").lower() for w in ("dog", "cat", "cow", "goat", "monkey", "bird", "horse", "animal"))
 
 
 def scene_prompt(st, s):
+    """The whole scene as plain, ordered sentences: frame, then every person with place, direction, eyes and action,
+    then who speaks, then a head count, then the look. Nothing is left for the AI to guess."""
     chars = {c["id"]: c for c in st["characters"]}
     wear = {str(k): v for k, v in st["wardrobe"].items()}[str(s["day"])]
-    people = [chars[c] for c in s["cast"]]
-    parts = [s["action"].strip().rstrip(".") + ".", f"Setting: {s['place'].strip().rstrip('.')}."]
-    if people:
-        parts.append(("The people in the shot, each one clearly different: " if len(people) > 1 else "In the shot: ")
-                     + "; ".join(person(p, wear[p["id"]]) for p in people) + ".")
+    stg = s["stage"]
+    people = stg.get("people") or {}
+    name = lambda x: chars[x]["name"] if x in chars else x
+    parts = [SHOTS[stg["shot"]][1] + ".", f"Setting: {s['place'].strip().rstrip('.')}."]
+    sh = stg.get("shoulder")
+    if sh:
+        side = "right" if any("left" in p.get("where", "") for p in people.values()) else "left"
+        parts.append(f"In the near foreground at the {side} edge of the frame, out of focus: only the shoulder and the "
+                     f"back of the head of {chars[sh]['name']} (wearing {wear[sh].strip().rstrip('.')}); "
+                     f"{chars[sh]['name']}'s face is NOT visible.")
+    for pid, p in people.items():
+        eyes = p["eyes"]
+        line = (f"{SPOT.get(p['where'], p['where'])}: {who(chars[pid], wear[pid])}, {TURN.get(p['faces'], p['faces'])}, "
+                f"eyes on {name(eyes)} the whole time")
+        if eyes in chars and eyes not in people and eyes != sh:
+            line += " (who is off-screen)"
+        line += f"; {p['does'].strip().rstrip('.')}"
+        if p.get("expression"):
+            line += f", {p['expression'].strip().rstrip('.')}"
+        parts.append(line + ".")
+    parts.append(f"What happens: {s['action'].strip().rstrip('.')}.")
     if (s.get("line") or "").strip():
         sp = chars[s["speaker"]]
-        parts.append(f"Only {sp['name']} speaks, in Hindi, clearly, with natural, well-synchronised lip movements and "
-                     f"no long pauses; {sp['name']} finishes speaking a moment before the shot ends; "
-                     "everyone else stays silent.")
+        others = [x for x in people if x != s["speaker"]]
+        txt = (f"Only {sp['name']} speaks, in Hindi, clearly, looking at {name(people[s['speaker']]['eyes'])} while "
+               f"speaking, with natural, well-synchronised lip movements; {sp['name']} finishes speaking a moment before "
+               "the shot ends.")
+        if others:
+            txt += (f" {' and '.join(name(x) for x in others)} {'stays' if len(others) == 1 else 'stay'} silent, "
+                    + ("only reacting." if all(is_animal(chars[x]) for x in others) else "lips closed, only reacting."))
+        parts.append(txt)
     else:
         parts.append("Nobody speaks.")
+    if people:
+        seen = [name(x) for x in people] + ([f"the shoulder of {name(sh)}"] if sh else [])
+        parts.append(f"Exactly {len(people)} {'figure' if len(people) == 1 else 'figures'} fully in the frame "
+                     f"({', '.join(seen)}); each appears only once; nobody else.")
+    if not any(p.get("to_camera") for p in people.values()):
+        parts.append("Nobody looks into the camera lens: the camera is an invisible observer that nobody notices.")
     parts.append("Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV "
                  "serial; never cartoon, anime or plastic-looking.")
     parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Vertical 9:16 frame for a phone screen, "
-                 "faces framed in the upper-middle of the picture. No text, no captions, no logos, no watermarks, "
-                 "no signboards, no shop signs, no posters, no name plates, no readable letters anywhere.")
+                 "faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, "
+                 "no shop signs, no posters, no name plates, no readable letters anywhere.")
     return " ".join(parts)
 
 
@@ -73,29 +110,91 @@ def sound_for(st, s):
     return f"{base}, no voices."
 
 
-def build_job(st):
-    scenes, ids = [], [s["id"] for s in st["scenes"]]
-    feeds = {ids[i - 1] for i, s in enumerate(st["scenes"]) if i and s.get("continue")}
-    for i, s in enumerate(st["scenes"]):
-        talk = bool((s.get("line") or "").strip())
-        sc = {"id": s["id"], "kind": "scene", "seed": seed_for(st["slug"], s["id"]), "scene": scene_prompt(st, s),
-              "dialogue": s.get("line", "").strip(), "language": SETTINGS["language"],
-              "sound": sound_for(st, s), "aspect": SETTINGS["aspect"], "duration": f"{SETTINGS['clip_seconds']} s",
-              "preview": SETTINGS["preview"], "preview_fallback": SETTINGS["preview_fallback"],
-              "output": SETTINGS["output"], "preset": SETTINGS["preset"]}
-        if talk:
-            sc.update(min_end_silence=0.4, retries=1)
-        if s.get("continue") and i:
-            sc["start_image"] = ids[i - 1]
-        if s["id"] in feeds:
-            sc.update(save_frame=True, frame_time="end")
+def plan(st):
+    """[(scene, clip id, engine fields, clip id it continues from)] in story order."""
+    out, prev = [], None
+    for s in st["scenes"]:
+        f = {"seed": seed_for(st["slug"], s["id"]), "scene": scene_prompt(st, s), "dialogue": (s.get("line") or "").strip(),
+             "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["aspect"],
+             "duration": f"{SETTINGS['clip_seconds']} s", "preview": SETTINGS["preview"]}
+        cont = prev if (s.get("continue") and prev) else None
+        key = hashlib.sha1(json.dumps([f, cont], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:6]
+        cid = f"{s['id']}-{key}"
+        out.append((s, cid, f, cont))
+        prev = cid
+    return out
+
+
+def assets(slug):
+    """{asset name: release tag} over every engine run of this story (newest wins)."""
+    from engine_week import gh
+    rels = [r for r in json.loads(gh("releases?per_page=100")) if r["tag_name"].startswith(f"engine-masala-{slug}-")]
+    found = {}
+    for r in sorted(rels, key=lambda r: r["created_at"]):
+        for a in r.get("assets", []):
+            found[a["name"]] = r["tag_name"]
+    return found
+
+
+def build_job(st, mode, have):
+    """(job or None when nothing is missing, [(clip id, release, file)] to download for the Short)."""
+    p = plan(st)
+    want = "720p" if mode == "final" else SETTINGS["preview"]
+    needed, scenes, inputs, frames = [], [], [], {}
+    todo = {cid for _, cid, _, _ in p if f"{cid}_{want}.mp4" not in have}
+    for s, cid, f, cont in p:
+        clip = f"{cid}_{want}.mp4"
+        if clip in have:
+            needed.append((cid, have[clip], clip))
+            continue
+        sc = {"id": cid, "kind": "scene", **f, "preview_fallback": SETTINGS["preview_fallback"]}
+        if mode == "final":
+            sc.update(output=SETTINGS["output"], preset=SETTINGS["preset"])
+            draft = f"{cid}_{SETTINGS['preview']}"
+            if f"{draft}.pt" in have:
+                sc["upscale_from"] = draft
+                inputs.append({"release": have[f"{draft}.pt"], "file": f"{draft}.pt"})
+                if f"{draft}.json" in have:
+                    inputs.append({"release": have[f"{draft}.json"], "file": f"{draft}.json"})
+        else:
+            sc["keep_latents"] = True
+        if cont and not sc.get("upscale_from"):
+            sc["start_image"] = cont
+            if cont not in todo and f"{cont}_frame.png" in have:  # the scene before was made in an earlier run
+                frames[cont] = f"{cont}_frame.png"
+                inputs.append({"release": have[f"{cont}_frame.png"], "file": f"{cont}_frame.png"})
         scenes.append(sc)
-    return {"run_id": run_id(st), "purpose": f"Masala Short: {st['title']}", "scenes": scenes,
-            "scene_time_limit_min": min(330, 14 * len(scenes) + 15)}
+    feeds = {cont for _, _, _, cont in p if cont}  # scenes that a later scene continues from keep their last picture
+    for sc in scenes:
+        if sc["id"] in feeds and "upscale_from" not in sc:
+            sc.update(save_frame=True, frame_time="end")
+    if not scenes:
+        return None, needed
+    limit = sum(13 if mode == "draft" else (11 if "upscale_from" in sc else 22) for sc in scenes) + 15
+    key = hashlib.sha1(json.dumps([sc["id"] for sc in scenes]).encode()).hexdigest()[:6]
+    return ({"run_id": f"masala-{st['slug']}-{mode}-{key}", "purpose": f"Masala Short ({mode}): {st['title']}",
+             "scenes": scenes, "inputs": inputs, "frames": frames, "scene_time_limit_min": min(330, limit)}, needed)
+
+
+def download(needed, dest):
+    from engine_week import gh
+    os.makedirs(dest, exist_ok=True)
+    by_rel = {}
+    for _, rel, n in needed:
+        by_rel.setdefault(rel, []).append(n)
+    repo = os.environ.get("GITHUB_REPOSITORY", "manzinetworks1/manzi-studio")
+    for rel, names in by_rel.items():
+        ids = {a["name"]: a["id"] for a in json.loads(gh(f"releases/tags/{rel}"))["assets"]}
+        for n in names:
+            data = subprocess.run(["gh", "api", "-H", "Accept: application/octet-stream",
+                                   f"repos/{repo}/releases/assets/{ids[n]}"], capture_output=True, check=True).stdout
+            open(os.path.join(dest, n), "wb").write(data)
+    log(f"downloaded {len(needed)} clip(s)")
 
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--story", required=True)
+    ap.add_argument("--mode", choices=["draft", "final"], default="draft")
     ap.add_argument("--build-only", action="store_true", help="write the job file and stop (for checking)")
     a = ap.parse_args()
     out = os.environ.get("GITHUB_OUTPUT")
@@ -106,27 +205,33 @@ def main():
             open(out, "a").write(f"ai={state}\n")
 
     st = load(a.story)
-    job = build_job(st)
-    name = f"{job['run_id']}.json"
-    path = os.path.join(ROOT, "engine", "jobs", name)
+    errs, _ = check(st)
+    if errs:
+        raise SystemExit("The story has problems:\n" + "\n".join(errs))
+    have = {} if a.build_only else assets(a.story)
+    job, needed = build_job(st, a.mode, have)
     if a.build_only:
+        path = os.path.join(ROOT, "engine", "jobs", f"{job['run_id']}.json")
         json.dump(job, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
         return log(f"job written: {len(job['scenes'])} clips -> {os.path.relpath(path, ROOT)}")
-    rel = release_for(st)
-    if rel:
-        from engine_week import download
-        download(rel, os.path.join(ROOT, "out", "masala", a.story, "engine"))
+    if job is None:
+        dest = os.path.join(ROOT, "out", "masala", a.story, "engine")
+        download(needed, dest)
+        json.dump({"mode": a.mode, "clips": [c for c, _, _ in needed]}, open(os.path.join(dest, "clips.json"), "w"))
         return say("ready")
+    log(f"{a.mode}: {len(job['scenes'])} clip(s) to make, {len(needed)} re-used")
+    name = f"{job['run_id']}.json"
+    path = os.path.join(ROOT, "engine", "jobs", name)
     pending = os.path.join(ROOT, "engine", "state", "pending.json")
     if os.path.exists(pending) and json.load(open(pending)).get("run_id") == job["run_id"]:
-        log("this Short is already on Kaggle: '3b - Collect' will start 'M - Make masala short' again when it is done")
+        log("this run is already on Kaggle: '3b - Collect' will start 'M - Make masala short' again when it is done")
         return say("sent")
     waiting = os.path.join(ROOT, "engine", "state", f"waiting-{job['run_id']}.json")
     if os.path.exists(waiting):
-        log("this Short is already waiting for the 11 am slot")
+        log("this run is already waiting for the 11 am slot")
         return say("waiting")
     json.dump(job, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    log(f"job: {len(job['scenes'])} clips")
+    then = f"masala:{a.story}:{a.mode}"
     now = datetime.datetime.now(datetime.timezone.utc)
     in_slot = datetime.time(5, 30) <= now.time() <= datetime.time(9, 30)     # 11:00 am - 3:00 pm India time
     if st.get("send_now"):  # "send_now": true in the story file: don't wait for the slot (the queue may be long)
@@ -134,15 +239,15 @@ def main():
         in_slot = True
     if not in_slot:
         os.makedirs(os.path.dirname(waiting), exist_ok=True)
-        json.dump({"job": name, "week": f"masala:{a.story}", "created_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")},
+        json.dump({"job": name, "week": then, "created_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")},
                   open(waiting, "w"), indent=2)
     subprocess.run(["git", "add", "-A", path, os.path.dirname(waiting)], cwd=ROOT, check=True)
-    subprocess.run(["git", "commit", "-q", "-m", f"Manzi Engine job: masala short {a.story}"], cwd=ROOT, check=False)
+    subprocess.run(["git", "commit", "-q", "-m", f"Manzi Engine job: masala short {a.story} ({a.mode})"], cwd=ROOT, check=False)
     subprocess.run(["git", "pull", "-q", "--rebase", "--autostash"], cwd=ROOT, check=False)
     subprocess.run(["git", "push", "-q"], cwd=ROOT, check=True)
     if in_slot:
         subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={name}", "-f", "wait_minutes=170",
-                        "-f", f"then_make=masala:{a.story}"], cwd=ROOT, check=True)
+                        "-f", f"then_make={then}"], cwd=ROOT, check=True)
         return say("sent")
     say("waiting")
 

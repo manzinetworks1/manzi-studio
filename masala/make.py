@@ -17,7 +17,8 @@ REPO = os.path.dirname(HERE)
 sys.path.insert(0, os.path.join(REPO, "pipeline")); sys.path.insert(0, os.path.join(REPO, "render")); sys.path.insert(0, HERE)
 from common import ROOT, config, log  # noqa: E402
 import ai_assemble, deliver, mail  # noqa: E402
-from story import SETTINGS, load  # noqa: E402
+from story import SETTINGS, check, load  # noqa: E402
+from job import plan  # noqa: E402
 
 W, H, FPS = 1080, 1920, 30
 FONTS = os.path.join(REPO, "render", "fonts")
@@ -112,25 +113,80 @@ def freezes(mp4, min_s=2.0):
     return [(a, b) for a, b in zip(starts, ends + [None] * (len(starts) - len(ends)))]
 
 
+def deliver_draft(a, cfg, st, out_dir, tmp, short, total, stuck, missing, starts, cids, t_all):
+    """Draft: the rough Short plus a picture sheet (3 frames of every clip, labelled), then the "Draft ready" email."""
+    draft = os.path.join(out_dir, f"{a.story}-DRAFT.mp4")
+    os.replace(short, draft)
+    rows = []
+    for sid, (t0, d) in starts.items():
+        pics = []
+        for k, frac in enumerate((0.1, 0.5, 0.9)):
+            png = os.path.join(tmp, f"sheet_{sid}_{k}.png")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{d * frac:.2f}", "-i", os.path.join(tmp, f"{sid}.mp4"),
+                 "-frames:v", "1", "-vf", "scale=270:480", png])
+            pics.append(png)
+        row = os.path.join(tmp, f"row_{sid}.png")
+        run(["ffmpeg", "-y", "-loglevel", "error", *sum((["-i", p] for p in pics), []), "-filter_complex",
+             f"hstack=3,pad=iw+120:ih:120:0:white,drawtext=text='{sid}':x=18:y=20:fontsize=40:fontcolor=black", row])
+        rows.append(row)
+    sheet = os.path.join(out_dir, f"{a.story}-DRAFT-sheet.jpg")
+    run(["ffmpeg", "-y", "-loglevel", "error", *sum((["-i", r] for r in rows), []), "-filter_complex",
+         f"vstack={len(rows)}" if len(rows) > 1 else "null", "-q:v", "3", sheet])
+    files = [draft, sheet]
+    log(f"draft made in {(time.time() - t_all) / 60:.1f} min")
+    where, links = "(not uploaded)", {}
+    if not a.no_upload:
+        stamp = time.strftime("%Y%m%d-%H%M", time.gmtime())
+        where, links = deliver.release_upload(files, f"masala-draft-{a.story}-{stamp}", f"Masala DRAFT: {st['title']}",
+                                              "Draft clips (544p) to check before the final.")
+    if not a.no_email:
+        e = html.escape
+        repo = os.environ.get("GITHUB_REPOSITORY", "manzinetworks1/manzi-studio")
+        run_url = f"https://github.com/{repo}/actions/workflows/masala_make.yml"
+        lk = lambda f: links.get(os.path.basename(f), where)
+        rows_html = "".join(
+            f"<tr><td><b>{s['id']}</b></td><td>{e(s['stage']['shot'])}</td><td>{e((s.get('line') or '(no line)'))}</td></tr>"
+            for s in st["scenes"])
+        notes = ([f"Not made (left out): {', '.join(missing)}."] if missing else []) + \
+                (["Still pictures of 2 s or more at: " + ", ".join(f"{x:.0f}s" for x, _ in stuck) + "."] if stuck else [])
+        mail.send(cfg, f"[Masala Shorts] Draft ready to check: {st['title']}",
+                  f"<h2 style='margin:0'>👀 Draft ready: please check every clip</h2>"
+                  f"<p>📱 <a href='{lk(draft)}'><b>Draft Short</b></a> ({total:.0f}s, 544p, not sharpened) · "
+                  f"🖼️ <a href='{lk(sheet)}'><b>picture sheet</b></a> (3 frames of every clip)</p>"
+                  + (f"<p>⚠️ {e(' '.join(notes))}</p>" if notes else "")
+                  + "<p>Look at who faces whom, where the eyes go, faces, and the Hindi lip-sync.</p>"
+                  f"<table border='1' cellpadding='4' style='border-collapse:collapse'>{rows_html}</table>"
+                  "<p><b>Something wrong?</b> Tell Claude in the chat, e.g. <i>“s02: he must look at her”</i>. Only "
+                  "the changed scenes are made again.</p>"
+                  f"<p><b>All good?</b> <a href='{run_url}'>Open “M - Make masala short”</a> → <b>Run workflow</b> → "
+                  f"story <code>{e(a.story)}</code>, mode <code>final</code>. The same clips are sharpened to 720p "
+                  "(about 9 min each) and you get the <b>Short ready</b> email.</p>")
+    shutil.rmtree(tmp, ignore_errors=True)
+    log("draft done")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--story", required=True); ap.add_argument("--no-upload", action="store_true")
     ap.add_argument("--no-email", action="store_true")
+    ap.add_argument("--mode", choices=["draft", "final"], default=None, help="default: what job.py downloaded")
     a = ap.parse_args()
     t_all = time.time()
     cfg, st = config(), load(a.story)
     out_dir = os.path.join(ROOT, "out", "masala", a.story)
     engine_dir = os.path.join(out_dir, "engine")
     tmp = os.path.join(out_dir, "build"); shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
-    results = {}
-    rj = os.path.join(engine_dir, "engine_results.json")
-    if os.path.exists(rj):
-        results = {s["id"]: s for s in json.load(open(rj))["scenes"]}
+    check(st)  # fills each scene's cast from its stage
+    info = json.load(open(os.path.join(engine_dir, "clips.json"))) if os.path.exists(os.path.join(engine_dir, "clips.json")) else {}
+    mode = a.mode or info.get("mode", "final")
+    cids = {s["id"]: cid for s, cid, _, _ in plan(st)}
+    timing = []
 
     # 1. one segment per scene, in order
     segs, cues, missing, timing, t, starts = [], [], [], [], 0.0, {}
     for s in st["scenes"]:
-        clip = ai_assemble.clip(engine_dir, s["id"])
+        clip = next((os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
+                     if os.path.exists(os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4"))), None)
         if not clip:
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
         out = os.path.join(tmp, f"{s['id']}.mp4"); d = seg(clip, out); segs.append(out); starts[s["id"]] = (t, d)
@@ -140,9 +196,6 @@ def main():
             a0, a1 = t + 0.15, t + d - 0.15
             step = (a1 - a0) / len(parts)
             cues += [(p, a0 + k * step, a0 + (k + 1) * step) for k, p in enumerate(parts)]
-        r = results.get(s["id"], {})
-        if r.get("timing_ok") is False or r.get("warning"):
-            timing.append(s["id"])
         t += d
         log(f"  {s['id']}: {d:.1f}s (total {t:.1f}s)")
     if not segs:
@@ -205,6 +258,9 @@ def main():
     total = ai_assemble.duration(short)
     stuck = freezes(short)
     log(f"Short: {total:.1f}s, still stretches of 2 s or more: {len(stuck)}")
+
+    if mode == "draft":
+        return deliver_draft(a, cfg, st, out_dir, tmp, short, total, stuck, missing, starts, cids, t_all)
 
     # 4. captions file and posting plan
     srt = os.path.join(out_dir, f"{a.story}.hi.srt")

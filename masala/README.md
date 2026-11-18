@@ -8,7 +8,12 @@ Hindi TV-serial-style drama Shorts, written with Claude in chat and made by the 
    `claude/masala-master-prompt.md`: ideas → you pick one and a length → script → characters → the **story file**.
 2. **On GitHub:** open `masala/inbox/` → **Add file → Create new file**. Name it anything (for example
    `riya.json`), paste the whole story file, and press **Commit changes**. It works from the phone too.
-3. **Wait for the emails.** "M - Make masala short" starts by itself:
+3. **Draft first.** The first run makes every clip at 544p only (about 11 min a clip) and emails **Draft ready**
+   with the rough Short and a picture sheet. Tell Claude what to change (*"s02: he must look at her"*); a pasted,
+   corrected file remakes only the changed scenes. When every clip is right: Actions → **M - Make masala short** →
+   **Run workflow** → story = the slug, mode = **final**. The approved clips themselves are sharpened to 720p
+   (about 9 min a clip), so the final is exactly what you approved.
+4. **Wait for the emails.** "M - Make masala short" starts by itself:
    - **Please fix the story:** something in the file breaks a rule. The email lists exactly what; paste it to Claude,
      get the corrected file and paste it into `masala/inbox/` again. Nothing is made from a file with problems.
    - **Making the clips:** the file is fine and the clips go to Kaggle (sent between 11 am and 3 pm IST; outside that
@@ -36,6 +41,7 @@ is simply the number of scenes × 8 s. That is why the story file has rules:
 | a long face description per character, the same in every scene | the same face from clip to clip |
 | clothes per day in `wardrobe` | the same clothes through a day, new ones on a new day |
 | 7–9 scenes for 1:00, 10–13 for 1:30, 14–17 for 2:00, 17–21 for 2:30 | the length you asked for |
+| a `stage` for every scene: the shot, and for each person where they stand, which way they face, where their eyes go | without it a speaking person looks into the camera, or a person is drawn twice |
 | `"continue": true` | the clip starts from the last picture of the scene before: same place, same people, same light |
 
 ## The story file
@@ -50,13 +56,26 @@ is simply the number of scenes × 8 s. That is why the story file has rules:
   "characters": [{"id": "kamla", "name": "Kamla Devi", "age": 68, "gender": "woman", "role": "…",
                   "face": "long English description of face, skin, hair, body", "voice": "how she sounds"}],
   "wardrobe": {"1": {"kamla": "what she wears on day 1"}},
-  "scenes": [{"id": "s01", "day": 1, "place": "…", "action": "English: shot, action, emotion, light",
-              "cast": ["kamla", "moti"], "speaker": "kamla", "line": "Hindi line in Devanagari",
+  "scenes": [{"id": "s01", "day": 1, "place": "…", "action": "English: what happens in this shot",
+              "stage": {"shot": "two-shot-profile",
+                        "people": {"kamla": {"where": "left", "faces": "right", "eyes": "moti",
+                                             "does": "holds out a roti", "expression": "loving smile"},
+                                   "moti": {"where": "right", "faces": "left", "eyes": "the roti",
+                                            "does": "takes the roti, tail wagging"}}},
+              "speaker": "kamla", "line": "Hindi line in Devanagari",
               "caption": "(optional) caption if different from the line", "sound": "(optional)", "continue": false}],
   "thumbnail": {"scene": "s05", "text": "big thumbnail words"},
   "youtube": {"description": "…", "tags": ["…"]}
 }
 ```
+
+**Shots** (`stage.shot`): `two-shot-profile` (2 people facing each other, both in profile), `two-shot-three-quarter`
+(2 people, camera on the listener's side), `close-up` and `medium` (1 person; whoever they look at is off-screen),
+`clean-over-shoulder` (1 person seen past `"shoulder": "<id>"`, whose face is not shown and who must not be in
+`people`), `group` (3 people), `wide` and `low-angle` (any number).
+**where:** left, right, centre, foreground-left, foreground-right, background, background-left, background-right.
+**faces:** left, right, camera-left, camera-right, away (camera only with `"to_camera": true`).
+**eyes:** another character's id, or a thing ("the roti", "the open door"); never the camera unless `"to_camera": true`.
 
 A full example: `masala/examples/moti-aur-nakli-bank-wala.json`. Check a file yourself with
 `python masala/story.py <file>`.

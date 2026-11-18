@@ -12,6 +12,25 @@ SETTINGS = json.load(open(os.path.join(HERE, "settings.json"), encoding="utf-8")
 DEVANAGARI = re.compile(r"[ऀ-ॿ]")
 SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
+# The shots H3 handles well. Every scene picks one, and says for each person where they stand, which way they face and
+# where their eyes go: without that, a speaking person tends to look into the camera.
+SHOTS = {
+    "two-shot-profile": (2, "Medium two-shot at eye level, the camera to the side of both people, so both are seen "
+                            "in profile, facing each other"),
+    "two-shot-three-quarter": (2, "Medium two-shot at eye level, the camera slightly on the listener's side, so the "
+                                  "speaker is seen in three-quarter view and the listener in near-profile"),
+    "close-up": (1, "Close-up of one face at eye level, filling the upper half of the frame; the other person is "
+                    "off-screen"),
+    "medium": (1, "Medium shot of one person at eye level, from the waist up; anyone else is off-screen"),
+    "clean-over-shoulder": (1, "Over-the-shoulder shot at eye level"),
+    "group": (3, "Medium-wide shot at eye level of three people standing apart from each other"),
+    "wide": (None, "Wide shot at eye level showing the whole place"),
+    "low-angle": (None, "Low-angle shot from near the floor"),
+}
+WHERE = {"left", "right", "centre", "foreground-left", "foreground-right", "background", "background-left",
+         "background-right"}
+FACES = {"left", "right", "camera-left", "camera-right", "camera", "away"}
+
 
 def parse(text):
     """The pasted text -> dict. Accepts the JSON with or without a ```json fence or chat text around it."""
@@ -75,10 +94,19 @@ def check(st):
         if s.get("id") in ids:
             E.append(f"{sid}: id used twice.")
         ids.add(s.get("id"))
-        for k in ("day", "place", "action", "cast"):
+        for k in ("day", "place", "action"):
             if not s.get(k):
                 E.append(f"{sid}: missing \"{k}\".")
-        cast = s.get("cast") or []
+        st_ = s.get("stage")
+        if not isinstance(st_, dict):
+            E.append(f"{sid}: missing \"stage\" (the shot, and where each person stands, faces and looks).")
+            st_ = {"people": {c: {} for c in (s.get("cast") or [])}}
+        else:
+            stage_errors(sid, st_, chars, E)
+        s["cast"] = list((st_.get("people") or {}).keys()) + ([st_["shoulder"]] if st_.get("shoulder") else [])
+        cast = s["cast"]
+        if (s.get("line") or "").strip() and s.get("speaker") == st_.get("shoulder"):
+            E.append(f"{sid}: the speaker cannot be the shoulder in the foreground; the speaker must be seen.")
         if len(cast) > SETTINGS["max_cast_per_scene"]:
             E.append(f"{sid}: {len(cast)} people in one shot; at most {SETTINGS['max_cast_per_scene']} "
                      "(more people means mixed-up faces).")
@@ -89,7 +117,7 @@ def check(st):
                 E.append(f"{sid}: no clothes for {c} on day {s.get('day')} (add them under \"wardrobe\").")
         line = (s.get("line") or "").strip()
         if line:
-            if s.get("speaker") not in cast:
+            if s.get("speaker") not in (st_.get("people") or {}):
                 E.append(f"{sid}: the speaker must be one of the people in the shot ({', '.join(cast)}).")
             n = words(line)
             if n > limit:
@@ -117,6 +145,50 @@ def check(st):
     if len(st["title"]) > 100:
         E.append(f"The title has {len(st['title'])} characters; YouTube allows 100.")
     return E, W
+
+
+def stage_errors(sid, st_, chars, E):
+    shot = st_.get("shot")
+    if shot not in SHOTS:
+        E.append(f"{sid}: \"shot\" must be one of {', '.join(SHOTS)} (got \"{shot}\").")
+        return
+    people = st_.get("people") or {}
+    n = SHOTS[shot][0]
+    if n and len(people) != n:
+        E.append(f"{sid}: a {shot} shows {n} {'person' if n == 1 else 'people'}; \"people\" has {len(people)}.")
+    if not people and shot not in ("wide",):
+        E.append(f"{sid}: \"people\" is empty.")
+    if shot == "clean-over-shoulder":
+        sh = st_.get("shoulder")
+        if sh not in chars:
+            E.append(f"{sid}: a clean-over-shoulder shot needs \"shoulder\": the character whose shoulder is in front.")
+        elif sh in people:
+            E.append(f"{sid}: {sh} is the shoulder in front, so must not also be in \"people\" (that draws them twice).")
+    elif st_.get("shoulder"):
+        E.append(f"{sid}: \"shoulder\" is only for the clean-over-shoulder shot.")
+    spots = {}
+    for pid, p in people.items():
+        if pid not in chars:
+            continue  # reported with the cast
+        for k in ("where", "faces", "eyes", "does"):
+            if not p.get(k):
+                E.append(f"{sid}: {pid} needs \"{k}\".")
+        if p.get("where") and p["where"] not in WHERE:
+            E.append(f"{sid}: {pid} \"where\" must be one of {', '.join(sorted(WHERE))}.")
+        if p.get("where") in spots:
+            E.append(f"{sid}: {pid} and {spots[p['where']]} both stand at \"{p['where']}\".")
+        spots[p.get("where")] = pid
+        if p.get("faces") and p["faces"] not in FACES:
+            E.append(f"{sid}: {pid} \"faces\" must be one of {', '.join(sorted(FACES))}.")
+        eyes = str(p.get("eyes", "")).strip().lower()
+        if eyes in ("camera", "the camera", "lens", "viewer") and not p.get("to_camera"):
+            E.append(f"{sid}: {pid} looks into the camera; give a person or thing to look at "
+                     "(or add \"to_camera\": true if that is really wanted).")
+        if p.get("faces") == "camera" and not p.get("to_camera"):
+            E.append(f"{sid}: {pid} faces the camera; use camera-left or camera-right (three-quarter) instead, "
+                     "or add \"to_camera\": true.")
+        if eyes == pid:
+            E.append(f"{sid}: {pid} cannot look at themself.")
 
 
 def story_hash(st):

@@ -108,8 +108,9 @@ def main():
         r = sh("gh", "workflow", "run", "landmark_make.yml", "-f", f"case={case}", check=False)
         print("started 'L2 - Make landmark video'" if r.returncode == 0 else f"⚠️ could not start 'L2': {r.stderr}")
     elif week and week.startswith("masala:"):  # a Masala Short: put it together now (it downloads this release)
-        slug = week.split(":", 1)[1]
-        r = sh("gh", "workflow", "run", "masala_make.yml", "-f", f"story={slug}", check=False)
+        slug, _, mode = week.split(":", 1)[1].partition(":")
+        args = ["-f", f"story={slug}"] + (["-f", f"mode={mode}"] if mode else [])
+        r = sh("gh", "workflow", "run", "masala_make.yml", *args, check=False)
         print("started 'M - Make masala short'" if r.returncode == 0 else f"⚠️ could not start 'M': {r.stderr}")
     elif week:  # the weekly flow: make the videos now (make.py downloads this release)
         r = sh("gh", "workflow", "run", "make.yml", "-f", f"week={week}", check=False)

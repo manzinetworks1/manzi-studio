@@ -91,10 +91,16 @@ jobs:
             git push
           fi
 
+      - name: Files from earlier runs (approved drafts)
+        if: steps.busy.outputs.busy != 'yes'
+        id: inputs
+        run: python engine/stage_latents.py "engine/jobs/${{ inputs.job }}"
+
       - name: Build the Kaggle job
         if: steps.busy.outputs.busy != 'yes'
         run: |
-          python engine/build_kernel.py "engine/jobs/${{ inputs.job }}" build
+          DS="${{ steps.inputs.outputs.dataset }}"
+          python engine/build_kernel.py "engine/jobs/${{ inputs.job }}" build ${DS:+--gpu-dataset $DS}
           RUN_ID=$(python -c "import json;print(json.load(open('engine/jobs/${{ inputs.job }}'))['run_id'])")
           echo "RUN_ID=$RUN_ID" >> "$GITHUB_ENV"
 

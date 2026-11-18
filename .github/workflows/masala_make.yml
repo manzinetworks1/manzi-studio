@@ -13,6 +13,12 @@ on:
         description: "Story code (slug). Leave empty to check the inbox"
         required: false
         default: ""
+      mode:
+        description: "draft (544p clips to check) or final (sharpen the approved clips to 720p)"
+        required: false
+        default: "draft"
+        type: choice
+        options: [draft, final]
 permissions:
   contents: write
   actions: write
@@ -46,14 +52,16 @@ jobs:
         if: steps.inbox.outputs.stories != ''
         run: |
           git config user.name "Manzi Studio"; git config user.email "manzi-studio@users.noreply.github.com"
+          MODE="${{ github.event.inputs.mode }}"; MODE="${MODE:-draft}"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
           READY=""
           for S in ${{ steps.inbox.outputs.stories }}; do
             : > "$RUNNER_TEMP/ai.txt"
-            GITHUB_OUTPUT="$RUNNER_TEMP/ai.txt" python masala/job.py --story "$S"
+            GITHUB_OUTPUT="$RUNNER_TEMP/ai.txt" python masala/job.py --story "$S" --mode "$MODE"
             STATE=$(sed -n "s/^ai=//p" "$RUNNER_TEMP/ai.txt")
             echo "$S: $STATE"
             if [ "$STATE" = "ready" ]; then READY="$READY $S"
-            else python masala/mail_started.py "$S" "$STATE"; fi
+            else python masala/mail_started.py "$S" "$STATE" "$MODE"; fi
           done
           echo "ready=$READY" >> "$GITHUB_OUTPUT"
       - name: Install the video tools
@@ -65,7 +73,7 @@ jobs:
       - name: Put the Short together and deliver it
         if: steps.ai.outputs.ready != ''
         run: |
-          for S in ${{ steps.ai.outputs.ready }}; do python masala/make.py --story "$S"; done
+          for S in ${{ steps.ai.outputs.ready }}; do python masala/make.py --story "$S" --mode "${{ steps.ai.outputs.mode }}"; done
         env:
           GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
           GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
