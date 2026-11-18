@@ -55,7 +55,8 @@ def scene_prompt(st, b):
         parts.append("Nobody speaks.")
     parts.append("Everyone is clearly Indian, with brown skin.")
     parts.append(f"Film look: {st['look'].strip().rstrip('.')}. Realistic and cinematic. "
-                 "No text, no captions, no logos, no watermarks.")
+                 "No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, "
+                 "no banners, no name plates, no readable letters anywhere in the picture.")
     return " ".join(parts)
 
 

@@ -92,9 +92,12 @@ HOW THE VIDEO WORKS
   written in "narration": 1-4 sentences per beat, each sentence at most 24 words, simple spoken English, no lists, no
   brackets, no abbreviations except "v." in case names. Write Article / Section numbers in full ("Article 21",
   "Section 10(3)(c)").
-- The beats are shown in order. A "scene" beat is ONE 5-second AI video clip; when the narration is longer, the clip
-  slows down and then its last picture is held, so 1-3 sentences per scene is ideal. A "card" beat is a clean on-screen
-  graphic (text, diagram) for the law itself.
+- The beats are shown in order. A "scene" beat is ONE 5-second AI video clip; it can be slowed to about 7.5 seconds,
+  and after that its last picture just stands still, which looks frozen. So a scene beat has AT MOST 2 short sentences
+  and AT MOST 22 words of narration in total. When a moment of the story needs more words, split it over two or three
+  scene beats with different shots (a wide shot, then a close-up of a face, then the hands or the document), or move
+  the explanation to a card. A "card" beat is a clean on-screen graphic (text, diagram) for the law itself; cards can
+  carry longer narration (up to 4 sentences).
 - Story order: the facts as they happened -> the legal question -> the old law (earlier cases) -> the arguments of both
   sides -> the judgment and its reasoning -> what changed afterwards -> a short exam recap.
 - {scenes_lo}-{scenes_hi} scene beats and 5-7 card beats. Start with a scene (a strong visual hook), then the "title"
@@ -113,7 +116,9 @@ THE SCENES (these rules come from tests with the AI video model; follow them exa
   every scene, so the same person is recognisable. Make every cast member look clearly different from the others.
 - "scene": 40-80 words describing ONE continuous 5-second shot: the place, the light, the camera (static, slow push-in,
   close-up, wide), who is in the frame (by label, e.g. "the petitioner") and the ONE simple action. No text, letters,
-  newspapers with readable headlines, logos or captions in the picture. Nothing gory or violent.
+  newspapers with readable headlines, logos or captions in the picture. NO signboards, shop signs, banners, posters,
+  name plates or number plates in view (the AI writes nonsense letters on them): choose framings where none are
+  visible. Nothing gory or violent.
 - "cast" in a scene beat: the ids of the cast members visible in it.
 - "look" (top level): the shared visual style of the whole film in about 30 words (era, colour grade, lens, mood),
   for example warm 1970s film look, soft natural light.

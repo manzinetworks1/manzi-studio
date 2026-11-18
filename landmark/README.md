@@ -19,7 +19,8 @@ Kaggle engine as the weekly videos.
    - the long video at 1920x1080
    - English captions (`.srt`)
    - 2 thumbnails
-   - 2 or 3 Shorts with burnt-in captions
+   - 2 or 3 upright Shorts, rebuilt from the story's beats: scenes fill the screen, cards have an upright layout,
+     captions split by sentence, the title card and Professor are left out, and an end card closes each one
    - the posting plan: title, description with chapters, disclaimer and credits, tags, pinned comment, and AI
      disclosure = Yes
 
@@ -40,7 +41,8 @@ Kaggle engine as the weekly videos.
 - `beats`: in order. Each beat is one of:
   - `professor`: on camera, the intro and outro
   - `scene`: one 5-second H3 clip. It is slowed down up to 1.5x to fit the narration, then its last picture is held
-    with a slow zoom.
+    with a slow zoom. So a scene carries at most 2 short sentences (22 words); longer moments are split over 2-3 shots.
+    Prompts forbid signboards and readable letters (the AI writes nonsense on them).
   - `card`: a graphic
 - `cont: true`: the scene starts from the previous scene's last picture, so the same people and place carry on.
 - `dialogue`: at most 7 words, in at most 3 scenes. These scenes are made at 544p with automatic retakes, the lip-sync

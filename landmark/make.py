@@ -8,7 +8,7 @@ sentences), and makes in out/landmark/<slug>/:
     Professor outro, with soft music
   - English captions (.srt) to upload with it
   - 2 thumbnails (a scene with big words, and the title card)
-  - 2-3 vertical Shorts cut from the story, with captions burnt in
+  - 2-3 upright Shorts made from the story's beats (full-screen scenes, upright cards, captions, end card)
   - the posting plan (title, description with chapters and credits, tags, pinned comment, AI disclosure)
 then uploads everything (Google Drive if set up, otherwise a GitHub Release) and emails you.
 Missing pieces never stop the video: a missing scene becomes a chapter card, a missing narration sentence is read by
@@ -104,7 +104,7 @@ def seg_professor(clip, out):
     return ai_assemble.duration(out)
 
 
-def seg_still(png, nar_wav, dur, out, fade=True):
+def seg_still(png, nar_wav, dur, out, fade=False):
     frames = int(round(dur * FPS))
     vf = kenburns(0, frames, "k") + (f";[k]fade=t=in:st=0:d=0.3,fade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3[v]"
                                      if fade else ";[k]null[v]")
@@ -159,25 +159,57 @@ def srt_time(t):
     return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 
 
-def split_caption(text, n=42):
-    """Long sentences -> evenly sized caption chunks of at most two lines (about 2 x n characters)."""
-    import math
+SMALL = {"a", "an", "the", "of", "to", "in", "on", "at", "by", "for", "with", "and", "or", "but", "her", "his",
+         "their", "its", "my", "your", "under", "from", "that", "this", "is", "was", "be", "as"}
+
+
+def split_caption(text, n=30, lines=2):
+    """A sentence -> caption chunks of at most `lines` lines of about `n` characters, split where the sentence
+    naturally pauses (after , ; : or before and/but/because/so...), never after a small word like "a" or "the",
+    and never between "Article" / "Section" and its number."""
+    limit = n * lines
+    if len(text) <= limit:
+        return [text]
     words = text.split()
-    k = max(1, math.ceil(len(text) / (n * 2)))
-    per = len(text) / k
-    chunks, cur = [], ""
-    for w in words:
-        if cur and len(cur) + len(w) + 1 > per * 1.15 and len(chunks) < k - 1:
-            chunks.append(cur); cur = w
-        else:
-            cur = (cur + " " + w).strip()
+    glue = lambda w, nxt: (w.lower().strip(",;:") in SMALL or re.fullmatch(r"(Article|Section|Articles|Sections)", w)
+                           or (nxt or "x")[:1].isdigit())     # keep "Articles 14, 19 and 21" together
+    chunks, cur = [], []
+    for i, w in enumerate(words):
+        cur.append(w)
+        nxt = words[i + 1] if i + 1 < len(words) else None
+        if nxt is None:
+            break
+        here = " ".join(cur)
+        rest = " ".join(words[i + 1:])
+        punct = w[-1] in ",;:.?!"
+        conj = (nxt.lower() in ("and", "but", "because", "so", "which", "who", "when", "while")
+                and not w.rstrip(",").isdigit())          # "14, 19 and 21" is a list, not a pause
+        too_long = len(here) + 1 + len(nxt) > limit
+        if glue(w, nxt) and not too_long:
+            continue
+        if too_long:
+            carry = []           # never end a chunk on a small word: move it to the next chunk
+            while len(cur) > 1 and (cur[-1].lower().strip(",;:") in SMALL):
+                carry.insert(0, cur.pop())
+            chunks.append(" ".join(cur)); cur = carry
+        elif len(rest) >= 12 and ((punct and len(here) >= n * 0.6) or (conj and len(here) >= n)):
+            chunks.append(here); cur = []
     if cur:
-        chunks.append(cur)
+        chunks.append(" ".join(cur))
+    # short pieces join a neighbour when the two still fit on the screen together
+    i = 0
+    while i < len(chunks) - 1:
+        a, b = chunks[i], chunks[i + 1]
+        if min(len(a), len(b)) < 25 and len(a) + len(b) + 1 <= limit + 8:
+            chunks[i:i + 2] = [a + " " + b]
+        else:
+            i += 1
     return chunks
 
 
 def captions(cues):
-    """[(text, start, end)] -> SRT cues, long sentences split by length."""
+    """[(text, start, end)] -> caption cues split by meaning; each cue stays on screen until the next one starts
+    (when the pause between them is short), so there are no empty moments."""
     out = []
     for text, a, b in cues:
         text = re.sub(r"\*\*", "", text)
@@ -186,8 +218,12 @@ def captions(cues):
         t = a
         for p in parts:
             d = (b - a) * len(p) / total
-            out.append((p, t, t + d)); t += d
-    return out
+            out.append([p, t, t + d]); t += d
+    out.sort(key=lambda c: c[1])
+    for c, nxt in zip(out, out[1:]):
+        if 0 < nxt[1] - c[2] < 1.5:
+            c[2] = nxt[1]
+    return [tuple(c) for c in out]
 
 
 def write_srt(cues, path):
@@ -284,31 +320,85 @@ def thumbnails(st, engine_dir, title_png, out_dir, base, tmp):
 
 
 # ------------------------------------------------------------------ Shorts
-def make_short(long_mp4, a, b, title, cues, out, tmp, k):
-    dur = min(59.0, b - a)
-    fs = drawtext_file(tmp, f"short{k}_title.txt", "\n".join(wrap(title.upper(), 22)[:3]))
-    vf = ["[0:v]split[x][y]",
-          "[x]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=24:2,eq=brightness=-0.12[bg]",
-          "[y]scale=1080:-2:flags=lanczos[fg]",
-          "[bg][fg]overlay=(W-w)/2:(H-h)/2-60[o]",
-          f"[o]drawtext=fontfile='{FONT}':textfile='{fs}':fontsize=64:line_spacing=14:fontcolor=white:text_align=center:"
-          f"box=1:boxcolor=0x0e1a2b@0.85:boxborderw=26:x=(w-text_w)/2:y=230"]
+SW, SH = 1080, 1920
+SHORT_MAX = 59.0
+END_CARD = 2.5
+
+
+def short_lines(text, n, k=3):
+    return wrap(text, n)[:k]
+
+
+def short_piece(kind, src, a, d, long_mp4, out):
+    """One beat of a Short, upright 1080x1920, with the long video's sound for that beat:
+    a scene fills the screen (centre crop of the long video's picture); a card is its upright version."""
+    if kind == "card":
+        frames = int(round(d * FPS))
+        graph = (f"[0:v]scale={SW}:{SH},zoompan=z='1+0.03*on/{max(1, frames)}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+                 f":d={max(1, frames)}:s={SW}x{SH}:fps={FPS},setsar=1,format=yuv420p[v]")
+        run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-ss", f"{a:.3f}", "-t", f"{d:.3f}",
+             "-i", long_mp4, "-filter_complex", graph, "-map", "[v]", "-map", "1:a", "-t", f"{d:.3f}", *V_OUT, out])
+    else:
+        run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", long_mp4,
+             "-filter_complex", f"[0:v]scale=-2:{SH}:flags=lanczos,crop={SW}:{SH},setsar=1,fps={FPS},format=yuv420p[v]",
+             "-map", "[v]", "-map", "0:a", "-t", f"{d:.3f}", *V_OUT, out])
+    return d
+
+
+def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing):
+    """An upright Short made from the beats sh["start"]..sh["end"] of the long video. The title card and the
+    Professor are left out (they belong to the long video); it ends on an end card."""
+    ids = [b["id"] for b in st["beats"]]
+    i0, i1 = ids.index(sh["start"]), ids.index(sh["end"])
+    pieces, remap, t = [], [], 0.0
+    for b in st["beats"][i0:i1 + 1]:
+        if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title"):
+            continue
+        a, e = beat_times[b["id"]]
+        d = min(e - a, SHORT_MAX - END_CARD - t)
+        if d < 1.0:
+            break
+        kind = "card" if b["type"] == "card" or b["id"] in missing else "scene"
+        piece = os.path.join(tmp, f"short{k}_{b['id']}.mp4")
+        short_piece(kind, pcard.get(b["id"]), a, d, long_mp4, piece)
+        pieces.append(piece); remap.append((a, a + d, t)); t += d
+    if not pieces:
+        return None, 0
+    endp = os.path.join(tmp, f"short{k}_end.mp4")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-i", pcard["__end__"], "-f", "lavfi", "-i",
+         "anullsrc=r=48000:cl=stereo", "-filter_complex",
+         f"[0:v]scale={SW}:{SH},setsar=1,fps={FPS},format=yuv420p[v]",
+         "-map", "[v]", "-map", "1:a", "-t", f"{END_CARD}", *V_OUT, endp])
+    pieces.append(endp); total = t + END_CARD
+
+    # title at the top (one drawtext per line, no line breaks inside the text) + captions near the bottom
+    title = re.sub(r"\b\d+\s*sec(ond)?s?\b", f"{int(round(t / 5.0) * 5)} seconds", sh["title"], flags=re.I)
+    draws = []
+    for j, line in enumerate(short_lines(title.upper(), 22, 3)):
+        f = drawtext_file(tmp, f"short{k}_t{j}.txt", line)
+        draws.append(f"drawtext=fontfile='{FONT}':textfile='{f}':fontsize=64:fontcolor=white:box=1:"
+                     f"boxcolor=0x0e1a2b@0.85:boxborderw=20:x=(w-text_w)/2:y={170 + j * 100}:enable='lt(t,{t:.2f})'")
     n = 0
     for text, ca, cb in cues:
-        if cb <= a or ca >= a + dur:
-            continue
-        ca, cb = max(ca, a) - a, min(cb, a + dur) - a
-        f = drawtext_file(tmp, f"short{k}_cap{n}.txt", "\n".join(wrap(text, 30)[:3]))
-        vf.append(f"drawtext=fontfile='{FONT}':textfile='{f}':fontsize=54:line_spacing=10:fontcolor=white:text_align=center:"
-                  f"borderw=5:bordercolor=black:x=(w-text_w)/2:y=1420:enable='between(t,{ca:.2f},{cb:.2f})'")
-        n += 1
-    vf.append(f"drawtext=fontfile='{FONT}':text='Full case on the channel':fontsize=40:fontcolor=0xd9ab4f:borderw=4:bordercolor=black:"
-              f"x=(w-text_w)/2:y=1760")
-    graph = vf[0] + ";" + vf[1] + ";" + vf[2] + ";" + vf[3] + ";" + ",".join(vf[4:]) + "[v]"
-    run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.3f}", "-t", f"{dur:.3f}", "-i", long_mp4,
-         "-filter_complex", graph, "-map", "[v]", "-map", "0:a",
-         "-af", f"afade=t=out:st={max(0, dur - 0.8):.2f}:d=0.8", *V_OUT, out])
-    return dur
+        for a, e, off in remap:
+            if cb <= a or ca >= e:
+                continue
+            s0, s1 = max(ca, a) - a + off, min(cb, e) - a + off
+            if s1 - s0 < 0.6 and not (ca >= a and cb <= e):
+                continue        # only the tail of a caption from a beat that is left out: skip it
+            for j, line in enumerate(short_lines(text, 28, 3)):
+                f = drawtext_file(tmp, f"short{k}_c{n}_{j}.txt", line)
+                draws.append(f"drawtext=fontfile='{FONT}':textfile='{f}':fontsize=58:fontcolor=white:borderw=6:"
+                             f"bordercolor=black:x=(w-text_w)/2:y={1400 + j * 78}:enable='between(t,{s0:.2f},{s1:.2f})'")
+            n += 1
+    inputs = sum((["-i", pth] for pth in pieces), [])
+    graph = "".join(f"[{i}:v][{i}:a]" for i in range(len(pieces))) + f"concat=n={len(pieces)}:v=1:a=1[cv][ca]"
+    graph += ";[cv]" + ",".join(draws) + "[v]" if draws else ";[cv]null[v]"
+    graph += f";[ca]afade=t=out:st={max(0, total - END_CARD - 0.6):.2f}:d=0.6,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]"
+    script = os.path.join(tmp, f"short{k}.txt"); open(script, "w", encoding="utf-8").write(graph)
+    run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex_script", script, "-map", "[v]", "-map", "[a]",
+         *V_OUT, "-movflags", "+faststart", out])
+    return title, ai_assemble.duration(out)
 
 
 # ------------------------------------------------------------------ main
@@ -336,7 +426,16 @@ def main():
             missing.append(b["id"])
             card_jobs.append(({"style": "chapter", "heading": b.get("chapter") or st["case"], "sub": st["case"]},
                               "", "", png)); card_png[b["id"]] = png
-    log(f"cards: {len(card_jobs)} ({len(missing)} in place of missing scenes)")
+    pcard = {}
+    for job in list(card_jobs):
+        bid = os.path.basename(job[3])[:-4]
+        pcard[bid] = os.path.join(tmp, f"{bid}_short.png")
+        card_jobs.append((*job[:3], pcard[bid], True))
+    pcard["__end__"] = os.path.join(tmp, "end_short.png")
+    short_case = re.sub(r"\s*\(.*?\)", "", st["case"])
+    card_jobs.append(({"style": "chapter", "heading": "Watch the full case", "sub": f"{short_case} · on the channel"},
+                      "", "", pcard["__end__"], True))
+    log(f"cards: {len(card_jobs)} ({len(missing)} in place of missing scenes, upright versions for the Shorts)")
     render_cards(card_jobs)
 
     # 2. one or two video segments per beat
@@ -367,7 +466,7 @@ def main():
                 seg_still(last_frame(ai_assemble.clip(engine_dir, b["id"]), os.path.join(tmp, f"last{i}.png")),
                           wav, dur, out, fade=False)
             else:
-                seg_still(card_png[b["id"]], wav, dur, out, fade=True)
+                seg_still(card_png[b["id"]], wav, dur, out)
             segs.append(out)
             cues += [(s, t + x, t + y) for s, x, y in times]
             t += ai_assemble.duration(out)
@@ -412,9 +511,11 @@ def main():
         if sb - sa < 15:
             continue
         out = os.path.join(out_dir, f"{base}-short{k}.mp4")
-        d = make_short(long_mp4, sa, sb, sh["title"], cap, out, tmp, k)
-        shorts.append({"file": out, "title": sh["title"], "duration": d}); files.append(out)
-        log(f"Short {k}: {d:.0f}s · {sh['title']}")
+        title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing)
+        if not title:
+            continue
+        shorts.append({"file": out, "title": title, "duration": d}); files.append(out)
+        log(f"Short {k}: {d:.0f}s · {title}")
 
     # 5. posting plan
     chaps = chapters(marks, total)

@@ -1,16 +1,19 @@
 """On-screen cards for the landmark videos (case title, the law, the Court's holdings, timeline, exam recap...).
 
 Each card is a small HTML page drawn by headless Chromium into a 1920x1080 PNG; the video then shows it with a slow
-zoom while the Professor's narration plays.
+zoom while the Professor's narration plays. The Shorts get an upright 1080x1920 version of the same card (portrait=True),
+with the content in the middle band, between the Short's title at the top and the captions at the bottom.
 """
 import html
 import os
 
 FONTS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "render", "fonts")
 W, H = 1920, 1080
+PW, PH = 1080, 1920          # upright cards for the Shorts
 GOLD, INK, PAPER, MUTED = "#d9ab4f", "#0e1a2b", "#f4efe4", "#a9b4c4"
 
-CSS = f"""
+def css(w, h, portrait=False):
+    return f"""
 @font-face {{ font-family: L; src: url('file://{FONTS}/Lora-Variable.ttf'); font-weight: 400 700; }}
 @font-face {{ font-family: L; src: url('file://{FONTS}/Lora-Italic-Variable.ttf'); font-weight: 400 700; font-style: italic; }}
 @font-face {{ font-family: T; src: url('file://{FONTS}/Inter-Medium.otf'); font-weight: 500; }}
@@ -18,7 +21,7 @@ CSS = f"""
 @font-face {{ font-family: T; src: url('file://{FONTS}/Inter-Bold.otf'); font-weight: 700; }}
 @font-face {{ font-family: D; src: url('file://{FONTS}/InterDisplay-ExtraBold.otf'); font-weight: 800; }}
 * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-html, body {{ width: {W}px; height: {H}px; overflow: hidden; }}
+html, body {{ width: {w}px; height: {h}px; overflow: hidden; }}
 body {{ font-family: T, sans-serif; color: {PAPER};
   background: radial-gradient(ellipse at 30% 20%, #1d3150 0%, {INK} 55%, #070e18 100%); }}
 .frame {{ position: absolute; inset: 44px; border: 2px solid rgba(217,171,79,.35); border-radius: 6px; }}
@@ -52,6 +55,7 @@ h1.big {{ font-size: 92px; text-align: center; }}
   padding: 20px 28px; }}
 .cell b {{ display: block; font: 700 26px T; letter-spacing: 3px; text-transform: uppercase; color: {GOLD}; }}
 .cell span {{ display: block; margin-top: 8px; font: 500 34px/1.32 T; }}
+.cell span b {{ display: inline; font: inherit; font-weight: 700; letter-spacing: 0; text-transform: none; color: #fff; }}
 .tl {{ position: relative; margin-top: 70px; display: flex; justify-content: space-between; }}
 .tl:before {{ content: ""; position: absolute; left: 4%; right: 4%; top: 92px; height: 5px; background: {GOLD};
   opacity: .6; }}
@@ -61,6 +65,27 @@ h1.big {{ font-size: 92px; text-align: center; }}
   border: 6px solid {INK}; box-shadow: 0 0 0 4px {GOLD}; position: relative; }}
 .ev span {{ display: block; font: 500 32px/1.3 T; color: {PAPER}; }}
 svg text {{ font-family: T; }}
+""" + (PORTRAIT_CSS if portrait else "")
+
+
+PORTRAIT_CSS = """
+.frame, .top { display: none; }
+.main { left: 60px; right: 60px; top: 380px; bottom: 540px; }
+h1 { font-size: 76px; } h1.big { font-size: 84px; }
+.sub { font-size: 40px; }
+.stats { flex-direction: column; align-items: stretch; gap: 22px; }
+.stat { max-width: none; padding: 22px 28px; } .stat b { font-size: 28px; } .stat span { font-size: 48px; }
+.grid { grid-template-columns: 1fr; gap: 16px; margin-top: 26px; }
+.cell { padding: 14px 24px; } .cell b { font-size: 28px; } .cell span { font-size: 40px; margin-top: 4px; }
+.list { margin-top: 32px; gap: 26px; } .num { width: 68px; height: 68px; font-size: 34px; line-height: 68px; }
+.row .txt { font-size: 44px; padding-top: 4px; }
+.quote { font-size: 92px; padding: 0 10px; }
+.tl { flex-direction: column; margin-top: 40px; gap: 34px; }
+.tl:before { display: none; }
+.ev { text-align: left; display: flex; align-items: baseline; gap: 30px; padding: 0; }
+.ev b { flex: none; width: 170px; font-size: 60px; height: auto; color: #d9ab4f; }
+.ev i { display: none; }
+.ev span { font-size: 44px; }
 """
 
 
@@ -74,7 +99,21 @@ def _bold(s):
     return re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", _e(s))
 
 
-def card_html(card, case, chapter):
+def _tri_label(x, y, it, sw, portrait):
+    """The text next to one corner of the triangle. Upright cards: above the top corner, and the bottom ones aligned
+    to the outer edge so they never run off the card."""
+    if not portrait:
+        tx, ty, anchor = (x, y + 130, "middle") if y > 300 else (x + 110, y + 12, "start")
+    elif y > 300:
+        tx, ty, anchor = (x - 84, y + 135, "start") if x < sw / 2 else (x + 84, y + 135, "end")
+    else:
+        tx, ty, anchor = x, y - 115, "middle"
+    return (f"<text x='{tx}' y='{ty}' text-anchor='{anchor}' font-size='{40 if portrait else 38}' "
+            f"font-weight='600' fill='{PAPER}'>{_e(it['text'])}</text>")
+
+
+def card_html(card, case, chapter, portrait=False):
+    w, h = (PW, PH) if portrait else (W, H)
     style = card.get("style", "holding")
     items = card.get("items") or []
     top = f"<div class='top'><span>{_e(chapter or 'Landmark Case')}</span><span>{_e(case)}</span></div>"
@@ -90,18 +129,19 @@ def card_html(card, case, chapter):
         body = (f"<div class='quote'>{_e(card['heading'])}</div>"
                 f"<div class='rule'></div><div class='sub center'>{_e(card.get('sub'))}</div>")
     elif style == "triangle":
-        pts = [(W / 2 - 110, 130), (W / 2 - 110 - 560, 560), (W / 2 - 110 + 560, 560)]
+        sw = w - (140 if portrait else 220)
+        half = 300 if portrait else 560
+        top_y = 210 if portrait else 130
+        pts = [(sw / 2, top_y), (sw / 2 - half, 560), (sw / 2 + half, 560)]
         labels = (items + [{"label": "", "text": ""}] * 3)[:3]
-        svg = [f"<svg width='{W - 220}' height='700' viewBox='0 0 {W - 220} 700'>",
+        svg = [f"<svg width='{sw}' height='700' viewBox='0 0 {sw} 700'>",
                f"<polygon points='{' '.join(f'{x},{y}' for x, y in pts)}' fill='rgba(217,171,79,.08)' "
                f"stroke='{GOLD}' stroke-width='6' stroke-linejoin='round'/>"]
         for (x, y), it in zip(pts, labels):
             svg.append(f"<circle cx='{x}' cy='{y}' r='84' fill='{GOLD}'/>"
                        f"<text x='{x}' y='{y + 2}' text-anchor='middle' dominant-baseline='middle' font-size='34' "
                        f"font-weight='800' fill='{INK}'>{_e(it['label'].replace('Article ', 'Art. '))}</text>"
-                       f"<text x='{x + (0 if y > 300 else 110)}' y='{y + (130 if y > 300 else 12)}' "
-                       f"text-anchor='{'middle' if y > 300 else 'start'}' font-size='38' "
-                       f"font-weight='600' fill='{PAPER}'>{_e(it['text'])}</text>")
+                       + _tri_label(x, y, it, sw, portrait))
         svg.append("</svg>")
         body = (f"<h1 class='center' style='font-size:62px'>{_e(card['heading'])}</h1>"
                 f"<div style='margin-top:40px'>{''.join(svg)}</div>")
@@ -122,21 +162,25 @@ def card_html(card, case, chapter):
                 + "".join(f"<div class='row'><div class='num'>{n}</div><div class='txt'><i>{_e(i['label'])}</i>"
                           f"{' · ' if i.get('label') and i.get('text') else ''}{_bold(i['text'])}</div></div>"
                           for n, i in enumerate(items[:5], 1)) + "</div>")
-    return (f"<!doctype html><html><head><meta charset='utf-8'><style>{CSS}</style></head><body>"
+    return (f"<!doctype html><html><head><meta charset='utf-8'><style>{css(w, h, portrait)}</style></head><body>"
             f"<div class='frame'></div>{top}<div class='main'>{body}</div></body></html>")
 
 
 def render_cards(jobs):
-    """jobs: [(card dict, case name, chapter, out_png)] -> PNGs (one browser for all)."""
+    """jobs: [(card dict, case name, chapter, out_png[, portrait])] -> PNGs (one browser for all)."""
     if not jobs:
         return
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = p.chromium.launch(args=["--allow-file-access-from-files"])
-        pg = b.new_page(viewport={"width": W, "height": H})
-        for card, case, chapter, out in jobs:
+        pages = {False: b.new_page(viewport={"width": W, "height": H}),
+                 True: b.new_page(viewport={"width": PW, "height": PH})}
+        for job in jobs:
+            card, case, chapter, out = job[:4]
+            portrait = bool(job[4]) if len(job) > 4 else False
+            pg = pages[portrait]
             tmp = out + ".html"
-            open(tmp, "w", encoding="utf-8").write(card_html(card, case, chapter))
+            open(tmp, "w", encoding="utf-8").write(card_html(card, case, chapter, portrait))
             pg.goto("file://" + os.path.abspath(tmp))
             pg.evaluate("document.fonts.ready")
             pg.wait_for_timeout(150)
