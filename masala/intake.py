@@ -63,8 +63,9 @@ def main():
         notes.append(f"✅ {slug}: {len(st['scenes'])} scenes" + (f", {len(warns)} warning(s)" if warns else ""))
         log(notes[-1])
     if files:
-        subprocess.run(["git", "add", "-A", INBOX, os.path.join(HERE, "stories"), os.path.join(HERE, "rejected")],
-                       cwd=ROOT, check=False)
+        # only folders that exist: git add stops (and adds nothing) at a path that does not exist
+        paths = [p for p in (INBOX, os.path.join(HERE, "stories"), os.path.join(HERE, "rejected")) if os.path.exists(p)]
+        subprocess.run(["git", "add", "-A", *paths], cwd=ROOT, check=True)
         subprocess.run(["git", "commit", "-q", "-m", "Masala inbox: " + ("; ".join(notes) or "rejected a story")],
                        cwd=ROOT, check=False)
         subprocess.run(["git", "pull", "-q", "--rebase", "--autostash"], cwd=ROOT, check=False)
