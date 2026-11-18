@@ -17,6 +17,8 @@ Hindi TV-serial-style drama Shorts, written with Claude in chat and made by the 
    - **Short ready:** the Short, its thumbnail, Hindi captions (.srt) and the posting plan (title, description with
      credits, tags). Upload by hand from YouTube Studio and set *Altered or synthetic content = Yes*.
 
+To skip the 11 am–3 pm wait, add `"send_now": true` to the story file (Kaggle's evening queue can be 2–3 hours).
+
 To make a story again (after changing it), paste the changed file again. A file whose scenes did not change re-uses
 the clips Kaggle already made; any change to the characters, clothes or scenes makes new clips.
 

@@ -129,6 +129,9 @@ def main():
     log(f"job: {len(job['scenes'])} clips")
     now = datetime.datetime.now(datetime.timezone.utc)
     in_slot = datetime.time(5, 30) <= now.time() <= datetime.time(9, 30)     # 11:00 am - 3:00 pm India time
+    if st.get("send_now"):  # "send_now": true in the story file: don't wait for the slot (the queue may be long)
+        log("send_now: sending straight away, outside the 11 am-3 pm slot")
+        in_slot = True
     if not in_slot:
         os.makedirs(os.path.dirname(waiting), exist_ok=True)
         json.dump({"job": name, "week": f"masala:{a.story}", "created_at": now.strftime("%Y-%m-%dT%H:%M:%SZ")},
