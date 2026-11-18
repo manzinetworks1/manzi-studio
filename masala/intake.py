@@ -67,7 +67,7 @@ def main():
                        cwd=ROOT, check=False)
         subprocess.run(["git", "commit", "-q", "-m", "Masala inbox: " + ("; ".join(notes) or "rejected a story")],
                        cwd=ROOT, check=False)
-        subprocess.run(["git", "pull", "-q", "--rebase"], cwd=ROOT, check=False)
+        subprocess.run(["git", "pull", "-q", "--rebase", "--autostash"], cwd=ROOT, check=False)
         subprocess.run(["git", "push", "-q"], cwd=ROOT, check=False)
     else:
         log("the inbox is empty")

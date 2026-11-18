@@ -48,9 +48,9 @@ jobs:
           git config user.name "Manzi Studio"; git config user.email "manzi-studio@users.noreply.github.com"
           READY=""
           for S in ${{ steps.inbox.outputs.stories }}; do
-            : > ai.txt
-            GITHUB_OUTPUT=ai.txt python masala/job.py --story "$S"
-            STATE=$(sed -n 's/^ai=//p' ai.txt)
+            : > "$RUNNER_TEMP/ai.txt"
+            GITHUB_OUTPUT="$RUNNER_TEMP/ai.txt" python masala/job.py --story "$S"
+            STATE=$(sed -n "s/^ai=//p" "$RUNNER_TEMP/ai.txt")
             echo "$S: $STATE"
             if [ "$STATE" = "ready" ]; then READY="$READY $S"
             else python masala/mail_started.py "$S" "$STATE"; fi

@@ -138,7 +138,7 @@ def main():
                   open(waiting, "w"), indent=2)
     subprocess.run(["git", "add", "-A", path, os.path.dirname(waiting)], cwd=ROOT, check=True)
     subprocess.run(["git", "commit", "-q", "-m", f"Manzi Engine job: masala short {a.story}"], cwd=ROOT, check=False)
-    subprocess.run(["git", "pull", "-q", "--rebase"], cwd=ROOT, check=False)
+    subprocess.run(["git", "pull", "-q", "--rebase", "--autostash"], cwd=ROOT, check=False)
     subprocess.run(["git", "push", "-q"], cwd=ROOT, check=True)
     if in_slot:
         subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={name}", "-f", "wait_minutes=170",
