@@ -40,9 +40,9 @@ def seed_for(slug, sid):
     return int(hashlib.sha1(f"masala/{slug}/{sid}".encode()).hexdigest()[:8], 16) % 900_000_000 + 10_000
 
 
-def who(c, outfit=None):
+def who(c, outfit=None, face=None):
     g = c.get("gender", "")
-    d = f"{c['name']} (a {c['age']}-year-old Indian {g}: {c['face'].strip().rstrip('.')}"
+    d = f"{c['name']} (a {c['age']}-year-old Indian {g}: {(face or c['face']).strip().rstrip('.')}"
     return d + (f"; wearing {outfit.strip().rstrip('.')})" if outfit else ")")
 
 
@@ -63,7 +63,7 @@ def scene_prompt(st, s):
                      f"{chars[sh]['name']}'s face is NOT visible.")
     for pid, p in people.items():
         eyes = p["eyes"]
-        line = (f"{SPOT.get(p['where'], p['where'])}: {who(chars[pid], wear[pid])}, {TURN.get(p['faces'], p['faces'])}, "
+        line = (f"{SPOT.get(p['where'], p['where'])}: {who(chars[pid], wear[pid], p.get("face"))}, {TURN.get(p['faces'], p['faces'])}, "
                 f"eyes on {name(eyes)} the whole time")
         if eyes in chars and eyes not in people and eyes != sh:
             line += " (who is off-screen)"
@@ -93,9 +93,22 @@ def scene_prompt(st, s):
         noisy = [x for x in people if people[x].get("sound")]
         parts.append("Nobody speaks." + "".join(f" {name(x)} {people[x]['sound'].strip().rstrip('.')}." for x in noisy))
     if people:
-        seen = [name(x) for x in people] + ([f"the shoulder of {name(sh)}"] if sh else [])
-        parts.append(f"Exactly {len(people)} {'figure' if len(people) == 1 else 'figures'} fully in the frame "
-                     f"({', '.join(seen)}); each appears only once; nobody else.")
+        humans = [x for x in people if not is_animal(chars[x])]
+        animals = [x for x in people if is_animal(chars[x])]
+        if animals:  # say humans and animals apart: "a two-shot" with a dog made H3 add a second man
+            cnt = lambda n, one, many: f"{'ONE' if n == 1 else n} {one if n == 1 else many}"
+            txt = (f"Who is in this shot: {cnt(len(humans), 'human', 'humans')}"
+                   + (f" ({', '.join(name(x) for x in humans)})" if humans else "")
+                   + f" and {cnt(len(animals), 'animal', 'animals')} ({', '.join(name(x) for x in animals)})"
+                   + (f", plus the shoulder of {name(sh)}" if sh else "")
+                   + f". There is only {'one' if len(humans) == 1 else len(humans) or 'no'} human and only "
+                     f"{'one' if len(animals) == 1 else len(animals)} animal in this shot; nobody appears twice; "
+                     "no other people and no other animals anywhere, not even in the background.")
+            parts.append(txt.replace("only no human", "no human"))
+        else:
+            seen = [name(x) for x in people] + ([f"the shoulder of {name(sh)}"] if sh else [])
+            parts.append(f"Exactly {len(people)} {'figure' if len(people) == 1 else 'figures'} fully in the frame "
+                         f"({', '.join(seen)}); each appears only once; nobody else.")
     if not any(p.get("to_camera") for p in people.values()):
         parts.append("Nobody looks into the camera lens: the camera is an invisible observer that nobody notices.")
     parts.append("Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV "
@@ -127,7 +140,7 @@ def plan(st):
              "duration": f"{SETTINGS['clip_seconds']} s", "preview": SETTINGS["preview"]}
         cont = prev if (s.get("continue") and prev) else None
         key = hashlib.sha1(json.dumps([f, cont], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:6]
-        cid = f"{s['id']}-{key}"
+        cid = s.get("clip") or f"{s['id']}-{key}"  # "clip": an approved clip, kept even if the prompt rules change
         out.append((s, cid, f, cont))
         prev = cid
     return out

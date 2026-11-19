@@ -15,10 +15,10 @@ SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 # The shots H3 handles well. Every scene picks one, and says for each person where they stand, which way they face and
 # where their eyes go: without that, a speaking person tends to look into the camera.
 SHOTS = {
-    "two-shot-profile": (2, "Medium two-shot at eye level, the camera to the side of both people, so both are seen "
-                            "in profile, facing each other"),
-    "two-shot-three-quarter": (2, "Medium two-shot at eye level, the camera slightly on the listener's side, so the "
-                                  "speaker is seen in three-quarter view and the listener in near-profile"),
+    "two-shot-profile": (2, "Medium two-shot at eye level, the camera to the side of both figures, so both are "
+                            "seen in profile, facing each other"),
+    "two-shot-three-quarter": (2, "Medium two-shot at eye level, the camera slightly to one side, so one figure is seen "
+                                  "in three-quarter view and the other in near-profile"),
     "close-up": (1, "Close-up of one face at eye level, filling the upper half of the frame; the other person is "
                     "off-screen"),
     "medium": (1, "Medium shot of one person at eye level, from the waist up; anyone else is off-screen"),
@@ -94,6 +94,8 @@ def check(st):
         if s.get("id") in ids:
             E.append(f"{sid}: id used twice.")
         ids.add(s.get("id"))
+        if s.get("clip") and not str(s["clip"]).startswith(f"{s.get('id')}-"):
+            E.append(f"{sid}: \"clip\" must be one of this scene's clips (like {s.get('id')}-3fa91c).")
         for k in ("day", "place", "action"):
             if not s.get(k):
                 E.append(f"{sid}: missing \"{k}\".")

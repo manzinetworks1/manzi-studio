@@ -113,54 +113,55 @@ def freezes(mp4, min_s=2.0):
     return [(a, b) for a, b in zip(starts, ends + [None] * (len(starts) - len(ends)))]
 
 
-def deliver_draft(a, cfg, st, out_dir, tmp, short, total, stuck, missing, starts, cids, t_all):
-    """Draft: the rough Short plus a picture sheet (3 frames of every clip, labelled), then the "Draft ready" email."""
-    draft = os.path.join(out_dir, f"{a.story}-DRAFT.mp4")
-    os.replace(short, draft)
-    rows = []
+def deliver_draft(a, cfg, st, out_dir, tmp, missing, starts, cids, t_all):
+    """Draft: every clip on its own (not joined) plus a picture sheet (3 frames of every clip, labelled), then the
+    "Draft ready" email. Clips are joined into the Short only by the final run, which you start yourself."""
+    rows, files = [], []
     for sid, (t0, d) in starts.items():
+        src = os.path.join(tmp, f"{sid}.mp4")
+        clip = os.path.join(out_dir, f"{cids[sid]}.mp4")
+        shutil.copy(src, clip)
+        files.append(clip)
         pics = []
         for k, frac in enumerate((0.1, 0.5, 0.9)):
             png = os.path.join(tmp, f"sheet_{sid}_{k}.png")
-            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{d * frac:.2f}", "-i", os.path.join(tmp, f"{sid}.mp4"),
+            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{d * frac:.2f}", "-i", src,
                  "-frames:v", "1", "-vf", "scale=270:480", png])
             pics.append(png)
         row = os.path.join(tmp, f"row_{sid}.png")
         run(["ffmpeg", "-y", "-loglevel", "error", *sum((["-i", p] for p in pics), []), "-filter_complex",
-             f"hstack=3,pad=iw+120:ih:120:0:white,drawtext=text='{sid}':x=18:y=20:fontsize=40:fontcolor=black", row])
+             f"hstack=3,pad=iw+150:ih:150:0:white,drawtext=text='{sid}':x=18:y=20:fontsize=40:fontcolor=black", row])
         rows.append(row)
     sheet = os.path.join(out_dir, f"{a.story}-DRAFT-sheet.jpg")
     run(["ffmpeg", "-y", "-loglevel", "error", *sum((["-i", r] for r in rows), []), "-filter_complex",
          f"vstack={len(rows)}" if len(rows) > 1 else "null", "-q:v", "3", sheet])
-    files = [draft, sheet]
-    log(f"draft made in {(time.time() - t_all) / 60:.1f} min")
+    files.append(sheet)
+    log(f"draft clips ready in {(time.time() - t_all) / 60:.1f} min")
     where, links = "(not uploaded)", {}
     if not a.no_upload:
         stamp = time.strftime("%Y%m%d-%H%M", time.gmtime())
         where, links = deliver.release_upload(files, f"masala-draft-{a.story}-{stamp}", f"Masala DRAFT: {st['title']}",
-                                              "Draft clips (544p) to check before the final.")
+                                              "Draft clips (544p), one per scene, to check before the final.")
     if not a.no_email:
         e = html.escape
         repo = os.environ.get("GITHUB_REPOSITORY", "manzinetworks1/manzi-studio")
         run_url = f"https://github.com/{repo}/actions/workflows/masala_make.yml"
         lk = lambda f: links.get(os.path.basename(f), where)
         rows_html = "".join(
-            f"<tr><td><b>{s['id']}</b></td><td>{e(s['stage']['shot'])}</td><td>{e((s.get('line') or '(no line)'))}</td></tr>"
-            for s in st["scenes"])
-        notes = ([f"Not made (left out): {', '.join(missing)}."] if missing else []) + \
-                (["Still pictures of 2 s or more at: " + ", ".join(f"{x:.0f}s" for x, _ in stuck) + "."] if stuck else [])
-        mail.send(cfg, f"[Masala Shorts] Draft ready to check: {st['title']}",
-                  f"<h2 style='margin:0'>👀 Draft ready: please check every clip</h2>"
-                  f"<p>📱 <a href='{lk(draft)}'><b>Draft Short</b></a> ({total:.0f}s, 544p, not sharpened) · "
-                  f"🖼️ <a href='{lk(sheet)}'><b>picture sheet</b></a> (3 frames of every clip)</p>"
-                  + (f"<p>⚠️ {e(' '.join(notes))}</p>" if notes else "")
-                  + "<p>Look at who faces whom, where the eyes go, faces, and the Hindi lip-sync.</p>"
+            f"<tr><td><b>{s['id']}</b></td><td>{'✅ approved' if s.get('clip') else '🆕 to check'}</td>"
+            f"<td>{'<a href=' + chr(39) + lk(os.path.join(out_dir, cids[s['id']] + '.mp4')) + chr(39) + '>clip</a>' if s['id'] in starts else '❌ not made'}</td>"
+            f"<td>{e(s.get('line') or '(no line)')}</td></tr>" for s in st["scenes"])
+        mail.send(cfg, f"[Masala Shorts] Draft clips to check: {st['title']}",
+                  f"<h2 style='margin:0'>👀 Draft clips ready: please check the new ones</h2>"
+                  f"<p>🖼️ <a href='{lk(sheet)}'><b>picture sheet</b></a> (3 frames of every clip). The clips are "
+                  "<b>not joined</b>: open each one below (544p, not sharpened).</p>"
+                  + (f"<p>⚠️ Not made: {e(', '.join(missing))}.</p>" if missing else "")
+                  + "<p>Look at who faces whom, where the eyes go, faces, clothes, and the Hindi lip-sync.</p>"
                   f"<table border='1' cellpadding='4' style='border-collapse:collapse'>{rows_html}</table>"
-                  "<p><b>Something wrong?</b> Tell Claude in the chat, e.g. <i>“s02: he must look at her”</i>. Only "
-                  "the changed scenes are made again.</p>"
-                  f"<p><b>All good?</b> <a href='{run_url}'>Open “M - Make masala short”</a> → <b>Run workflow</b> → "
-                  f"story <code>{e(a.story)}</code>, mode <code>final</code>. The same clips are sharpened to 720p "
-                  "(about 9 min each) and you get the <b>Short ready</b> email.</p>")
+                  "<p><b>Something wrong?</b> Tell Claude in the chat; only the changed scenes are made again.</p>"
+                  f"<p><b>All good?</b> Tell Claude, or <a href='{run_url}'>open “M - Make masala short”</a> → "
+                  f"<b>Run workflow</b> → story <code>{e(a.story)}</code>, mode <code>final</code>: the same clips are "
+                  "sharpened to 720p and joined into the Short.</p>")
     shutil.rmtree(tmp, ignore_errors=True)
     log("draft done")
 
@@ -200,6 +201,9 @@ def main():
         log(f"  {s['id']}: {d:.1f}s (total {t:.1f}s)")
     if not segs:
         raise SystemExit("No clips came back from Kaggle: nothing to put together.")
+
+    if mode == "draft":  # draft: the clips one by one, not joined
+        return deliver_draft(a, cfg, st, out_dir, tmp, missing, starts, cids, t_all)
 
     # 2. text pictures: hook, captions, end line
     jobs, overlays = [], []
@@ -258,9 +262,6 @@ def main():
     total = ai_assemble.duration(short)
     stuck = freezes(short)
     log(f"Short: {total:.1f}s, still stretches of 2 s or more: {len(stuck)}")
-
-    if mode == "draft":
-        return deliver_draft(a, cfg, st, out_dir, tmp, short, total, stuck, missing, starts, cids, t_all)
 
     # 4. captions file and posting plan
     srt = os.path.join(out_dir, f"{a.story}.hi.srt")

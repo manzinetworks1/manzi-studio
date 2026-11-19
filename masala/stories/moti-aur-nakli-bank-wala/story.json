@@ -77,7 +77,8 @@
             "does": "sits on the ground in front of her, taking the roti, tail wagging"
           }
         }
-      }
+      },
+      "clip": "s01-5435fa"
     },
     {
       "id": "s02",
@@ -99,7 +100,8 @@
             "expression": "a fake, polite smile"
           }
         }
-      }
+      },
+      "clip": "s02-2843ff"
     },
     {
       "id": "s03",
@@ -120,7 +122,8 @@
             "expression": "fear and shock, eyes welling up"
           }
         }
-      }
+      },
+      "clip": "s03-90c7b9"
     },
     {
       "id": "s04",
@@ -148,7 +151,8 @@
             "expression": "worried and confused"
           }
         }
-      }
+      },
+      "clip": "s04-6c66f3"
     },
     {
       "id": "s05",
@@ -169,8 +173,9 @@
             "where": "left",
             "faces": "right",
             "eyes": "moti",
-            "does": "steps back quickly with both hands raised in front of him",
-            "expression": "terrified: eyebrows raised, eyes wide, mouth open in fear, no smile at all"
+            "does": "jumps back a step in fright with both hands raised up in front of his chest, palms out",
+            "expression": "terrified: eyebrows raised, eyes wide, mouth open in fear, no smile at all",
+            "face": "sharp narrow face, thin trimmed moustache, small shifty dark eyes, medium-brown skin with light acne marks on the cheeks, short oiled black hair combed to the side, lean build, about 5 feet 8 inches"
           },
           "kamla": {
             "where": "background-right",
@@ -186,30 +191,31 @@
       "id": "s06",
       "day": 1,
       "place": "inside the small sitting room of the house, morning",
-      "action": "Moti leaps up, puts his front paws on Ramesh's chest, bites the blank card hanging on Ramesh's lanyard and yanks it off, then drops down and dashes out of the open front door with the card in his mouth",
+      "action": "Moti leaps up at Ramesh, bites the plain blue card hanging on Ramesh's lanyard and yanks it off: the lanyard snaps and comes away with the card; Moti lands on all four paws with the card and lanyard in his mouth and turns towards the open door",
       "speaker": "ramesh",
       "line": "अरे! मेरा कार्ड लौटा, कुत्ते!",
-      "sound": "A dog's snarl, a snapping cord, running paws",
+      "sound": "A snapping cord and running paws on the floor",
       "stage": {
-        "shot": "two-shot-three-quarter",
+        "shot": "two-shot-profile",
         "people": {
           "ramesh": {
             "where": "left",
-            "faces": "camera-right",
+            "faces": "right",
             "eyes": "moti",
-            "does": "stumbles backwards as the dog jumps on him, then reaches out after the dog, shouting",
+            "face": "sharp narrow face, thin trimmed moustache, small shifty dark eyes, medium-brown skin with light acne marks on the cheeks, short oiled black hair combed to the side, lean build, about 5 feet 8 inches",
+            "does": "stumbles backwards as the dog jumps at him and shouts; once the dog has pulled the lanyard off, Ramesh's chest is bare: no lanyard and no card on him",
             "expression": "shock and anger, no smile at all"
           },
           "moti": {
             "where": "right",
             "faces": "left",
             "eyes": "the card on Ramesh's chest",
-            "does": "leaps up with his front paws on Ramesh's chest, grabs the blank card in his teeth and pulls it off, then runs out of the door"
+            "does": "leaps up with his front paws on Ramesh's chest, bites the plain blue card and pulls hard so the lanyard snaps; lands on all four paws holding the card and lanyard in his mouth, then turns towards the open door"
           }
         }
       },
       "wear": {
-        "ramesh": "a light-blue formal shirt, dark trousers, a black office bag, and a blank blue card hanging on a lanyard around his neck (the dog pulls it off)"
+        "ramesh": "a light-blue formal shirt, dark trousers, a black office bag, and ONE plain blue card with nothing printed on it, hanging on a thin blue lanyard around his neck (the dog pulls the card and lanyard off together)"
       }
     },
     {
@@ -228,7 +234,8 @@
           }
         }
       },
-      "sound": "Running paws on the street, distant traffic and a scooter horn"
+      "sound": "Running paws on the street, distant traffic and a scooter horn",
+      "clip": "s06b-9cca2b"
     },
     {
       "id": "s07",
@@ -267,7 +274,8 @@
       "wear": {
         "ramesh": "a light-blue formal shirt and dark trousers, a black office bag; NO lanyard and NO card on his chest",
         "sunil": "a khaki Indian police uniform with a brown leather belt and a khaki beret; no lanyard, no ID card"
-      }
+      },
+      "clip": "s07-b7c73d"
     },
     {
       "id": "s08",
@@ -294,7 +302,8 @@
             "does": "stands in her arms, licking her cheek, tail wagging"
           }
         }
-      }
+      },
+      "clip": "s08-98f4a4"
     }
   ],
   "thumbnail": {
