@@ -72,7 +72,8 @@
       "sound": "A quiet evening room, a ticking wall clock",
       "cast": [
         "verma"
-      ]
+      ],
+      "clip": "s01-5ee908"
     },
     {
       "id": "s02",
@@ -97,7 +98,8 @@
       "sound": "A quiet room, a ceiling fan",
       "cast": [
         "sharma"
-      ]
+      ],
+      "clip": "s02-d0b288"
     },
     {
       "id": "s03",
@@ -122,7 +124,8 @@
       "sound": "A quiet room",
       "cast": [
         "meera"
-      ]
+      ],
+      "clip": "s03-cd30bc"
     },
     {
       "id": "s04",
@@ -155,7 +158,8 @@
       "cast": [
         "sharma",
         "meera"
-      ]
+      ],
+      "clip": "s04-9c44fb"
     },
     {
       "id": "s05",
@@ -185,7 +189,9 @@
       "cast": [
         "sharma",
         "verma"
-      ]
+      ],
+      "clip": "s05-66c1a8",
+      "mute": true
     },
     {
       "id": "s06",
@@ -218,7 +224,8 @@
       "cast": [
         "sharma",
         "verma"
-      ]
+      ],
+      "clip": "s06-bce1a5"
     },
     {
       "id": "s07",
@@ -243,7 +250,8 @@
       "sound": "Soft wedding music in the background",
       "cast": [
         "verma"
-      ]
+      ],
+      "clip": "s07-079ec5"
     },
     {
       "id": "s08",
@@ -268,7 +276,8 @@
       "sound": "The wedding music stops suddenly",
       "cast": [
         "meera"
-      ]
+      ],
+      "clip": "s08-0d8e7d"
     },
     {
       "id": "s09",
@@ -293,7 +302,8 @@
       "sound": "A silent courtyard, murmuring guests",
       "cast": [
         "verma"
-      ]
+      ],
+      "clip": "s09-a578a8"
     },
     {
       "id": "s10",
@@ -318,7 +328,8 @@
       "sound": "A silent courtyard, murmuring guests",
       "cast": [
         "meera"
-      ]
+      ],
+      "take": 2
     },
     {
       "id": "s11",
@@ -351,39 +362,25 @@
       "cast": [
         "meera",
         "sharma"
-      ]
+      ],
+      "clip": "s11-973b72"
     },
     {
       "id": "s12",
       "day": 2,
       "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
       "seconds": 10,
-      "action": "Sharma ji lowers his head in shame while Verma ji quietly puts the car key back on the brass tray",
+      "action": "Extreme close-up: Verma ji's hand, with gold rings and the maroon sleeve of his Nehru jacket, slowly puts the car key back down on a small decorated brass tray held by Sharma ji's hands in a cream silk sleeve",
       "stage": {
-        "shot": "two-shot-three-quarter",
-        "people": {
-          "sharma": {
-            "where": "left",
-            "faces": "camera-right",
-            "eyes": "the floor",
-            "does": "stands holding the brass tray, head lowered",
-            "expression": "ashamed, no smile at all"
-          },
-          "verma": {
-            "where": "right",
-            "faces": "camera-left",
-            "eyes": "the brass tray",
-            "does": "quietly puts the car key back on the brass tray in Sharma ji's hands",
-            "expression": "embarrassed, no smile at all"
-          }
-        }
+        "shot": "insert",
+        "people": {}
       },
       "narrator": {
         "line": "दहेज लेना ही नहीं, देना भी जुर्म है… 'गिफ़्ट' कहने से क़ानून नहीं बदलता!",
         "voice": "a young Indian woman's warm, playful, slightly teasing voice"
       },
       "caption_en": "Not just taking dowry, giving it is a crime too… calling it a 'gift' doesn't change the law!",
-      "sound": "A silent courtyard, a soft serious music note",
+      "sound": "A silent courtyard, the soft clink of the key on the brass tray, a soft serious music note",
       "cast": [
         "sharma",
         "verma"
@@ -393,7 +390,7 @@
       "id": "s13",
       "day": 2,
       "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
-      "action": "Meera, the hero of the story, looks straight into the camera with a proud warm smile while the narrator talks to the viewer",
+      "action": "Meera, the hero of the story, looks straight into the camera with a proud warm smile and talks to the viewer",
       "stage": {
         "shot": "medium",
         "people": {
@@ -407,15 +404,13 @@
           }
         }
       },
-      "narrator": {
-        "line": "मीरा के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
-        "voice": "a young Indian woman's warm, playful, slightly teasing voice"
-      },
-      "caption_en": "Meera deserves at least one like… and don't forget to subscribe!",
+      "caption_en": "I deserve at least one like… and don't forget to subscribe!",
       "sound": "Soft happy wedding music returns",
       "cast": [
         "meera"
-      ]
+      ],
+      "speaker": "meera",
+      "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!"
     }
   ],
   "law_card": {

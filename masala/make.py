@@ -58,12 +58,12 @@ def pace(full, out, spoken):
     return ai_assemble.duration(out)
 
 
-def seg(clip, out):
-    """One scene: upright 1080x1920, 30 fps, its own sound (silence if it has none), at normal speed."""
+def seg(clip, out, mute=False):
+    """One scene: upright 1080x1920, 30 fps, its own sound (silence if it has none or is muted), at normal speed."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{H},setsar=1,fps={FPS},format=yuv420p"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", "-i", clip]
-    if not has_audio(clip):
-        cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-shortest"]
+    if mute or not has_audio(clip):
+        cmd += ["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-map", "0:v", "-map", "1:a", "-shortest"]
     cmd += ["-vf", vf, "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k",
             "-ar", "48000", "-ac", "2", out]
     run(cmd)
@@ -259,9 +259,9 @@ def main():
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
         out = os.path.join(tmp, f"{s['id']}.mp4")
         if mode == "draft" or not SETTINGS.get("trim", True):
-            d = seg(clip, out)
+            d = seg(clip, out, s.get("mute"))
         else:
-            full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full)
+            full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute"))
             d = pace(full, out, spoken)
         segs.append(out); starts[s["id"]] = (t, d)
         a0, a1 = speech_span(out, d)

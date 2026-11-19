@@ -25,6 +25,7 @@ SHOTS = {
     "clean-over-shoulder": (1, "Over-the-shoulder shot at eye level"),
     "group": (3, "Medium-wide shot at eye level of three people standing apart from each other"),
     "wide": (None, "Wide shot at eye level showing the whole place"),
+    "insert": (0, "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame"),
     "low-angle": (None, "Low-angle shot from near the floor"),
 }
 WHERE = {"left", "right", "centre", "foreground-left", "foreground-right", "background", "background-left",
@@ -128,6 +129,9 @@ def check(st):
             E.append(f"{sid}: \"seconds\" must be 8 or 10.")
             secs = SETTINGS["clip_seconds"]
         nar = s.get("narrator")
+        if nar and (st_.get("people") or {}) and not s.get("allow_faces"):
+            W.append(f"{sid}: a narrator over a shot with people: H3 moves their lips to the narration. Use an "
+                     "\"insert\" shot (hands and objects) or a shot without faces.")
         if nar:
             if (s.get("line") or "").strip():
                 E.append(f"{sid}: a scene has either a character's line or a narrator, not both.")
@@ -160,10 +164,10 @@ def check(st):
         if cid in chars and not chars[cid].get("voice"):
             E.append(f"Character {cid} speaks but has no \"voice\" description.")
     last = scenes[-1] if scenes else {}
-    cta = ((last.get("narrator") or {}).get("line") or "")
+    cta = ((last.get("narrator") or {}).get("line") or "") + (last.get("line") or "")
     if not ("Like" in cta and "Subscribe" in cta):
         W.append("The last scene should be the hero's Like/Subscribe ending: the hero looks into the camera and the "
-                 "narrator says \"<hero> के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!\"")
+                 "hero says \"मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!\"")
     lc = st.get("law_card")
     if lc and (lc.get("scene") not in ids or not lc.get("title") or not lc.get("lines")):
         E.append("\"law_card\" needs \"scene\" (an existing scene id), \"title\" and \"lines\".")
@@ -191,7 +195,7 @@ def stage_errors(sid, st_, chars, E):
     n = SHOTS[shot][0]
     if n and len(people) != n:
         E.append(f"{sid}: a {shot} shows {n} {'person' if n == 1 else 'people'}; \"people\" has {len(people)}.")
-    if not people and shot not in ("wide",):
+    if not people and shot not in ("wide", "insert"):
         E.append(f"{sid}: \"people\" is empty.")
     if shot == "clean-over-shoulder":
         sh = st_.get("shoulder")

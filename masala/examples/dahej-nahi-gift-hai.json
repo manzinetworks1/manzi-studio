@@ -68,7 +68,11 @@
       "speaker": "verma",
       "line": "रिश्तेदार पूछेंगे, बहू क्या लाई… इज़्ज़त का सवाल है, समधी जी।",
       "caption_en": "Relatives will ask what the bride brought… it's about our honour.",
-      "sound": "A quiet evening room, a ticking wall clock"
+      "sound": "A quiet evening room, a ticking wall clock",
+      "cast": [
+        "verma"
+      ],
+      "clip": "s01-5ee908"
     },
     {
       "id": "s02",
@@ -90,7 +94,11 @@
       "speaker": "sharma",
       "line": "जी… जी समधी जी, आप बिल्कुल चिंता मत कीजिए।",
       "caption_en": "Yes… yes, please don't worry at all.",
-      "sound": "A quiet room, a ceiling fan"
+      "sound": "A quiet room, a ceiling fan",
+      "cast": [
+        "sharma"
+      ],
+      "clip": "s02-d0b288"
     },
     {
       "id": "s03",
@@ -112,7 +120,11 @@
       "speaker": "meera",
       "line": "पापा, क्या उन्होंने कुछ माँगा है?",
       "caption_en": "Papa, have they asked for something?",
-      "sound": "A quiet room"
+      "sound": "A quiet room",
+      "cast": [
+        "meera"
+      ],
+      "clip": "s03-cd30bc"
     },
     {
       "id": "s04",
@@ -141,7 +153,12 @@
       "speaker": "sharma",
       "line": "नहीं बेटा, हम तो अपनी ख़ुशी से दे रहे हैं।",
       "caption_en": "No, dear, we're giving it out of our own happiness.",
-      "sound": "A quiet room, a ceiling fan"
+      "sound": "A quiet room, a ceiling fan",
+      "cast": [
+        "sharma",
+        "meera"
+      ],
+      "clip": "s04-9c44fb"
     },
     {
       "id": "s05",
@@ -167,7 +184,13 @@
           }
         }
       },
-      "sound": "Wedding band music and cheering in the background"
+      "sound": "Wedding band music and cheering in the background",
+      "cast": [
+        "sharma",
+        "verma"
+      ],
+      "clip": "s05-66c1a8",
+      "mute": true
     },
     {
       "id": "s06",
@@ -196,7 +219,12 @@
       "speaker": "sharma",
       "line": "समधी जी, ये गाड़ी… हमारी तरफ़ से छोटा-सा तोहफ़ा!",
       "caption_en": "This car… a small gift from our side!",
-      "sound": "Soft wedding music in the background"
+      "sound": "Soft wedding music in the background",
+      "cast": [
+        "sharma",
+        "verma"
+      ],
+      "clip": "s06-bce1a5"
     },
     {
       "id": "s07",
@@ -218,7 +246,11 @@
       "speaker": "verma",
       "line": "अरे, इसकी क्या ज़रूरत थी… चलिए, आपकी ख़ुशी!",
       "caption_en": "Oh, there was no need… but if it makes you happy!",
-      "sound": "Soft wedding music in the background"
+      "sound": "Soft wedding music in the background",
+      "cast": [
+        "verma"
+      ],
+      "clip": "s07-079ec5"
     },
     {
       "id": "s08",
@@ -240,7 +272,11 @@
       "speaker": "meera",
       "line": "रुकिए! ये तोहफ़ा नहीं, दहेज है।",
       "caption_en": "Stop! This isn't a gift. It's dowry.",
-      "sound": "The wedding music stops suddenly"
+      "sound": "The wedding music stops suddenly",
+      "cast": [
+        "meera"
+      ],
+      "clip": "s08-0d8e7d"
     },
     {
       "id": "s09",
@@ -262,7 +298,11 @@
       "speaker": "verma",
       "line": "बहू! हमने तो कुछ माँगा ही नहीं था!",
       "caption_en": "Daughter-in-law! We never asked for anything!",
-      "sound": "A silent courtyard, murmuring guests"
+      "sound": "A silent courtyard, murmuring guests",
+      "cast": [
+        "verma"
+      ],
+      "clip": "s09-a578a8"
     },
     {
       "id": "s10",
@@ -284,7 +324,11 @@
       "speaker": "meera",
       "line": "माँगा था, अंकल… 'इज़्ज़त का सवाल है', याद है?",
       "caption_en": "You did, Uncle… 'it's about our honour', remember?",
-      "sound": "A silent courtyard, murmuring guests"
+      "sound": "A silent courtyard, murmuring guests",
+      "cast": [
+        "meera"
+      ],
+      "take": 2
     },
     {
       "id": "s11",
@@ -313,45 +357,39 @@
       "speaker": "meera",
       "line": "और पापा, दहेज देना भी उतना ही बड़ा जुर्म है।",
       "caption_en": "And Papa, giving dowry is just as big a crime.",
-      "sound": "A silent courtyard"
+      "sound": "A silent courtyard",
+      "cast": [
+        "meera",
+        "sharma"
+      ],
+      "clip": "s11-973b72"
     },
     {
       "id": "s12",
       "day": 2,
       "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
       "seconds": 10,
-      "action": "Sharma ji lowers his head in shame while Verma ji quietly puts the car key back on the brass tray",
+      "action": "Extreme close-up: Verma ji's hand, with gold rings and the maroon sleeve of his Nehru jacket, slowly puts the car key back down on a small decorated brass tray held by Sharma ji's hands in a cream silk sleeve",
       "stage": {
-        "shot": "two-shot-three-quarter",
-        "people": {
-          "sharma": {
-            "where": "left",
-            "faces": "camera-right",
-            "eyes": "the floor",
-            "does": "stands holding the brass tray, head lowered",
-            "expression": "ashamed, no smile at all"
-          },
-          "verma": {
-            "where": "right",
-            "faces": "camera-left",
-            "eyes": "the brass tray",
-            "does": "quietly puts the car key back on the brass tray in Sharma ji's hands",
-            "expression": "embarrassed, no smile at all"
-          }
-        }
+        "shot": "insert",
+        "people": {}
       },
       "narrator": {
         "line": "दहेज लेना ही नहीं, देना भी जुर्म है… 'गिफ़्ट' कहने से क़ानून नहीं बदलता!",
         "voice": "a young Indian woman's warm, playful, slightly teasing voice"
       },
       "caption_en": "Not just taking dowry, giving it is a crime too… calling it a 'gift' doesn't change the law!",
-      "sound": "A silent courtyard, a soft serious music note"
+      "sound": "A silent courtyard, the soft clink of the key on the brass tray, a soft serious music note",
+      "cast": [
+        "sharma",
+        "verma"
+      ]
     },
     {
       "id": "s13",
       "day": 2,
       "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
-      "action": "Meera, the hero of the story, looks straight into the camera with a proud warm smile while the narrator talks to the viewer",
+      "action": "Meera, the hero of the story, looks straight into the camera with a proud warm smile and talks to the viewer",
       "stage": {
         "shot": "medium",
         "people": {
@@ -365,12 +403,13 @@
           }
         }
       },
-      "narrator": {
-        "line": "मीरा के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
-        "voice": "a young Indian woman's warm, playful, slightly teasing voice"
-      },
-      "caption_en": "Meera deserves at least one like… and don't forget to subscribe!",
-      "sound": "Soft happy wedding music returns"
+      "caption_en": "I deserve at least one like… and don't forget to subscribe!",
+      "sound": "Soft happy wedding music returns",
+      "cast": [
+        "meera"
+      ],
+      "speaker": "meera",
+      "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!"
     }
   ],
   "law_card": {

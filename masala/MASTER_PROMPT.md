@@ -51,9 +51,16 @@ ahead.
 - **Animals may make a sound** in `stage.people.<id>.sound` ("barks sharply twice at the very start of the shot");
   add it to the scene's `sound` too. People never get a `sound`: only the scene's speaker speaks.
 - **Every story ends the same way (channel signature):** a last scene (8 s) where the story's hero looks straight
-  into the camera (`"to_camera": true`) and the off-screen female narrator (`"a young Indian woman's warm, playful,
-  slightly teasing voice"`) says: **"<hero> के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!"**, with
-  `"end_text": "Like 👍 Subscribe 🔔"` (shown at the top). The checker warns when it is missing.
+  into the camera (`"to_camera": true`) and **says it themselves** (so the lips match the voice):
+  **"मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!"**, with `"end_text": "Like 👍 Subscribe 🔔"` (shown at
+  the top). For an animal hero, the narrator says it over the animal ("इस डॉगी के लिए…", or the name if the story said
+  it). The checker warns when the ending is missing.
+- **A narrator only speaks over shots with no visible faces** (`"shot": "insert"`: hands and objects, or backs,
+  or a wide view): H3 moves the lips of anyone on screen to the narration (the father got a woman's voice).
+- **Silent scenes:** the `sound` says "no voices" (never "cheering", "crowd" or "chatter": H3 turns those into
+  gibberish talk). A finished clip with unwanted talking can get `"mute": true` (its sound is replaced, no GPU).
+- **No tiny face details** (moles, small scars): H3 draws them differently every time. Cars: no number plates.
+- A clip that came out broken (rotated, garbled) can be remade with a new seed: `"take": 2`.
 - **Law stories** ("you broke a law without knowing"): the scene before the ending is the narrator's one-line
   lesson, with a `law_card` on screen: `{"scene": "s12", "title": "⚖️ <Act, year>", "lines": ["Sec …: …"],
   "note": "For awareness only. Not legal advice."}`. Check every section and punishment on the web before writing

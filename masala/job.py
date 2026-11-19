@@ -122,9 +122,10 @@ def scene_prompt(st, s):
                      "serial; never cartoon, anime or plastic-looking.")
     else:
         parts.append("A real, photographed animal; never cartoon, anime or plastic-looking.")
-    parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Vertical 9:16 frame for a phone screen, "
+    parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Upright, normal orientation (never rotated "
+                 "or upside down). Vertical 9:16 frame for a phone screen, "
                  "faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, "
-                 "no shop signs, no posters, no name plates, no readable letters anywhere.")
+                 "no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.")
     return " ".join(parts)
 
 
@@ -147,7 +148,8 @@ def plan(st):
     """[(scene, clip id, engine fields, clip id it continues from)] in story order."""
     out, prev = [], None
     for s in st["scenes"]:
-        f = {"seed": seed_for(st["slug"], s["id"]), "scene": scene_prompt(st, s),
+        take = int(s.get("take", 1))  # "take": 2 -> a new seed for a remake that came out wrong
+        f = {"seed": seed_for(st["slug"], s["id"] if take == 1 else f"{s['id']}#{take}"), "scene": scene_prompt(st, s),
              "dialogue": ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
              "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["aspect"],
              "duration": f"{s.get('seconds', SETTINGS['clip_seconds'])} s", "preview": SETTINGS["preview"]}
