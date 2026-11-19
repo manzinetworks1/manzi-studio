@@ -19,9 +19,9 @@ SHOTS = {
                             "seen in profile, facing each other"),
     "two-shot-three-quarter": (2, "Medium two-shot at eye level, the camera slightly to one side, so one figure is seen "
                                   "in three-quarter view and the other in near-profile"),
-    "close-up": (1, "Close-up of one face at eye level, filling the upper half of the frame; the other person is "
+    "close-up": (1, "Close-up of one face at eye level, filling the upper half of the frame; anyone else is "
                     "off-screen"),
-    "medium": (1, "Medium shot of one person at eye level, from the waist up; anyone else is off-screen"),
+    "medium": (1, "Medium shot of one figure at eye level; anyone else is off-screen"),
     "clean-over-shoulder": (1, "Over-the-shoulder shot at eye level"),
     "group": (3, "Medium-wide shot at eye level of three people standing apart from each other"),
     "wide": (None, "Wide shot at eye level showing the whole place"),
@@ -123,13 +123,28 @@ def check(st):
         for pid, p in (st_.get("people") or {}).items():
             if p.get("sound") and pid in chars and not is_animal(chars[pid]):
                 E.append(f"{sid}: only animals get a \"sound\" ({pid} is a person; people only speak the scene's line).")
+        secs = s.get("seconds", SETTINGS["clip_seconds"])
+        if secs not in (8, 10):
+            E.append(f"{sid}: \"seconds\" must be 8 or 10.")
+            secs = SETTINGS["clip_seconds"]
+        nar = s.get("narrator")
+        if nar:
+            if (s.get("line") or "").strip():
+                E.append(f"{sid}: a scene has either a character's line or a narrator, not both.")
+            if not nar.get("line") or not nar.get("voice"):
+                E.append(f"{sid}: \"narrator\" needs \"line\" and \"voice\".")
+            elif words(nar["line"]) > int(secs * 2.4):
+                E.append(f"{sid}: the narrator's line has {words(nar['line'])} words; at most {int(secs * 2.4)} fit in "
+                         f"{secs} s (a voice-over can be a little faster than lip-synced speech).")
+        if st.get("captions") == "en" and ((s.get("line") or "").strip() or nar) and not s.get("caption_en"):
+            E.append(f"{sid}: English captions are on, so this scene needs \"caption_en\" (the line in English).")
         line = (s.get("line") or "").strip()
         if line:
             if s.get("speaker") not in (st_.get("people") or {}):
                 E.append(f"{sid}: the speaker must be one of the people in the shot ({', '.join(cast)}).")
             n = words(line)
-            if n > limit:
-                E.append(f"{sid}: the line has {n} words; at most {limit} fit in a {SETTINGS['clip_seconds']} s clip "
+            if n > limit * secs // SETTINGS["clip_seconds"]:
+                E.append(f"{sid}: the line has {n} words; at most {limit * secs // SETTINGS['clip_seconds']} fit in a {secs} s clip "
                          "with good lip-sync. Split it over two scenes.")
             if not DEVANAGARI.search(line):
                 W.append(f"{sid}: the line is not in Devanagari; the AI speaks Hindi best from Devanagari text.")

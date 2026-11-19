@@ -59,7 +59,7 @@ html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; o
        font-family: Pop, 'Noto Sans Devanagari', 'Noto Sans', sans-serif; font-weight: 800; color: #fff;
        -webkit-text-stroke: 3px #000; paint-order: stroke fill;
        text-shadow: 0 4px 14px rgba(0,0,0,.85), 0 0 3px #000; line-height: 1.35; }}
-.cap {{ top: 1180px; font-size: 62px; }}
+.cap {{ top: 1330px; left: 70px; right: 190px; font-size: 74px; line-height: 1.2; }}
 .hook {{ top: 210px; font-size: 76px; }}
 .hook span, .end span {{ background: #ffd400; color: #111; -webkit-text-stroke: 0; text-shadow: none;
        padding: 6px 22px; border-radius: 18px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }}
@@ -97,6 +97,35 @@ def split_caption(text, n=26, k=3):
     if cur:
         lines.append(cur)
     return ["<br>".join(lines[i:i + k]) for i in range(0, len(lines), k)] or [""]
+
+
+def chunks(text, most=3):
+    """English caption pieces of 2-3 words, breaking after punctuation when possible."""
+    w = text.split()
+    out, cur = [], []
+    for x in w:
+        cur.append(x)
+        if len(cur) >= most or (len(cur) >= 2 and x[-1] in ",.!?…;:"):
+            out.append(" ".join(cur)); cur = []
+    if cur:
+        if len(cur) == 1 and out and len(out[-1].split()) < 4:
+            out[-1] += " " + cur[0]
+        else:
+            out.append(" ".join(cur))
+    return out
+
+
+def speech_span(clip, d):
+    """(start, end) of the loud part of a clip's sound, where the voice is; the whole clip when unsure."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", clip, "-af",
+                        "asetnsamples=4800,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level",
+                        "-f", "null", "-"], capture_output=True, text=True).stderr
+    lv = [float(x) if x not in ("-inf", "inf") else -99 for x in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", r)]
+    loud = [i for i, x in enumerate(lv) if x > -32]
+    if not loud:
+        return 0.2, d - 0.3
+    a, b = loud[0] * 0.1, (loud[-1] + 1) * 0.1
+    return (max(0.1, a), min(d - 0.1, b)) if b - a > 1.0 else (0.2, d - 0.3)
 
 
 def srt_time(t):
@@ -184,19 +213,29 @@ def main():
     timing = []
 
     # 1. one segment per scene, in order
-    segs, cues, missing, timing, t, starts = [], [], [], [], 0.0, {}
+    segs, cues, hi_cues, missing, timing, t, starts = [], [], [], [], [], 0.0, {}
     for s in st["scenes"]:
         clip = next((os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
                      if os.path.exists(os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4"))), None)
         if not clip:
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
         out = os.path.join(tmp, f"{s['id']}.mp4"); d = seg(clip, out); segs.append(out); starts[s["id"]] = (t, d)
-        text = (s.get("caption") or s.get("line") or "").strip()
-        if text:
-            parts = split_caption(text)
-            a0, a1 = t + 0.15, t + d - 0.15
-            step = (a1 - a0) / len(parts)
-            cues += [(p, a0 + k * step, a0 + (k + 1) * step) for k, p in enumerate(parts)]
+        spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
+        a0, a1 = speech_span(out, d)
+        if spoken:
+            hi_cues.append((spoken, t + a0, t + a1))
+        if st.get("captions") == "en":
+            text = (s.get("caption_en") or "").strip()
+            parts = chunks(text) if text else []
+        else:
+            text = (s.get("caption") or spoken)
+            parts = split_caption(text) if text else []
+        if parts:  # each piece gets time in proportion to its length
+            wts = [len(p) + 4 for p in parts]
+            x = t + a0
+            for p_, w_ in zip(parts, wts):
+                y = x + (a1 - a0) * w_ / sum(wts)
+                cues.append((p_, x, y)); x = y
         t += d
         log(f"  {s['id']}: {d:.1f}s (total {t:.1f}s)")
     if not segs:
@@ -264,9 +303,14 @@ def main():
     log(f"Short: {total:.1f}s, still stretches of 2 s or more: {len(stuck)}")
 
     # 4. captions file and posting plan
-    srt = os.path.join(out_dir, f"{a.story}.hi.srt")
+    srt = os.path.join(out_dir, f"{a.story}.hi.srt")  # Hindi subtitles (whole lines) for YouTube's subtitle track
     open(srt, "w", encoding="utf-8").write("".join(
-        f"{i}\n{srt_time(x)} --> {srt_time(y)}\n{c.replace('<br>', chr(10))}\n\n" for i, (c, x, y) in enumerate(cues, 1)))
+        f"{i}\n{srt_time(x)} --> {srt_time(y)}\n{c}\n\n" for i, (c, x, y) in enumerate(hi_cues, 1)))
+    srt_en = None
+    if st.get("captions") == "en":  # the English pieces burned into the video, also as a subtitle file
+        srt_en = os.path.join(out_dir, f"{a.story}.en.srt")
+        open(srt_en, "w", encoding="utf-8").write("".join(
+            f"{i}\n{srt_time(x)} --> {srt_time(y)}\n{c}\n\n" for i, (c, x, y) in enumerate(cues, 1)))
     yt = st["youtube"]
     title = st["title"] if "#shorts" in st["title"].lower() or len(st["title"]) > 90 else f"{st['title']} #Shorts"
     desc = f"{yt['description'].strip()}\n\n{DISCLAIMER}\n\n{CREDITS}"
@@ -278,11 +322,12 @@ def main():
     plan = [f"=== {day.strftime('%a %d %b')} {SETTINGS.get('post_time', '19:00')} | {os.path.basename(short)} ===",
             "TITLE:", title, "", "DESCRIPTION:", desc, "", "TAGS:", ", ".join(tags), "",
             f"THUMBNAIL: {os.path.basename(thumb)} (YouTube app → the Short → Edit → Thumbnail)",
-            f"SUBTITLES: {os.path.basename(srt)} (optional: Studio → Subtitles → Hindi → Upload file → With timing)",
+            f"SUBTITLES: {os.path.basename(srt)} (optional: Studio → Subtitles → Hindi → Upload file → With timing)"
+            + (f"; {os.path.basename(srt_en)} the same way as English" if srt_en else ""),
             "ALTERED OR SYNTHETIC CONTENT (YouTube Studio → Details): YES (realistic AI people and voices)", ""]
     plan_file = os.path.join(out_dir, f"publish-plan-{a.story}.txt")
     open(plan_file, "w", encoding="utf-8").write("\n".join(plan))
-    files = [short, thumb, srt, plan_file]
+    files = [short, thumb, srt, plan_file] + ([srt_en] if srt_en else [])
     log(f"all made in {(time.time() - t_all) / 60:.1f} min")
 
     # 5. upload + email

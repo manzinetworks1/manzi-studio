@@ -89,6 +89,12 @@ def scene_prompt(st, s):
                 txt += (f" {name(x)} {people[x]['sound'].strip().rstrip('.')}, and is quiet while "
                         f"{sp['name']} speaks.")
         parts.append(txt)
+    elif s.get("narrator"):
+        nv = s["narrator"]["voice"].strip().rstrip(".")
+        parts.append(f"Nobody on screen speaks: the only voice is an unseen narrator ({nv}) speaking a voice-over "
+                     "in Hindi, straight to the viewer. Every mouth on screen stays closed; nobody's lips move."
+                     + "".join(f" {name(x)} {people[x]['sound'].strip().rstrip('.')}." for x in people
+                               if people[x].get("sound")))
     else:
         noisy = [x for x in people if people[x].get("sound")]
         parts.append("Nobody speaks." + "".join(f" {name(x)} {people[x]['sound'].strip().rstrip('.')}." for x in noisy))
@@ -97,7 +103,7 @@ def scene_prompt(st, s):
         animals = [x for x in people if is_animal(chars[x])]
         if animals:  # say humans and animals apart: "a two-shot" with a dog made H3 add a second man
             cnt = lambda n, one, many: f"{'ONE' if n == 1 else n} {one if n == 1 else many}"
-            txt = (f"Who is in this shot: {cnt(len(humans), 'human', 'humans')}"
+            txt = (f"Who is in this shot: {cnt(len(humans), 'human', 'humans') if humans else 'no humans'}"
                    + (f" ({', '.join(name(x) for x in humans)})" if humans else "")
                    + f" and {cnt(len(animals), 'animal', 'animals')} ({', '.join(name(x) for x in animals)})"
                    + (f", plus the shoulder of {name(sh)}" if sh else "")
@@ -111,8 +117,11 @@ def scene_prompt(st, s):
                          f"({', '.join(seen)}); each appears only once; nobody else.")
     if not any(p.get("to_camera") for p in people.values()):
         parts.append("Nobody looks into the camera lens: the camera is an invisible observer that nobody notices.")
-    parts.append("Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV "
-                 "serial; never cartoon, anime or plastic-looking.")
+    if not people or any(not is_animal(chars[x]) for x in people) or sh:
+        parts.append("Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV "
+                     "serial; never cartoon, anime or plastic-looking.")
+    else:
+        parts.append("A real, photographed animal; never cartoon, anime or plastic-looking.")
     parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Vertical 9:16 frame for a phone screen, "
                  "faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, "
                  "no shop signs, no posters, no name plates, no readable letters anywhere.")
@@ -128,6 +137,9 @@ def sound_for(st, s):
     if (s.get("line") or "").strip():
         sp = next(c for c in st["characters"] if c["id"] == s["speaker"])
         return f"{base}, and {sp['name']}'s voice: {sp['voice'].strip().rstrip('.')}, speaking Hindi."
+    if s.get("narrator"):
+        return (f"{base}, and an off-screen narrator's voice-over: {s['narrator']['voice'].strip().rstrip('.')}, "
+                "speaking Hindi warmly and playfully, close to the microphone.")
     return f"{base}, no voices."
 
 
@@ -135,9 +147,10 @@ def plan(st):
     """[(scene, clip id, engine fields, clip id it continues from)] in story order."""
     out, prev = [], None
     for s in st["scenes"]:
-        f = {"seed": seed_for(st["slug"], s["id"]), "scene": scene_prompt(st, s), "dialogue": (s.get("line") or "").strip(),
+        f = {"seed": seed_for(st["slug"], s["id"]), "scene": scene_prompt(st, s),
+             "dialogue": ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
              "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["aspect"],
-             "duration": f"{SETTINGS['clip_seconds']} s", "preview": SETTINGS["preview"]}
+             "duration": f"{s.get('seconds', SETTINGS['clip_seconds'])} s", "preview": SETTINGS["preview"]}
         cont = prev if (s.get("continue") and prev) else None
         key = hashlib.sha1(json.dumps([f, cont], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:6]
         cid = s.get("clip") or f"{s['id']}-{key}"  # "clip": an approved clip, kept even if the prompt rules change

@@ -1,10 +1,10 @@
 {
   "slug": "moti-aur-nakli-bank-wala",
   "title": "नकली Bank Agent vs वफादार कुत्ता 😱 | Dog Saves Grandma's Pension | Hindi Story",
-  "duration": "1:00",
+  "duration": "1:30",
   "category": "Wild And Domestic Animals Helping Humans In Their Life",
   "hook_text": "नकली बैंक वाला आया… पर मोती ने पहचान लिया!",
-  "end_text": "Part 2 चाहिए? Comment करो 👇",
+  "end_text": "Like 👍 Subscribe 🔔",
   "look": "Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, warm natural morning sunlight in a small North Indian town, shallow depth of field",
   "characters": [
     {
@@ -78,7 +78,8 @@
           }
         }
       },
-      "clip": "s01-5435fa"
+      "clip": "s01-5435fa",
+      "caption_en": "Eat up, Moti, today it's your favourite roti."
     },
     {
       "id": "s02",
@@ -101,7 +102,8 @@
           }
         }
       },
-      "clip": "s02-2843ff"
+      "clip": "s02-2843ff",
+      "caption_en": "Ma'am, I'm from the bank. Your account is being closed."
     },
     {
       "id": "s03",
@@ -123,7 +125,8 @@
           }
         }
       },
-      "clip": "s03-90c7b9"
+      "clip": "s03-90c7b9",
+      "caption_en": "Oh God! My whole pension is in that account, son."
     },
     {
       "id": "s04",
@@ -152,7 +155,8 @@
           }
         }
       },
-      "clip": "s04-6c66f3"
+      "clip": "s04-6c66f3",
+      "caption_en": "Just give me your ATM card and PIN, I'll fix it."
     },
     {
       "id": "s05",
@@ -185,7 +189,8 @@
             "expression": "surprised"
           }
         }
-      }
+      },
+      "clip": "s05-9cc41a"
     },
     {
       "id": "s06",
@@ -216,7 +221,9 @@
       },
       "wear": {
         "ramesh": "a light-blue formal shirt, dark trousers, a black office bag, and ONE plain blue card with nothing printed on it, hanging on a thin blue lanyard around his neck (the dog pulls the card and lanyard off together)"
-      }
+      },
+      "caption_en": "Hey! Give my card back, you dog!",
+      "clip": "s06-127989"
     },
     {
       "id": "s06b",
@@ -275,7 +282,8 @@
         "ramesh": "a light-blue formal shirt and dark trousers, a black office bag; NO lanyard and NO card on his chest",
         "sunil": "a khaki Indian police uniform with a brown leather belt and a khaki beret; no lanyard, no ID card"
       },
-      "clip": "s07-b7c73d"
+      "clip": "s07-b7c73d",
+      "caption_en": "Hey, this is the conman the police are looking for!"
     },
     {
       "id": "s08",
@@ -303,7 +311,34 @@
           }
         }
       },
-      "clip": "s08-98f4a4"
+      "clip": "s08-98f4a4",
+      "caption_en": "Today you saved my life's savings, Moti."
+    },
+    {
+      "id": "s09",
+      "day": 1,
+      "place": "the courtyard of the house with the tulsi pot, late morning",
+      "seconds": 10,
+      "action": "Moti sits alone in the courtyard, tilts his head and looks straight into the camera with big puppy eyes while a narrator talks to the viewer",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "moti": {
+            "where": "centre",
+            "faces": "camera",
+            "to_camera": true,
+            "eyes": "camera",
+            "does": "sits on the courtyard floor, slowly tilts his head to one side and looks straight into the camera lens with big, sad, hopeful puppy eyes",
+            "expression": "innocent and a little sad, ears soft"
+          }
+        }
+      },
+      "narrator": {
+        "line": "मोती ने तो दादी माँ को ठगी से बचा लिया… पर बेचारे मोती के लिए किसी ने अब तक Like और Subscribe नहीं किया!",
+        "voice": "a young Indian woman's warm, playful, slightly teasing voice"
+      },
+      "caption_en": "Moti saved Dadi Ma from the fraud… but nobody has liked or subscribed for poor Moti yet!",
+      "sound": "Soft birdsong and a gentle, light-hearted music sting at the end"
     }
   ],
   "thumbnail": {
@@ -322,5 +357,6 @@
       "hindi kahani"
     ]
   },
-  "send_now": true
+  "send_now": true,
+  "captions": "en"
 }
