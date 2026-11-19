@@ -1,4 +1,5 @@
-{"send_now": true,
+{
+  "send_now": true,
   "slug": "dahej-nahi-gift-hai",
   "title": "ये तोहफ़ा नहीं, दहेज है! 😱 | Dowry as a 'Gift' is Still a Crime | Hindi Family Drama",
   "duration": "1:30",
@@ -68,7 +69,10 @@
       "speaker": "verma",
       "line": "रिश्तेदार पूछेंगे, बहू क्या लाई… इज़्ज़त का सवाल है, समधी जी।",
       "caption_en": "Relatives will ask what the bride brought… it's about our honour.",
-      "sound": "A quiet evening room, a ticking wall clock"
+      "sound": "A quiet evening room, a ticking wall clock",
+      "cast": [
+        "verma"
+      ]
     },
     {
       "id": "s02",
@@ -90,7 +94,10 @@
       "speaker": "sharma",
       "line": "जी… जी समधी जी, आप बिल्कुल चिंता मत कीजिए।",
       "caption_en": "Yes… yes, please don't worry at all.",
-      "sound": "A quiet room, a ceiling fan"
+      "sound": "A quiet room, a ceiling fan",
+      "cast": [
+        "sharma"
+      ]
     },
     {
       "id": "s03",
@@ -112,7 +119,10 @@
       "speaker": "meera",
       "line": "पापा, क्या उन्होंने कुछ माँगा है?",
       "caption_en": "Papa, have they asked for something?",
-      "sound": "A quiet room"
+      "sound": "A quiet room",
+      "cast": [
+        "meera"
+      ]
     },
     {
       "id": "s04",
@@ -141,7 +151,11 @@
       "speaker": "sharma",
       "line": "नहीं बेटा, हम तो अपनी ख़ुशी से दे रहे हैं।",
       "caption_en": "No, dear, we're giving it out of our own happiness.",
-      "sound": "A quiet room, a ceiling fan"
+      "sound": "A quiet room, a ceiling fan",
+      "cast": [
+        "sharma",
+        "meera"
+      ]
     },
     {
       "id": "s05",
@@ -167,7 +181,11 @@
           }
         }
       },
-      "sound": "Wedding band music and cheering in the background"
+      "sound": "Wedding band music and cheering in the background",
+      "cast": [
+        "sharma",
+        "verma"
+      ]
     },
     {
       "id": "s06",
@@ -196,7 +214,11 @@
       "speaker": "sharma",
       "line": "समधी जी, ये गाड़ी… हमारी तरफ़ से छोटा-सा तोहफ़ा!",
       "caption_en": "This car… a small gift from our side!",
-      "sound": "Soft wedding music in the background"
+      "sound": "Soft wedding music in the background",
+      "cast": [
+        "sharma",
+        "verma"
+      ]
     },
     {
       "id": "s07",
@@ -218,7 +240,10 @@
       "speaker": "verma",
       "line": "अरे, इसकी क्या ज़रूरत थी… चलिए, आपकी ख़ुशी!",
       "caption_en": "Oh, there was no need… but if it makes you happy!",
-      "sound": "Soft wedding music in the background"
+      "sound": "Soft wedding music in the background",
+      "cast": [
+        "verma"
+      ]
     },
     {
       "id": "s08",
@@ -240,7 +265,10 @@
       "speaker": "meera",
       "line": "रुकिए! ये तोहफ़ा नहीं, दहेज है।",
       "caption_en": "Stop! This isn't a gift. It's dowry.",
-      "sound": "The wedding music stops suddenly"
+      "sound": "The wedding music stops suddenly",
+      "cast": [
+        "meera"
+      ]
     },
     {
       "id": "s09",
@@ -262,7 +290,10 @@
       "speaker": "verma",
       "line": "बहू! हमने तो कुछ माँगा ही नहीं था!",
       "caption_en": "Daughter-in-law! We never asked for anything!",
-      "sound": "A silent courtyard, murmuring guests"
+      "sound": "A silent courtyard, murmuring guests",
+      "cast": [
+        "verma"
+      ]
     },
     {
       "id": "s10",
@@ -284,7 +315,10 @@
       "speaker": "meera",
       "line": "माँगा था, अंकल… 'इज़्ज़त का सवाल है', याद है?",
       "caption_en": "You did, Uncle… 'it's about our honour', remember?",
-      "sound": "A silent courtyard, murmuring guests"
+      "sound": "A silent courtyard, murmuring guests",
+      "cast": [
+        "meera"
+      ]
     },
     {
       "id": "s11",
@@ -313,7 +347,11 @@
       "speaker": "meera",
       "line": "और पापा, दहेज देना भी उतना ही बड़ा जुर्म है।",
       "caption_en": "And Papa, giving dowry is just as big a crime.",
-      "sound": "A silent courtyard"
+      "sound": "A silent courtyard",
+      "cast": [
+        "meera",
+        "sharma"
+      ]
     },
     {
       "id": "s12",
@@ -345,7 +383,11 @@
         "voice": "a young Indian woman's warm, playful, slightly teasing voice"
       },
       "caption_en": "Not just taking dowry, giving it is a crime too… calling it a 'gift' doesn't change the law!",
-      "sound": "A silent courtyard, a soft serious music note"
+      "sound": "A silent courtyard, a soft serious music note",
+      "cast": [
+        "sharma",
+        "verma"
+      ]
     },
     {
       "id": "s13",
@@ -370,7 +412,10 @@
         "voice": "a young Indian woman's warm, playful, slightly teasing voice"
       },
       "caption_en": "Meera deserves at least one like… and don't forget to subscribe!",
-      "sound": "Soft happy wedding music returns"
+      "sound": "Soft happy wedding music returns",
+      "cast": [
+        "meera"
+      ]
     }
   ],
   "law_card": {
