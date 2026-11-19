@@ -96,7 +96,7 @@ def main():
         f.write("\n".join(notes))
 
     tag = f"engine-{run_id}-{time.strftime('%Y%m%d-%H%M', time.gmtime())}"
-    assets = [f for f in files if f.endswith((".mp4", ".wav", ".png", ".json", ".log", ".txt"))]
+    assets = [f for f in files if f.endswith((".mp4", ".wav", ".png", ".json", ".log", ".txt", ".pt"))]  # .pt: draft latents
     sh("gh", "release", "create", tag, "--title", f"Manzi Engine: {run_id}", "--notes-file", "release_notes.md",
        "--prerelease", *assets)
     print(f"✅ Published {len(assets)} files on release {tag}")
