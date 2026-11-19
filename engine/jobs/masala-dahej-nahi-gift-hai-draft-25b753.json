@@ -1,0 +1,60 @@
+{
+  "run_id": "masala-dahej-nahi-gift-hai-draft-25b753",
+  "purpose": "Masala Short (draft): ये तोहफ़ा नहीं, दहेज है! 😱 | Dowry as a 'Gift' is Still a Crime | Hindi Family Drama",
+  "scenes": [
+    {
+      "id": "s10-11a1df",
+      "kind": "scene",
+      "seed": 128046055,
+      "scene": "Close-up of one face at eye level, filling the upper half of the frame; anyone else is off-screen. Setting: the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind. In the CENTRE of the frame: Meera (a 26-year-old Indian woman: oval face with high cheekbones, large expressive dark-brown eyes, thick straight eyebrows, warm medium-brown skin, long straight black hair, a small mole above the left corner of her lip, slim build, about 5 feet 4 inches tall; wearing a red and gold bridal lehenga, a heavy gold necklace, a maang tikka and red bridal bangles), turned three-quarters towards the camera, angled to the left of the frame, eyes on Verma ji the whole time (who is off-screen); holds up her mobile phone towards him, its screen dark with nothing readable on it, calm and sharp, no smile at all. What happens: Meera reminds him of his phone call. Only Meera speaks, in Hindi, clearly, looking at Verma ji while speaking, with natural, well-synchronised lip movements; Meera finishes speaking a moment before the shot ends. Exactly 1 figure fully in the frame (Meera); each appears only once; nobody else. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television family drama, shot on a cinema camera, natural skin texture, warm practical lighting, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "माँगा था, अंकल… 'इज़्ज़त का सवाल है', याद है?",
+      "language": "Hindi",
+      "sound": "A silent courtyard, murmuring guests, and Meera's voice: a clear, confident young woman's voice, speaking Hindi.",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s12-eed7fc",
+      "kind": "scene",
+      "seed": 125626478,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind. What happens: Extreme close-up: Verma ji's hand, with gold rings and the maroon sleeve of his Nehru jacket, slowly puts the car key back down on a small decorated brass tray held by Sharma ji's hands in a cream silk sleeve. Nobody on screen speaks: the only voice is an unseen narrator (a young Indian woman's warm, playful, slightly teasing voice) speaking a voice-over in Hindi, straight to the viewer. Every mouth on screen stays closed; nobody's lips move. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television family drama, shot on a cinema camera, natural skin texture, warm practical lighting, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "दहेज लेना ही नहीं, देना भी जुर्म है… 'गिफ़्ट' कहने से क़ानून नहीं बदलता!",
+      "language": "Hindi",
+      "sound": "A silent courtyard, the soft clink of the key on the brass tray, a soft serious music note, and an off-screen narrator's voice-over: a young Indian woman's warm, playful, slightly teasing voice, speaking Hindi warmly and playfully, close to the microphone.",
+      "aspect": "9:16 Portrait",
+      "duration": "10 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s13-f9a966",
+      "kind": "scene",
+      "seed": 112470348,
+      "scene": "Medium shot of one figure at eye level; anyone else is off-screen. Setting: the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind. In the CENTRE of the frame: Meera (a 26-year-old Indian woman: oval face with high cheekbones, large expressive dark-brown eyes, thick straight eyebrows, warm medium-brown skin, long straight black hair, a small mole above the left corner of her lip, slim build, about 5 feet 4 inches tall; wearing a red and gold bridal lehenga, a heavy gold necklace, a maang tikka and red bridal bangles), facing the camera, eyes on camera the whole time; stands in the courtyard and smiles straight into the camera lens, adjusting her maang tikka, proud, warm, confident smile. What happens: Meera, the hero of the story, looks straight into the camera with a proud warm smile and talks to the viewer. Only Meera speaks, in Hindi, clearly, looking at camera while speaking, with natural, well-synchronised lip movements; Meera finishes speaking a moment before the shot ends. Exactly 1 figure fully in the frame (Meera); each appears only once; nobody else. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television family drama, shot on a cinema camera, natural skin texture, warm practical lighting, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+      "language": "Hindi",
+      "sound": "Soft happy wedding music returns, and Meera's voice: a clear, confident young woman's voice, speaking Hindi.",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "scene_time_limit_min": 54
+}
