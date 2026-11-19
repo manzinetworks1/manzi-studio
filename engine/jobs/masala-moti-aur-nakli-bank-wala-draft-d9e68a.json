@@ -1,0 +1,26 @@
+{
+  "run_id": "masala-moti-aur-nakli-bank-wala-draft-d9e68a",
+  "purpose": "Masala Short (draft): नकली Bank Agent vs वफादार कुत्ता 😱 | Dog Saves Grandma's Pension | Hindi Story",
+  "scenes": [
+    {
+      "id": "s09-839099",
+      "kind": "scene",
+      "seed": 600408445,
+      "scene": "Medium shot of one figure at eye level; anyone else is off-screen. Setting: the courtyard of the house with the tulsi pot, late morning. In the CENTRE of the frame: Moti (a 4-year-old Indian street dog: medium-sized Indian pariah dog with a short golden-brown coat, white chest patch, pointed upright ears, curled tail, alert amber eyes and a black nose, lean and athletic, a red cloth collar; wearing his red cloth collar), facing the camera, eyes on camera the whole time; sits on the courtyard floor, slowly tilts his head to one side and looks straight into the camera lens with big, sad, hopeful puppy eyes, innocent and a little sad, ears soft. What happens: Moti sits alone in the courtyard, tilts his head and looks straight into the camera with big puppy eyes while a narrator talks to the viewer. Nobody on screen speaks: the only voice is an unseen narrator (a young Indian woman's warm, playful, slightly teasing voice) speaking a voice-over in Hindi, straight to the viewer. Every mouth on screen stays closed; nobody's lips move. Who is in this shot: no humans and ONE animal (Moti). There is no human and only one animal in this shot; nobody appears twice; no other people and no other animals anywhere, not even in the background. A real, photographed animal; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, warm natural morning sunlight in a small North Indian town, shallow depth of field. Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no readable letters anywhere.",
+      "dialogue": "मोती ने तो दादी माँ को ठगी से बचा लिया… पर बेचारे मोती के लिए किसी ने अब तक Like और Subscribe नहीं किया!",
+      "language": "Hindi",
+      "sound": "Soft birdsong and a gentle, light-hearted music sting at the end, and an off-screen narrator's voice-over: a young Indian woman's warm, playful, slightly teasing voice, speaking Hindi warmly and playfully, close to the microphone.",
+      "aspect": "9:16 Portrait",
+      "duration": "10 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "scene_time_limit_min": 28
+}
