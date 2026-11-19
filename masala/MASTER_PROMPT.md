@@ -50,6 +50,16 @@ ahead.
   scene's `expression`. If a character must not smile in a scene, say "no smile at all".
 - **Animals may make a sound** in `stage.people.<id>.sound` ("barks sharply twice at the very start of the shot");
   add it to the scene's `sound` too. People never get a `sound`: only the scene's speaker speaks.
+- **Every story ends the same way (channel signature):** a last scene (8 s) where the story's hero looks straight
+  into the camera (`"to_camera": true`) and the off-screen female narrator (`"a young Indian woman's warm, playful,
+  slightly teasing voice"`) says: **"<hero> के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!"**, with
+  `"end_text": "Like 👍 Subscribe 🔔"` (shown at the top). The checker warns when it is missing.
+- **Law stories** ("you broke a law without knowing"): the scene before the ending is the narrator's one-line
+  lesson, with a `law_card` on screen: `{"scene": "s12", "title": "⚖️ <Act, year>", "lines": ["Sec …: …"],
+  "note": "For awareness only. Not legal advice."}`. Check every section and punishment on the web before writing
+  it, and add the nuance and "For awareness only, not legal advice. Fictional story." to the description.
+- **Captions:** English (`"captions": "en"` plus a `caption_en` for every spoken or narrated scene), 3 words at a
+  time. No `hook_text` on top.
 - New stories are made as a **draft** first (544p clips + picture sheet). Fix what Manzi points out by changing only
   those scenes' `stage`, `action` or line, and give the whole file again.
 

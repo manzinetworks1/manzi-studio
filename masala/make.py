@@ -95,6 +95,12 @@ html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; o
 .hook span, .end span {{ background: #ffd400; color: #111; -webkit-text-stroke: 0; text-shadow: none;
        padding: 6px 22px; border-radius: 18px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }}
 .end {{ top: 170px; font-size: 80px; }}
+.law {{ position: absolute; top: 300px; left: 70px; right: 70px; padding: 30px 36px; border-radius: 28px;
+       background: rgba(10,14,30,.86); border: 4px solid #ffd60a; color: #fff;
+       font-family: Pop, 'Noto Sans Devanagari', sans-serif; box-shadow: 0 10px 40px rgba(0,0,0,.5); }}
+.law h1 {{ margin: 0 0 14px; font-size: 50px; color: #ffd60a; line-height: 1.2; }}
+.law p {{ margin: 10px 0 0; font-size: 38px; line-height: 1.3; }}
+.law small {{ display: block; margin-top: 16px; font-size: 26px; opacity: .75; }}
 .thumb {{ position: absolute; inset: 0; background-size: cover; background-position: center; }}
 .thumb .box {{ top: 1180px; font-size: 104px; }}
 .thumb .box span {{ background: #e3001b; color: #fff; -webkit-text-stroke: 0; padding: 4px 26px; border-radius: 16px;
@@ -298,6 +304,15 @@ def main():
         else:
             jobs.append((f"<div class='box cap'>{'<br>'.join(html.escape(l) for l in text.split('<br>'))}</div>", png, True))
         overlays.append((png, x, y))
+    lc = st.get("law_card")
+    if lc and lc.get("scene") in starts:  # the law on screen for one whole scene
+        png = os.path.join(tmp, "law.png")
+        body = (f"<div class='law'><h1>{html.escape(lc['title'])}</h1>"
+                + "".join(f"<p>{html.escape(x)}</p>" for x in lc.get("lines", []))
+                + (f"<small>{html.escape(lc['note'])}</small>" if lc.get("note") else "") + "</div>")
+        jobs.append((body, png, True))
+        x0, dur = starts[lc["scene"]]
+        overlays.append((png, x0, x0 + dur))
     if st.get("end_text"):
         png = os.path.join(tmp, "end.png")
         jobs.append((f"<div class='box end'><span>{html.escape(st['end_text'])}</span></div>", png, True))

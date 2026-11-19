@@ -1,0 +1,404 @@
+{
+  "slug": "dahej-nahi-gift-hai",
+  "title": "ये तोहफ़ा नहीं, दहेज है! 😱 | Dowry as a 'Gift' is Still a Crime | Hindi Family Drama",
+  "duration": "1:30",
+  "category": "Kanoon Toot Gaya: everyday things that break the law",
+  "captions": "en",
+  "end_text": "Like 👍 Subscribe 🔔",
+  "look": "Photorealistic live-action Indian television family drama, shot on a cinema camera, natural skin texture, warm practical lighting, shallow depth of field",
+  "characters": [
+    {
+      "id": "sharma",
+      "name": "Sharma ji",
+      "age": 55,
+      "gender": "man",
+      "role": "the bride's father, a retired schoolteacher",
+      "face": "thin oval face with deep forehead lines, kind tired dark-brown eyes behind thin black-rimmed spectacles, wheatish-brown skin, short neatly combed salt-and-pepper hair, a greying moustache, slim build, about 5 feet 7 inches tall",
+      "voice": "a soft, gentle, slightly nervous middle-aged male voice"
+    },
+    {
+      "id": "meera",
+      "name": "Meera",
+      "age": 26,
+      "gender": "woman",
+      "role": "the bride, a final-year law student",
+      "face": "oval face with high cheekbones, large expressive dark-brown eyes, thick straight eyebrows, warm medium-brown skin, long straight black hair, a small mole above the left corner of her lip, slim build, about 5 feet 4 inches tall",
+      "voice": "a clear, confident young woman's voice"
+    },
+    {
+      "id": "verma",
+      "name": "Verma ji",
+      "age": 58,
+      "gender": "man",
+      "role": "the groom's father",
+      "face": "round fleshy face, thick black moustache curled at the ends, small sharp eyes, light-brown skin, receding black hair combed back, a red tilak on his forehead, heavy pot-bellied build, about 5 feet 6 inches tall",
+      "voice": "a deep, smooth, sweet-talking male voice"
+    }
+  ],
+  "wardrobe": {
+    "1": {
+      "sharma": "a plain white cotton kurta-pyjama",
+      "meera": "a simple light-yellow cotton salwar suit with a matching dupatta",
+      "verma": "a beige kurta with a brown sleeveless jacket"
+    },
+    "2": {
+      "sharma": "a cream silk kurta with a maroon stole",
+      "meera": "a red and gold bridal lehenga, a heavy gold necklace, a maang tikka and red bridal bangles",
+      "verma": "a maroon Nehru jacket over a cream kurta and a marigold garland around his neck"
+    }
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "day": 1,
+      "place": "the big living room of a well-off North Indian home with a large sofa, evening",
+      "action": "One week before the wedding, Verma ji talks on the phone to the bride's father and hints that he wants something big",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "verma": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "the window",
+            "does": "sits on the big sofa holding a mobile phone to his ear, stroking his moustache",
+            "expression": "sly, fake-polite smile"
+          }
+        }
+      },
+      "speaker": "verma",
+      "line": "रिश्तेदार पूछेंगे, बहू क्या लाई… इज़्ज़त का सवाल है, समधी जी।",
+      "caption_en": "Relatives will ask what the bride brought… it's about our honour.",
+      "sound": "A quiet evening room, a ticking wall clock"
+    },
+    {
+      "id": "s02",
+      "day": 1,
+      "place": "the small living room of a modest middle-class North Indian home with an old steel almirah and a calendar-free plain wall, evening",
+      "action": "Sharma ji, on the phone, nervously looks at his small savings passbook and agrees",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "sharma": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "the open passbook in his hand",
+            "does": "holds a mobile phone to his ear with one hand and an open bank passbook in the other",
+            "expression": "worried, forcing politeness"
+          }
+        }
+      },
+      "speaker": "sharma",
+      "line": "जी… जी समधी जी, आप बिल्कुल चिंता मत कीजिए।",
+      "caption_en": "Yes… yes, please don't worry at all.",
+      "sound": "A quiet room, a ceiling fan"
+    },
+    {
+      "id": "s03",
+      "day": 1,
+      "place": "the small living room of a modest middle-class North Indian home with an old steel almirah and a calendar-free plain wall, evening",
+      "action": "Meera has overheard the call and asks her father from the doorway",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "meera": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "sharma",
+            "does": "stands in the doorway holding the door frame",
+            "expression": "suspicious and worried"
+          }
+        }
+      },
+      "speaker": "meera",
+      "line": "पापा, क्या उन्होंने कुछ माँगा है?",
+      "caption_en": "Papa, have they asked for something?",
+      "sound": "A quiet room"
+    },
+    {
+      "id": "s04",
+      "day": 1,
+      "place": "the small living room of a modest middle-class North Indian home with an old steel almirah and a calendar-free plain wall, evening",
+      "action": "Sharma ji avoids his daughter's eyes and pretends everything is fine",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "sharma": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "the floor",
+            "does": "puts the passbook behind his back and avoids looking at her",
+            "expression": "guilty, forced smile"
+          },
+          "meera": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "sharma",
+            "does": "listens, not convinced",
+            "expression": "doubtful"
+          }
+        }
+      },
+      "speaker": "sharma",
+      "line": "नहीं बेटा, हम तो अपनी ख़ुशी से दे रहे हैं।",
+      "caption_en": "No, dear, we're giving it out of our own happiness.",
+      "sound": "A quiet room, a ceiling fan"
+    },
+    {
+      "id": "s05",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "On the wedding night, Sharma ji proudly shows the new car to Verma ji",
+      "stage": {
+        "shot": "wide",
+        "people": {
+          "sharma": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "the car",
+            "does": "proudly points both hands towards the new white car with the red ribbon",
+            "expression": "proud"
+          },
+          "verma": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "the car",
+            "does": "stares at the car and rubs his hands together",
+            "expression": "greedy delight"
+          }
+        }
+      },
+      "sound": "Wedding band music and cheering in the background"
+    },
+    {
+      "id": "s06",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Sharma ji offers Verma ji the car key on a small decorated brass tray",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "sharma": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "verma",
+            "does": "holds out one car key on a small decorated brass tray",
+            "expression": "proud smile"
+          },
+          "verma": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "the car key on the tray",
+            "does": "leans towards the tray",
+            "expression": "greedy, trying to hide it"
+          }
+        }
+      },
+      "speaker": "sharma",
+      "line": "समधी जी, ये गाड़ी… हमारी तरफ़ से छोटा-सा तोहफ़ा!",
+      "caption_en": "This car… a small gift from our side!",
+      "sound": "Soft wedding music in the background"
+    },
+    {
+      "id": "s07",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Verma ji picks up the car key, pretending to be humble",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "verma": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "sharma",
+            "does": "picks up the car key from the tray and closes his fist around it",
+            "expression": "greedy grin, pretending to be humble"
+          }
+        }
+      },
+      "speaker": "verma",
+      "line": "अरे, इसकी क्या ज़रूरत थी… चलिए, आपकी ख़ुशी!",
+      "caption_en": "Oh, there was no need… but if it makes you happy!",
+      "sound": "Soft wedding music in the background"
+    },
+    {
+      "id": "s08",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Meera, in her bridal lehenga, steps forward and stops them",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "meera": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "verma",
+            "does": "steps forward with one hand raised, palm out",
+            "expression": "firm and determined, no smile at all"
+          }
+        }
+      },
+      "speaker": "meera",
+      "line": "रुकिए! ये तोहफ़ा नहीं, दहेज है।",
+      "caption_en": "Stop! This isn't a gift. It's dowry.",
+      "sound": "The wedding music stops suddenly"
+    },
+    {
+      "id": "s09",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Verma ji is offended and denies asking for anything",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "verma": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "meera",
+            "does": "freezes with the car key in his hand",
+            "expression": "offended, eyebrows raised, no smile at all"
+          }
+        }
+      },
+      "speaker": "verma",
+      "line": "बहू! हमने तो कुछ माँगा ही नहीं था!",
+      "caption_en": "Daughter-in-law! We never asked for anything!",
+      "sound": "A silent courtyard, murmuring guests"
+    },
+    {
+      "id": "s10",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Meera reminds him of his phone call",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "meera": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "verma",
+            "does": "holds up her mobile phone towards him, its screen dark with nothing readable on it",
+            "expression": "calm and sharp, no smile at all"
+          }
+        }
+      },
+      "speaker": "meera",
+      "line": "माँगा था, अंकल… 'इज़्ज़त का सवाल है', याद है?",
+      "caption_en": "You did, Uncle… 'it's about our honour', remember?",
+      "sound": "A silent courtyard, murmuring guests"
+    },
+    {
+      "id": "s11",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Meera turns to her father and holds his hand",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "meera": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "sharma",
+            "does": "holds her father's hand",
+            "expression": "sad but firm, no smile at all"
+          },
+          "sharma": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "meera",
+            "does": "listens, ashamed",
+            "expression": "shock and shame, no smile at all"
+          }
+        }
+      },
+      "speaker": "meera",
+      "line": "और पापा, दहेज देना भी उतना ही बड़ा जुर्म है।",
+      "caption_en": "And Papa, giving dowry is just as big a crime.",
+      "sound": "A silent courtyard"
+    },
+    {
+      "id": "s12",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "seconds": 10,
+      "action": "Sharma ji lowers his head in shame while Verma ji quietly puts the car key back on the brass tray",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "sharma": {
+            "where": "left",
+            "faces": "camera-right",
+            "eyes": "the floor",
+            "does": "stands holding the brass tray, head lowered",
+            "expression": "ashamed, no smile at all"
+          },
+          "verma": {
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "the brass tray",
+            "does": "quietly puts the car key back on the brass tray in Sharma ji's hands",
+            "expression": "embarrassed, no smile at all"
+          }
+        }
+      },
+      "narrator": {
+        "line": "दहेज लेना ही नहीं, देना भी जुर्म है… 'गिफ़्ट' कहने से क़ानून नहीं बदलता!",
+        "voice": "a young Indian woman's warm, playful, slightly teasing voice"
+      },
+      "caption_en": "Not just taking dowry, giving it is a crime too… calling it a 'gift' doesn't change the law!",
+      "sound": "A silent courtyard, a soft serious music note"
+    },
+    {
+      "id": "s13",
+      "day": 2,
+      "place": "the decorated courtyard of a North Indian wedding venue at night, strings of warm fairy lights and marigold garlands, a new white car with a big red ribbon bow parked behind",
+      "action": "Meera, the hero of the story, looks straight into the camera with a proud warm smile while the narrator talks to the viewer",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "meera": {
+            "where": "centre",
+            "faces": "camera",
+            "eyes": "camera",
+            "does": "stands in the courtyard and smiles straight into the camera lens, adjusting her maang tikka",
+            "expression": "proud, warm, confident smile",
+            "to_camera": true
+          }
+        }
+      },
+      "narrator": {
+        "line": "मीरा के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+        "voice": "a young Indian woman's warm, playful, slightly teasing voice"
+      },
+      "caption_en": "Meera deserves at least one like… and don't forget to subscribe!",
+      "sound": "Soft happy wedding music returns"
+    }
+  ],
+  "law_card": {
+    "scene": "s12",
+    "title": "⚖️ Dowry Prohibition Act, 1961",
+    "lines": [
+      "Sec 3: Giving OR taking dowry → at least 5 years jail + fine of at least ₹15,000 (or the dowry's value)",
+      "Sec 4: Even asking for it → 6 months to 2 years"
+    ],
+    "note": "For awareness only. Not legal advice."
+  },
+  "thumbnail": {
+    "scene": "s08",
+    "text": "ये तोहफ़ा नहीं, दहेज है!"
+  },
+  "youtube": {
+    "description": "बेटी की शादी में पापा ने 'गिफ़्ट' में कार दी… पर LLB पढ़ रही मीरा ने सबके सामने सच बोल दिया! 😱\nA father gives a car as a 'gift' at his daughter's wedding, but the bride, a law student, calls it what it is: dowry.\n\n⚖️ Dowry Prohibition Act, 1961\n• Section 3: giving OR taking dowry is a crime: at least 5 years in jail and a fine of at least ₹15,000 or the value of the dowry, whichever is more.\n• Section 4: even demanding dowry, directly or indirectly, is punishable with 6 months to 2 years.\n• Real wedding presents are allowed only when nothing was demanded, they are customary, not excessive for the giver's means, and entered in a list of presents (Section 3(2)).\n\nFor awareness only, not legal advice. Fictional story.\n\n#Dowry #DowryProhibitionAct #KanoonTootGaya #HindiStory #FamilyDrama #Shorts",
+    "tags": [
+      "dowry",
+      "dahej",
+      "dowry prohibition act",
+      "dowry law india",
+      "hindi family drama",
+      "shaadi",
+      "kanoon",
+      "legal awareness",
+      "hindi story",
+      "indian wedding drama"
+    ]
+  }
+}

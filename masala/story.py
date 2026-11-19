@@ -159,6 +159,14 @@ def check(st):
     for cid in {s.get("speaker") for s in scenes if (s.get("line") or "").strip()}:
         if cid in chars and not chars[cid].get("voice"):
             E.append(f"Character {cid} speaks but has no \"voice\" description.")
+    last = scenes[-1] if scenes else {}
+    cta = ((last.get("narrator") or {}).get("line") or "")
+    if not ("Like" in cta and "Subscribe" in cta):
+        W.append("The last scene should be the hero's Like/Subscribe ending: the hero looks into the camera and the "
+                 "narrator says \"<hero> के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!\"")
+    lc = st.get("law_card")
+    if lc and (lc.get("scene") not in ids or not lc.get("title") or not lc.get("lines")):
+        E.append("\"law_card\" needs \"scene\" (an existing scene id), \"title\" and \"lines\".")
     yt = st["youtube"]
     if not yt.get("description") or not yt.get("tags"):
         E.append("\"youtube\" needs a \"description\" and \"tags\".")
