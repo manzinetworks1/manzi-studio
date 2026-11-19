@@ -87,9 +87,9 @@ html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; o
        -webkit-text-stroke: 3px #000; paint-order: stroke fill;
        text-shadow: 0 4px 14px rgba(0,0,0,.85), 0 0 3px #000; line-height: 1.35; }}
 .cap {{ top: 1300px; left: 60px; right: 170px; font-size: 64px; line-height: 1.25; }}
-.en {{ font-family: MzAnton, Pop, sans-serif; font-weight: 400; font-size: 88px; text-transform: uppercase;
-      letter-spacing: 2px; -webkit-text-stroke: 12px #000; line-height: 1.1;
-      text-shadow: 0 8px 0 #000, 0 10px 24px rgba(0,0,0,.6); }}
+.en {{ font-family: MzAnton, Pop, sans-serif; font-weight: 400; font-size: 44px; text-transform: uppercase;
+      letter-spacing: 2px; -webkit-text-stroke: 7px #000; line-height: 1.15;
+      text-shadow: 0 4px 0 #000, 0 6px 14px rgba(0,0,0,.6); }}
 .en .hl {{ color: #ffd60a; }}
 .hook {{ top: 210px; font-size: 76px; }}
 .hook span, .end span {{ background: #ffd400; color: #111; -webkit-text-stroke: 0; text-shadow: none;
