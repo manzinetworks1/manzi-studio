@@ -71,16 +71,23 @@ def seg(clip, out):
 
 
 # ---------------------------------------------------------------- text pictures (Chromium draws Hindi correctly)
+def _font(name):
+    """A font as a data: URL: a page made with set_content() may not load file:// fonts (it fell back to a plain
+    font on GitHub's machine)."""
+    import base64
+    return "data:font/ttf;base64," + base64.b64encode(open(os.path.join(FONTS, name), "rb").read()).decode()
+
+
 CSS = f"""
-@font-face {{ font-family: Pop; src: url('file://{FONTS}/Poppins-Bold.ttf'); }}
-@font-face {{ font-family: Anton; src: url('file://{FONTS}/Anton-Regular.ttf'); }}
+@font-face {{ font-family: Pop; src: url('{_font('Poppins-Bold.ttf')}'); }}
+@font-face {{ font-family: MzAnton; src: url('{_font('Anton-Regular.ttf')}'); }}
 html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; overflow: hidden; }}
 .box {{ position: absolute; left: 60px; right: 60px; text-align: center;
        font-family: Pop, 'Noto Sans Devanagari', 'Noto Sans', sans-serif; font-weight: 800; color: #fff;
        -webkit-text-stroke: 3px #000; paint-order: stroke fill;
        text-shadow: 0 4px 14px rgba(0,0,0,.85), 0 0 3px #000; line-height: 1.35; }}
 .cap {{ top: 1300px; left: 60px; right: 170px; font-size: 64px; line-height: 1.25; }}
-.en {{ font-family: Anton, Pop, sans-serif; font-weight: 400; font-size: 88px; text-transform: uppercase;
+.en {{ font-family: MzAnton, Pop, sans-serif; font-weight: 400; font-size: 88px; text-transform: uppercase;
       letter-spacing: 2px; -webkit-text-stroke: 12px #000; line-height: 1.1;
       text-shadow: 0 8px 0 #000, 0 10px 24px rgba(0,0,0,.6); }}
 .en .hl {{ color: #ffd60a; }}
