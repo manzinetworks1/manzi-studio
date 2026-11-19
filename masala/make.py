@@ -94,7 +94,7 @@ html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; o
 .hook {{ top: 210px; font-size: 76px; }}
 .hook span, .end span {{ background: #ffd400; color: #111; -webkit-text-stroke: 0; text-shadow: none;
        padding: 6px 22px; border-radius: 18px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }}
-.end {{ top: 820px; font-size: 80px; }}
+.end {{ top: 170px; font-size: 80px; }}
 .thumb {{ position: absolute; inset: 0; background-size: cover; background-position: center; }}
 .thumb .box {{ top: 1180px; font-size: 104px; }}
 .thumb .box span {{ background: #e3001b; color: #fff; -webkit-text-stroke: 0; padding: 4px 26px; border-radius: 16px;
