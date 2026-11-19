@@ -228,7 +228,8 @@ def download(needed, dest):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--story", required=True)
-    ap.add_argument("--mode", choices=["draft", "final"], default="draft")
+    ap.add_argument("--mode", choices=["draft", "final", "final-544p"], default="draft",
+                    help="final-544p: the Short from the approved 544p draft clips, no GPU")
     ap.add_argument("--build-only", action="store_true", help="write the job file and stop (for checking)")
     a = ap.parse_args()
     out = os.environ.get("GITHUB_OUTPUT")

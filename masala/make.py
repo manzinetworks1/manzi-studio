@@ -223,7 +223,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--story", required=True); ap.add_argument("--no-upload", action="store_true")
     ap.add_argument("--no-email", action="store_true")
-    ap.add_argument("--mode", choices=["draft", "final"], default=None, help="default: what job.py downloaded")
+    ap.add_argument("--mode", choices=["draft", "final", "final-544p"], default=None, help="default: what job.py downloaded")
     a = ap.parse_args()
     t_all = time.time()
     cfg, st = config(), load(a.story)

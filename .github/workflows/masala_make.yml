@@ -14,11 +14,11 @@ on:
         required: false
         default: ""
       mode:
-        description: "draft (544p clips to check) or final (sharpen the approved clips to 720p)"
+        description: "draft (544p clips to check), final (sharpen the approved clips to 720p) or final-544p (the Short from the approved draft clips, no GPU)"
         required: false
         default: "draft"
         type: choice
-        options: [draft, final]
+        options: [draft, final, final-544p]
 permissions:
   contents: write
   actions: write
