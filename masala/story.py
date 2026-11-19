@@ -89,8 +89,8 @@ def check(st):
     prev = None
     for i, s in enumerate(scenes, 1):
         sid = s.get("id") or f"scene {i}"
-        if not re.match(r"^s\d{2}$", str(s.get("id", ""))):
-            E.append(f"{sid}: \"id\" must look like s01, s02...")
+        if not re.match(r"^s\d{2}[a-z]?$", str(s.get("id", ""))):
+            E.append(f"{sid}: \"id\" must look like s01, s02... (or s06b for a shot added between s06 and s07)")
         if s.get("id") in ids:
             E.append(f"{sid}: id used twice.")
         ids.add(s.get("id"))
@@ -113,8 +113,14 @@ def check(st):
         for c in cast:
             if c not in chars:
                 E.append(f"{sid}: \"{c}\" is not in the characters list.")
-            elif c not in wardrobe.get(str(s.get("day")), {}):
+            elif c not in wardrobe.get(str(s.get("day")), {}) and c not in (s.get("wear") or {}):
                 E.append(f"{sid}: no clothes for {c} on day {s.get('day')} (add them under \"wardrobe\").")
+        for c in (s.get("wear") or {}):
+            if c not in cast:
+                E.append(f"{sid}: \"wear\" gives clothes for {c}, who is not in this shot.")
+        for pid, p in (st_.get("people") or {}).items():
+            if p.get("sound") and pid in chars and not is_animal(chars[pid]):
+                E.append(f"{sid}: only animals get a \"sound\" ({pid} is a person; people only speak the scene's line).")
         line = (s.get("line") or "").strip()
         if line:
             if s.get("speaker") not in (st_.get("people") or {}):
@@ -145,6 +151,10 @@ def check(st):
     if len(st["title"]) > 100:
         E.append(f"The title has {len(st['title'])} characters; YouTube allows 100.")
     return E, W
+
+
+def is_animal(c):
+    return any(w in c.get("gender", "").lower() for w in ("dog", "cat", "cow", "goat", "monkey", "bird", "horse", "animal"))
 
 
 def stage_errors(sid, st_, chars, E):

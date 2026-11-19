@@ -75,6 +75,10 @@ is simply the number of scenes × 8 s. That is why the story file has rules:
 `people`), `group` (3 people), `wide` and `low-angle` (any number).
 **where:** left, right, centre, foreground-left, foreground-right, background, background-left, background-right.
 **faces:** left, right, camera-left, camera-right, away (camera only with `"to_camera": true`).
+**sound** (animals only): e.g. `"barks sharply twice at the very start of the shot"`.
+**wear** (per scene, optional): `{"ramesh": "…"}` replaces that person's wardrobe in this scene only (e.g. after the
+dog pulled his card off). Props that get taken or dropped belong in the scene, never in `wardrobe`.
+Scene ids are s01, s02…; `s06b` adds a shot between s06 and s07 without renaming the others.
 **eyes:** another character's id, or a thing ("the roti", "the open door"); never the camera unless `"to_camera": true`.
 
 A full example: `masala/examples/moti-aur-nakli-bank-wala.json`. Check a file yourself with

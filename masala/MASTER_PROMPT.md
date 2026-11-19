@@ -40,6 +40,16 @@ ahead.
   over-the-shoulder shot use `clean-over-shoulder` with the listener as `"shoulder"` (never also in `people`). Plan
   the eye-lines across the scene: if Kamla is on the left looking right in s01, keep her on the left in the next
   shot of the same conversation. `action` is one English sentence of what happens.
+- **Props are placed in the scene, never worn.** Anything that gets taken, dropped, snatched or handed over (a card, a
+  phone, a bag) is described in that scene's `does`/`action`, not in `wardrobe` (wardrobe text is drawn in every
+  scene, so a worn card can never disappear). When clothes change for one or two scenes (the card was pulled off),
+  give those scenes a `"wear": {"<id>": "…"}` that replaces that person's wardrobe there.
+- **One physical action per clip.** A grab and a run and a chase do not fit in 8 s: split them over two shots
+  (ids like `s06b` add a shot without renaming the others, so approved clips are kept).
+- **Faces hold permanent features only** (face shape, eyes, skin, hair, build); moods (smile, frown) go in each
+  scene's `expression`. If a character must not smile in a scene, say "no smile at all".
+- **Animals may make a sound** in `stage.people.<id>.sound` ("barks sharply twice at the very start of the shot");
+  add it to the scene's `sound` too. People never get a `sound`: only the scene's speaker speaks.
 - New stories are made as a **draft** first (544p clips + picture sheet). Fix what Manzi points out by changing only
   those scenes' `stage`, `action` or line, and give the whole file again.
 

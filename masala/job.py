@@ -21,7 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "pipeline"))
 sys.path.insert(0, HERE)
 from common import ROOT, log  # noqa: E402
-from story import SETTINGS, SHOTS, check, load  # noqa: E402
+from story import SETTINGS, SHOTS, check, is_animal, load  # noqa: E402
 
 LOOK = ("Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture and pores, "
         "real human actors, warm practical lighting, shallow depth of field")
@@ -46,15 +46,11 @@ def who(c, outfit=None):
     return d + (f"; wearing {outfit.strip().rstrip('.')})" if outfit else ")")
 
 
-def is_animal(c):
-    return any(w in c.get("gender", "").lower() for w in ("dog", "cat", "cow", "goat", "monkey", "bird", "horse", "animal"))
-
-
 def scene_prompt(st, s):
     """The whole scene as plain, ordered sentences: frame, then every person with place, direction, eyes and action,
     then who speaks, then a head count, then the look. Nothing is left for the AI to guess."""
     chars = {c["id"]: c for c in st["characters"]}
-    wear = {str(k): v for k, v in st["wardrobe"].items()}[str(s["day"])]
+    wear = {**{str(k): v for k, v in st["wardrobe"].items()}.get(str(s["day"]), {}), **(s.get("wear") or {})}
     stg = s["stage"]
     people = stg.get("people") or {}
     name = lambda x: chars[x]["name"] if x in chars else x
@@ -74,6 +70,8 @@ def scene_prompt(st, s):
         line += f"; {p['does'].strip().rstrip('.')}"
         if p.get("expression"):
             line += f", {p['expression'].strip().rstrip('.')}"
+        if p.get("sound"):
+            line += f"; {chars[pid]['name']} {p['sound'].strip().rstrip('.')}"
         parts.append(line + ".")
     parts.append(f"What happens: {s['action'].strip().rstrip('.')}.")
     if (s.get("line") or "").strip():
@@ -82,12 +80,18 @@ def scene_prompt(st, s):
         txt = (f"Only {sp['name']} speaks, in Hindi, clearly, looking at {name(people[s['speaker']]['eyes'])} while "
                f"speaking, with natural, well-synchronised lip movements; {sp['name']} finishes speaking a moment before "
                "the shot ends.")
-        if others:
-            txt += (f" {' and '.join(name(x) for x in others)} {'stays' if len(others) == 1 else 'stay'} silent, "
-                    + ("only reacting." if all(is_animal(chars[x]) for x in others) else "lips closed, only reacting."))
+        quiet = [x for x in others if not people[x].get("sound")]
+        if quiet:
+            txt += (f" {' and '.join(name(x) for x in quiet)} {'stays' if len(quiet) == 1 else 'stay'} silent, "
+                    + ("only reacting." if all(is_animal(chars[x]) for x in quiet) else "lips closed, only reacting."))
+        for x in others:
+            if people[x].get("sound"):
+                txt += (f" {name(x)} {people[x]['sound'].strip().rstrip('.')}, and is quiet while "
+                        f"{sp['name']} speaks.")
         parts.append(txt)
     else:
-        parts.append("Nobody speaks.")
+        noisy = [x for x in people if people[x].get("sound")]
+        parts.append("Nobody speaks." + "".join(f" {name(x)} {people[x]['sound'].strip().rstrip('.')}." for x in noisy))
     if people:
         seen = [name(x) for x in people] + ([f"the shoulder of {name(sh)}"] if sh else [])
         parts.append(f"Exactly {len(people)} {'figure' if len(people) == 1 else 'figures'} fully in the frame "
@@ -104,6 +108,10 @@ def scene_prompt(st, s):
 
 def sound_for(st, s):
     base = (s.get("sound") or "Natural room tone that matches the place").strip().rstrip(".")
+    chars = {c["id"]: c for c in st["characters"]}
+    for pid, p in (s["stage"].get("people") or {}).items():
+        if p.get("sound"):
+            base += f", {chars[pid]['name']} {p['sound'].strip().rstrip('.')}"
     if (s.get("line") or "").strip():
         sp = next(c for c in st["characters"] if c["id"] == s["speaker"])
         return f"{base}, and {sp['name']}'s voice: {sp['voice'].strip().rstrip('.')}, speaking Hindi."

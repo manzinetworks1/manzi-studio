@@ -169,8 +169,8 @@
             "where": "left",
             "faces": "right",
             "eyes": "moti",
-            "does": "steps back nervously with both hands raised",
-            "expression": "scared"
+            "does": "steps back quickly with both hands raised in front of him",
+            "expression": "terrified: eyebrows raised, eyes wide, mouth open in fear, no smile at all"
           },
           "kamla": {
             "where": "background-right",
@@ -186,28 +186,49 @@
       "id": "s06",
       "day": 1,
       "place": "inside the small sitting room of the house, morning",
-      "action": "Moti snatches the blank card from Ramesh's chest and runs out of the front door; Ramesh chases him",
+      "action": "Moti leaps up, puts his front paws on Ramesh's chest, bites the blank card hanging on Ramesh's lanyard and yanks it off, then drops down and dashes out of the open front door with the card in his mouth",
       "speaker": "ramesh",
       "line": "अरे! मेरा कार्ड लौटा, कुत्ते!",
-      "sound": "Running paws, a door banging",
+      "sound": "A dog's snarl, a snapping cord, running paws",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "ramesh": {
+            "where": "left",
+            "faces": "camera-right",
+            "eyes": "moti",
+            "does": "stumbles backwards as the dog jumps on him, then reaches out after the dog, shouting",
+            "expression": "shock and anger, no smile at all"
+          },
+          "moti": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "the card on Ramesh's chest",
+            "does": "leaps up with his front paws on Ramesh's chest, grabs the blank card in his teeth and pulls it off, then runs out of the door"
+          }
+        }
+      },
+      "wear": {
+        "ramesh": "a light-blue formal shirt, dark trousers, a black office bag, and a blank blue card hanging on a lanyard around his neck (the dog pulls it off)"
+      }
+    },
+    {
+      "id": "s06b",
+      "day": 1,
+      "place": "a narrow sunlit lane of a small Indian town with parked scooters, morning",
+      "action": "Moti runs fast down the lane towards the camera with the blank blue card held in his mouth",
       "stage": {
         "shot": "wide",
         "people": {
           "moti": {
-            "where": "left",
-            "faces": "left",
-            "eyes": "the open front door",
-            "does": "runs out of the open door with a blank lanyard card in his mouth"
-          },
-          "ramesh": {
-            "where": "right",
-            "faces": "left",
-            "eyes": "moti",
-            "does": "lunges after the dog with one arm stretched out, shouting",
-            "expression": "angry and panicked"
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "the end of the lane",
+            "does": "runs fast down the middle of the lane with the blank blue card in his mouth, ears flapping"
           }
         }
-      }
+      },
+      "sound": "Running paws on the street, distant traffic and a scooter horn"
     },
     {
       "id": "s07",
@@ -215,32 +236,37 @@
       "place": "a narrow sunlit lane of a small Indian town with parked scooters, morning",
       "action": "In the lane, Moti has dropped the card at Constable Sunil's feet; Sunil holds it up and confronts Ramesh, who has just run up and freezes",
       "speaker": "sunil",
-      "line": "ये तो वही ठग है, जिसकी फोटो थाने में लगी है!",
-      "sound": "A busy lane, a distant bicycle bell",
+      "line": "अरे, ये तो थाने वाला फरार ठग है!",
+      "sound": "A quiet lane, two loud sharp dog barks at the start",
       "stage": {
         "shot": "group",
         "people": {
           "moti": {
             "where": "foreground-left",
             "faces": "right",
-            "eyes": "sunil",
-            "does": "sits at Sunil's feet, wagging his tail"
+            "eyes": "ramesh",
+            "does": "stands at Sunil's feet facing Ramesh",
+            "sound": "barks sharply twice at the very start of the shot"
           },
           "sunil": {
             "where": "centre",
             "faces": "right",
             "eyes": "ramesh",
-            "does": "holds up the blank card in one hand, glaring",
-            "expression": "stern and angry"
+            "does": "holds up the blank blue card in one hand",
+            "expression": "stern and angry, frowning, no smile at all"
           },
           "ramesh": {
             "where": "right",
             "faces": "left",
             "eyes": "sunil",
             "does": "stops running and freezes on the spot",
-            "expression": "panic and guilt"
+            "expression": "panic and guilt, no smile at all"
           }
         }
+      },
+      "wear": {
+        "ramesh": "a light-blue formal shirt and dark trousers, a black office bag; NO lanyard and NO card on his chest",
+        "sunil": "a khaki Indian police uniform with a brown leather belt and a khaki beret; no lanyard, no ID card"
       }
     },
     {
@@ -286,5 +312,6 @@
       "emotional story",
       "hindi kahani"
     ]
-  }
+  },
+  "send_now": true
 }
