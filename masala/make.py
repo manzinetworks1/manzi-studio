@@ -39,6 +39,25 @@ def has_audio(path):
                                 "-of", "csv=p=0", path], capture_output=True, text=True).stdout.strip())
 
 
+def pace(full, out, spoken):
+    """Cuts the dead air (keeps a little before the first and after the last word; a scene without a line keeps its
+    first few seconds) and plays the result a little faster. Returns the new length."""
+    d = ai_assemble.duration(full)
+    lead, tail, speed = SETTINGS.get("lead", 0.4), SETTINGS.get("tail", 0.3), SETTINGS.get("speed", 1.0)
+    if spoken:
+        a0, a1 = speech_span(full, d)
+        a, b = max(0.0, a0 - lead), min(d, a1 + tail)
+    else:
+        a, b = 0.3, min(d, 0.3 + SETTINGS.get("silent_max", 4.5))
+    if b - a < 2.0:
+        a, b = 0.0, d
+    run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.2f}", "-to", f"{b:.2f}", "-i", full,
+         "-vf", f"setpts=PTS/{speed},fps={FPS},format=yuv420p", "-af", f"atempo={speed}",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+         "-ac", "2", out])
+    return ai_assemble.duration(out)
+
+
 def seg(clip, out):
     """One scene: upright 1080x1920, 30 fps, its own sound (silence if it has none), at normal speed."""
     vf = f"scale={W}:{H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{H},setsar=1,fps={FPS},format=yuv420p"
@@ -54,12 +73,17 @@ def seg(clip, out):
 # ---------------------------------------------------------------- text pictures (Chromium draws Hindi correctly)
 CSS = f"""
 @font-face {{ font-family: Pop; src: url('file://{FONTS}/Poppins-Bold.ttf'); }}
+@font-face {{ font-family: Anton; src: url('file://{FONTS}/Anton-Regular.ttf'); }}
 html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; overflow: hidden; }}
 .box {{ position: absolute; left: 60px; right: 60px; text-align: center;
        font-family: Pop, 'Noto Sans Devanagari', 'Noto Sans', sans-serif; font-weight: 800; color: #fff;
        -webkit-text-stroke: 3px #000; paint-order: stroke fill;
        text-shadow: 0 4px 14px rgba(0,0,0,.85), 0 0 3px #000; line-height: 1.35; }}
-.cap {{ top: 1330px; left: 70px; right: 190px; font-size: 74px; line-height: 1.2; }}
+.cap {{ top: 1300px; left: 60px; right: 170px; font-size: 64px; line-height: 1.25; }}
+.en {{ font-family: Anton, Pop, sans-serif; font-weight: 400; font-size: 108px; text-transform: uppercase;
+      letter-spacing: 2px; -webkit-text-stroke: 14px #000; line-height: 1.1;
+      text-shadow: 0 8px 0 #000, 0 10px 24px rgba(0,0,0,.6); }}
+.en .hl {{ color: #ffd60a; }}
 .hook {{ top: 210px; font-size: 76px; }}
 .hook span, .end span {{ background: #ffd400; color: #111; -webkit-text-stroke: 0; text-shadow: none;
        padding: 6px 22px; border-radius: 18px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }}
@@ -219,8 +243,14 @@ def main():
                      if os.path.exists(os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4"))), None)
         if not clip:
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
-        out = os.path.join(tmp, f"{s['id']}.mp4"); d = seg(clip, out); segs.append(out); starts[s["id"]] = (t, d)
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
+        out = os.path.join(tmp, f"{s['id']}.mp4")
+        if mode == "draft" or not SETTINGS.get("trim", True):
+            d = seg(clip, out)
+        else:
+            full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full)
+            d = pace(full, out, spoken)
+        segs.append(out); starts[s["id"]] = (t, d)
         a0, a1 = speech_span(out, d)
         if spoken:
             hi_cues.append((spoken, t + a0, t + a1))
@@ -252,7 +282,14 @@ def main():
         overlays.append((png, 0.0, min(3.0, t)))
     for k, (text, x, y) in enumerate(cues):
         png = os.path.join(tmp, f"cap{k:03d}.png")
-        jobs.append((f"<div class='box cap'>{'<br>'.join(html.escape(l) for l in text.split('<br>'))}</div>", png, True))
+        if st.get("captions") == "en":  # bold upper-case words, the longest one in yellow
+            ws = [html.escape(w) for w in text.split()]
+            raw = text.split()
+            key = max(range(len(raw)), key=lambda i: len(re.sub(r"[^\w]", "", raw[i]))) if raw else -1  # longest word
+            body = " ".join(f"<span class='hl'>{w}</span>" if i == key and len(w) > 3 else w for i, w in enumerate(ws))
+            jobs.append((f"<div class='box cap en'>{body}</div>", png, True))
+        else:
+            jobs.append((f"<div class='box cap'>{'<br>'.join(html.escape(l) for l in text.split('<br>'))}</div>", png, True))
         overlays.append((png, x, y))
     if st.get("end_text"):
         png = os.path.join(tmp, "end.png")
