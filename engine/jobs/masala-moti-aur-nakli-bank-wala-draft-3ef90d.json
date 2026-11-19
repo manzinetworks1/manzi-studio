@@ -1,0 +1,43 @@
+{
+  "run_id": "masala-moti-aur-nakli-bank-wala-draft-3ef90d",
+  "purpose": "Masala Short (draft): नकली Bank Agent vs वफादार कुत्ता 😱 | Dog Saves Grandma's Pension | Hindi Story",
+  "scenes": [
+    {
+      "id": "s05-9cc41a",
+      "kind": "scene",
+      "seed": 14970928,
+      "scene": "Low-angle shot from near the floor. Setting: inside the small sitting room of the house, morning. In the CENTRE of the frame: Moti (a 4-year-old Indian street dog: medium-sized Indian pariah dog with a short golden-brown coat, white chest patch, pointed upright ears, curled tail, alert amber eyes and a black nose, lean and athletic, a red cloth collar; wearing his red cloth collar), body and face turned towards the left of the frame, eyes on Ramesh the whole time; stands firmly on the floor between them, ears back, baring his teeth and growling. On the LEFT of the frame: Ramesh (a 35-year-old Indian man: sharp narrow face, thin trimmed moustache, small shifty dark eyes, medium-brown skin with light acne marks on the cheeks, short oiled black hair combed to the side, lean build, about 5 feet 8 inches; wearing a light-blue formal shirt, dark trousers, a black office bag and a blank blue lanyard card on his chest), body and face turned towards the right of the frame, eyes on Moti the whole time; jumps back a step in fright with both hands raised up in front of his chest, palms out, terrified: eyebrows raised, eyes wide, mouth open in fear, no smile at all. In the BACKGROUND on the right: Kamla Devi (a 68-year-old Indian woman: thin, gentle oval face with deep laugh lines, warm dark-brown eyes behind round gold-rimmed glasses, wheatish-brown wrinkled skin, silver-grey hair in a low bun with a centre parting, small red bindi, slightly stooped, slim build, about 5 feet tall; wearing a plain off-white cotton saree with a thin maroon border, a grey woollen shawl, thin gold bangles), body and face turned towards the left of the frame, eyes on Moti the whole time; sits on the sofa behind the dog, surprised. What happens: Moti jumps between Kamla Devi and Ramesh and growls at Ramesh, who backs away. Nobody speaks. Who is in this shot: 2 humans (Ramesh, Kamla Devi) and ONE animal (Moti). There is only 2 human and only one animal in this shot; nobody appears twice; no other people and no other animals anywhere, not even in the background. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, warm natural morning sunlight in a small North Indian town, shallow depth of field. Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "A low, menacing dog growl and a ceiling fan, no voices.",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s06-127989",
+      "kind": "scene",
+      "seed": 675945849,
+      "scene": "Medium two-shot at eye level, the camera to the side of both figures, so both are seen in profile, facing each other. Setting: inside the small sitting room of the house, morning. On the LEFT of the frame: Ramesh (a 35-year-old Indian man: sharp narrow face, thin trimmed moustache, small shifty dark eyes, medium-brown skin with light acne marks on the cheeks, short oiled black hair combed to the side, lean build, about 5 feet 8 inches; wearing a light-blue formal shirt, dark trousers, a black office bag, and ONE plain blue card with nothing printed on it, hanging on a thin blue lanyard around his neck (the dog pulls the card and lanyard off together)), body and face turned towards the right of the frame, eyes on Moti the whole time; stumbles backwards as the dog jumps at him and shouts; once the dog has pulled the lanyard off, Ramesh's chest is bare: no lanyard and no card on him, shock and anger, no smile at all. On the RIGHT of the frame: Moti (a 4-year-old Indian street dog: medium-sized Indian pariah dog with a short golden-brown coat, white chest patch, pointed upright ears, curled tail, alert amber eyes and a black nose, lean and athletic, a red cloth collar; wearing his red cloth collar), body and face turned towards the left of the frame, eyes on the card on Ramesh's chest the whole time; leaps up with his front paws on Ramesh's chest, bites the plain blue card and pulls hard so the lanyard snaps; lands on all four paws holding the card and lanyard in his mouth, then turns towards the open door. What happens: Moti leaps up at Ramesh, bites the plain blue card hanging on Ramesh's lanyard and yanks it off: the lanyard snaps and comes away with the card; Moti lands on all four paws with the card and lanyard in his mouth and turns towards the open door. Only Ramesh speaks, in Hindi, clearly, looking at Moti while speaking, with natural, well-synchronised lip movements; Ramesh finishes speaking a moment before the shot ends. Moti stays silent, only reacting. Who is in this shot: ONE human (Ramesh) and ONE animal (Moti). There is only one human and only one animal in this shot; nobody appears twice; no other people and no other animals anywhere, not even in the background. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, warm natural morning sunlight in a small North Indian town, shallow depth of field. Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no readable letters anywhere.",
+      "dialogue": "अरे! मेरा कार्ड लौटा, कुत्ते!",
+      "language": "Hindi",
+      "sound": "A snapping cord and running paws on the floor, and Ramesh's voice: a smooth, fast-talking, falsely polite male voice, speaking Hindi.",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "scene_time_limit_min": 41
+}
