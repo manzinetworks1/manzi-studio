@@ -150,7 +150,7 @@ def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.3):
     """The scene under its narration. If the narration fits the clip (slowed down up to 1.3x), the clip simply plays.
     If the narration is longer, the clip plays forward, eases to a stop, plays slowly backward, eases to a stop,
     forward again... until the narration ends (passes of about 9 s, never faster than normal speed), so the people
-    never stop moving. A slow zoom runs on top. The scene's own sound plays once underneath, quietly."""
+    never stop moving. A slow zoom runs on top. Only the narration is heard."""
     clen = ai_assemble.duration(clip) or 5.0
     zoom = min(0.16, 0.04 + 0.006 * dur)            # longer beats travel further, but stay gentle
     frames = int(round(dur * FPS)) + 2
@@ -161,7 +161,6 @@ def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.3):
         f = max(dur / clen, 1.0)
         inputs = ["-i", clip]
         graph = [f"[0:v]setpts={f:.4f}*PTS,fps={FPS},tpad=stop_mode=clone:stop_duration=0.5,{zp}[v]"]
-        shown, tempo = clen * f, 1 / f
     else:
         src = os.path.join(tmp, "bounce_src"); seq = os.path.join(tmp, "bounce_seq")
         for d in (src, seq):
@@ -187,18 +186,12 @@ def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.3):
             os.symlink(os.path.join(src, names[min(n - 1, int(round(pos * (n - 1))))]), os.path.join(seq, f"o{j:05d}.jpg"))
         inputs = ["-framerate", str(FPS), "-i", os.path.join(seq, "o%05d.jpg"), "-i", clip]
         graph = [f"[0:v]{zp}[v]"]
-        shown, tempo = clen, 1.0
         log(f"    forward/backward: {passes} pass(es) of {T:.1f}s over {dur:.1f}s" if passes > 1
             else f"    slow motion: {span / dur:.2f}x over {dur:.1f}s")
+    # only the Professor's narration: the clip's own sound is left out (the AI makes up mumbling in scenes where
+    # nobody should speak; a spoken line is shown separately by seg_dialogue with its sound)
     ai = len([x for x in inputs if x == "-i"])          # the narration's input index
-    a_clip = ai - 1
-    graph.append(f"[{ai}:a]aresample=48000,aformat=channel_layouts=stereo,apad[n]")
-    if has_audio(clip):
-        graph.append(f"[{a_clip}:a]atempo={tempo:.4f},volume=0.22,aresample=48000,aformat=channel_layouts=stereo,"
-                     f"afade=t=out:st={max(0, shown - 0.6):.3f}:d=0.6,apad[m]")
-        graph.append("[n][m]amix=inputs=2:duration=first:normalize=0[a]")
-    else:
-        graph.append("[n]anull[a]")
+    graph.append(f"[{ai}:a]aresample=48000,aformat=channel_layouts=stereo,apad[a]")
     run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-i", nar_wav, "-filter_complex", ";".join(graph),
          "-map", "[v]", "-map", "[a]", "-t", f"{dur:.3f}", *V_OUT, out])
     return dur

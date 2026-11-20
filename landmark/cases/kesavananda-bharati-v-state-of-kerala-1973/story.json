@@ -166,7 +166,7 @@
       "id": "c02",
       "chapter": "The Legal Question",
       "narration": [
-        "Suddenly, a local property dispute transformed into a fierce constitutional battle over Parliament's power to rewrite the fundamental law of India.",
+        "Suddenly, the Mutt's right under Article 26 to manage its property turned into a fierce battle over Parliament's power to rewrite India's fundamental law.",
         "The Twenty-fourth Amendment altered Article 368 to declare that Parliament could amend any provision freely without facing limits from Article 13.",
         "The Twenty-fifth Amendment inserted Article 31C, which prevented courts from reviewing laws that claimed to implement Directive Principles of State Policy.",
         "Therefore, the Supreme Court faced one monumental legal question: is Parliament's amending power under Article 368 unlimited, or are some boundaries unbreakable?"
@@ -176,6 +176,10 @@
         "heading": "Article 368 and Article 13",
         "items": [
           {
+            "label": "Article 26",
+            "text": "Protects the right of religious denominations to manage their own property."
+          },
+          {
             "label": "Article 368",
             "text": "Gives Parliament power to amend the Constitution through a special procedure."
           },
@@ -184,12 +188,21 @@
             "text": "Declares void any law that takes away or abridges Fundamental Rights."
           },
           {
-            "label": "Article 26",
-            "text": "Protects the right of religious denominations to manage their own property."
-          },
-          {
             "label": "Article 31C",
             "text": "Inserted by Twenty-fifth Amendment to shield certain laws from judicial review."
+          }
+        ],
+        "prop": "Constitution",
+        "stamps": [
+          {
+            "text": "No limits?",
+            "at": "without facing limits",
+            "color": "red"
+          },
+          {
+            "text": "No review",
+            "at": "prevented courts from reviewing",
+            "color": "red"
           }
         ]
       }
@@ -218,8 +231,8 @@
       "narration": [
         "To grasp the intense tension in nineteen seventy-three, we must trace twenty years of constitutional conflict between Parliament and the courts.",
         "In nineteen fifty-one, in Shankari Prasad v. Union of India, the Court ruled that constitutional amendments are not ordinary laws under Article 13.",
-        "Fourteen years later, Sajjan Singh v. State of Rajasthan repeated that view, though two judges warned that basic features might remain protected.",
-        "Then in nineteen sixty-seven, Golaknath v. State of Punjab reversed course by six to five, forbidding Parliament from curtailing Fundamental Rights."
+        "In nineteen sixty-five, Sajjan Singh v. State of Rajasthan repeated that view, though two judges warned that basic features might remain protected.",
+        "In nineteen sixty-seven, Golaknath reversed course by six to five, and in nineteen seventy-one Parliament hit back with the Twenty-fourth Amendment."
       ],
       "card": {
         "style": "timeline",
@@ -231,7 +244,7 @@
           },
           {
             "label": "1965",
-            "text": "Sajjan Singh confirms the rule with two dissents."
+            "text": "Sajjan Singh confirms the rule; two judges raise doubts."
           },
           {
             "label": "1967",
@@ -395,7 +408,7 @@
         "Here stood the deepest conflict in Indian constitutional law, pulling two vital principles of democratic governance in completely opposite directions.",
         "If Article 368 carried no limits whatsoever, a temporary parliamentary majority could abolish free elections, silence courts, or erase Fundamental Rights.",
         "On the other hand, if Golaknath remained untouched, Parliament could never adjust Fundamental Rights even to pass urgent land and social reforms.",
-        "The thirteen judges needed a wise middle path that respected both elected parliamentary lawmaking and the lasting supremacy of the Constitution."
+        "The thirteen judges needed a wise middle path: a basic structure that no parliamentary majority could ever touch."
       ],
       "card": {
         "style": "triangle",
@@ -515,6 +528,13 @@
           {
             "label": "Article 31C Struck Down",
             "text": "Second part of Article 31C barring judicial review was declared unconstitutional and void."
+          }
+        ],
+        "stamps": [
+          {
+            "text": "Basic structure protected",
+            "at": "does not include the power to destroy",
+            "color": "green"
           }
         ]
       }
@@ -656,8 +676,8 @@
       "narration": [
         "Let us do a quick exam revision of Kesavananda Bharati v. State of Kerala, the greatest cornerstone of Indian constitutional law.",
         "On the facts, the Edneer Mutt challenged Kerala land reforms along with the Twenty-fourth, Twenty-fifth, and Twenty-ninth Amendments before thirteen judges.",
-        "The Court overruled Golaknath and allowed Parliament to amend Fundamental Rights, yet held seven to six that the basic structure cannot be destroyed.",
-        "In your answer, always cite Article 368 alongside Indira Nehru Gandhi and Minerva Mills to show how basic structure protects judicial review."
+        "The issue was whether Article 368 had any limits; the Court overruled Golaknath, yet held seven to six that the basic structure cannot be destroyed.",
+        "The principle: Article 368 is wide but limited, and it was later cited in Indira Nehru Gandhi and Minerva Mills to protect judicial review."
       ],
       "card": {
         "style": "exam",

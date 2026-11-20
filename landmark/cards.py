@@ -102,14 +102,28 @@ def _bold(s):
 def _tri_label(x, y, it, sw, portrait):
     """The text next to one corner of the triangle. Upright cards: above the top corner, and the bottom ones aligned
     to the outer edge so they never run off the card."""
-    if not portrait:
-        tx, ty, anchor = (x, y + 130, "middle") if y > 300 else (x + 110, y + 12, "start")
+    if not portrait and y <= 300:
+        tx, ty, anchor = x + 110, y + 12, "start"
     elif y > 300:
         tx, ty, anchor = (x - 84, y + 135, "start") if x < sw / 2 else (x + 84, y + 135, "end")
     else:
         tx, ty, anchor = x, y - 115, "middle"
     return (f"<text x='{tx}' y='{ty}' text-anchor='{anchor}' font-size='{40 if portrait else 38}' "
             f"font-weight='600' fill='{PAPER}'>{_e(it['text'])}</text>")
+
+
+def _circle_label(x, y, label):
+    """The label inside a corner circle: one line when short, otherwise two smaller lines (so it stays inside)."""
+    words = label.split()
+    if len(label) <= 9 or len(words) < 2:
+        size = 34 if len(label) <= 9 else max(20, int(34 * 9 / len(label)))
+        return (f"<text x='{x}' y='{y + 2}' text-anchor='middle' dominant-baseline='middle' font-size='{size}' "
+                f"font-weight='800' fill='{INK}'>{_e(label)}</text>")
+    cut = min(range(1, len(words)), key=lambda k: abs(len(" ".join(words[:k])) - len(" ".join(words[k:]))))
+    lines = [" ".join(words[:cut]), " ".join(words[cut:])]
+    size = max(20, min(28, int(150 / max(len(l) for l in lines) * 1.6)))
+    return (f"<text x='{x}' y='{y + 2}' text-anchor='middle' font-size='{size}' font-weight='800' fill='{INK}'>"
+            f"<tspan x='{x}' dy='-0.15em'>{_e(lines[0])}</tspan><tspan x='{x}' dy='1.1em'>{_e(lines[1])}</tspan></text>")
 
 
 def card_html(card, case, chapter, portrait=False):
@@ -139,8 +153,7 @@ def card_html(card, case, chapter, portrait=False):
                f"stroke='{GOLD}' stroke-width='6' stroke-linejoin='round'/>"]
         for (x, y), it in zip(pts, labels):
             svg.append(f"<circle cx='{x}' cy='{y}' r='84' fill='{GOLD}'/>"
-                       f"<text x='{x}' y='{y + 2}' text-anchor='middle' dominant-baseline='middle' font-size='34' "
-                       f"font-weight='800' fill='{INK}'>{_e(it['label'].replace('Article ', 'Art. '))}</text>"
+                       + _circle_label(x, y, it['label'].replace('Article ', 'Art. '))
                        + _tri_label(x, y, it, sw, portrait))
         svg.append("</svg>")
         body = (f"<h1 class='center' style='font-size:62px'>{_e(card['heading'])}</h1>"

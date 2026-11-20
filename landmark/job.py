@@ -8,6 +8,15 @@ python landmark/job.py --case <slug> [--no-ai]
   cloned voice), sends it to "3 - Manzi Engine" in the 11 am-3 pm IST slot or leaves it waiting for "3c", and prints
   ai=sent or ai=waiting. When Kaggle is done, "3b - Collect" publishes the results and starts L2 again by itself.
 Writes "ai=<off|ready|sent|waiting>" to $GITHUB_OUTPUT when run in GitHub Actions.
+
+Two rounds, to save GPU (Manzi's choice, 21 Nov 2026):
+- draft (no landmark/cases/<slug>/approved.json yet): every scene only as its preview (384p, 544p when someone speaks),
+  latents kept; plus the narration. The video is made from these so the scenes can be reviewed.
+- final (approved.json exists): {"approved": ["s01", ...] or "all", "remake": {"s05": "what to change"}}. Approved
+  scenes are sharpened to 720p from their own draft (the same clip); scenes in "remake" are made again (new seed) at
+  720p. The draft's narration is re-used.
+landmark/cases/<slug>/reuse.json (optional): {"release": "<engine release tag>", "clips": {"<beat id>": "<clip name in
+that release>"}}: clips already made and approved elsewhere (e.g. a test run); they are not made again.
 """
 import argparse, datetime, hashlib, json, os, subprocess, sys
 
@@ -30,10 +39,36 @@ def load_story(sl):
         raise SystemExit(f"landmark/cases/{sl}/story.json has a typing mistake after your edit: {e}. Fix that line on GitHub and run again.")
 
 
-def release_for(sl):
+def release_for(sl, final=False):
     rels = json.loads(gh("releases?per_page=100"))
-    rels = [r for r in rels if r["tag_name"].startswith(f"engine-landmark-{sl}-")]
+    rels = [r for r in rels if r["tag_name"].startswith(f"engine-landmark-{sl}-")
+            and r["tag_name"].startswith(f"engine-landmark-{sl}-final-") == final]
     return sorted(rels, key=lambda r: r["created_at"])[-1] if rels else None
+
+
+def release_by_tag(tag):
+    return json.loads(gh(f"releases/tags/{tag}"))
+
+
+def case_file(sl, name):
+    p = os.path.join(HERE, "cases", sl, name)
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else None
+
+
+def fetch_reuse(reuse, dest):
+    """Copies re-used clips into the engine folder under this case's beat ids (720p if there, else the preview)."""
+    if not reuse:
+        return
+    rel = release_by_tag(reuse["release"])
+    ids = {a["name"]: a["id"] for a in rel["assets"]}
+    os.makedirs(dest, exist_ok=True)
+    for beat, src in reuse.get("clips", {}).items():
+        for size in ("720p", "544p", "384p"):
+            if f"{src}_{size}.mp4" in ids:
+                open(os.path.join(dest, f"{beat}_{size}.mp4"), "wb").write(
+                    gh(f"releases/assets/{ids[f'{src}_{size}.mp4']}", "application/octet-stream"))
+                break
+    log(f"re-used clips: {', '.join(reuse.get('clips', {}))}")
 
 
 def seed_for(sl, sid):
@@ -60,16 +95,27 @@ def scene_prompt(st, b):
     return " ".join(parts)
 
 
-def build_job(st, lcfg):
+def build_job(st, lcfg, mode="draft", reuse=None, draft_have=None, approved=None):
     sl = st["slug"]
     prof = json.load(open(CAST, encoding="utf-8"))
     beats = st["beats"]
     scene_ids = [b["id"] for b in beats if b["type"] == "scene"]
     next_continues = {scene_ids[i - 1] for i, sid in enumerate(scene_ids)
                       if i and next(b for b in beats if b["id"] == sid).get("cont")}
-    scenes, pieces, prev = [], [], None
+    reuse = reuse or {"clips": {}}
+    rclips = reuse.get("clips", {})
+    draft_have = draft_have or {}                 # {asset name: release tag} of the draft run
+    approved = approved or {}
+    ok_ids = approved.get("approved", [])
+    remake = approved.get("remake", {}) or {}
+    scenes, pieces, prev, inputs, frames = [], [], None, [], {}
     for b in beats:
-        if b["type"] == "professor":
+        if b["id"] in rclips:
+            prev = b["id"] if b["type"] == "scene" else prev
+        elif b["type"] == "professor" and mode == "final" and (ok_ids == "all" or b["id"] in ok_ids) \
+                and f"{b['id']}_720p.mp4" in draft_have:
+            pass
+        elif b["type"] == "professor":
             scenes.append({"id": b["id"], "kind": "professor", "seed": prof["seed"], "scene": prof["scene"],
                            "dialogue": b["line"], "sound": prof["sound"],
                            # 384p like the approved takes: the same seed at another size would give another face
@@ -86,16 +132,43 @@ def build_job(st, lcfg):
                 sc["preview"] = "384p"
             if b.get("cont") and prev:
                 sc["start_image"] = prev       # continues from the previous scene's last picture
+                if prev in rclips:             # ... which was made in another run
+                    f = f"{rclips[prev]}_frame.png"
+                    frames[prev] = f; inputs.append({"release": reuse["release"], "file": f})
             if b["id"] in next_continues:
                 sc.update(save_frame=True, frame_time="end")
+            if mode == "draft":
+                sc.pop("output", None); sc.pop("preset", None); sc["keep_latents"] = True
+            else:
+                draft = f"{b['id']}_{sc['preview']}"
+                if b["id"] not in remake and (ok_ids == "all" or b["id"] in ok_ids) and f"{draft}.pt" in draft_have:
+                    sc = {"id": b["id"], "kind": "scene", "upscale_from": draft, "output": sc["output"],
+                          "preset": sc["preset"], "preview": sc["preview"]}
+                    inputs.append({"release": draft_have[f"{draft}.pt"], "file": f"{draft}.pt"})
+                    if f"{draft}.json" in draft_have:
+                        inputs.append({"release": draft_have[f"{draft}.json"], "file": f"{draft}.json"})
+                else:
+                    sc["seed"] += 97                # a remake: another take
+                    if remake.get(b["id"]):
+                        sc["scene"] += " " + remake[b["id"]].strip()
+                    if sc.get("start_image") and sc["start_image"] not in rclips:
+                        f = f"{sc['start_image']}_frame.png"
+                        if f in draft_have:
+                            frames[sc["start_image"]] = f; inputs.append({"release": draft_have[f], "file": f})
+                        else:
+                            sc.pop("start_image")
             scenes.append(sc)
             prev = b["id"]
-        for s in b.get("narration", []):
+        for s in (b.get("narration", []) if mode == "draft" else []):
             t = speakable(s)
             if t and t not in pieces:
                 pieces.append(t)
-    job = {"run_id": f"landmark-{sl}", "purpose": f"Landmark case video: {st['case']}", "scenes": scenes,
-           "scene_time_limit_min": min(330, 13 * len(scenes) + 15)}
+    per = (lambda sc: 6 if sc.get("preview") == "384p" else 10) if mode == "draft" else \
+          (lambda sc: 8 if sc.get("upscale_from") else 15)
+    job = {"run_id": f"landmark-{sl}" + ("-final" if mode == "final" else ""),
+           "purpose": f"Landmark case video ({mode}): {st['case']}", "scenes": scenes,
+           "inputs": inputs, "frames": frames,
+           "scene_time_limit_min": min(330, sum(per(sc) for sc in scenes) + 15)}
     if pieces:
         job["narration"] = {"ref_audio_file": "engine/cast/professor_voiceA.wav", "ref_audio": "professor_voiceA.wav",
                             "ref_text": prof["dialogue"], "speed": 1.0, "engines": ["qwen3"], "pieces": pieces}
@@ -117,15 +190,27 @@ def main():
     st = load_story(a.case)
     if a.no_ai:
         return say("off")
-    job = build_job(st, lcfg)
-    name = f"landmark-{a.case}.json"
+    approved, reuse = case_file(a.case, "approved.json"), case_file(a.case, "reuse.json")
+    mode = "final" if approved else "draft"
+    dest = os.path.join(ROOT, "out", "landmark", a.case, "engine")
+    draft_rel = release_for(a.case)
+    draft_have = {x["name"]: draft_rel["tag_name"] for x in draft_rel["assets"]} if draft_rel else {}
+    if mode == "final" and not draft_rel:
+        raise SystemExit("approved.json is there but no draft run was found: remove approved.json to make the draft first")
+    job = build_job(st, lcfg, mode, reuse, draft_have, approved)
+    log(f"mode: {mode}")
+    name = f"landmark-{a.case}{'-final' if mode == 'final' else ''}.json"
     path = os.path.join(ROOT, "engine", "jobs", name)
     if a.build_only:
         json.dump(job, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
         return log(f"job written: {len(job['scenes'])} clips, {len(job.get('narration', {}).get('pieces', []))} sentences")
-    rel = release_for(a.case)
-    if rel:
-        download(rel, os.path.join(ROOT, "out", "landmark", a.case, "engine"))
+    rel = release_for(a.case, final=True) if mode == "final" else draft_rel
+    if rel or (mode == "final" and not job["scenes"]):
+        if draft_rel:
+            download(draft_rel, dest)
+        if mode == "final" and rel:
+            download(rel, dest)
+        fetch_reuse(reuse, dest)
         return say("ready")
     pending = os.path.join(ROOT, "engine", "state", "pending.json")
     if os.path.exists(pending) and json.load(open(pending)).get("run_id") == job["run_id"]:

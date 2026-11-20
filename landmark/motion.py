@@ -23,15 +23,78 @@ STEP = 0.6               # smallest gap between two things appearing
 
 
 # ------------------------------------------------------------------ when is a phrase said?
+UNITS = {w: i for i, w in enumerate("zero one two three four five six seven eight nine ten eleven twelve thirteen "
+                                    "fourteen fifteen sixteen seventeen eighteen nineteen".split())}
+ORD = {w: i for i, w in enumerate("_ first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth "
+                                  "thirteenth fourteenth fifteenth sixteenth seventeenth eighteenth nineteenth".split())
+       if w != "_"}
+ORD.update({w: 10 * i for i, w in enumerate("_ _ twentieth thirtieth fortieth fiftieth sixtieth seventieth eightieth "
+                                            "ninetieth".split()) if w != "_"})
+SUF = lambda v: "th" if 10 <= v % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(v % 10, "th")
+TENS = {w: 10 * i for i, w in enumerate("_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()) if w != "_"}
+
+
+def _numbers(tokens):
+    """Spoken numbers -> digits: "nineteen fifty one" -> 1951, "three hundred sixty eight" -> 368, "fourteen" -> 14.
+    tokens: [(word, index)] -> same, with number words merged into one digit token."""
+    out, i = [], 0
+    while i < len(tokens):
+        groups, j = [], i                     # groups of 0-99, "hundred" multiplies the last one
+        while j < len(tokens):
+            w = tokens[j][0]
+            if w in TENS:
+                v = TENS[w]
+                nxt = tokens[j + 1][0] if j + 1 < len(tokens) else ""
+                if nxt in UNITS and UNITS[nxt] < 10:
+                    v += UNITS[nxt]; j += 1
+                elif nxt in ORD and ORD[nxt] < 10:                 # twenty fourth -> 24th
+                    v += ORD[nxt]; j += 2
+                    groups.append(f"{v}{SUF(v)}")
+                    break
+                groups.append(v)
+            elif w in ORD and not groups:
+                groups.append(f"{ORD[w]}{SUF(ORD[w])}"); j += 1
+                break
+            elif w in UNITS:
+                groups.append(UNITS[w])
+            elif w in ("hundred", "thousand") and groups and isinstance(groups[-1], int):
+                groups[-1] *= 100 if w == "hundred" else 1000
+                if j + 1 < len(tokens) and tokens[j + 1][0] == "and":
+                    j += 1
+            else:
+                break
+            j += 1
+        if not groups:
+            out.append(tokens[i]); i += 1
+            continue
+        if any(isinstance(g, str) for g in groups):           # an ordinal ends the number
+            if len(groups) == 1:
+                out.append((groups[0], tokens[i][1])); i = j
+            else:
+                out += tokens[i:j]; i = j
+            continue
+        if len(groups) == 1:
+            v = groups[0]
+        elif len(groups) == 2 and groups[0] % 100 == 0 and groups[0] and groups[1] < groups[0]:
+            v = groups[0] + groups[1]                       # three hundred | sixty eight, two thousand | seven
+        elif len(groups) == 2 and 1 <= groups[0] <= 99 and groups[1] < 100:
+            v = groups[0] * 100 + groups[1]                 # nineteen | fifty one, three | sixty eight
+        else:
+            out += tokens[i:j]; i = j
+            continue
+        out.append((str(v), tokens[i][1])); i = j
+    return out
+
+
 def _norm(s):
-    """lower case, punctuation -> spaces; returns (text, index map back to the original)."""
+    """lower case, punctuation -> spaces, spoken numbers -> digits; returns (text, index map back to the original)."""
+    tokens = [(m.group(0).lower(), m.start()) for m in re.finditer(r"[A-Za-z0-9]+", s)]
+    tokens = _numbers(tokens)
     out, idx = [], []
-    for i, ch in enumerate(s):
-        c = ch.lower()
-        if c.isalnum():
-            out.append(c); idx.append(i)
-        elif out and out[-1] != " ":
+    for w, i in tokens:
+        if out:
             out.append(" "); idx.append(i)
+        out.extend(w); idx.extend([i] * len(w))
     return "".join(out), idx
 
 
@@ -47,7 +110,7 @@ def find(times, phrase, after=0.0, frac=0.0):
         if b < after:
             continue
         n, idx = _norm(text)
-        for m in re.finditer(r"(?<![a-z0-9])" + re.escape(p), n):
+        for m in re.finditer(r"(?<![a-z0-9])" + re.escape(p) + r"(?![0-9])", n):
             pos = idx[m.start()] + frac * len(phrase)
             t = a + (b - a) * pos / max(1, len(text))
             if t >= after - 0.01:
@@ -81,12 +144,13 @@ def item_time(times, it, after):
             return t
     # all the label's real words in one sentence -> the first of them
     words = [w for w in _norm(label)[0].split() if len(w) > 3 and w not in SMALL]
-    for w in words:
-        for s in times:
-            if s[2] < after:
-                continue
-            if all(find([s], x) is not None for x in words):
-                return find([s], w)
+    need = len(words) if len(words) <= 2 else len(words) - 1     # "Basic Structure Doctrine" -> 2 of 3 is enough
+    for s in times:
+        if s[2] < after or not words:
+            continue
+        hits = [find([s], x) for x in words]
+        if sum(h is not None for h in hits) >= need:
+            return min(h for h in hits if h is not None)
     for b in _bolds(it.get("text")):                              # a name inside a bold phrase ("A.K. Gopalan")
         for w in sorted(re.findall(r"\b[A-Z][a-z]{4,}\b", b), key=len, reverse=True):
             if True:
@@ -103,8 +167,10 @@ def schedule(times, items, ordered=True, first=0.8):
     out, prev, late = [], first - STEP, 0
     for k, t in enumerate(found):
         later_known = any(x is not None for x in found[k + 1:])
-        if t is None:
-            if later_known or not ordered:
+        if t is None and not ordered:
+            t = (out[-1] if out else first - STEP) + 1.2
+        elif t is None:
+            if later_known:
                 t = prev + STEP
             else:
                 t = end + 0.3 + late * PAUSE_END; late += 1
@@ -143,7 +209,7 @@ window.hl = (el, t, dur) => {
 };
 window.shake = (t) => anim(document.querySelector('.main'), [{transform: 'translate(0,0)'}, {transform: 'translate(-5px,4px)'},
   {transform: 'translate(4px,-3px)'}, {transform: 'translate(0,0)'}], t, .22, {fill: 'none', composite: 'add'});
-window.stamp = (parent, text, color, css, t) => {
+window.stamp = (parent, text, color, css, t, hold) => {
   const s = document.createElement('div');
   s.textContent = text;
   s.style.cssText = `position:absolute;font:800 40px D;letter-spacing:4px;color:${color};border:6px solid ${color};
@@ -154,20 +220,30 @@ window.stamp = (parent, text, color, css, t) => {
   anim(s, [{opacity: 0, transform: `${base} rotate(${rot}deg) scale(2.6)`},
            {opacity: 1, transform: `${base} rotate(${rot}deg) scale(.94)`, offset: .7},
            {opacity: .93, transform: `${base} rotate(${rot}deg) scale(1)`}], t, .32, {easing: 'ease-in'});
+  if (hold) {                        // upright Shorts: lands, stays a moment, goes (no room to keep it)
+    s.style.background = 'rgba(8,18,38,.92)'; s.style.mixBlendMode = 'normal';
+    anim(s, [{opacity: .93}, {opacity: 0}], t + hold, .5, {fill: 'forwards', composite: 'replace'});
+  }
   shake(t + .22);
 };
 window.prop = (label, t, portrait) => {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:absolute;right:160px;top:96px;width:290px;height:340px;transform-origin:top right;z-index:4;';
+  document.body.appendChild(wrap);
+  const first = document.querySelector('.main .row, .main .cell, .main .tl, .main .quote');
+  if (first) {                       // shrink it so it ends above the first point
+    const room = first.getBoundingClientRect().top - 50 - 96 - 14;   // (the points are still 50px low here, before they rise)
+    if (room < 340) wrap.style.transform = `scale(${Math.max(.5, room / 340)})`;
+  }
   const p = document.createElement('div');
-  p.style.cssText = portrait
-    ? `position:absolute;left:50%;top:150px;margin-left:-150px;width:300px;height:200px;border-radius:14px;`
-    : `position:absolute;right:160px;top:110px;width:290px;height:340px;border-radius:14px;`;
+  p.style.cssText = `position:absolute;left:0;top:0;width:290px;height:340px;border-radius:14px;`;
   p.style.cssText += `background:linear-gradient(160deg,#24406b,#162a49);border:3px solid rgba(217,171,79,.8);
     box-shadow:0 20px 50px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;
     justify-content:flex-start;padding-top:${portrait ? 18 : 26}px;gap:10px;z-index:4;`;
   p.innerHTML = `<div style="width:${portrait ? 56 : 76}px;height:${portrait ? 56 : 76}px;border-radius:50%;border:4px solid #d9ab4f;
     display:flex;align-items:center;justify-content:center;font:800 30px D;color:#d9ab4f">✦</div>
     <div style="font:700 ${label.length > 9 ? 24 : 30}px T;letter-spacing:6px;color:#d9ab4f">${label}</div>`;
-  document.body.appendChild(p);
+  wrap.appendChild(p);
   anim(p, [{opacity: 0, transform: 'translateX(140px) rotate(12deg)'}, {opacity: 1, transform: 'rotate(6deg)'}], t, .8);
   return p;
 };
@@ -325,7 +401,7 @@ anim(x,[{{opacity:0,transform:'scale(2)'}},{{opacity:.95,transform:'scale(1)'}}]
     # props and stamps from the storyboard (for dramatic cards)
     stamps = card.get("stamps") or []
     end_all = end + extra
-    if card.get("prop"):
+    if card.get("prop") and not portrait:
         tp = (items and schedule(times, items[:1])[0][0]) or 0.8
         tp = max(0.3, tp - 0.2)
         if not portrait:
@@ -347,8 +423,12 @@ anim(x,[{{opacity:0,transform:'scale(2)'}},{{opacity:.95,transform:'scale(1)'}}]
         if t is None:
             continue
         color = {"red": "#e5484d", "green": "#3fbf7f", "gold": "#d9ab4f"}.get(s.get("color", "red"), "#e5484d")
-        where, css = ("P", places[k]) if card.get("prop") else ("M", free[k])
-        js.append(f"stamp({where},{_js(s['text'].upper()[:22])},'{color}',{_js(css)},{t});")
+        if portrait:
+            js.append(f"stamp(M,{_js(s['text'].upper()[:28])},'{color}',"
+                      f"'left:50%;top:42%;transform:translate(-50%,-50%) rotate(-7deg);font-size:46px',{t},2.6);")
+        else:
+            where, css = ("P", places[k]) if card.get("prop") else ("M", free[k])
+            js.append(f"stamp({where},{_js(s['text'].upper()[:28])},'{color}',{_js(css)},{t});")
         ev.append(("thud", t + .2))
     return "\n".join(js), ev, round(extra, 2)
 
