@@ -1,0 +1,98 @@
+{
+  "run_id": "test-kesavananda-preview-and-professor-ref",
+  "purpose": "Test (20 Nov 2026): 4 hardest Kesavananda scenes in final quality + Professor intro/outro starting from professor.png",
+  "scenes": [
+    {
+      "id": "p_intro_ref",
+      "kind": "professor",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Can Parliament rewrite the entire Constitution? Let us explore Kesavananda Bharati.",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+      "preview": "384p",
+      "duration": "5 s",
+      "output": "720p",
+      "preset": "Fast",
+      "start_image": "professor"
+    },
+    {
+      "id": "p_outro_ref",
+      "kind": "professor",
+      "seed": 552052728,
+      "scene": "Static medium close-up in a bright Indian university classroom with a green blackboard. A 38-year-old Indian male law lecturer from Delhi, clean-shaven, short neat black hair, navy blue blazer over a white shirt, looks straight at the camera with a warm confident smile and speaks English with a natural, clearly Indian accent (Indian English, as spoken by an educated Delhi professor). He speaks briskly at a lively, energetic, fast-paced YouTube-teacher tempo, with no pauses between sentences.",
+      "dialogue": "Comment the next landmark case you want. See you next time!",
+      "sound": "Quiet classroom room tone, only the professor's Indian-accented voice.",
+      "preview": "384p",
+      "duration": "5 s",
+      "output": "720p",
+      "preset": "Fast",
+      "start_image": "professor"
+    },
+    {
+      "id": "s09",
+      "kind": "scene",
+      "seed": 225128315,
+      "scene": "Inside the grand courtroom, wide static shot showing the long curved wooden dais where the chief judge and the thoughtful judge sit at the centre of the bench. Below them, both advocates stand near wooden lecterns under soft warm indoor lighting. The people in the shot, each one different: the chief judge: Elderly Indian man in his early sixties, dignified posture, brown skin, silver hair, trimmed white moustache, wearing dark judicial robes; the thoughtful judge: Indian man in his late fifties, average build, brown skin, calm eyes, parted salt-and-pepper hair, wearing formal black court robes; the senior advocate: Indian man in his late forties, slim build, brown skin, sharp nose, combed greying hair, wearing black gown and white bands; the government counsel: Indian man in his fifties, sturdy build, brown skin, thick black-rimmed spectacles, receding hair, wearing black coat over white shirt. Nobody speaks. Everyone is clearly Indian, with brown skin. Film look: Warm 1973 archival film look, muted earthy tones and rich wooden browns, soft natural and tungsten lighting, 35mm cinematic lens, dignified, contemplative, historically grounded courtroom drama mood. Realistic and cinematic. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no banners, no name plates, no readable letters anywhere in the picture.",
+      "dialogue": "",
+      "language": "English",
+      "duration": "5 s",
+      "sound": "Rustle of judicial robes and gentle cough in the gallery, no voices.",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s10",
+      "kind": "scene",
+      "seed": 345103213,
+      "scene": "Close-up inside the courtroom from behind the government counsel's shoulder, looking directly at the senior advocate standing at the lectern. Wearing his black gown and white bands, he raises one hand calmly while making a pointed legal argument in soft courtroom light. The people in the shot, each one different: the senior advocate: Indian man in his late forties, slim build, brown skin, sharp nose, combed greying hair, wearing black gown and white bands; the government counsel: Indian man in his fifties, sturdy build, brown skin, thick black-rimmed spectacles, receding hair, wearing black coat over white shirt. Only the senior advocate speaks, clearly, with crisp, well-articulated mouth movements and no long pauses; everyone else stays silent. Everyone is clearly Indian, with brown skin. Film look: Warm 1973 archival film look, muted earthy tones and rich wooden browns, soft natural and tungsten lighting, 35mm cinematic lens, dignified, contemplative, historically grounded courtroom drama mood. Realistic and cinematic. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no banners, no name plates, no readable letters anywhere in the picture.",
+      "dialogue": "Amendment cannot mean destruction of the Constitution.",
+      "language": "English",
+      "duration": "5 s",
+      "sound": "Clear calm courtroom voice and faint creak of wooden chairs, the speaker's clear Indian-accented voice.",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "544p",
+      "min_end_silence": 0.4,
+      "retries": 1,
+      "save_frame": true,
+      "frame_time": "end"
+    },
+    {
+      "id": "s17",
+      "kind": "scene",
+      "seed": 119958278,
+      "scene": "Bright morning sunlight streams through tall arched courtroom windows on judgment day. A wide static shot shows the packed wooden benches of the courtroom filled with waiting advocates in black gowns, looking eagerly toward the empty raised dais. The people in the shot, each one different: the senior advocate: Indian man in his late forties, slim build, brown skin, sharp nose, combed greying hair, wearing black gown and white bands; the government counsel: Indian man in his fifties, sturdy build, brown skin, thick black-rimmed spectacles, receding hair, wearing black coat over white shirt. Nobody speaks. Everyone is clearly Indian, with brown skin. Film look: Warm 1973 archival film look, muted earthy tones and rich wooden browns, soft natural and tungsten lighting, 35mm cinematic lens, dignified, contemplative, historically grounded courtroom drama mood. Realistic and cinematic. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no banners, no name plates, no readable letters anywhere in the picture.",
+      "dialogue": "",
+      "language": "English",
+      "duration": "5 s",
+      "sound": "Excited low chatter across a crowded courtroom, no voices.",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s18",
+      "kind": "scene",
+      "seed": 39421825,
+      "scene": "Medium close-up of the thoughtful judge seated on the high bench beside the chief judge, looking composed and resolute in formal black robes. Soft morning light illuminates his face as he reads calmly from thick white pages held slightly below frame. The people in the shot, each one different: the thoughtful judge: Indian man in his late fifties, average build, brown skin, calm eyes, parted salt-and-pepper hair, wearing formal black court robes; the chief judge: Elderly Indian man in his early sixties, dignified posture, brown skin, silver hair, trimmed white moustache, wearing dark judicial robes. Nobody speaks. Everyone is clearly Indian, with brown skin. Film look: Warm 1973 archival film look, muted earthy tones and rich wooden browns, soft natural and tungsten lighting, 35mm cinematic lens, dignified, contemplative, historically grounded courtroom drama mood. Realistic and cinematic. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no banners, no name plates, no readable letters anywhere in the picture.",
+      "dialogue": "",
+      "language": "English",
+      "duration": "5 s",
+      "sound": "Clear measured reading inside a completely silent hall, no voices.",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    }
+  ],
+  "inputs": [
+    {
+      "repo_file": "engine/cast/professor.png",
+      "file": "professor.png"
+    }
+  ],
+  "frames": {
+    "professor": "professor.png"
+  },
+  "scene_time_limit_min": 75
+}

@@ -2,7 +2,8 @@
 
 python engine/stage_latents.py engine/jobs/<job>.json
 
-The job may list {"inputs": [{"release": "<GitHub release tag>", "file": "<asset name>"}, ...]}. Those assets are
+The job may list {"inputs": [{"release": "<GitHub release tag>", "file": "<asset name>"}, ...]} (or {"repo_file":
+"<path in this repo>"} for a file kept in the repo). Those assets are
 downloaded from the repo's Releases and published as a new version of the private Kaggle dataset
 <KAGGLE_USERNAME>/manzi-latents (created on first use); the run then attaches it and finds the files under
 /kaggle/input. Prints "dataset=<owner/slug>" to $GITHUB_OUTPUT (nothing when the job lists no inputs).
@@ -30,6 +31,10 @@ def sh(*a, check=True):
 
 ids = {}
 for it in items:
+    if it.get("repo_file"):              # a file kept in this repo (e.g. engine/cast/professor.png)
+        import shutil
+        shutil.copy(it["repo_file"], os.path.join(d, it.get("file") or os.path.basename(it["repo_file"])))
+        continue
     if it["release"] not in ids:
         rel = json.loads(sh("gh", "api", f"repos/{repo}/releases/tags/{it['release']}").stdout)
         ids[it["release"]] = {a["name"]: a["id"] for a in rel["assets"]}
