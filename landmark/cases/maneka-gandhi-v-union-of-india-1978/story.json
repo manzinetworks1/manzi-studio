@@ -168,6 +168,24 @@
             "label": "Hearing",
             "text": "The Act said **nothing about hearing the passport holder** first."
           }
+        ],
+        "prop": "Passport",
+        "stamps": [
+          {
+            "text": "Impounded",
+            "at": "impounded",
+            "color": "red"
+          },
+          {
+            "text": "No reasons",
+            "at": "refuse to give reasons",
+            "color": "red"
+          },
+          {
+            "text": "No hearing",
+            "at": "end",
+            "color": "red"
+          }
         ]
       }
     },
@@ -337,7 +355,14 @@
         "style": "quote",
         "heading": "Right and just and fair",
         "sub": "Justice P.N. Bhagwati, on the procedure under Article 21",
-        "items": []
+        "items": [],
+        "stamps": [
+          {
+            "text": "Right · Just · Fair",
+            "at": "not arbitrary",
+            "color": "green"
+          }
+        ]
       }
     },
     {

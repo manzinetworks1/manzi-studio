@@ -14,7 +14,7 @@ then uploads everything (Google Drive if set up, otherwise a GitHub Release) and
 Missing pieces never stop the video: a missing scene becomes a chapter card, a missing narration sentence is read by
 the Microsoft Indian English voice.
 """
-import argparse, datetime, html, json, os, re, shutil, subprocess, sys, time
+import argparse, datetime, html, json, math, os, re, shutil, subprocess, sys, time
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +24,7 @@ from common import ROOT, config, log, to_pcm, wav_write  # noqa: E402
 from voice import speakable, trim, SR  # noqa: E402
 import ai_assemble, deliver, mail  # noqa: E402
 from cards import render_cards, W, H  # noqa: E402
+import motion  # noqa: E402
 
 FPS = 30
 LEAD, GAP, TAIL = 0.35, 0.35, 0.5          # seconds of quiet before, between and after narration sentences
@@ -145,30 +146,83 @@ def seg_still(png, nar_wav, dur, out, fade=False):
     return dur
 
 
-def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.5):
-    """The clip, slowed down up to 1.5x to fit the narration; if the narration is longer still, its last picture
-    stays on. One smooth zoom runs over the whole beat, from the first frame until the next beat, so the picture never
-    stops moving. The scene's own sound stays underneath, quietly."""
+def seg_scene(clip, nar_wav, dur, out, tmp, slow_max=1.3):
+    """The scene under its narration. If the narration fits the clip (slowed down up to 1.3x), the clip simply plays.
+    If the narration is longer, the clip plays forward, eases to a stop, plays slowly backward, eases to a stop,
+    forward again... until the narration ends (passes of about 9 s, never faster than normal speed), so the people
+    never stop moving. A slow zoom runs on top. The scene's own sound plays once underneath, quietly."""
     clen = ai_assemble.duration(clip) or 5.0
-    f = min(max(dur / clen, 1.0), slow_max)
-    shown = clen * f
-    tail = max(0.0, dur - shown)
-    frames = int(round(dur * FPS)) + 2
     zoom = min(0.16, 0.04 + 0.006 * dur)            # longer beats travel further, but stay gentle
-    graph = [f"[0:v]setpts={f:.4f}*PTS,fps={FPS},tpad=stop_mode=clone:stop_duration={tail + 0.3:.3f},"
-             f"scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase:flags=lanczos,crop={W * 2}:{H * 2},"
-             f"zoompan=z='1+{zoom:.4f}*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},"
-             f"setsar=1,format=yuv420p[v]"]
-    graph.append("[1:a]aresample=48000,aformat=channel_layouts=stereo,apad[n]")
+    frames = int(round(dur * FPS)) + 2
+    zp = (f"scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase:flags=lanczos,crop={W * 2}:{H * 2},"
+          f"zoompan=z='1+{zoom:.4f}*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},"
+          f"setsar=1,format=yuv420p")
+    if dur <= clen * slow_max:
+        f = max(dur / clen, 1.0)
+        inputs = ["-i", clip]
+        graph = [f"[0:v]setpts={f:.4f}*PTS,fps={FPS},tpad=stop_mode=clone:stop_duration=0.5,{zp}[v]"]
+        shown, tempo = clen * f, 1 / f
+    else:
+        src = os.path.join(tmp, "bounce_src"); seq = os.path.join(tmp, "bounce_seq")
+        for d in (src, seq):
+            shutil.rmtree(d, ignore_errors=True); os.makedirs(d)
+        # the clip's frames at 60 fps (blended in-betweens), so slow playback stays smooth
+        run(["ffmpeg", "-y", "-loglevel", "error", "-i", clip, "-vf",
+             f"scale={W}:{H}:force_original_aspect_ratio=increase:flags=lanczos,crop={W}:{H},framerate=fps=60",
+             "-q:v", "2", os.path.join(src, "f%05d.jpg")])
+        names = sorted(os.listdir(src)); n = len(names)
+        span = n / 60
+        passes = max(1, round(dur / 9.0))
+        if math.pi / 2 * span / (dur / passes) > 1.0:          # keep the fastest moment at normal speed or slower
+            passes = max(1, int(dur / (math.pi / 2 * span)))
+        T = dur / passes
+        for j in range(frames):
+            t = min(j / FPS, dur - 1e-6)
+            k = int(t // T); ph = (t - k * T) / T
+            if passes == 1:
+                pos = t / dur                                  # one slow pass: an even slow motion, no stop
+            else:
+                e = math.sin(math.pi / 2 * ph) if k == 0 else (1 - math.cos(math.pi * ph)) / 2   # starts already moving
+                pos = e if k % 2 == 0 else 1 - e
+            os.symlink(os.path.join(src, names[min(n - 1, int(round(pos * (n - 1))))]), os.path.join(seq, f"o{j:05d}.jpg"))
+        inputs = ["-framerate", str(FPS), "-i", os.path.join(seq, "o%05d.jpg"), "-i", clip]
+        graph = [f"[0:v]{zp}[v]"]
+        shown, tempo = clen, 1.0
+        log(f"    forward/backward: {passes} pass(es) of {T:.1f}s over {dur:.1f}s" if passes > 1
+            else f"    slow motion: {span / dur:.2f}x over {dur:.1f}s")
+    ai = len([x for x in inputs if x == "-i"])          # the narration's input index
+    a_clip = ai - 1
+    graph.append(f"[{ai}:a]aresample=48000,aformat=channel_layouts=stereo,apad[n]")
     if has_audio(clip):
-        graph.append(f"[0:a]atempo={1 / f:.4f},volume=0.22,aresample=48000,aformat=channel_layouts=stereo,"
+        graph.append(f"[{a_clip}:a]atempo={tempo:.4f},volume=0.22,aresample=48000,aformat=channel_layouts=stereo,"
                      f"afade=t=out:st={max(0, shown - 0.6):.3f}:d=0.6,apad[m]")
         graph.append("[n][m]amix=inputs=2:duration=first:normalize=0[a]")
     else:
         graph.append("[n]anull[a]")
-    run(["ffmpeg", "-y", "-loglevel", "error", "-i", clip, "-i", nar_wav, "-filter_complex", ";".join(graph),
+    run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-i", nar_wav, "-filter_complex", ";".join(graph),
          "-map", "[v]", "-map", "[a]", "-t", f"{dur:.3f}", *V_OUT, out])
     return dur
+
+
+def seg_card(card, case, chapter, times, nar_wav, dur, out, tmp, tag, portrait=False):
+    """A moving card (motion.py) under its narration. Returns the beat's length (a pause is added after the
+    narration when the card shows a point the narration never mentions). The upright version for the Shorts
+    (portrait=True) gets the same timing and the same sound."""
+    js, events, extra = motion.plan(card, times, portrait)
+    total = dur + extra
+    if not portrait:
+        pcm = to_pcm(nar_wav, SR)
+        pcm = np.concatenate([pcm, np.zeros(int(round(total * SR)) - len(pcm), np.int16)]) if total * SR > len(pcm) else pcm
+        wav_write(nar_wav, motion.add_sounds(pcm, events, SR), SR)
+    fdir = os.path.join(tmp, f"frames_{tag}")
+    motion.record([(card, case, chapter, times, total, fdir, portrait, js)], FPS)
+    w, h = (SW, SH) if portrait else (W, H)
+    run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(FPS), "-i", os.path.join(fdir, "f%05d.jpg"),
+         "-i", nar_wav, "-filter_complex",
+         f"[0:v]scale={w}:{h},setsar=1,format=yuv420p[v];[1:a]aresample=48000,aformat=channel_layouts=stereo,apad[a]",
+         "-map", "[v]", "-map", "[a]", "-t", f"{total:.3f}", *V_OUT, out])
+    shutil.rmtree(fdir, ignore_errors=True)
+    return total
 
 
 def seg_dialogue(clip, out):
@@ -362,7 +416,11 @@ def short_lines(text, n, k=3):
 def short_piece(kind, src, a, d, long_mp4, out):
     """One beat of a Short, upright 1080x1920, with the long video's sound for that beat:
     a scene fills the screen (centre crop of the long video's picture); a card is its upright version."""
-    if kind == "card":
+    if kind == "card" and src and src.endswith(".mp4"):     # a moving upright card: `a` is the time inside it
+        run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", src,
+             "-filter_complex", f"[0:v]setsar=1,fps={FPS},format=yuv420p[v];[0:a]aresample=48000[a]",
+             "-map", "[v]", "-map", "[a]", "-t", f"{d:.3f}", *V_OUT, out])
+    elif kind == "card":
         frames = int(round(d * FPS))
         graph = kenburns(0, frames + 2, "v", 1.0, 1.05, SW, SH)
         run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-ss", f"{a:.3f}", "-t", f"{d:.3f}",
@@ -374,11 +432,12 @@ def short_piece(kind, src, a, d, long_mp4, out):
     return d
 
 
-def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing):
+def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing, pvid=None):
     """An upright Short made from the beats sh["start"]..sh["end"] of the long video. The title card and the
     Professor are left out (they belong to the long video); it ends on an end card."""
     ids = [b["id"] for b in st["beats"]]
     i0, i1 = ids.index(sh["start"]), ids.index(sh["end"])
+    pvid = pvid or {}
     pieces, remap, t = [], [], 0.0
     for b in st["beats"][i0:i1 + 1]:
         if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title"):
@@ -391,7 +450,10 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
             break
         kind = "card" if b["type"] == "card" or b["id"] in missing else "scene"
         piece = os.path.join(tmp, f"short{k}_{b['id']}.mp4")
-        short_piece(kind, pcard.get(b["id"]), a, d, long_mp4, piece)
+        if kind == "card" and b["id"] in pvid:
+            short_piece(kind, pvid[b["id"]], a - beat_times[b["id"]][0], d, long_mp4, piece)
+        else:
+            short_piece(kind, pcard.get(b["id"]), a, d, long_mp4, piece)
         pieces.append(piece); remap.append((a, a + d, t)); t += d - XF
     if not pieces:
         return None, 0
@@ -471,6 +533,10 @@ def main():
     render_cards(card_jobs)
 
     # 2. one or two video segments per beat
+    ids = [b["id"] for b in st["beats"]]
+    in_shorts = {x for sh in st.get("shorts", [])[:3] if sh.get("start") in ids and sh.get("end") in ids
+                 for x in ids[ids.index(sh["start"]):ids.index(sh["end"]) + 1]}
+    pvid = {}                                   # moving upright cards for the Shorts
     segs, cues, marks, beat_times, t = [], [], [], {}, 0.0
     for i, b in enumerate(st["beats"]):
         start = t
@@ -497,6 +563,15 @@ def main():
             elif b["type"] == "scene" and b.get("dialogue") and b["id"] not in missing:
                 seg_still(last_frame(ai_assemble.clip(engine_dir, b["id"]), os.path.join(tmp, f"last{i}.png")),
                           wav, dur, out, fade=False)
+            elif b["type"] == "card":
+                case_name = re.sub(r"\s*\(.*?\)", "", st["case"])
+                d_long = seg_card(b["card"], case_name, b.get("chapter"), times, wav, dur, out, tmp, b["id"])
+                if b["id"] in in_shorts:
+                    pvid[b["id"]] = os.path.join(tmp, f"{b['id']}_short.mp4")
+                    seg_card(b["card"], case_name, b.get("chapter"), times, wav, dur, pvid[b["id"]], tmp,
+                             b["id"] + "_p", portrait=True)
+                log(f"    moving card: {d_long - dur:+.1f}s pause for points the narration does not read" if d_long > dur
+                    else "    moving card")
             else:
                 seg_still(card_png[b["id"]], wav, dur, out)
             segs.append(out)
@@ -539,7 +614,7 @@ def main():
         if sb - sa < 15:
             continue
         out = os.path.join(out_dir, f"{base}-short{k}.mp4")
-        title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing)
+        title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing, pvid)
         if not title:
             continue
         shorts.append({"file": out, "title": title, "duration": d}); files.append(out)

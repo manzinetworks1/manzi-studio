@@ -69,7 +69,9 @@ SCHEMA = S(
                               "continue": BOOL,
                               "card": {"type": "OBJECT", "nullable": True,
                                        "properties": {"style": {"type": "STRING", "enum": CARD_STYLES}, "heading": STR,
-                                                      "sub": STR, "items": ARR(S(label=STR, text=STR))},
+                                                      "sub": STR, "items": ARR(S(label=STR, text=STR)),
+                                                      "prop": STR,
+                                                      "stamps": ARR(S(text=STR, at=STR, color=STR))},
                                        "required": ["style", "heading", "items"]},
                               "narration": ARR(STR)},
                "required": ["type", "id", "chapter", "narration"]}),
@@ -143,6 +145,14 @@ THE CARDS
 - style "holding": the Court's main holdings, 3-5 items, label = 2-5 words, text = at most 20 words.
 - style "exam": the exam recap: 4-6 items, label = 1-3 words (Facts, Issue, Held, Principle, Cited in...), text =
   at most 18 words. Narration here sounds like a teacher's quick revision.
+- The cards MOVE with the narration: each item comes on screen when the narration talks about it, and **bold** words
+  in an item's text are highlighted at the moment the narration says them. So the card's narration must mention EVERY
+  item, in the same order as the items (use the item's label word, year or Article number, or its bold words), and
+  bold words should be words the narration actually says.
+- Optional, for 1 or 2 dramatic cards only (usually "law" or "quote"): "prop" = one word for a document shown on the
+  card (e.g. "PASSPORT", "FIR", "ORDER"), and "stamps" = 1-3 rubber stamps that land on it: text = at most 3 words
+  in capitals (e.g. "IMPOUNDED", "NO HEARING"), at = the exact words of the narration at which it lands (or "end"),
+  color = "red" (what went wrong) or "green" (what the Court set right). Leave both empty on all other cards.
 
 PROFESSOR AND PACKAGING
 - professor_intro: what the Professor says ON CAMERA at the very start: AT MOST 12 words, a hook about the case.
