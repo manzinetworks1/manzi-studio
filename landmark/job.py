@@ -147,6 +147,8 @@ def build_job(st, lcfg, mode="draft", reuse=None, draft_have=None, approved=None
                     inputs.append({"release": draft_have[f"{draft}.pt"], "file": f"{draft}.pt"})
                     if f"{draft}.json" in draft_have:
                         inputs.append({"release": draft_have[f"{draft}.json"], "file": f"{draft}.json"})
+                    if f"{draft}.mp4" in draft_have:                  # its sound (the sharpened clip keeps it)
+                        inputs.append({"release": draft_have[f"{draft}.mp4"], "file": f"{draft}.mp4"})
                 else:
                     sc["seed"] += 97                # a remake: another take
                     if remake.get(b["id"]):

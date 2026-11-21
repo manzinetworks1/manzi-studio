@@ -192,6 +192,8 @@ def build_job(st, mode, have):
                 inputs.append({"release": have[f"{draft}.pt"], "file": f"{draft}.pt"})
                 if f"{draft}.json" in have:
                     inputs.append({"release": have[f"{draft}.json"], "file": f"{draft}.json"})
+                if f"{draft}.mp4" in have:                  # its sound (the sharpened clip keeps it)
+                    inputs.append({"release": have[f"{draft}.mp4"], "file": f"{draft}.mp4"})
         else:
             sc["keep_latents"] = True
         if cont and not sc.get("upscale_from"):

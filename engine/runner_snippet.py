@@ -4,6 +4,7 @@
 # function above (make_preview, make_upscale, the tensor-parallel DiT, the LoRA runtime...) is used unchanged.
 import json as _mz_json
 import shutil as _mz_shutil
+import subprocess as _mz_subprocess
 from PIL import Image as _MzImage
 
 # The UI section normally sets this budget for upscale planning; without it every upscale would "not fit".
@@ -65,6 +66,25 @@ def _mz_upscale_source(_sc):
     _mz_shutil.copy(_pt, _dpt)
     if _js:
         _mz_shutil.copy(_js, _djs)
+        # the draft's sound: make_upscale() muxes previews/<draft name>.wav, which only existed in the draft's own
+        # session. Take it from the draft clip (<base>.mp4) when attached, else silence of the same length.
+        try:
+            _meta = _mz_json.load(open(_js))
+            _wav = os.path.join(os.path.dirname(_djs), _meta["name"] + ".wav")
+            if not os.path.exists(_wav):
+                _mp4 = _mz_input(_base + ".mp4")
+                _secs = max(1.0, float(_meta.get("frames", 121)) / 24.0)
+                _cmd = (["ffmpeg", "-y", "-loglevel", "error", "-i", _mp4, "-vn", "-ac", "2", "-ar", "48000", _wav]
+                        if _mp4 else
+                        ["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+                         "-t", f"{_secs:.2f}", _wav])
+                _r = _mz_subprocess.run(_cmd, capture_output=True)
+                if _r.returncode != 0 or not os.path.exists(_wav):          # a clip without sound: silence
+                    _mz_subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
+                                        "anullsrc=r=48000:cl=stereo", "-t", f"{_secs:.2f}", _wav])
+                print(f"   🔈 draft sound for {_sc['id']}: {'from ' + os.path.basename(_mp4) if _mp4 else 'silence'}")
+        except Exception as _e:
+            print(f"   ⚠️ could not prepare the draft's sound for {_sc['id']}: {_e}")
     return _name
 
 
