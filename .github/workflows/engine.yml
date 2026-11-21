@@ -11,7 +11,7 @@ on:
         required: true
       wait_minutes:
         description: "How long this run waits for Kaggle before handing over to '3b - Collect'"
-        default: "120"
+        default: "0"
         required: true
       then_make:
         description: "Week to make videos for when the results are in (set by '2 - Make videos')"

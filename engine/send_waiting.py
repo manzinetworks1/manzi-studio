@@ -31,7 +31,7 @@ def main():
         return
     _, f = sorted(jobs)[0]
     w = json.load(open(f))
-    subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={w['job']}", "-f", "wait_minutes=170",
+    subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={w['job']}", "-f", "wait_minutes=0",
                     "-f", f"then_make={w.get('week', '')}"], check=True)
     subprocess.run(["git", "config", "user.name", "manzi-studio-bot"], check=True)
     subprocess.run(["git", "config", "user.email", "actions@users.noreply.github.com"], check=True)

@@ -238,7 +238,7 @@ def main():
     subprocess.run(["git", "pull", "-q", "--rebase"], cwd=ROOT, check=False)
     subprocess.run(["git", "push", "-q"], cwd=ROOT, check=True)
     if in_slot:
-        subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={name}", "-f", "wait_minutes=170",
+        subprocess.run(["gh", "workflow", "run", "engine.yml", "-f", f"job={name}", "-f", "wait_minutes=0",
                         "-f", f"then_make=landmark:{a.case}"], cwd=ROOT, check=True)
         return say("sent")
     say("waiting")
