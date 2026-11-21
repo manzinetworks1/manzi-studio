@@ -1,0 +1,336 @@
+{
+  "run_id": "landmark-kesavananda-bharati-v-state-of-kerala-1973-final",
+  "purpose": "Landmark case video (final): Kesavananda Bharati v. State of Kerala",
+  "scenes": [
+    {
+      "id": "s01",
+      "kind": "scene",
+      "upscale_from": "s01_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s02",
+      "kind": "scene",
+      "upscale_from": "s02_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s03",
+      "kind": "scene",
+      "upscale_from": "s03_544p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "544p"
+    },
+    {
+      "id": "s04",
+      "kind": "scene",
+      "upscale_from": "s04_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s05",
+      "kind": "scene",
+      "upscale_from": "s05_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s06",
+      "kind": "scene",
+      "upscale_from": "s06_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s07",
+      "kind": "scene",
+      "upscale_from": "s07_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s08",
+      "kind": "scene",
+      "upscale_from": "s08_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s11",
+      "kind": "scene",
+      "upscale_from": "s11_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s12",
+      "kind": "scene",
+      "upscale_from": "s12_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s13",
+      "kind": "scene",
+      "upscale_from": "s13_544p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "544p"
+    },
+    {
+      "id": "s14",
+      "kind": "scene",
+      "upscale_from": "s14_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s15",
+      "kind": "scene",
+      "upscale_from": "s15_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s16",
+      "kind": "scene",
+      "upscale_from": "s16_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s19",
+      "kind": "scene",
+      "upscale_from": "s19_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s20",
+      "kind": "scene",
+      "upscale_from": "s20_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s21",
+      "kind": "scene",
+      "upscale_from": "s21_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s22",
+      "kind": "scene",
+      "upscale_from": "s22_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s23",
+      "kind": "scene",
+      "upscale_from": "s23_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    },
+    {
+      "id": "s24",
+      "kind": "scene",
+      "upscale_from": "s24_384p",
+      "output": "720p",
+      "preset": "Fast",
+      "preview": "384p"
+    }
+  ],
+  "inputs": [
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s01_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s01_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s02_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s02_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s03_544p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s03_544p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s04_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s04_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s05_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s05_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s06_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s06_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s07_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s07_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s08_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s08_384p.json"
+    },
+    {
+      "release": "engine-test-kesavananda-preview-and-professor-ref-20261120-1647",
+      "file": "s10_frame.png"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s11_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s11_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s12_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s12_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s13_544p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s13_544p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s14_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s14_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s15_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s15_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s16_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s16_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s19_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s19_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s20_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s20_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s21_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s21_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s22_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s22_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s23_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s23_384p.json"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s24_384p.pt"
+    },
+    {
+      "release": "engine-landmark-kesavananda-bharati-v-state-of-kerala-1973-20261120-2144",
+      "file": "s24_384p.json"
+    }
+  ],
+  "frames": {
+    "s10": "s10_frame.png"
+  },
+  "scene_time_limit_min": 175
+}
