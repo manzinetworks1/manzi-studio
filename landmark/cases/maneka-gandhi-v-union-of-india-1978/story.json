@@ -304,7 +304,25 @@
       "speaker": "lawyer",
       "dialogue": "My Lords, she was never even heard.",
       "sound": "Quiet courtroom murmur, a ceiling fan turning",
-      "cont": false
+      "cont": false,
+      "quote_by": {
+        "name": "Her lawyer",
+        "role": "for the petitioner"
+      },
+      "keywords": [
+        {
+          "show": "Articles 14, 19, 21",
+          "say": "Articles 14, 19 and 21"
+        },
+        {
+          "show": "Natural justice",
+          "say": "natural justice"
+        },
+        {
+          "show": "Condemned unheard",
+          "say": "condemned unheard"
+        }
+      ]
     },
     {
       "type": "scene",
@@ -322,7 +340,25 @@
       "speaker": "govt_counsel",
       "dialogue": "The Act lays down the procedure, My Lords.",
       "sound": "Quiet courtroom murmur, papers rustling",
-      "cont": false
+      "cont": false,
+      "quote_by": {
+        "name": "The government counsel",
+        "role": "for the Union"
+      },
+      "keywords": [
+        {
+          "show": "Passports Act",
+          "say": "Passports Act"
+        },
+        {
+          "show": "Article 21",
+          "say": "Article 21"
+        },
+        {
+          "show": "Might leave",
+          "say": "simply leave the country"
+        }
+      ]
     },
     {
       "type": "scene",
