@@ -440,61 +440,89 @@ def short_lines(text, n, k=3):
     return wrap(text, n)[:k]
 
 
-def short_piece(kind, src, a, d, long_mp4, out):
-    """One beat of a Short, upright 1080x1920, with the long video's sound for that beat:
-    a scene fills the screen (centre crop of the long video's picture); a card is its upright version."""
-    if kind == "card" and src and src.endswith(".mp4"):     # a moving upright card: `a` is the time inside it
-        run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", src,
+def short_piece(kind, src, seg, d, out):
+    """One piece of a Short, upright 1080x1920, `d` seconds, with the sound of its long-video segment `seg`:
+    "scene" = centre crop of the segment; "upright" = a ready upright version (moving card, spotlight; own sound);
+    "card" = an upright card picture with a slow zoom."""
+    if kind == "upright":
+        run(["ffmpeg", "-y", "-loglevel", "error", "-t", f"{d:.3f}", "-i", src,
              "-filter_complex", f"[0:v]setsar=1,fps={FPS},format=yuv420p[v];[0:a]aresample=48000[a]",
              "-map", "[v]", "-map", "[a]", "-t", f"{d:.3f}", *V_OUT, out])
     elif kind == "card":
         frames = int(round(d * FPS))
         graph = kenburns(0, frames + 2, "v", 1.0, 1.05, SW, SH)
-        run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-ss", f"{a:.3f}", "-t", f"{d:.3f}",
-             "-i", long_mp4, "-filter_complex", graph, "-map", "[v]", "-map", "1:a", "-t", f"{d:.3f}", *V_OUT, out])
+        run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-t", f"{d:.3f}", "-i", seg, "-filter_complex", graph,
+             "-map", "[v]", "-map", "1:a", "-t", f"{d:.3f}", *V_OUT, out])
     else:
-        run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.3f}", "-t", f"{d:.3f}", "-i", long_mp4,
-             "-filter_complex", f"[0:v]scale=-2:{SH}:flags=lanczos,crop={SW}:{SH},setsar=1,fps={FPS},format=yuv420p[v]",
-             "-map", "[v]", "-map", "0:a", "-t", f"{d:.3f}", *V_OUT, out])
+        run(["ffmpeg", "-y", "-loglevel", "error", "-t", f"{d:.3f}", "-i", src,
+             "-filter_complex", f"[0:v]scale=-2:{SH}:flags=lanczos,crop={SW}:{SH},setsar=1,fps={FPS},format=yuv420p[v];"
+                                f"[0:a]aresample=48000,aformat=channel_layouts=stereo[a]",
+             "-map", "[v]", "-map", "[a]", "-t", f"{d:.3f}", *V_OUT, out])
     return d
 
 
+def stretch_short(st, sh, least=30.0, most=55.0):
+    """A Short range whose beats would last under `least` seconds (e.g. a scene and the title card, which a Short
+    leaves out) is stretched forward beat by beat, staying under `most` (estimated from the narration)."""
+    ids = [b["id"] for b in st["beats"]]
+    if sh.get("start") not in ids or sh.get("end") not in ids:
+        return sh
+    est = lambda b: 0.0 if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title") \
+        else len(" ".join(b.get("narration", [])).split()) / 2.6 + 0.9 + (5.0 if b.get("dialogue") else 0.0)
+    i0, i1 = ids.index(sh["start"]), ids.index(sh["end"])
+    total = sum(est(b) for b in st["beats"][i0:i1 + 1])
+    while total < least and i1 + 1 < len(ids) and st["beats"][i1 + 1]["type"] != "professor" \
+            and total + est(st["beats"][i1 + 1]) <= most:
+        i1 += 1; total += est(st["beats"][i1])
+    if ids[i1] != sh["end"]:
+        log(f"Short '{sh.get('title', '')}': {sh['start']}..{sh['end']} is too short, made {sh['start']}..{ids[i1]}")
+    return dict(sh, end=ids[i1])
+
+
 def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing, pvid=None,
-               pspot=None, spot_start=None):
+               pspot=None, spot_start=None, beat_segs=None):
     """An upright Short made from the beats sh["start"]..sh["end"] of the long video. The title card and the
     Professor are left out (they belong to the long video); it ends on an end card."""
     ids = [b["id"] for b in st["beats"]]
     i0, i1 = ids.index(sh["start"]), ids.index(sh["end"])
     pvid, pspot, spot_start = pvid or {}, pspot or {}, spot_start or {}
     pieces, remap, t = [], [], 0.0
+    beat_segs = beat_segs or {}
+
+    def room_for(a, full):
+        """How much of a piece (starting at a, `full` seconds) fits: all of it, else up to the end of the last
+        whole sentence that fits (never in the middle of the Professor's words), else nothing."""
+        room = SHORT_MAX - END_CARD - t
+        if full <= room:
+            return full
+        ends = [cb for _, ca, cb in cues if a < cb and cb + 0.3 - a <= room]
+        return (max(ends) + 0.3 - a) if ends and max(ends) + 0.3 - a >= 3.0 else 0.0
+
+    stop = False
     for b in st["beats"][i0:i1 + 1]:
+        if stop:
+            break
         if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title"):
             continue
-        a, e = beat_times[b["id"]]
-        if a > 0:
-            a += XF          # start after the long video's dissolve into this beat
-        d = min(e - a, SHORT_MAX - END_CARD - t)
-        if d < 1.0:
-            break
-        kind = "card" if b["type"] == "card" or b["id"] in missing else "scene"
-        piece = os.path.join(tmp, f"short{k}_{b['id']}.mp4")
-        if b["id"] in pspot and a < spot_start[b["id"]]:
-            # a speaking scene: the spoken line cropped from the long video, then the upright spotlight
-            d1 = spot_start[b["id"]] + XF - a
-            p1 = os.path.join(tmp, f"short{k}_{b['id']}_a.mp4")
-            short_piece("scene", None, a, d1, long_mp4, p1)
-            pieces.append(p1); remap.append((a, a + d1, t)); t += d1 - XF
-            d2 = min(e - spot_start[b["id"]], SHORT_MAX - END_CARD - t)
-            if d2 < 1.0:
-                break
-            run(["ffmpeg", "-y", "-loglevel", "error", "-i", pspot[b["id"]], "-t", f"{d2:.3f}", "-c", "copy", piece])
-            pieces.append(piece); remap.append((spot_start[b["id"]], spot_start[b["id"]] + d2, t)); t += d2 - XF
-            continue
-        if kind == "card" and b["id"] in pvid:
-            short_piece(kind, pvid[b["id"]], a - beat_times[b["id"]][0], d, long_mp4, piece)
-        else:
-            short_piece(kind, pcard.get(b["id"]), a, d, long_mp4, piece)
-        pieces.append(piece); remap.append((a, a + d, t)); t += d - XF
+        # each beat's own segment(s) -- the exact pieces the long video was joined from, with their full sound
+        for j, (seg, a) in enumerate(beat_segs.get(b["id"], [])):
+            full = exact_duration(seg)
+            d = room_for(a, full)
+            if d < 1.0:
+                stop = True; break
+            piece = os.path.join(tmp, f"short{k}_{b['id']}_{j}.mp4")
+            if b["id"] in pspot and j == len(beat_segs[b["id"]]) - 1:
+                src, kind = pspot[b["id"]], "upright"            # the upright spotlight
+            elif b["type"] == "card" and b["id"] in pvid:
+                src, kind = pvid[b["id"]], "upright"             # the moving upright card
+            elif b["type"] == "card" or b["id"] in missing:
+                src, kind = pcard.get(b["id"]), "card"
+            else:
+                src, kind = seg, "scene"
+            short_piece(kind, src, seg, d, piece)
+            pieces.append(piece); remap.append((a, a + d, t)); t += d - XF
+            if d < full - 0.05:
+                stop = True; break                                # shortened to fit: the Short ends here
     if not pieces:
         return None, 0
     endp = os.path.join(tmp, f"short{k}_end.mp4")
@@ -528,7 +556,14 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
             n += 1
     inputs, graph, total, _ = dissolve_join(pieces, tmp, f"short{k}")
     graph += ";[cv]" + (",".join(draws) if draws else "null") + "[v]"
-    graph += f";[ca]afade=t=out:st={max(0, total - END_CARD - 0.6):.2f}:d=0.6,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]"
+    music = os.path.join(tmp, f"short{k}_music.wav")
+    from render import make_music
+    make_music(music, total + 1)
+    m = len([x for x in inputs if x == "-i"])
+    inputs += ["-i", music]
+    graph += (f";[{m}:a]aresample=48000,aformat=channel_layouts=stereo,volume=0.10[m]"
+              f";[ca]aresample=48000,aformat=channel_layouts=stereo[c0];[c0][m]amix=inputs=2:duration=first:normalize=0[cm]"
+              f";[cm]afade=t=out:st={max(0, total - END_CARD - 0.6):.2f}:d=0.6,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]")
     script = os.path.join(tmp, f"short{k}.txt"); open(script, "w", encoding="utf-8").write(graph)
     run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex_script", script, "-map", "[v]", "-map", "[a]",
          *V_OUT, "-movflags", "+faststart", out])
@@ -585,25 +620,30 @@ def main():
 
     # 2. one or two video segments per beat
     ids = [b["id"] for b in st["beats"]]
+    st["shorts"] = [stretch_short(st, sh) for sh in st.get("shorts", [])]
     in_shorts = {x for sh in st.get("shorts", [])[:3] if sh.get("start") in ids and sh.get("end") in ids
                  for x in ids[ids.index(sh["start"]):ids.index(sh["end"]) + 1]}
     pvid = {}                                   # moving upright cards for the Shorts
     pspot, spot_start = {}, {}                  # upright spotlight parts of speaking scenes, and where they start
     segs, cues, marks, beat_times, t = [], [], [], {}, 0.0
+    beat_segs = {}                              # beat id -> [(segment file, its start in the timeline)]
     for i, b in enumerate(st["beats"]):
         start = t
+        beat_segs[b["id"]] = []
         marks.append((t, b.get("chapter") or ""))
         if b["type"] == "professor":
             clip = ai_assemble.clip(engine_dir, b["id"])
             if not clip:
                 log(f"  {b['id']}: no Professor clip, left out"); beat_times[b["id"]] = (t, t); continue
             out = os.path.join(tmp, f"seg{i:03d}.mp4"); seg_professor(clip, out); d = exact_duration(out); segs.append(out)
+            beat_segs[b["id"]].append((out, t))
             cues.append((b["line"], t + 0.3, t + d - 0.3)); t += d - XF
         else:
             if b["type"] == "scene" and b.get("dialogue") and b["id"] not in missing:
                 out = os.path.join(tmp, f"seg{i:03d}a.mp4"); seg_dialogue(ai_assemble.clip(engine_dir, b["id"]), out)
                 d = exact_duration(out)
-                segs.append(out); cues.append((b["dialogue"], t + 0.4, t + d - 0.3)); t += d - XF
+                segs.append(out); beat_segs[b["id"]].append((out, t))
+                cues.append((b["dialogue"], t + 0.4, t + d - 0.3)); t += d - XF
             if b["type"] == "scene" and b.get("dialogue") and not b.get("narration"):
                 beat_times[b["id"]] = (start, t); continue
             wav = os.path.join(tmp, f"nar{i:03d}.wav")
@@ -633,7 +673,7 @@ def main():
                     else "    moving card")
             else:
                 seg_still(card_png[b["id"]], wav, dur, out)
-            segs.append(out)
+            segs.append(out); beat_segs[b["id"]].append((out, t))
             cues += [(s, t + x, t + y) for s, x, y in times]
             t += exact_duration(out) - XF
         beat_times[b["id"]] = (start, t)
@@ -674,7 +714,7 @@ def main():
             continue
         out = os.path.join(out_dir, f"{base}-short{k}.mp4")
         title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing, pvid,
-                                  pspot, spot_start)
+                                  pspot, spot_start, beat_segs)
         if not title:
             continue
         shorts.append({"file": out, "title": title, "duration": d}); files.append(out)

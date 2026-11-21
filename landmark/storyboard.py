@@ -166,7 +166,8 @@ PROFESSOR AND PACKAGING
 - thumbnail.scene: the id of the scene whose picture works best as a thumbnail (a face with emotion);
   thumbnail.text: 2-5 big words for the thumbnail (no case name needed).
 - shorts: 2-3 YouTube Shorts cut from this video: "start" and "end" are beat ids (start before end); together the
-  beats from start to end must have at most 130 words of narration and must make sense on their own. "title" = a
+  beats from start to end must have between 80 and 130 words of narration (about 30-55 seconds; the Professor and
+  the title card are left out of Shorts, so their words do not count) and must make sense on their own. "title" = a
   Short's title (at most 60 characters).
 - title: topic-first YouTube title, at most 95 characters, e.g. "{case} ({year}) | Article 21 Explained | Landmark Case".
 - summary: 2-3 sentences for the description. tags: 12-20 YouTube tags. pinned_comment: one question to viewers.
