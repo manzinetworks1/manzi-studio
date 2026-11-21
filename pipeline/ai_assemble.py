@@ -13,13 +13,17 @@ CREDITS = ("ðŸŽ¬ AI scenes made with MiniMax H3 (MiniMax H3 Community License) Â
 
 
 def premade_voices(engine_dir):
-    """{spoken text: wav bytes} from the voice stage's report (only pieces that passed the Whisper check)."""
+    """{spoken text: wav bytes} from the voice stage's report (only pieces that passed the Whisper check). A piece is
+    checked again here with numbers compared as numbers (Whisper writes "1973" where the script says "nineteen
+    seventy-three"; older runs marked such sentences as failed although the Professor said them right)."""
+    from numwords import match
     voices = {}
     for rep in sorted(f for f in os.listdir(engine_dir) if f.startswith("voice_") and f.endswith(".json")):
         data = json.load(open(os.path.join(engine_dir, rep), encoding="utf-8"))
         for p in data.get("pieces", []):
             path = os.path.join(engine_dir, p["file"])
-            if p.get("passed") and os.path.exists(path):
+            ok = p.get("passed") or (p.get("heard") and match(p.get("text", ""), p["heard"]) >= 0.85)
+            if ok and os.path.exists(path):
                 voices[p["text"]] = open(path, "rb").read()
     return voices
 
