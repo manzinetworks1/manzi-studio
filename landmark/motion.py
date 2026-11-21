@@ -477,3 +477,76 @@ def record(jobs, fps=30):
                 pg.screenshot(path=os.path.join(fdir, f"f{j:05d}.jpg"), type="jpeg", quality=93)
             os.remove(tmp)
         b.close()
+
+
+# ------------------------------------------------------------------ spotlight: a character's line + key words
+def spotlight(quote, name, role, keys, times, portrait=False):
+    """A scene where a character spoke, while the Professor explains it: the line as a quote with who said it, and
+    2-3 key words that pop in when the Professor says them (keys: [{"show": "31 days", "say": "thirty-one days"}]).
+    -> (html, javascript, [(sound, t)]). The page has a transparent background; it goes over the blurred scene."""
+    from cards import FONTS, GOLD, INK, PAPER
+    w, h = (PW, PH) if portrait else (W, H)
+    found = []
+    for k in keys[:3]:
+        t = find(times, k.get("say") or k.get("show"), found[-1][1] if found else 0.0)
+        if t is not None:
+            found.append((k.get("show") or k.get("say"), t))
+    esc = lambda s: (s or "").replace("&", "&amp;").replace("<", "&lt;")
+    q_top, q_side, q_size = (560, 70, 60) if portrait else (230, 180, 64)
+    k_top = 1060 if portrait else 700
+    html = f"""<!doctype html><html><head><meta charset='utf-8'><style>
+@font-face {{ font-family: L; src: url('file://{FONTS}/Lora-Italic-Variable.ttf'); font-weight: 400 700; font-style: italic; }}
+@font-face {{ font-family: L2; src: url('file://{FONTS}/Lora-Variable.ttf'); font-weight: 400 700; }}
+@font-face {{ font-family: T; src: url('file://{FONTS}/Inter-SemiBold.otf'); font-weight: 600; }}
+@font-face {{ font-family: D; src: url('file://{FONTS}/InterDisplay-ExtraBold.otf'); font-weight: 800; }}
+html, body {{ margin: 0; width: {w}px; height: {h}px; background: transparent; overflow: hidden; }}
+.q {{ position: absolute; left: {q_side}px; right: {q_side}px; top: {q_top}px; text-align: center; }}
+.mark {{ font: 700 160px L2; color: {GOLD}; line-height: .6; height: 70px; }}
+.qt {{ font: italic 600 {q_size}px/1.25 L; color: {PAPER}; text-shadow: 0 4px 30px rgba(0,0,0,.6); }}
+.who {{ margin-top: 30px; font: 600 30px T; letter-spacing: 4px; text-transform: uppercase; color: {GOLD}; }}
+.who span {{ color: rgba(244,239,228,.75); text-transform: none; letter-spacing: 1px; }}
+.keys {{ position: absolute; left: 40px; right: 40px; top: {k_top}px; display: flex; flex-wrap: wrap;
+         justify-content: center; gap: {26 if portrait else 40}px; }}
+.k {{ font: 800 46px D; color: {INK}; background: {GOLD}; padding: 14px 32px; border-radius: 14px;
+      text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 10px 40px rgba(0,0,0,.5); }}
+</style></head><body>
+<div class='q'><div class='mark'>“</div><div class='qt'>{esc(quote)}</div>
+<div class='who'>— {esc(name)} {f"<span>· {esc(role)}</span>" if role else ""}</div></div>
+<div class='keys'>{''.join(f"<div class='k'>{esc(s)}</div>" for s, _ in found)}</div>
+</body></html>"""
+    js = ["const Q=document.querySelector('.q'), MK=document.querySelector('.mark'), QT=document.querySelector('.qt'),"
+          "  NM=document.querySelector('.who'), K=[...document.querySelectorAll('.k')];",
+          "anim(MK,[{opacity:0,transform:'scale(.4)'},{opacity:1,transform:'none'}],.15,.5);",
+          "QT.innerHTML=QT.textContent.split(' ').map(w=>'<span style=\"display:inline-block\">'+w+'</span>').join(' ');",
+          "[...QT.children].forEach((w,i)=>anim(w,[{opacity:0,transform:'translateY(24px)'},{opacity:1,transform:'none'}],.3+i*.08,.45));",
+          "anim(NM,[{opacity:0},{opacity:1}],1.1,.6);"]
+    events = [("pop", 0.35)]
+    for i, (_, t) in enumerate(found):
+        js.append(f"anim(K[{i}],[{{opacity:0,transform:'translateY(40px) scale(.6)'}},{{opacity:1,transform:'scale(1.15)',offset:.6}},"
+                  f"{{opacity:1,transform:'scale(1)'}}],{t},.5);")
+        events.append(("pop", t + .05))
+        if i:
+            js.append(f"anim(K[{i - 1}],[{{background:'{GOLD}',color:'{INK}',transform:'scale(1)'}},"
+                      f"{{background:'rgba(244,239,228,.16)',color:'{PAPER}',transform:'scale(.86)'}}],{t},.4,"
+                      f"{{fill:'forwards',composite:'replace'}});")
+    if found:
+        js.append(f"anim(Q,[{{opacity:1}},{{opacity:.8}}],{found[0][1]},.6,{{fill:'forwards'}});")
+    return html, "\n".join(js), events
+
+
+def record_overlay(html, js, dur, fdir, portrait=False, fps=30):
+    """Transparent PNG frames f00000.png... of an animated page (for spotlight)."""
+    from playwright.sync_api import sync_playwright
+    w, h = (PW, PH) if portrait else (W, H)
+    shutil.rmtree(fdir, ignore_errors=True); os.makedirs(fdir)
+    hp = os.path.join(fdir, "page.html"); open(hp, "w", encoding="utf-8").write(html)
+    with sync_playwright() as p:
+        b = p.chromium.launch(args=["--allow-file-access-from-files"])
+        pg = b.new_page(viewport={"width": w, "height": h})
+        pg.goto("file://" + os.path.abspath(hp)); pg.evaluate("document.fonts.ready"); pg.wait_for_timeout(150)
+        pg.evaluate(KIT); pg.evaluate("() => {" + js + "\n}")
+        for j in range(int(math.ceil(dur * fps)) + 2):
+            pg.evaluate(f"seek({j / fps})")
+            pg.screenshot(path=os.path.join(fdir, f"f{j:05d}.png"), omit_background=True)
+        b.close()
+    os.remove(hp)

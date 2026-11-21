@@ -125,7 +125,25 @@
       "speaker": "counsel_pet",
       "dialogue": "We must challenge this in Delhi.",
       "sound": "Quiet evening crickets outside and soft spoken voice.",
-      "cont": true
+      "cont": true,
+      "quote_by": {
+        "name": "The senior advocate",
+        "role": "advising the Mutt"
+      },
+      "keywords": [
+        {
+          "show": "Supreme Court",
+          "say": "Supreme Court"
+        },
+        {
+          "show": "Article 32",
+          "say": "Article 32"
+        },
+        {
+          "show": "Religion & property",
+          "say": "religion and property"
+        }
+      ]
     },
     {
       "type": "scene",
@@ -328,7 +346,25 @@
       "speaker": "counsel_pet",
       "dialogue": "Amendment cannot mean destruction of the Constitution.",
       "sound": "Clear calm courtroom voice and faint creak of wooden chairs.",
-      "cont": false
+      "cont": false,
+      "quote_by": {
+        "name": "The senior advocate",
+        "role": "for the petitioners"
+      },
+      "keywords": [
+        {
+          "show": "31 days",
+          "say": "thirty-one days"
+        },
+        {
+          "show": "Unlimited power",
+          "say": "unlimited amending power"
+        },
+        {
+          "show": "Destroy democracy",
+          "say": "destroy Indian democracy"
+        }
+      ]
     },
     {
       "type": "scene",
@@ -381,7 +417,25 @@
       "speaker": "counsel_gov",
       "dialogue": "Elected representatives must have power for reform.",
       "sound": "Firm steady voice echoing softly in the wooden hall.",
-      "cont": false
+      "cont": false,
+      "quote_by": {
+        "name": "The government counsel",
+        "role": "for the State"
+      },
+      "keywords": [
+        {
+          "show": "No implied limits",
+          "say": "implied limits"
+        },
+        {
+          "show": "Article 368",
+          "say": "Article 368"
+        },
+        {
+          "show": "Will of the people",
+          "say": "sovereign will of the people"
+        }
+      ]
     },
     {
       "type": "scene",

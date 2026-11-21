@@ -66,6 +66,7 @@ SCHEMA = S(
     beats=ARR({"type": "OBJECT",
                "properties": {"type": {"type": "STRING", "enum": ["scene", "card"]}, "id": STR, "chapter": STR,
                               "scene": STR, "cast": ARR(STR), "speaker": STR, "dialogue": STR, "sound": STR,
+                              "quote_by": S(name=STR, role=STR), "keywords": ARR(S(show=STR, say=STR)),
                               "continue": BOOL,
                               "card": {"type": "OBJECT", "nullable": True,
                                        "properties": {"style": {"type": "STRING", "enum": CARD_STYLES}, "heading": STR,
@@ -127,6 +128,11 @@ THE SCENES (these rules come from tests with the AI video model; follow them exa
 - Dialogue: at most 3 scenes may have a spoken line. "dialogue" is AT MOST 7 words, invented (never claimed as a real
   quote), spoken by ONE person ("speaker" = a cast id); the speaker is filmed close-up from just behind the listener.
   All other scenes: "dialogue" and "speaker" are empty strings and nobody speaks.
+- For each scene WITH dialogue, while the Professor's narration plays the line is shown on screen as a quote:
+  "quote_by" = who said it BY ROLE ONLY, never a real name (name e.g. "The senior advocate", role e.g. "for the
+  petitioners"), and "keywords" = 2-3 key words from that scene's narration that pop up as the Professor says them:
+  "show" = 1-3 words for the screen (e.g. "31 days", "Article 32"), "say" = the exact words of the narration at that
+  moment (e.g. "thirty-one days"), in the order they are said. Other scenes: quote_by and keywords empty.
 - "sound": 5-12 words of background sound for the scene (no music, no speech unless there is dialogue).
 - "continue": true ONLY when this scene directly continues the previous scene in the same place (it then starts from
   the previous scene's last picture, which keeps the people and place identical). Use it 2-5 times. The first scene

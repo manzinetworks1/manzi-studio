@@ -226,6 +226,40 @@ def seg_dialogue(clip, out):
     return ai_assemble.duration(out)
 
 
+def spot_who(st, b):
+    """Who said a scene's line, by role only (the lines are invented, so never a real person's name):
+    b["quote_by"] {"name": "The senior advocate", "role": "for the petitioners"}, else the cast member's label.
+    The role always ends in "dramatised"."""
+    q = b.get("quote_by") or {}
+    c = next((c for c in st.get("cast", []) if c.get("id") == b.get("speaker")), {})
+    name = q.get("name") or (c.get("label") or "").strip() or "In court"
+    role = " · ".join(x for x in (q.get("role", "").strip(), "dramatised") if x)
+    return name[:1].upper() + name[1:], role
+
+
+def seg_spotlight(clip, wav, dur, times, quote, who, role, keys, out, tmp, tag, portrait=False, bg=None):
+    """While the Professor explains a scene where a character spoke: the scene keeps moving (forward/backward),
+    blurred and darkened (faded in over 0.6 s), with the line as a quote and key words popping in as he says them
+    (motion.spotlight). The landscape call mixes the pop sounds into `wav` and returns its background clip, which the
+    upright (Shorts) call re-uses."""
+    html, js, events = motion.spotlight(quote, who, role, keys, times, portrait)
+    if not portrait:
+        wav_write(wav, motion.add_sounds(to_pcm(wav, SR), events, SR), SR)
+        bg = os.path.join(tmp, f"spotbg_{tag}.mp4")
+        seg_scene(clip, wav, dur, bg, tmp)
+    fdir = os.path.join(tmp, f"spot_{tag}")
+    motion.record_overlay(html, js, dur, fdir, portrait, FPS)
+    fit = f"scale=-2:{SH},crop={SW}:{SH}," if portrait else ""
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", bg, "-framerate", str(FPS), "-i", os.path.join(fdir, "f%05d.png"),
+         "-filter_complex",
+         f"[0:v]{fit}split[a][b];[b]gblur=sigma=22,eq=brightness=-0.26:saturation=0.75[bl];"
+         f"[a][bl]blend=all_expr='A*(1-min(T/0.6,1))+B*min(T/0.6,1)'[bg];"
+         f"[bg][1:v]overlay=0:0:format=auto,setsar=1,format=yuv420p[v];[0:a]aresample=48000[a]",
+         "-map", "[v]", "-map", "[a]", "-t", f"{dur:.3f}", *V_OUT, out])
+    shutil.rmtree(fdir, ignore_errors=True)
+    return bg
+
+
 # ------------------------------------------------------------------ helpers for the outputs
 def mmss(s):
     s = int(s); return f"{s // 60}:{s % 60:02d}"
@@ -425,12 +459,13 @@ def short_piece(kind, src, a, d, long_mp4, out):
     return d
 
 
-def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing, pvid=None):
+def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, k, missing, pvid=None,
+               pspot=None, spot_start=None):
     """An upright Short made from the beats sh["start"]..sh["end"] of the long video. The title card and the
     Professor are left out (they belong to the long video); it ends on an end card."""
     ids = [b["id"] for b in st["beats"]]
     i0, i1 = ids.index(sh["start"]), ids.index(sh["end"])
-    pvid = pvid or {}
+    pvid, pspot, spot_start = pvid or {}, pspot or {}, spot_start or {}
     pieces, remap, t = [], [], 0.0
     for b in st["beats"][i0:i1 + 1]:
         if b["type"] == "professor" or (b["type"] == "card" and b["card"].get("style") == "title"):
@@ -443,6 +478,18 @@ def make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cues, out, tmp, 
             break
         kind = "card" if b["type"] == "card" or b["id"] in missing else "scene"
         piece = os.path.join(tmp, f"short{k}_{b['id']}.mp4")
+        if b["id"] in pspot and a < spot_start[b["id"]]:
+            # a speaking scene: the spoken line cropped from the long video, then the upright spotlight
+            d1 = spot_start[b["id"]] + XF - a
+            p1 = os.path.join(tmp, f"short{k}_{b['id']}_a.mp4")
+            short_piece("scene", None, a, d1, long_mp4, p1)
+            pieces.append(p1); remap.append((a, a + d1, t)); t += d1 - XF
+            d2 = min(e - spot_start[b["id"]], SHORT_MAX - END_CARD - t)
+            if d2 < 1.0:
+                break
+            run(["ffmpeg", "-y", "-loglevel", "error", "-i", pspot[b["id"]], "-t", f"{d2:.3f}", "-c", "copy", piece])
+            pieces.append(piece); remap.append((spot_start[b["id"]], spot_start[b["id"]] + d2, t)); t += d2 - XF
+            continue
         if kind == "card" and b["id"] in pvid:
             short_piece(kind, pvid[b["id"]], a - beat_times[b["id"]][0], d, long_mp4, piece)
         else:
@@ -530,6 +577,7 @@ def main():
     in_shorts = {x for sh in st.get("shorts", [])[:3] if sh.get("start") in ids and sh.get("end") in ids
                  for x in ids[ids.index(sh["start"]):ids.index(sh["end"]) + 1]}
     pvid = {}                                   # moving upright cards for the Shorts
+    pspot, spot_start = {}, {}                  # upright spotlight parts of speaking scenes, and where they start
     segs, cues, marks, beat_times, t = [], [], [], {}, 0.0
     for i, b in enumerate(st["beats"]):
         start = t
@@ -554,8 +602,15 @@ def main():
             if is_scene:
                 seg_scene(ai_assemble.clip(engine_dir, b["id"]), wav, dur, out, tmp)
             elif b["type"] == "scene" and b.get("dialogue") and b["id"] not in missing:
-                seg_still(last_frame(ai_assemble.clip(engine_dir, b["id"]), os.path.join(tmp, f"last{i}.png")),
-                          wav, dur, out, fade=False)
+                who, role = spot_who(st, b)
+                spot_start[b["id"]] = t
+                bgv = seg_spotlight(ai_assemble.clip(engine_dir, b["id"]), wav, dur, times, b["dialogue"], who, role,
+                                    b.get("keywords") or [], out, tmp, b["id"])
+                if b["id"] in in_shorts:
+                    pspot[b["id"]] = os.path.join(tmp, f"{b['id']}_spot_short.mp4")
+                    seg_spotlight(None, wav, dur, times, b["dialogue"], who, role, b.get("keywords") or [],
+                                  pspot[b["id"]], tmp, b["id"] + "_p", portrait=True, bg=bgv)
+                log(f"    spotlight: quote + {len(b.get('keywords') or [])} key words")
             elif b["type"] == "card":
                 case_name = re.sub(r"\s*\(.*?\)", "", st["case"])
                 d_long = seg_card(b["card"], case_name, b.get("chapter"), times, wav, dur, out, tmp, b["id"])
@@ -607,7 +662,8 @@ def main():
         if sb - sa < 15:
             continue
         out = os.path.join(out_dir, f"{base}-short{k}.mp4")
-        title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing, pvid)
+        title, d = make_short(st, sh, beat_times, long_mp4, engine_dir, pcard, cap, out, tmp, k, missing, pvid,
+                                  pspot, spot_start)
         if not title:
             continue
         shorts.append({"file": out, "title": title, "duration": d}); files.append(out)
