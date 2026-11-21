@@ -207,6 +207,12 @@ def main():
         json.dump(job, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
         return log(f"job written: {len(job['scenes'])} clips, {len(job.get('narration', {}).get('pieces', []))} sentences")
     rel = release_for(a.case, final=True) if mode == "final" else draft_rel
+    if mode == "final" and rel:          # only counts if it really brought the 720p clips back
+        got = {x["name"] for x in rel["assets"]}
+        lost = [sc["id"] for sc in job["scenes"] if f"{sc['id']}_720p.mp4" not in got]
+        if lost:
+            log(f"the final run {rel['tag_name']} is missing {len(lost)} clip(s) ({', '.join(lost[:6])}...): sending again")
+            rel = None
     if rel or (mode == "final" and not job["scenes"]):
         if draft_rel:
             download(draft_rel, dest)
