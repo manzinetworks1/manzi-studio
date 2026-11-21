@@ -549,6 +549,17 @@ def main():
     tmp = os.path.join(out_dir, "build"); shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
     base = a.case
     voices = Voices(engine_dir, lcfg)
+    # every sentence must be in the Professor's voice: stop (and say which) rather than use the Microsoft voice
+    missing_voice = [x for b in st["beats"] for x in b.get("narration", []) if speakable(x) not in voices.premade]
+    if missing_voice and not lcfg.get("allow_fallback_voice", False):
+        items = "".join(f"<li>{html.escape(x)}</li>" for x in missing_voice)
+        log(f"stopped: {len(missing_voice)} sentence(s) have no Professor voice:\n  " + "\n  ".join(missing_voice))
+        if not a.no_email:
+            mail.send(cfg, f"[Manzi Studio] {st['case']}: {len(missing_voice)} sentence(s) missing the Professor's voice",
+                      f"<p>The video was <b>not</b> made, so the Microsoft voice is never used. These sentences have no "
+                      f"recording in the Professor's voice from Kaggle:</p><ol>{items}</ol>"
+                      f"<p>Send Claude this email: the sentences can be voiced again on Kaggle (a few minutes of GPU).</p>")
+        raise SystemExit(1)
 
     # 1. cards (the storyboard's cards + a chapter card for any scene Kaggle could not make)
     card_jobs, card_png, missing = [], {}, []
