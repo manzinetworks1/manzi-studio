@@ -1,0 +1,166 @@
+{
+  "language": "english",
+  "qnum": 6,
+  "course": "LLB Semester 5",
+  "subject": "Constitutional Law",
+  "topic": "Doctrine of Basic Structure in Constitution",
+  "question": "Explain the doctrine of basic structure with the help of leading cases.",
+  "marks": "15",
+  "asked_years": [],
+  "years_range": [],
+  "long": {
+    "sections": [
+      {
+        "heading": "Introduction",
+        "paras": [
+          "The **Doctrine of Basic Structure** is a landmark judicial principle in Indian Constitutional Law. It states that although Parliament has wide powers to amend the Constitution under **Article 368**, it cannot alter or destroy its fundamental identity. The Constitution has certain core values that remain permanent and unchangeable, ensuring that constitutional supremacy and democracy are always protected against arbitrary parliamentary majorities.",
+          "This doctrine is not expressly written in the text of the Constitution. It was evolved by the **Supreme Court of India** to balance two competing needs: the need for constitutional flexibility to meet changing social realities, and the need to preserve the **essential features** of our democratic republic from complete destruction."
+        ]
+      },
+      {
+        "heading": "Evolution of the Doctrine",
+        "paras": [
+          "Initially, in **Shankari Prasad v. Union of India (1951)** and Sajjan Singh (1965), the Supreme Court held that Parliament could amend any part of the Constitution, including Fundamental Rights. However, in **Golaknath v. State of Punjab (1967)**, the Court reversed its view and ruled that constitutional amendments were law under Article 13, so Parliament could not take away Fundamental Rights.",
+          "To overcome the Golaknath judgment, Parliament passed the **24th Amendment Act, 1971**, declaring unlimited amending power under Article 368. When this amendment was challenged, a historic **13-judge bench** in Kesavananda Bharati (1973) struck a middle path. It upheld Parliament's power to amend Fundamental Rights, provided the basic framework of the Constitution remains intact."
+        ]
+      },
+      {
+        "heading": "Key Elements of Basic Structure",
+        "points": [
+          {
+            "title": "Supremacy of the Constitution",
+            "text": "The Constitution is the highest law of the land. Even **Parliament** is a creation of the Constitution and cannot claim **unlimited sovereignty** above it."
+          },
+          {
+            "title": "Rule of Law",
+            "text": "Every organ of the state must act according to **law**, not arbitrary will. No person or government authority is above **legal accountability**."
+          },
+          {
+            "title": "Judicial Review",
+            "text": "High Courts and the Supreme Court have the power of **judicial review** to strike down unconstitutional laws and amendments that violate **basic features**."
+          },
+          {
+            "title": "Secularism and Federalism",
+            "text": "India has no state religion, ensuring **secularism**. Power is divided between the Centre and States, protecting the **federal structure** of governance."
+          },
+          {
+            "title": "Democracy and Free Elections",
+            "text": "Periodic **free and fair elections** and a **republican form** of government form the core of Indian democracy and cannot be abolished."
+          },
+          {
+            "title": "Balance Between FRs and DPSPs",
+            "text": "Harmony between **Fundamental Rights** (Part III) and **Directive Principles** (Part IV) is essential. Neither can be given total supremacy to destroy the other."
+          }
+        ],
+        "tip": "List at least five basic features clearly and mention which case recognised each one to score full marks."
+      },
+      {
+        "heading": "Leading Case Laws",
+        "cases": [
+          {
+            "name": "Kesavananda Bharati v. State of Kerala (1973)",
+            "text": "A 13-judge bench overruled Golaknath and upheld the 24th Amendment. By a 7:6 majority, it propounded the **basic structure doctrine**, holding that Parliament can amend any constitutional provision including **Fundamental Rights**, but cannot damage or destroy the Constitution's basic framework."
+          },
+          {
+            "name": "Indira Nehru Gandhi v. Raj Narain (1975)",
+            "text": "The Supreme Court struck down Clause (4) of the **39th Amendment Act**, which placed the Prime Minister's election beyond judicial scrutiny. The Court held that **free and fair elections**, rule of law, and judicial review are part of the basic structure."
+          },
+          {
+            "name": "Minerva Mills Ltd. v. Union of India (1980)",
+            "text": "The Court struck down Clauses (4) and (5) of Article 368 introduced by the **42nd Amendment**. It held that **limited amending power** itself is a basic feature, and Parliament cannot destroy judicial review or upset the harmony between Fundamental Rights and Directive Principles."
+          }
+        ]
+      },
+      {
+        "heading": "Significance and Conclusion",
+        "paras": [
+          "The Doctrine of Basic Structure has acted as a **constitutional shield** for over five decades. Later cases like **S.R. Bommai v. Union of India (1994)** and I.R. Coelho (2007) expanded the list to include secularism, federalism, and separation of powers. In conclusion, the doctrine ensures that while Parliament can adapt the Constitution to modern needs, its **democratic soul** remains forever protected."
+        ]
+      }
+    ]
+  },
+  "shorts": {
+    "myth": {
+      "myth": "Parliament can change or remove any Fundamental Right because it has unlimited amending power.",
+      "law": "Under **Article 368**, Parliament can amend the Constitution, including Fundamental Rights, only if it does not destroy the **basic structure**.",
+      "source": "Article 368, Constitution of India and Kesavananda Bharati (1973)",
+      "source_say": "According to Article 368 as interpreted in the Kesavananda Bharati case of 1973.",
+      "thumb": "Can Parliament Delete Fundamental Rights?"
+    },
+    "quiz": {
+      "question": "Which landmark Supreme Court case propounded the Doctrine of Basic Structure in India?",
+      "options": [
+        "Golaknath v. State of Punjab",
+        "Kesavananda Bharati v. State of Kerala",
+        "Minerva Mills v. Union of India",
+        "Maneka Gandhi v. Union of India"
+      ],
+      "answer": 1,
+      "explain": "In **Kesavananda Bharati (1973)**, a 13-judge bench held that Parliament can amend the Constitution but cannot alter its **basic structure**.",
+      "thumb": "Test Your Constitutional Law Knowledge!"
+    },
+    "case": {
+      "name": "Kesavananda Bharati v. State of Kerala (1973)",
+      "facts": "A math head challenged Kerala land reform laws and the 24th, 25th, and 29th Constitutional Amendments for violating Fundamental Rights.",
+      "issue": "Whether Parliament has unlimited power under Article 368 to amend or destroy Fundamental Rights.",
+      "held": "By a 7:6 majority, the Supreme Court upheld **Article 368** power to amend Fundamental Rights, subject to the **basic structure** limit.",
+      "principle": "Parliament has wide **amending power**, but it cannot destroy the **identity** or essential features of the Constitution.",
+      "thumb": "The Case That Saved Our Constitution"
+    },
+    "compare": {
+      "left": {
+        "name": "Golaknath Case",
+        "sub": "1967 Ruling"
+      },
+      "right": {
+        "name": "Kesavananda Case",
+        "sub": "1973 Ruling"
+      },
+      "rows": [
+        {
+          "label": "Amend FRs?",
+          "left": "Cannot amend Fundamental Rights",
+          "right": "Can amend Fundamental Rights",
+          "say": "In Golaknath, Fundamental Rights could not be amended, whereas Kesavananda allowed amending them."
+        },
+        {
+          "label": "Article 13(2)",
+          "left": "Amendments are law under Art 13",
+          "right": "Amendments are not law under Art 13",
+          "say": "Golaknath treated amendments as ordinary law under Article 13, while Kesavananda overturned that view."
+        },
+        {
+          "label": "Limit",
+          "left": "Total ban on abridging FRs",
+          "right": "Basic structure cannot be damaged",
+          "say": "Instead of a total ban, Kesavananda introduced the basic structure limit on Parliament."
+        }
+      ],
+      "thumb": "Golaknath vs Kesavananda: Key Differences",
+      "title": "Golaknath vs Kesavananda",
+      "title_say": "Let us compare Golaknath and Kesavananda on Parliament's amending power."
+    },
+    "datadrop": {
+      "thumb": "Basic Structure Doctrine Explained Simply"
+    }
+  },
+  "ai": {
+    "hook": {
+      "place": "an Indian Supreme Court courtroom",
+      "speaker": "senior Indian advocate, fifties, medium build, greying hair, black gown and white band, assertive",
+      "listener": "the stern-looking Chief Justice",
+      "line": "Parliament can amend laws, not erase democracy.",
+      "sound": "rustling legal papers, footsteps, soft murmurs in packed courtroom"
+    },
+    "professor_intro": "Hello students! Today: Basic Structure Doctrine, made simple. Let's begin.",
+    "professor_outro": "Comment NOTES for the free PDF. See you next time!"
+  },
+  "check": [
+    "7:6 majority bench strength (13 judges) in Kesavananda Bharati v. State of Kerala (1973)",
+    "24th, 25th, and 29th Constitutional Amendment Acts challenged in Kesavananda Bharati",
+    "39th Amendment Clause (4) struck down in Indira Nehru Gandhi v. Raj Narain (1975)",
+    "42nd Amendment Clauses (4) and (5) of Article 368 struck down in Minerva Mills Ltd. v. Union of India (1980)",
+    "Golaknath v. State of Punjab (1967) holding on Article 13(2)"
+  ],
+  "approved": false
+}
