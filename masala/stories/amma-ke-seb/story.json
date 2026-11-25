@@ -71,7 +71,11 @@
       "speaker": "rohit",
       "line": "हट बुढ़िया! मेरी गाड़ी के रास्ते में ठेला लगाती है?",
       "caption_en": "Move, old woman! You park your cart in my car's way?",
-      "sound": "City street ambience, apples thudding on the road, no voices"
+      "sound": "City street ambience, apples thudding on the road, no voices",
+      "cast": [
+        "rohit",
+        "amma"
+      ]
     },
     {
       "id": "s02",
@@ -100,7 +104,11 @@
       "speaker": "amma",
       "line": "बेटा, सुबह से एक भी सेब नहीं बिका…",
       "caption_en": "Son, I haven't sold a single apple since morning…",
-      "sound": "City street ambience, no other voices"
+      "sound": "City street ambience, no other voices",
+      "cast": [
+        "amma",
+        "rohit"
+      ]
     },
     {
       "id": "s03",
@@ -122,7 +130,10 @@
       "speaker": "rohit",
       "line": "ले, दस रुपये… आज की कमाई समझ ले।",
       "caption_en": "Here, ten rupees… call it today's earnings.",
-      "sound": "City street ambience, a coin clinking on the road, no other voices"
+      "sound": "City street ambience, a coin clinking on the road, no other voices",
+      "cast": [
+        "rohit"
+      ]
     },
     {
       "id": "s04",
@@ -144,7 +155,10 @@
       "speaker": "kavya",
       "line": "ये सेब किसने गिराए?",
       "caption_en": "Who threw these apples down?",
-      "sound": "City street ambience, firm footsteps, no other voices"
+      "sound": "City street ambience, firm footsteps, no other voices",
+      "cast": [
+        "kavya"
+      ]
     },
     {
       "id": "s06",
@@ -173,7 +187,11 @@
       "speaker": "kavya",
       "line": "ये बुढ़िया नहीं… मेरी माँ है।",
       "caption_en": "She's not an 'old woman'… she's my mother.",
-      "sound": "The street seems to go quiet, a soft dramatic music hit, no voices"
+      "sound": "The street seems to go quiet, a soft dramatic music hit, no voices",
+      "cast": [
+        "kavya",
+        "amma"
+      ]
     },
     {
       "id": "s06b",
@@ -195,7 +213,10 @@
       "speaker": "kavya",
       "line": "इन्हीं सेबों को बेचकर माँ ने मुझे अफ़सर बनाया है।",
       "caption_en": "By selling these very apples, my mother made me an officer.",
-      "sound": "Soft emotional music begins, no other voices"
+      "sound": "Soft emotional music begins, no other voices",
+      "cast": [
+        "kavya"
+      ]
     },
     {
       "id": "s07",
@@ -217,7 +238,10 @@
       "speaker": "rohit",
       "line": "माफ़ कीजिए माँजी… मुझसे बहुत बड़ी गलती हो गई।",
       "caption_en": "Forgive me, mother… I made a huge mistake.",
-      "sound": "City street ambience, no other voices"
+      "sound": "City street ambience, no other voices",
+      "cast": [
+        "rohit"
+      ]
     },
     {
       "id": "s08",
@@ -246,7 +270,11 @@
       "speaker": "amma",
       "line": "बेटा, बड़ा आदमी पैसों से नहीं, दिल से बनता है।",
       "caption_en": "Son, a big man is made by his heart, not money.",
-      "sound": "Soft emotional music, no other voices"
+      "sound": "Soft emotional music, no other voices",
+      "cast": [
+        "amma",
+        "rohit"
+      ]
     },
     {
       "id": "s09",
@@ -269,7 +297,10 @@
       "speaker": "amma",
       "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
       "caption_en": "I deserve at least one like… and don't forget to subscribe!",
-      "sound": "Soft happy music, no other voices"
+      "sound": "Soft happy music, no other voices",
+      "cast": [
+        "amma"
+      ]
     }
   ],
   "thumbnail": {
