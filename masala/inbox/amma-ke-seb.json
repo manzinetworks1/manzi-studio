@@ -1,0 +1,294 @@
+{
+  "send_now": true,
+  "slug": "amma-ke-seb",
+  "title": "अमीर ने गरीब अम्मा के सेब फेंके… फिर आई पुलिस वाली बेटी 😱 | Emotional Hindi Story #shorts",
+  "duration": "1:00",
+  "category": "The asymmetrical street confrontation",
+  "captions": "en",
+  "end_text": "Like 👍 Subscribe 🔔",
+  "look": "Photorealistic live-action Indian television drama, shot on a cinema camera, natural skin texture, soft warm morning sunlight, shallow depth of field",
+  "characters": [
+    {
+      "id": "amma",
+      "name": "Shanti Amma",
+      "age": 66,
+      "gender": "woman",
+      "role": "an old fruit seller who sells apples from a wooden handcart on the roadside",
+      "face": "thin oval face with deep wrinkles around the eyes and mouth, gentle dark-brown eyes, sun-darkened brown skin, grey hair parted in the middle and tied in a small low bun, a thin frail build with slightly bent shoulders, about 5 feet 1 inch tall",
+      "voice": "a soft, tired, gentle old woman's voice"
+    },
+    {
+      "id": "rohit",
+      "name": "Rohit",
+      "age": 34,
+      "gender": "man",
+      "role": "a rich, arrogant businessman",
+      "face": "square face with a sharp jawline, a short well-groomed black beard, narrow dark eyes, fair-wheatish skin, thick black hair gelled back, a broad gym-fit build, about 5 feet 11 inches tall",
+      "voice": "a loud, rude, arrogant young male voice"
+    },
+    {
+      "id": "kavya",
+      "name": "Kavya",
+      "age": 29,
+      "gender": "woman",
+      "role": "a police officer and Shanti Amma's daughter",
+      "face": "oval face with high cheekbones, large calm dark-brown eyes, thick straight eyebrows, warm medium-brown skin, long black hair tied in a tight low bun under her cap, an athletic upright build, about 5 feet 6 inches tall",
+      "voice": "a firm, calm, confident young woman's voice"
+    }
+  ],
+  "wardrobe": {
+    "1": {
+      "amma": "a faded green cotton saree with a plain dark-green border, a few thin glass bangles",
+      "rohit": "a crisp white linen shirt with rolled sleeves, beige trousers, a gold wristwatch and dark sunglasses pushed up on his head",
+      "kavya": "an Indian police officer's khaki uniform with shoulder stars, a black leather belt and a khaki peaked cap, with no name plate and no badge text"
+    }
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, a small wooden handcart piled with red apples, a shiny white SUV with no number plate parked behind",
+      "action": "Rohit angrily sweeps one arm across the handcart and red apples tumble onto the road",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "rohit": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "amma",
+            "does": "sweeps his arm across the handcart, knocking apples off it",
+            "expression": "angry, arrogant sneer"
+          },
+          "amma": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "the falling apples",
+            "does": "stands behind her handcart and raises her hands in shock",
+            "expression": "shocked and frightened"
+          }
+        }
+      },
+      "speaker": "rohit",
+      "line": "हट बुढ़िया! मेरी गाड़ी के रास्ते में ठेला लगाती है?",
+      "caption_en": "Move, old woman! You park your cart in my car's way?",
+      "sound": "City street ambience, apples thudding on the road, no voices"
+    },
+    {
+      "id": "s02",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Amma kneels on the road picking up apples and looks up at Rohit with folded hands",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "amma": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "rohit",
+            "does": "kneels on the road with two apples in her hands, looking up at him",
+            "expression": "pleading, eyes wet"
+          },
+          "rohit": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "amma",
+            "does": "stands over her with his hands on his hips",
+            "expression": "cold, no smile at all"
+          }
+        }
+      },
+      "speaker": "amma",
+      "line": "बेटा, सुबह से एक भी सेब नहीं बिका…",
+      "caption_en": "Son, I haven't sold a single apple since morning…",
+      "sound": "City street ambience, no other voices"
+    },
+    {
+      "id": "s03",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Rohit tosses a single coin onto the road in front of the kneeling old woman and mocks her",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "rohit": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "the coin on the road",
+            "does": "tosses a single coin down onto the road with a flick of his fingers",
+            "expression": "mocking smirk"
+          }
+        }
+      },
+      "speaker": "rohit",
+      "line": "ले, दस रुपये… आज की कमाई समझ ले।",
+      "caption_en": "Here, ten rupees… call it today's earnings.",
+      "sound": "City street ambience, a coin clinking on the road, no other voices"
+    },
+    {
+      "id": "s04",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Kavya in police uniform walks quickly up the footpath towards them, her eyes fixed on Rohit",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "kavya": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "rohit",
+            "does": "walks up quickly and stops, one hand on her belt",
+            "expression": "stern, no smile at all"
+          }
+        }
+      },
+      "speaker": "kavya",
+      "line": "ये सेब किसने गिराए?",
+      "caption_en": "Who threw these apples down?",
+      "sound": "City street ambience, firm footsteps, no other voices"
+    },
+    {
+      "id": "s06",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Kavya gently helps the old woman stand up, then turns her head to Rohit and reveals the truth",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "kavya": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "rohit",
+            "does": "holds the old woman's arm to support her and turns her head to Rohit",
+            "expression": "hurt and angry"
+          },
+          "amma": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "kavya",
+            "does": "stands up slowly, leaning on Kavya's arm",
+            "expression": "surprised and emotional"
+          }
+        }
+      },
+      "speaker": "kavya",
+      "line": "ये बुढ़िया नहीं… मेरी माँ है।",
+      "caption_en": "She's not an 'old woman'… she's my mother.",
+      "sound": "The street seems to go quiet, a soft dramatic music hit, no voices"
+    },
+    {
+      "id": "s06b",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Kavya, holding her mother's hand, tells Rohit how her mother made her an officer",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "kavya": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "rohit",
+            "does": "holds her mother's wrinkled hand up a little in her own hand",
+            "expression": "proud, eyes filling with tears"
+          }
+        }
+      },
+      "speaker": "kavya",
+      "line": "इन्हीं सेबों को बेचकर माँ ने मुझे अफ़सर बनाया है।",
+      "caption_en": "By selling these very apples, my mother made me an officer.",
+      "sound": "Soft emotional music begins, no other voices"
+    },
+    {
+      "id": "s07",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, red apples scattered on the road around a small wooden handcart",
+      "action": "Rohit, ashamed, bends down and puts apples back into the old woman's basket with shaking hands",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "rohit": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "the apples in his hands",
+            "does": "bends down and places two apples back onto the handcart",
+            "expression": "ashamed, sweating, no smile at all"
+          }
+        }
+      },
+      "speaker": "rohit",
+      "line": "माफ़ कीजिए माँजी… मुझसे बहुत बड़ी गलती हो गई।",
+      "caption_en": "Forgive me, mother… I made a huge mistake.",
+      "sound": "City street ambience, no other voices"
+    },
+    {
+      "id": "s08",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, a small wooden handcart piled with red apples again",
+      "action": "Amma calmly hands Rohit one apple and teaches him a lesson with a kind face",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "amma": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "rohit",
+            "does": "holds out one red apple to him",
+            "expression": "calm, kind, dignified"
+          },
+          "rohit": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "amma",
+            "does": "takes the apple with his head bowed",
+            "expression": "ashamed, teary"
+          }
+        }
+      },
+      "speaker": "amma",
+      "line": "बेटा, बड़ा आदमी पैसों से नहीं, दिल से बनता है।",
+      "caption_en": "Son, a big man is made by his heart, not money.",
+      "sound": "Soft emotional music, no other voices"
+    },
+    {
+      "id": "s09",
+      "day": 1,
+      "place": "a busy roadside footpath in an Indian city in the morning, a small wooden handcart piled with red apples",
+      "action": "Shanti Amma, the hero of the story, looks straight into the camera with a warm proud smile and talks to the viewer",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "amma": {
+            "where": "centre",
+            "faces": "camera",
+            "eyes": "camera",
+            "does": "stands beside her handcart holding a red apple and smiles straight into the camera lens",
+            "expression": "warm, proud smile",
+            "to_camera": true
+          }
+        }
+      },
+      "speaker": "amma",
+      "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+      "caption_en": "I deserve at least one like… and don't forget to subscribe!",
+      "sound": "Soft happy music, no other voices"
+    }
+  ],
+  "thumbnail": {
+    "scene": "s06",
+    "text": "ये मेरी माँ है!"
+  },
+  "youtube": {
+    "description": "एक अमीर आदमी ने सड़क पर बूढ़ी अम्मा के सेब फेंक दिए और दस रुपये फेंककर मज़ाक उड़ाया… तभी आई पुलिस वाली बेटी! 😱 इन्हीं सेबों को बेचकर माँ ने बेटी को अफ़सर बनाया था।\nA rich man knocks an old fruit seller's apples onto the road and mocks her, until a police officer arrives: her daughter, who became an officer because her mother sold those very apples.\n\nबड़ा आदमी पैसों से नहीं, दिल से बनता है। ❤️\nRespect every hard-working person.\n\nFictional story. AI-generated video.\n\n#EmotionalStory #HindiStory #Maa #Respect #MotherLove #Shorts",
+    "tags": [
+      "emotional hindi story",
+      "maa",
+      "respect",
+      "hindi short film",
+      "police officer daughter",
+      "garib vs amir",
+      "emotional shorts",
+      "hindi kahani",
+      "moral story",
+      "entertainment with manzi"
+    ]
+  }
+}
