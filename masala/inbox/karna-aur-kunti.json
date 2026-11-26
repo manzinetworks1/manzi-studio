@@ -1,0 +1,335 @@
+{
+  "send_now": true,
+  "slug": "karna-aur-kunti",
+  "title": "युद्ध से एक दिन पहले माँ ने बताया सच… कर्ण और कुंती 😢 | Mahabharat Emotional Story #shorts",
+  "duration": "1:30",
+  "category": "Mythology: human moments from the Mahabharata",
+  "captions": "en",
+  "end_text": "Like 👍 Subscribe 🔔",
+  "look": "Photorealistic live-action epic Indian historical drama set in ancient India, shot on a cinema camera, golden dawn light, soft mist over the river, natural skin texture, shallow depth of field",
+  "characters": [
+    {
+      "id": "karna",
+      "name": "Karna",
+      "age": 38,
+      "gender": "man",
+      "role": "the great warrior, foster son of a charioteer, Duryodhana's loyal friend",
+      "face": "strong noble oval face with a straight nose and a firm square jaw, calm deep-set dark-brown eyes, warm golden-brown skin, a short neat black beard, long wavy black hair tied in a loose knot at the back of his head, a tall broad-shouldered muscular warrior's build, about 6 feet 1 inch tall",
+      "voice": "a deep, calm, dignified male voice"
+    },
+    {
+      "id": "kunti",
+      "name": "Kunti",
+      "age": 60,
+      "gender": "woman",
+      "role": "the queen mother of the Pandavas, Karna's secret birth mother",
+      "face": "graceful oval face with fine wrinkles around the eyes and lips, large sorrowful dark-brown eyes, fair wheatish skin, long silver-grey hair parted in the middle, a slim upright regal build, about 5 feet 4 inches tall",
+      "voice": "a soft, trembling, regal older woman's voice"
+    }
+  ],
+  "wardrobe": {
+    "1": {
+      "karna": "a saffron silk dhoti, a white cotton cloth draped over one shoulder, a sacred thread across his bare chest, plain gold armbands, no armour and no earrings",
+      "kunti": "a plain white silk saree with a thin gold border, its end drawn over her head as a veil, no jewellery"
+    }
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, stone steps going down into the misty water, the sun rising over the river",
+      "action": "Close-up from behind: two strong hands with gold armbands raise a copper pot and pour a stream of water towards the rising sun over the misty river",
+      "stage": {
+        "shot": "insert",
+        "people": {}
+      },
+      "narrator": {
+        "line": "महाभारत युद्ध से एक दिन पहले… एक माँ अपने बेटे से मिलने आई।",
+        "voice": "a deep, warm Indian male storyteller's voice"
+      },
+      "caption_en": "One day before the Mahabharata war… a mother came to meet her son.",
+      "sound": "Gentle river water, soft temple bells far away, no voices",
+      "cast": [
+        "karna"
+      ]
+    },
+    {
+      "id": "s02",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, stone steps going down into the misty water",
+      "action": "Kunti slowly walks down the stone steps towards the river, holding her veil, hesitant",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "kunti": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "the river below",
+            "does": "walks slowly down the stone steps holding the edge of her veil",
+            "expression": "nervous, eyes full of tears, no smile at all"
+          }
+        }
+      },
+      "sound": "Gentle river water, footsteps on stone, no voices"
+    },
+    {
+      "id": "s03",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, wet stone steps at the water's edge",
+      "action": "Karna has come out of the water, sees Kunti and bows to her with folded hands",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "karna": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "kunti",
+            "does": "stands on the lowest step, water dripping, and bows with folded hands",
+            "expression": "surprised but respectful"
+          },
+          "kunti": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "karna",
+            "does": "stands two steps above him, clutching her veil",
+            "expression": "emotional, holding back tears"
+          }
+        }
+      },
+      "speaker": "karna",
+      "line": "राजमाता कुंती? सूतपुत्र कर्ण आपको प्रणाम करता है।",
+      "caption_en": "Queen Mother Kunti? Karna, the charioteer's son, bows to you.",
+      "sound": "Gentle river water, no other voices"
+    },
+    {
+      "id": "s04",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, mist over the water behind her",
+      "action": "Kunti, tears falling, tells Karna the secret",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "kunti": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "karna",
+            "does": "presses one hand to her chest as tears roll down",
+            "expression": "heartbroken, crying"
+          }
+        }
+      },
+      "speaker": "kunti",
+      "line": "सूतपुत्र नहीं… तुम मेरे पुत्र हो, कर्ण।",
+      "caption_en": "Not a charioteer's son… you are my son, Karna.",
+      "sound": "The river goes quiet, a soft deep music note, no other voices"
+    },
+    {
+      "id": "s05",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, mist over the water behind him",
+      "action": "Karna freezes in shock, his folded hands slowly falling apart",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "karna": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "kunti",
+            "does": "slowly lowers his hands, breathing hard",
+            "expression": "stunned, eyes wide, no smile at all"
+          }
+        }
+      },
+      "sound": "A heartbeat, the river, no voices"
+    },
+    {
+      "id": "s06",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, the rising sun behind the mist",
+      "action": "Kunti steps closer and tells him who his father is",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "kunti": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "karna",
+            "does": "steps one step down towards him with her hands half raised",
+            "expression": "pleading, crying"
+          },
+          "karna": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "kunti",
+            "does": "stands still, listening",
+            "expression": "shocked, eyes wet"
+          }
+        }
+      },
+      "speaker": "kunti",
+      "line": "तुम मेरे पहले पुत्र हो… सूर्यदेव के पुत्र।",
+      "caption_en": "You are my firstborn… the son of the Sun God.",
+      "sound": "Gentle river water, no other voices"
+    },
+    {
+      "id": "s07",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, mist over the water behind him",
+      "action": "Karna, hurt, asks why she abandoned him in the river as a baby",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "karna": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "kunti",
+            "does": "clenches his jaw as a tear runs down his cheek",
+            "expression": "deep pain, controlled anger"
+          }
+        }
+      },
+      "speaker": "karna",
+      "line": "जब नदी में बहाया था, तब याद नहीं आई, माँ?",
+      "caption_en": "When you set me afloat on the river, didn't you remember me then, Mother?",
+      "sound": "Gentle river water, no other voices"
+    },
+    {
+      "id": "s08",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, stone steps at the water's edge",
+      "action": "Kunti folds her hands and begs Karna to join his brothers",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "kunti": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "karna",
+            "does": "folds her hands in front of him, pleading",
+            "expression": "desperate, crying"
+          }
+        }
+      },
+      "speaker": "kunti",
+      "line": "अपने भाइयों के पास आ जाओ… पांडवों का साथ दो।",
+      "caption_en": "Come to your brothers… stand with the Pandavas.",
+      "sound": "Gentle river water, no other voices"
+    },
+    {
+      "id": "s09",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, the rising sun behind the mist",
+      "action": "Karna refuses with quiet pride, loyal to his friend",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "karna": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "kunti",
+            "does": "stands tall and puts one hand on his chest",
+            "expression": "firm, proud, eyes wet"
+          }
+        }
+      },
+      "speaker": "karna",
+      "line": "दुर्योधन ने तब साथ दिया, जब सबने मुझे ठुकराया।",
+      "caption_en": "Duryodhana stood by me when everyone rejected me.",
+      "sound": "Gentle river water, no other voices"
+    },
+    {
+      "id": "s10",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, stone steps at the water's edge",
+      "action": "Karna softens and gives his mother a promise",
+      "stage": {
+        "shot": "two-shot-profile",
+        "people": {
+          "karna": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "kunti",
+            "does": "takes both of her hands in his",
+            "expression": "gentle, sad"
+          },
+          "kunti": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "karna",
+            "does": "lets him hold her hands",
+            "expression": "crying, hopeful"
+          }
+        }
+      },
+      "speaker": "karna",
+      "line": "पर वचन देता हूँ… अर्जुन के सिवा किसी भाई को नहीं मारूँगा।",
+      "caption_en": "But I promise… I will kill none of my brothers except Arjuna.",
+      "sound": "Gentle river water, soft emotional music, no other voices"
+    },
+    {
+      "id": "s11",
+      "day": 1,
+      "place": "the bank of the river Ganga at dawn in ancient India, wet stone steps at the water's edge",
+      "action": "Karna bends and touches his mother's feet; Kunti puts her hand on his head",
+      "stage": {
+        "shot": "two-shot-three-quarter",
+        "people": {
+          "karna": {
+            "where": "left",
+            "faces": "right",
+            "eyes": "kunti's feet",
+            "does": "bends down and touches her feet",
+            "expression": "calm acceptance"
+          },
+          "kunti": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "karna",
+            "does": "rests her trembling hand on his head",
+            "expression": "crying, blessing him"
+          }
+        }
+      },
+      "speaker": "karna",
+      "line": "तुम्हारे पाँच पुत्र ही रहेंगे, माँ… अर्जुन या कर्ण।",
+      "caption_en": "You will always have five sons, Mother… with Arjuna, or with Karna.",
+      "sound": "Soft emotional music, the river, no other voices"
+    },
+    {
+      "id": "s12",
+      "day": 1,
+      "place": "the river Ganga at dawn in ancient India",
+      "action": "Extreme close-up: a small clay oil lamp floats away on the golden river water as the sun rises",
+      "stage": {
+        "shot": "insert",
+        "people": {}
+      },
+      "narrator": {
+        "line": "कर्ण के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+        "voice": "a deep, warm Indian male storyteller's voice"
+      },
+      "caption_en": "Karna deserves at least one like… and don't forget to subscribe!",
+      "sound": "Gentle river water, soft music, no voices"
+    }
+  ],
+  "thumbnail": {
+    "scene": "s04",
+    "text": "तुम मेरे पुत्र हो!"
+  },
+  "youtube": {
+    "description": "महाभारत युद्ध से एक दिन पहले कुंती गंगा किनारे कर्ण से मिलीं और वो सच बताया जो उन्होंने सालों छुपाया था… पर कर्ण ने अपने मित्र दुर्योधन का साथ नहीं छोड़ा, और माँ को एक वचन दिया। 😢\nOne day before the Kurukshetra war, Kunti meets Karna on the bank of the Ganga and tells him he is her firstborn son. He refuses to leave Duryodhana, but promises her: she will always have five sons.\n\nBased on the Udyoga Parva of the Mahabharata. A dramatised retelling; AI-generated video.\n\n#Mahabharat #Karna #Kunti #MahabharatStory #HindiStory #Shorts",
+    "tags": [
+      "mahabharat",
+      "karna",
+      "kunti",
+      "karna kunti samvad",
+      "mahabharat story",
+      "mahabharat in hindi",
+      "karna emotional",
+      "suryaputra karna",
+      "hindi story",
+      "mythology shorts",
+      "entertainment with manzi"
+    ]
+  }
+}
