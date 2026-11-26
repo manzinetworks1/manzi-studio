@@ -49,9 +49,7 @@
       },
       "caption_en": "One day before the Mahabharata war… a mother came to meet her son.",
       "sound": "Gentle river water, soft temple bells far away, no voices",
-      "cast": [
-        "karna"
-      ]
+      "cast": []
     },
     {
       "id": "s02",
@@ -70,7 +68,10 @@
           }
         }
       },
-      "sound": "Gentle river water, footsteps on stone, no voices"
+      "sound": "Gentle river water, footsteps on stone, no voices",
+      "cast": [
+        "kunti"
+      ]
     },
     {
       "id": "s03",
@@ -99,7 +100,11 @@
       "speaker": "karna",
       "line": "राजमाता कुंती? सूतपुत्र कर्ण आपको प्रणाम करता है।",
       "caption_en": "Queen Mother Kunti? Karna, the charioteer's son, bows to you.",
-      "sound": "Gentle river water, no other voices"
+      "sound": "Gentle river water, no other voices",
+      "cast": [
+        "karna",
+        "kunti"
+      ]
     },
     {
       "id": "s04",
@@ -121,7 +126,10 @@
       "speaker": "kunti",
       "line": "सूतपुत्र नहीं… तुम मेरे पुत्र हो, कर्ण।",
       "caption_en": "Not a charioteer's son… you are my son, Karna.",
-      "sound": "The river goes quiet, a soft deep music note, no other voices"
+      "sound": "The river goes quiet, a soft deep music note, no other voices",
+      "cast": [
+        "kunti"
+      ]
     },
     {
       "id": "s05",
@@ -140,7 +148,10 @@
           }
         }
       },
-      "sound": "A heartbeat, the river, no voices"
+      "sound": "A heartbeat, the river, no voices",
+      "cast": [
+        "karna"
+      ]
     },
     {
       "id": "s06",
@@ -169,7 +180,11 @@
       "speaker": "kunti",
       "line": "तुम मेरे पहले पुत्र हो… सूर्यदेव के पुत्र।",
       "caption_en": "You are my firstborn… the son of the Sun God.",
-      "sound": "Gentle river water, no other voices"
+      "sound": "Gentle river water, no other voices",
+      "cast": [
+        "kunti",
+        "karna"
+      ]
     },
     {
       "id": "s07",
@@ -191,7 +206,10 @@
       "speaker": "karna",
       "line": "जब नदी में बहाया था, तब याद नहीं आई, माँ?",
       "caption_en": "When you set me afloat on the river, didn't you remember me then, Mother?",
-      "sound": "Gentle river water, no other voices"
+      "sound": "Gentle river water, no other voices",
+      "cast": [
+        "karna"
+      ]
     },
     {
       "id": "s08",
@@ -213,7 +231,10 @@
       "speaker": "kunti",
       "line": "अपने भाइयों के पास आ जाओ… पांडवों का साथ दो।",
       "caption_en": "Come to your brothers… stand with the Pandavas.",
-      "sound": "Gentle river water, no other voices"
+      "sound": "Gentle river water, no other voices",
+      "cast": [
+        "kunti"
+      ]
     },
     {
       "id": "s09",
@@ -235,7 +256,10 @@
       "speaker": "karna",
       "line": "दुर्योधन ने तब साथ दिया, जब सबने मुझे ठुकराया।",
       "caption_en": "Duryodhana stood by me when everyone rejected me.",
-      "sound": "Gentle river water, no other voices"
+      "sound": "Gentle river water, no other voices",
+      "cast": [
+        "karna"
+      ]
     },
     {
       "id": "s10",
@@ -264,7 +288,11 @@
       "speaker": "karna",
       "line": "पर वचन देता हूँ… अर्जुन के सिवा किसी भाई को नहीं मारूँगा।",
       "caption_en": "But I promise… I will kill none of my brothers except Arjuna.",
-      "sound": "Gentle river water, soft emotional music, no other voices"
+      "sound": "Gentle river water, soft emotional music, no other voices",
+      "cast": [
+        "karna",
+        "kunti"
+      ]
     },
     {
       "id": "s11",
@@ -293,7 +321,11 @@
       "speaker": "karna",
       "line": "तुम्हारे पाँच पुत्र ही रहेंगे, माँ… अर्जुन या कर्ण।",
       "caption_en": "You will always have five sons, Mother… with Arjuna, or with Karna.",
-      "sound": "Soft emotional music, the river, no other voices"
+      "sound": "Soft emotional music, the river, no other voices",
+      "cast": [
+        "karna",
+        "kunti"
+      ]
     },
     {
       "id": "s12",
@@ -309,7 +341,8 @@
         "voice": "a deep, warm Indian male storyteller's voice"
       },
       "caption_en": "Karna deserves at least one like… and don't forget to subscribe!",
-      "sound": "Gentle river water, soft music, no voices"
+      "sound": "Gentle river water, soft music, no voices",
+      "cast": []
     }
   ],
   "thumbnail": {
