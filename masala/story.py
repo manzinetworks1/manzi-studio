@@ -66,9 +66,10 @@ def check(st):
         return E, W
     if not SLUG.match(str(st["slug"])):
         E.append(f"\"slug\" must be lowercase English letters, numbers and dashes (got \"{st['slug']}\").")
-    rng = SETTINGS["scenes_for_duration"].get(st["duration"])
+    table = SETTINGS["film"]["scenes_for_duration"] if st.get("format") == "film" else SETTINGS["scenes_for_duration"]
+    rng = table.get(st["duration"])
     if not rng:
-        E.append(f"\"duration\" must be one of {', '.join(SETTINGS['scenes_for_duration'])} (got \"{st['duration']}\").")
+        E.append(f"\"duration\" must be one of {', '.join(table)} (got \"{st['duration']}\").")
     chars = {}
     for c in st["characters"]:
         cid = c.get("id", "?")

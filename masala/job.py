@@ -123,8 +123,9 @@ def scene_prompt(st, s):
     else:
         parts.append("A real, photographed animal; never cartoon, anime or plastic-looking.")
     parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Upright, normal orientation (never rotated "
-                 "or upside down). Vertical 9:16 frame for a phone screen, "
-                 "faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, "
+                 "or upside down). " + ("Widescreen 16:9 cinematic film frame, composed like a feature film, "
+                 "faces at eye level. " if st.get("format") == "film" else "Vertical 9:16 frame for a phone screen, "
+                 "faces in the upper-middle of the picture. ") + "No text, no captions, no logos, no watermarks, no signboards, "
                  "no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.")
     return " ".join(parts)
 
@@ -151,7 +152,7 @@ def plan(st):
         take = int(s.get("take", 1))  # "take": 2 -> a new seed for a remake that came out wrong
         f = {"seed": seed_for(st["slug"], s["id"] if take == 1 else f"{s['id']}#{take}"), "scene": scene_prompt(st, s),
              "dialogue": ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
-             "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["aspect"],
+             "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["film"]["aspect"] if st.get("format") == "film" else SETTINGS["aspect"],
              "duration": f"{s.get('seconds', SETTINGS['clip_seconds'])} s", "preview": SETTINGS["preview"]}
         cont = prev if (s.get("continue") and prev) else None
         key = hashlib.sha1(json.dumps([f, cont], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:6]

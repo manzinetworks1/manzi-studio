@@ -108,6 +108,29 @@ html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; o
 """
 
 
+FILM_CSS = """
+html, body { width: 1920px; height: 1080px; }
+.cap { top: 880px; left: 260px; right: 260px; font-size: 52px; }
+.en { font-size: 40px; -webkit-text-stroke: 6px #000; }
+.end { top: 60px; font-size: 64px; }
+.thumb .box { top: 700px; font-size: 110px; }
+.card { position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center;
+        justify-content: center; color: #f4efe4; font-family: Pop, 'Noto Sans Devanagari', sans-serif; text-align: center; }
+.card h1 { margin: 0; font-size: 150px; letter-spacing: 4px; color: #f2c14e; text-shadow: 0 0 40px rgba(242,193,78,.35); }
+.card p { margin: 22px 0 0; font-size: 40px; opacity: .85; }
+.card .small { font-size: 30px; line-height: 1.6; opacity: .8; max-width: 1500px; }
+"""
+
+
+def card_seg(png, secs, out):
+    """A still card (title, credits) with a slow fade in and out and silence."""
+    run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-t", f"{secs:.2f}", "-i", png, "-f", "lavfi", "-t",
+         f"{secs:.2f}", "-i", "anullsrc=r=48000:cl=stereo", "-vf",
+         f"scale={W}:{H},setsar=1,fps={FPS},fade=t=in:st=0:d=0.8,fade=t=out:st={secs - 0.8:.2f}:d=0.8,format=yuv420p",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-shortest", out])
+    return ai_assemble.duration(out)
+
+
 def render(jobs):
     """jobs: [(html body, png path, transparent?)] -> PNG files."""
     from playwright.sync_api import sync_playwright
@@ -115,7 +138,8 @@ def render(jobs):
         b = p.chromium.launch()
         pg = b.new_page(viewport={"width": W, "height": H})
         for body, png, clear in jobs:
-            pg.set_content(f"<html><head><meta charset='utf-8'><style>{CSS}</style></head><body>{body}</body></html>",
+            pg.set_content(f"<html><head><meta charset='utf-8'><style>{CSS}{FILM_CSS if W > H else ''}</style></head>"
+                           f"<body>{body}</body></html>",
                            wait_until="load")
             pg.wait_for_timeout(60)
             pg.screenshot(path=png, omit_background=clear)
@@ -244,6 +268,12 @@ def main():
     engine_dir = os.path.join(out_dir, "engine")
     tmp = os.path.join(out_dir, "build"); shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
     check(st)  # fills each scene's cast from its stage
+    film = st.get("format") == "film"
+    if film:  # a widescreen short film: normal speed, gentler trims, title card and credits, joined even as a draft
+        global W, H
+        W, H = 1920, 1080
+        SETTINGS.update({k: v for k, v in SETTINGS["film"].items() if k in ("speed", "lead", "tail", "silent_max",
+                                                                             "music_volume")})
     info = json.load(open(os.path.join(engine_dir, "clips.json"))) if os.path.exists(os.path.join(engine_dir, "clips.json")) else {}
     mode = a.mode or info.get("mode", "final")
     cids = {s["id"]: cid for s, cid, _, _ in clip_plan(st)}
@@ -281,10 +311,24 @@ def main():
                 cues.append((p_, x, y)); x = y
         t += d
         log(f"  {s['id']}: {d:.1f}s (total {t:.1f}s)")
+        tc = st.get("title_card") or {}
+        if film and tc.get("after") == s["id"]:
+            png = os.path.join(tmp, "title_card.png")
+            render([(f"<div class='card'><h1>{html.escape(tc.get('text', st['title']))}</h1>"
+                     + (f"<p>{html.escape(tc['sub'])}</p>" if tc.get("sub") else "") + "</div>", png, False)])
+            out = os.path.join(tmp, "title_card.mp4")
+            d = card_seg(png, float(tc.get("seconds", 4.5)), out)
+            segs.append(out); t += d
     if not segs:
         raise SystemExit("No clips came back from Kaggle: nothing to put together.")
 
-    if mode == "draft":  # draft: the clips one by one, not joined
+    if film and st.get("credits"):
+        png = os.path.join(tmp, "credits.png")
+        render([("<div class='card'><p class='small'>" + "<br>".join(html.escape(x) for x in st["credits"])
+                 + "</p></div>", png, False)])
+        out = os.path.join(tmp, "credits.mp4")
+        segs.append(out); t += card_seg(png, 7.0, out)
+    if mode == "draft" and not film:  # draft: the clips one by one, not joined
         return deliver_draft(a, cfg, st, out_dir, tmp, missing, starts, cids, t_all)
 
     # 2. text pictures: hook, captions, end line
@@ -316,7 +360,8 @@ def main():
     if st.get("end_text"):
         png = os.path.join(tmp, "end.png")
         jobs.append((f"<div class='box end'><span>{html.escape(st['end_text'])}</span></div>", png, True))
-        overlays.append((png, max(0.0, t - 2.5), t))
+        last = max(x0 + dd for x0, dd in starts.values())
+        overlays.append((png, max(0.0, last - 2.5), last))
     # thumbnail: a frame from the chosen scene with the big words
     th = st.get("thumbnail") or {}
     tid = th.get("scene") if th.get("scene") in starts else list(starts)[len(starts) // 2]
@@ -371,7 +416,7 @@ def main():
         open(srt_en, "w", encoding="utf-8").write("".join(
             f"{i}\n{srt_time(x)} --> {srt_time(y)}\n{c}\n\n" for i, (c, x, y) in enumerate(cues, 1)))
     yt = st["youtube"]
-    title = st["title"] if "#shorts" in st["title"].lower() or len(st["title"]) > 90 else f"{st['title']} #Shorts"
+    title = st["title"] if film or "#shorts" in st["title"].lower() or len(st["title"]) > 90 else f"{st['title']} #Shorts"
     desc = f"{yt['description'].strip()}\n\n{DISCLAIMER}\n\n{CREDITS}"
     tags, n_ch = [], 0
     for tg in yt.get("tags", []) + ["hindi story", "family drama", "entertainment with manzi"]:
