@@ -1,0 +1,743 @@
+{
+  "slug": "justice-k-s-puttaswamy-v-union-of-india-2017",
+  "language": "english",
+  "case": "Justice K.S. Puttaswamy (Retd.) v. Union of India",
+  "citation": "(2017) 10 SCC 1; AIR 2017 SC 4161",
+  "year": 2017,
+  "court": "Supreme Court of India",
+  "bench": "9 judges",
+  "subject": "Constitutional Law",
+  "topic": "Fundamental Right to Privacy under Article 21",
+  "principle": "Privacy is an intrinsic fundamental right under Article 21, subject only to legality, legitimate aim, and proportionality.",
+  "look": "Warm 2017 Indian documentary realism, soft natural daylight and amber courtroom lamps, 35mm cinematic lens, rich earth and wood tones, dignified, thoughtful, unhurried constitutional drama mood.",
+  "cast": [
+    {
+      "id": "petitioner",
+      "label": "the retired judge",
+      "look": "An elderly Indian man in his late eighties, thin build, brown skin, white hair, wire-rimmed spectacles, crisp cream cotton kurta."
+    },
+    {
+      "id": "counsel_pet",
+      "label": "the senior petitioner advocate",
+      "look": "A middle-aged Indian woman in her fifties, medium build, brown skin, short wavy dark hair, black advocate coat and white band."
+    },
+    {
+      "id": "counsel_state",
+      "label": "the government counsel",
+      "look": "A stout Indian man in his late fifties, brown skin, receding silver hair, thick moustache, black advocate gown and white band."
+    },
+    {
+      "id": "judge",
+      "label": "the presiding judge",
+      "look": "A dignified Indian man in his early sixties, brown skin, salt-and-pepper beard, rectangular glasses, crimson-trimmed black judicial robe."
+    },
+    {
+      "id": "clerk",
+      "label": "the young law researcher",
+      "look": "A young Indian woman in her late twenties, slender, brown skin, long braided black hair, wearing a neat blue salwar kameez."
+    }
+  ],
+  "beats": [
+    {
+      "type": "professor",
+      "id": "p_intro",
+      "chapter": "Introduction",
+      "line": "Can the Indian state collect your biometrics without a privacy right?",
+      "narration": []
+    },
+    {
+      "type": "scene",
+      "id": "s01",
+      "chapter": "A Quiet Protest",
+      "narration": [
+        "In 2012, a retired High Court judge in Bengaluru sat at his wooden desk and challenged a massive national biometric project."
+      ],
+      "scene": "Warm afternoon sunlight slants through wooden shutters into a quiet Bengaluru study. A slow push-in frames the retired judge seated behind a polished teak desk, adjusting his wire-rimmed spectacles as he opens a plain cream file folder. Wooden bookshelves filled with old leather volumes line the blurred background, with no readable text visible anywhere.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft ceiling fan hum and faint birdsong outside.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c01",
+      "chapter": "A Quiet Protest",
+      "narration": [
+        "This landmark constitutional battle began with one quiet citizen petition in Bengaluru and grew into the largest privacy dispute in Indian legal history.",
+        "Sitting on a special constitutional bench, nine judges of the Supreme Court delivered a historic unanimous verdict that transformed civil liberties across India.",
+        "Decided in August 2017, this extraordinary ruling finally answered a deep constitutional conflict that had lingered unresolved for more than six full decades.",
+        "The core issue before the Court was whether personal privacy is an enforceable fundamental right guaranteed to every citizen under the Indian Constitution."
+      ],
+      "card": {
+        "style": "title",
+        "heading": "Justice K.S. Puttaswamy (Retd.) v. Union of India",
+        "items": [
+          {
+            "label": "Bench",
+            "text": "**Nine judges** unanimous verdict"
+          },
+          {
+            "label": "Year",
+            "text": "Decided in **August 2017**"
+          },
+          {
+            "label": "Core Issue",
+            "text": "Is **privacy** a **fundamental right**"
+          }
+        ],
+        "prop": "",
+        "stamps": [],
+        "sub": "2017 · Supreme Court of India"
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s02",
+      "chapter": "A Quiet Protest",
+      "narration": [
+        "Since 2009, the government had been collecting fingerprints and iris scans from millions of residents across India under the Aadhaar program."
+      ],
+      "scene": "Soft fluorescent daylight fills a busy 2017 neighbourhood enrolment hall in India. A medium wide shot shows Indian men and women in everyday shirts and saris waiting patiently in line beside plain tables with small black biometric scanners, while blank cream walls behind them remain completely free of any signs or posters.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Murmured voices, shuffling sandals, and soft camera clicks.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s03",
+      "chapter": "A Quiet Protest",
+      "narration": [
+        "Soon, ordinary citizens needed this twelve-digit biometric identity number to receive welfare subsidies, file taxes, and access essential public services."
+      ],
+      "scene": "In the same fluorescent enrolment hall, a static close-up focuses on an Indian citizen's brown hand pressing a thumb gently onto the glowing glass pad of a small biometric scanner on a wooden desk, with blurred figures seated quietly in the soft background.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Faint electronic scanner beep and quiet room murmur.",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s04",
+      "chapter": "A Quiet Protest",
+      "narration": [
+        "Justice Puttaswamy worried that mandatory biometric data collection without a strong statutory privacy framework exposed citizens to unchecked state surveillance."
+      ],
+      "scene": "Golden morning light enters a peaceful Bengaluru home library. A medium two-shot shows the retired judge sitting beside the young law researcher at a round wooden table, pointing thoughtfully toward a thick bound book while she listens attentively with an open unmarked notebook.",
+      "cast": [
+        "petitioner",
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Rustling paper pages and distant street traffic.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s05",
+      "chapter": "The Constitutional Question",
+      "narration": [
+        "He therefore filed a constitutional writ petition under Article 32 directly before the Supreme Court of India in New Delhi."
+      ],
+      "scene": "Cool morning light filters through the high sandstone colonnade of the Supreme Court corridor in New Delhi. A smooth tracking shot follows the senior petitioner advocate walking briskly forward in her black coat and white band, carrying a tied bundle of plain white legal briefs under one arm, with empty stone pillars behind.",
+      "cast": [
+        "counsel_pet"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Crisp footsteps echoing slowly across polished stone floors.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s06",
+      "chapter": "The Constitutional Question",
+      "narration": [
+        "Her argument before the Court was sharp and direct.",
+        "The state cannot collect intimate biometric data without clear constitutional safeguards."
+      ],
+      "scene": "Warm courtroom lamp light illuminates the carved wooden panelling of the Supreme Court hall. Filmed in close-up from just behind the shoulder of the presiding judge, the senior petitioner advocate leans toward a desk microphone and speaks earnestly with one hand raised, her expression calm and resolute.",
+      "cast": [
+        "counsel_pet",
+        "judge"
+      ],
+      "speaker": "counsel_pet",
+      "dialogue": "Citizens are not numbers in a database.",
+      "sound": "Quiet courtroom hush as the advocate speaks.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c02",
+      "chapter": "The Constitutional Question",
+      "narration": [
+        "The petitioners anchored their constitutional challenge in Article 21, which firmly guarantees life and personal liberty to every single person living across India.",
+        "They argued that gathering sensitive biometric data without statutory consent violated liberty unless justified by a fair procedure established by law.",
+        "When government lawyers replied that Indian citizens possess no fundamental privacy right, a three-judge bench saw a direct conflict with earlier rulings.",
+        "In 2017, the Supreme Court therefore constituted a nine-judge bench through this formal reference to settle the constitutional status of privacy permanently."
+      ],
+      "card": {
+        "style": "law",
+        "heading": "Article 21 and the Constitutional Reference",
+        "items": [
+          {
+            "label": "Article 21",
+            "text": "Protects **life** and **personal liberty** of every person"
+          },
+          {
+            "label": "Procedure",
+            "text": "Only limited by **procedure established by law**"
+          },
+          {
+            "label": "Reference",
+            "text": "**Nine-judge bench** formed to decide privacy status"
+          }
+        ],
+        "prop": "PETITION",
+        "stamps": [
+          {
+            "text": "NO PRIVACY LAW",
+            "at": "biometric data",
+            "color": "red"
+          },
+          {
+            "text": "NINE JUDGES",
+            "at": "nine-judge bench",
+            "color": "green"
+          }
+        ],
+        "sub": ""
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s07",
+      "chapter": "The Constitutional Question",
+      "narration": [
+        "Before the nine judges could rule on privacy, both legal teams had to confront two massive precedents from the early republic."
+      ],
+      "scene": "Soft afternoon daylight falls across a quiet wooden table in a Delhi legal library. A medium shot shows the young law researcher placing a tall stack of thick red-bound law volumes beside a brass desk lamp, her brow slightly furrowed as she adjusts her braided hair.",
+      "cast": [
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Heavy thud of books landing on wood.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s08",
+      "chapter": "Shadows of Past Judgments",
+      "narration": [
+        "Back in 1954 and 1962, larger benches of the Supreme Court had explicitly rejected privacy as an enforceable fundamental right."
+      ],
+      "scene": "Dim warm tungsten light glows between tall mahogany bookshelves inside a quiet legal archive room. A medium wide shot tracks slowly alongside the young law researcher as she reaches high onto an upper shelf and carefully pulls down an aged, worn law volume covered in pale cloth.",
+      "cast": [
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft footsteps and creak of old wooden shelves.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s09",
+      "chapter": "Shadows of Past Judgments",
+      "narration": [
+        "Because those earlier benches comprised eight and six judges, smaller benches could not legally overrule them for more than five decades."
+      ],
+      "scene": "In the same quiet archive room, a tight close-up frames the young law researcher's brown hands gently opening the yellowed, slightly frayed pages of the old law book on a wooden ledge, with no readable words visible on the blurred paper surface.",
+      "cast": [
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Dry crinkle of aged paper pages turning slowly.",
+      "cont": true
+    },
+    {
+      "type": "card",
+      "id": "c03",
+      "chapter": "Shadows of Past Judgments",
+      "narration": [
+        "In 1954, an eight-judge bench in M.P. Sharma v. Satish Chandra ruled that the Indian Constitution contained no fundamental right to personal privacy.",
+        "In 1962, six judges in Kharak Singh v. State of Uttar Pradesh invalidated midnight police visits yet denied constitutional privacy protection again.",
+        "Later smaller benches in Gobind in 1975 and Maneka Gandhi in 1978 read personal privacy and human dignity broadly into Article 21.",
+        "By 2015, this deepening clash between larger and smaller benches forced three judges to refer the constitutional conflict to a larger bench."
+      ],
+      "card": {
+        "style": "timeline",
+        "heading": "Sixty Years of Shifting Precedent",
+        "items": [
+          {
+            "label": "1954",
+            "text": "**M.P. Sharma** denies a fundamental privacy right"
+          },
+          {
+            "label": "1962",
+            "text": "**Kharak Singh** rejects privacy against police surveillance"
+          },
+          {
+            "label": "1975",
+            "text": "**Gobind** recognizes limited privacy under Article 21"
+          },
+          {
+            "label": "1978",
+            "text": "**Maneka Gandhi** expands personal liberty and dignity"
+          },
+          {
+            "label": "2015",
+            "text": "**Three judges** refer conflict to larger bench"
+          }
+        ],
+        "prop": "",
+        "stamps": [],
+        "sub": ""
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s10",
+      "chapter": "Shadows of Past Judgments",
+      "narration": [
+        "In July 2017, the Union of India stepped forward into Courtroom One to defend those earlier precedents before nine judges."
+      ],
+      "scene": "Bright natural daylight streams into an arched stone hallway outside the main Supreme Court chamber. A static medium shot shows the government counsel standing beside a carved pillar, checking thick white paper folders in his hands while other blurred lawyers in black robes walk past behind him.",
+      "cast": [
+        "counsel_state"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Distant hallway chatter and rustling legal papers.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s11",
+      "chapter": "Clash in Courtroom One",
+      "narration": [
+        "Inside a packed Supreme Court hall, nine robed judges listened intently across six full days of historic, rigorous constitutional oral argument."
+      ],
+      "scene": "Soft warm light from high courtroom windows falls over the grand raised mahogany bench inside the Supreme Court. A wide static shot shows the presiding judge seated at the center alongside eight other robed judges in dark silhouettes, looking down calmly toward the crowded wooden lectern below.",
+      "cast": [
+        "judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Low rustle of robes and quiet courtroom settling.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s12",
+      "chapter": "Clash in Courtroom One",
+      "narration": [
+        "The government counsel argued that the Constituent Assembly deliberately rejected a privacy clause, leaving privacy only to ordinary statutory law."
+      ],
+      "scene": "Warm indoor courtroom lighting highlights the tense wooden lectern area. Filmed in close-up from just behind the shoulder of the senior petitioner advocate, the government counsel gestures firmly with one hand while addressing the bench, his silver moustache and dark eyes focused straight ahead.",
+      "cast": [
+        "counsel_state",
+        "counsel_pet"
+      ],
+      "speaker": "counsel_state",
+      "dialogue": "The Constitution makers left privacy out deliberately.",
+      "sound": "Clear resonant voice echoing inside wooden courtroom.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s13",
+      "chapter": "Clash in Courtroom One",
+      "narration": [
+        "He also warned that an undefined constitutional privacy right could severely paralyze public welfare schemes and vital national security efforts."
+      ],
+      "scene": "In the same warm courtroom light, a tight close-up frames the presiding judge on the high bench listening thoughtfully, gently pushing his rectangular glasses up the bridge of his nose as he leans slightly forward over a closed leather notebook.",
+      "cast": [
+        "judge"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Quiet courtroom silence and faint pen scratching.",
+      "cont": true
+    },
+    {
+      "type": "scene",
+      "id": "s14",
+      "chapter": "Clash in Courtroom One",
+      "narration": [
+        "The petitioners strongly countered that personal privacy is an inherent human right, never a temporary privilege granted by the state."
+      ],
+      "scene": "Soft daylight angles across the dark polished wood of the courtroom lectern. A slow push-in captures the senior petitioner advocate standing straight and composed, resting both palms gently on the wooden stand as she looks upward toward the bench with quiet conviction.",
+      "cast": [
+        "counsel_pet"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Measured breathing and quiet room ambience.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c04",
+      "chapter": "Clash in Courtroom One",
+      "narration": [
+        "The petitioners reminded the nine judges that Indian constitutional law had long outgrown the narrow silo interpretation of the early 1950s.",
+        "Ever since the landmark Maneka Gandhi decision, Part Three rights must be read together as a connected golden triangle rather than separate islands.",
+        "Article 14 demands equality and non-arbitrariness in every state action, while Article 19 protects six fundamental freedoms including speech, association, and movement.",
+        "At the base stands Article 21, protecting life and personal liberty, which loses real meaning if the state controls every private choice."
+      ],
+      "card": {
+        "style": "triangle",
+        "heading": "The Golden Triangle of Fundamental Rights",
+        "items": [
+          {
+            "label": "Article 14",
+            "text": "**Equality** and **non-arbitrariness**"
+          },
+          {
+            "label": "Article 19",
+            "text": "**Six fundamental freedoms**"
+          },
+          {
+            "label": "Article 21",
+            "text": "**Life** and **personal liberty**"
+          }
+        ],
+        "prop": "",
+        "stamps": [],
+        "sub": ""
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s15",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "On August 24, 2017, advocates, petitioners, journalists, and law students gathered at the Supreme Court for the historic constitutional judgment."
+      ],
+      "scene": "Soft golden early-morning light touches the iconic copper dome and sandstone arches of the Supreme Court building in New Delhi. A wide static exterior shot shows groups of Indian lawyers in black coats and young students walking calmly up the broad stone steps beneath swaying green trees, with no signs visible.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Morning birdsong and distant New Delhi traffic.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s16",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "Speaking with one clear voice on the bench, all nine judges unanimously declared that privacy is an enforceable fundamental right."
+      ],
+      "scene": "Bright morning light slants across the grand mahogany bench inside the packed courtroom. Filmed in close-up from just behind the senior petitioner advocate's shoulder, the presiding judge looks calmly down over his rectangular glasses, resting one hand on a thick stack of bound judgment pages as he reads aloud.",
+      "cast": [
+        "judge",
+        "counsel_pet"
+      ],
+      "speaker": "judge",
+      "dialogue": "Privacy is intrinsic to life and liberty.",
+      "sound": "Solemn judicial voice in a silent courtroom.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c05",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "Unanimously, all nine judges held that privacy is a fundamental right intrinsic to Article 21 and the freedoms guaranteed under Part Three.",
+        "The Court formally overruled both M.P. Sharma and Kharak Singh to the extent they declared that the Constitution did not protect privacy.",
+        "While privacy is never absolute, any state restriction must pass a strict three-part test requiring a valid law, a legitimate aim, and proportionality.",
+        "The judges also safeguarded informational privacy, shielding personal data, bodily integrity, and personal choices against arbitrary state or private commercial intrusion."
+      ],
+      "card": {
+        "style": "holding",
+        "heading": "What the Nine Judges Held",
+        "items": [
+          {
+            "label": "Fundamental Right",
+            "text": "**Privacy** is intrinsic to **Article 21** and Part Three freedoms"
+          },
+          {
+            "label": "Precedents Overruled",
+            "text": "**M.P. Sharma** and **Kharak Singh** are formally overruled"
+          },
+          {
+            "label": "Three-Part Test",
+            "text": "Restrictions need **valid law**, **legitimate aim**, and **proportionality**"
+          },
+          {
+            "label": "Informational Privacy",
+            "text": "Shields **personal data**, **bodily integrity**, and **personal choices**"
+          }
+        ],
+        "prop": "",
+        "stamps": [],
+        "sub": ""
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s17",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "Back in his quiet Bengaluru home, the elderly retired judge waited calmly to hear the final verdict from Courtroom One."
+      ],
+      "scene": "Soft morning light fills a simple, dignified Bengaluru living room. A medium shot shows the retired judge seated comfortably in a cane armchair wearing his crisp cream kurta, holding a porcelain teacup while gazing steadily toward an off-camera television screen with quiet anticipation.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Gentle clink of porcelain cup and quiet room.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s18",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "Although the nine-judge bench delivered six separate written opinions, every single judge firmly agreed on the core constitutional privacy principle."
+      ],
+      "scene": "In the same Bengaluru living room, a slow push-in moves to a warm close-up of the retired judge's face as a gentle, relieved smile slowly creases his eyes behind his wire-rimmed spectacles, while he lowers his teacup calmly onto the wooden side table.",
+      "cast": [
+        "petitioner"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft sigh of relief and distant garden birds.",
+      "cont": true
+    },
+    {
+      "type": "card",
+      "id": "c06",
+      "chapter": "Nine Voices, One Verdict",
+      "narration": [
+        "Writing the leading plurality opinion for four judges, Justice Chandrachud famously declared that privacy is the constitutional core of human dignity for all.",
+        "He explained that human dignity cannot endure unless the Constitution shields personal autonomy, bodily choices, and family life from unwarranted state intrusion.",
+        "In a powerful moment of historical judicial correction, the bench also revisited ADM Jabalpur v. Shivkant Shukla from the Emergency year of 1976.",
+        "Holding that its denial of life and liberty was gravely wrong, the nine judges expressly disapproved that decision to safeguard future generations."
+      ],
+      "card": {
+        "style": "quote",
+        "heading": "Privacy is the constitutional core of human dignity.",
+        "items": [
+          {
+            "label": "Human Dignity",
+            "text": "Privacy protects **personal autonomy** and **family life**"
+          },
+          {
+            "label": "ADM Jabalpur",
+            "text": "The 1976 Emergency ruling was **expressly disapproved**"
+          }
+        ],
+        "prop": "JUDGMENT",
+        "stamps": [
+          {
+            "text": "DIGNITY AFFIRMED",
+            "at": "human dignity",
+            "color": "green"
+          },
+          {
+            "text": "1976 DISAPPROVED",
+            "at": "expressly disapproved",
+            "color": "green"
+          }
+        ],
+        "sub": "Justice D.Y. Chandrachud, plurality opinion"
+      }
+    },
+    {
+      "type": "scene",
+      "id": "s19",
+      "chapter": "How India Changed",
+      "narration": [
+        "Puttaswamy did not remain on dusty library shelves; it immediately began reshaping Indian statutes, civil liberties, and everyday public policy."
+      ],
+      "scene": "Bright late-morning sunlight washes across the wrought-iron Supreme Court gates and green trees outside. A medium tracking shot follows the young law researcher walking cheerfully out onto the sunlit pavement, clutching a thick unmarked notebook against her blue salwar kameez with a hopeful expression.",
+      "cast": [
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Rustling leaves, cheerful footsteps, and distant traffic.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s20",
+      "chapter": "How India Changed",
+      "narration": [
+        "In 2018, a five-judge bench struck down Section 57 of the Aadhaar Act, stopping private companies from demanding citizen biometrics."
+      ],
+      "scene": "Warm daylight filters through glass windows inside a quiet 2018 Indian bank branch. A static medium shot shows a young Indian customer in a neat shirt completing plain paper forms across a wooden counter without placing a finger on the unused scanner beside the clerk.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Quiet office murmur and soft stamp thud.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s21",
+      "chapter": "How India Changed",
+      "narration": [
+        "The Supreme Court soon cited Puttaswamy to decriminalize consensual adult relationships under Section 377 and strike down colonial adultery laws."
+      ],
+      "scene": "Soft golden afternoon light filters through lush green trees along a quiet Delhi park pathway. A wide static shot shows two young Indian adults walking peacefully side by side down the stone path, smiling softly and speaking quietly together without fear or hurry.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Gentle breeze through leaves and distant birds.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s22",
+      "chapter": "How India Changed",
+      "narration": [
+        "The nine-judge verdict also pushed Parliament toward enacting India's Digital Personal Data Protection Act in 2023 to regulate digital data."
+      ],
+      "scene": "Cool natural daylight illuminates a clean modern Indian workspace desk. A medium shot from the side shows a young Indian software engineer typing thoughtfully on a silver laptop with a blank, out-of-focus screen, pausing to sip water from a steel tumbler on the wooden desk.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft keyboard clicks and quiet office hum.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s23",
+      "chapter": "Exam Revision",
+      "narration": [
+        "For every Indian law student, Puttaswamy now stands as the modern constitutional bridge linking human dignity with emerging digital rights."
+      ],
+      "scene": "Warm evening desk lamp light illuminates a quiet Indian study room. A medium close-up shows the young law researcher seated at a wooden desk, carefully drawing a straight ink line across a blank notebook page with a brass ruler, her textbooks stacked neatly beside her.",
+      "cast": [
+        "clerk"
+      ],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Quiet room hum and pen gliding on paper.",
+      "cont": false
+    },
+    {
+      "type": "scene",
+      "id": "s24",
+      "chapter": "Exam Revision",
+      "narration": [
+        "Now let us lock in every essential fact, holding, and test from this landmark judgment for your constitutional law exam."
+      ],
+      "scene": "Deep amber dusk light glows behind the grand sandstone silhouette of the Supreme Court building in New Delhi. A slow wide pull-back frames the illuminated pillars and quiet courtyard steps as evening settles peacefully over the empty grounds, with no banners or text visible.",
+      "cast": [],
+      "speaker": "",
+      "dialogue": "",
+      "sound": "Soft evening breeze and distant city hum.",
+      "cont": false
+    },
+    {
+      "type": "card",
+      "id": "c07",
+      "chapter": "Exam Revision",
+      "narration": [
+        "For your exam, begin clearly with the facts: a retired judge challenged mandatory Aadhaar biometric collection introduced without strong statutory privacy safeguards.",
+        "Next, clearly state the central issue: whether the Indian Constitution guarantees a fundamental right to privacy despite older adverse Supreme Court precedents.",
+        "Write what the unanimous nine-judge bench held: privacy is protected under Article 21 and Part Three, overruling M.P. Sharma and Kharak Singh.",
+        "Finally, summarize the proportionality principle requiring legality, legitimate aim, and proportionality, later cited in Navtej Singh Johar, Joseph Shine, and Aadhaar 2018."
+      ],
+      "card": {
+        "style": "exam",
+        "heading": "Exam Recap: Puttaswamy (2017)",
+        "items": [
+          {
+            "label": "Facts",
+            "text": "Challenge to mandatory **Aadhaar** biometric collection without statutory privacy safeguards"
+          },
+          {
+            "label": "Issue",
+            "text": "Whether the **Constitution** guarantees a **fundamental right to privacy**"
+          },
+          {
+            "label": "Held",
+            "text": "**Unanimous nine-judge bench** affirmed privacy under **Article 21** and Part Three"
+          },
+          {
+            "label": "Principle",
+            "text": "Restrictions must satisfy **legality**, **legitimate aim**, and **proportionality**"
+          },
+          {
+            "label": "Cited In",
+            "text": "Relied on in **Navtej Singh Johar**, **Joseph Shine**, and **Aadhaar 2018**"
+          }
+        ],
+        "prop": "",
+        "stamps": [],
+        "sub": ""
+      }
+    },
+    {
+      "type": "professor",
+      "id": "p_outro",
+      "chapter": "Recap",
+      "line": "Comment which landmark constitutional case we should break down next!",
+      "narration": []
+    }
+  ],
+  "thumbnail": {
+    "scene": "s18",
+    "text": "PRIVACY IS FUNDAMENTAL"
+  },
+  "shorts": [
+    {
+      "title": "The Golden Triangle Argument in Puttaswamy",
+      "start": "s14",
+      "end": "c04"
+    },
+    {
+      "title": "What 9 Supreme Court Judges Held on Privacy",
+      "start": "s16",
+      "end": "c05"
+    },
+    {
+      "title": "How Puttaswamy Changed India After 2017",
+      "start": "s19",
+      "end": "s23"
+    }
+  ],
+  "title": "Justice K.S. Puttaswamy (Retd.) v. Union of India (2017) | Right to Privacy | Article 21",
+  "summary": "Explore the landmark nine-judge Supreme Court verdict in Justice K.S. Puttaswamy (Retd.) v. Union of India (2017) that declared the right to privacy a fundamental right under Article 21. Designed for LLB and judicial services students, this documentary traces the Aadhaar challenge, the overruling of M.P. Sharma and Kharak Singh, the proportionality test, and post-2017 legal reforms. Watch till the end for a crisp exam-ready recap of facts, issues, holdings, and subsequent cases.",
+  "tags": [
+    "Puttaswamy judgment",
+    "Justice K.S. Puttaswamy v. Union of India",
+    "Right to Privacy India",
+    "Article 21 Indian Constitution",
+    "Constitutional Law LLB",
+    "Landmark Supreme Court cases",
+    "Nine judge bench",
+    "Proportionality test India",
+    "M.P. Sharma overruled",
+    "Kharak Singh overruled",
+    "Aadhaar privacy case",
+    "Golden triangle Indian Constitution",
+    "CLAT constitutional law",
+    "Judiciary exam preparation",
+    "Indian case law explained"
+  ],
+  "pinned_comment": "Do you think the three-part proportionality test from Puttaswamy adequately protects citizen data in the age of digital governance?",
+  "check": [
+    "Judgment date: 24 August 2017; reporter citations: (2017) 10 SCC 1 and AIR 2017 SC 4161",
+    "Nine-judge bench composition: CJI J.S. Khehar and Justices Chelameswar, Bobde, Agrawal, Nariman, Sapre, Chandrachud, Kaul, and Nazeer; six separate concurring opinions delivered",
+    "Timeline dates: Aadhaar project launched in 2009; Justice Puttaswamy writ petition filed in 2012; reference order to larger bench in August 2015",
+    "Precedent bench sizes: M.P. Sharma v. Satish Chandra (1954) had 8 judges; Kharak Singh v. State of Uttar Pradesh (1962) had 6 judges",
+    "Quote verification: 'Privacy is the constitutional core of human dignity' attributed to Justice D.Y. Chandrachud's plurality opinion for 4 judges",
+    "Post-2017 developments: Aadhaar judgment striking down Section 57 (2018), Navtej Singh Johar (2018), Joseph Shine (2018), and Digital Personal Data Protection Act (2023)"
+  ],
+  "approved": false
+}
