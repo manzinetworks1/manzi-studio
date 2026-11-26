@@ -265,7 +265,7 @@
       "id": "s10",
       "day": 1,
       "place": "the bank of the river Ganga at dawn in ancient India, stone steps at the water's edge",
-      "action": "Karna softens and gives his mother a promise",
+      "action": "Karna and Kunti both stand upright on the stone steps facing each other; Karna holds both of her hands at chest height and gives her a promise",
       "stage": {
         "shot": "two-shot-profile",
         "people": {
@@ -273,14 +273,14 @@
             "where": "left",
             "faces": "right",
             "eyes": "kunti",
-            "does": "takes both of her hands in his",
+            "does": "stands upright and holds both of Kunti's hands at chest height",
             "expression": "gentle, sad"
           },
           "kunti": {
             "where": "right",
             "faces": "left",
             "eyes": "karna",
-            "does": "lets him hold her hands",
+            "does": "stands upright facing him, her hands in his",
             "expression": "crying, hopeful"
           }
         }
@@ -292,7 +292,8 @@
       "cast": [
         "karna",
         "kunti"
-      ]
+      ],
+      "take": 2
     },
     {
       "id": "s11",
@@ -331,7 +332,7 @@
       "id": "s12",
       "day": 1,
       "place": "the river Ganga at dawn in ancient India",
-      "action": "Extreme close-up: a small clay oil lamp floats away on the golden river water as the sun rises",
+      "action": "Extreme close-up of the river surface only: a single small clay oil lamp with a flame floats away on the golden water at sunrise. No people, no hands, no faces anywhere in the shot",
       "stage": {
         "shot": "insert",
         "people": {}
@@ -342,7 +343,8 @@
       },
       "caption_en": "Karna deserves at least one like… and don't forget to subscribe!",
       "sound": "Gentle river water, soft music, no voices",
-      "cast": []
+      "cast": [],
+      "take": 2
     }
   ],
   "thumbnail": {
