@@ -176,6 +176,26 @@ def chunks(text, most=3):
     return out
 
 
+def tts_line(s, tmp):
+    """The narrator line spoken by Sarvam Bulbul, made a little deeper and older, with a soft room. Stops the build
+    if Sarvam fails (no Microsoft fallback)."""
+    import base64
+    from common import http_json, secret
+    n = s["narrator"]
+    body = {"text": n["line"], "target_language_code": "hi-IN", "model": n.get("sarvam_model", "bulbul:v3"),
+            "speaker": n.get("sarvam_speaker", "shubh"), "pace": float(n.get("pace", 0.85)), "speech_sample_rate": 24000}
+    r = http_json(os.environ.get("SARVAM_URL", "https://api.sarvam.ai/text-to-speech"), body,
+                  {"api-subscription-key": secret("SARVAM_API_KEY")})
+    raw = os.path.join(tmp, f"{s['id']}-tts-raw.wav"); open(raw, "wb").write(base64.b64decode(r["audios"][0]))
+    p = float(n.get("pitch", 0.92))
+    out = os.path.join(tmp, f"{s['id']}-tts.wav")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", raw, "-af",
+         f"asetrate=24000*{p},aresample=48000,atempo={1 / p:.4f},lowpass=f=7000,aecho=0.8:0.5:35:0.12,"
+         "adelay=150|150,apad=pad_dur=0.4", "-ar", "48000", "-ac", "2", out])
+    log(f"  {s['id']}: narration voiced by Sarvam ({body['speaker']})")
+    return out
+
+
 def speech_span(clip, d, floor=-32):
     """(start, end) of the loud part of a clip's sound, where the voice is; the whole clip when unsure. A voice clip
     uses a lower floor (-45 dB): a soft, slow line ending ("...असल में मेरी ज़मीन थी") fell under -32 and was cut."""
@@ -301,6 +321,8 @@ def main():
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
         out = os.path.join(tmp, f"{s['id']}.mp4")
         vclip = os.path.join(engine_dir, f"{cids[s['id']]}-v_384p.mp4") if voiced(st, s) else None
+        if voiced(st, s) and (s.get("narrator") or {}).get("tts") == "sarvam":
+            vclip = tts_line(s, tmp)   # a clean studio voice: H3 voice clips came out with gaps and missing words
         if vclip and os.path.exists(vclip):
             # the silent picture with the narration taken from its voice clip, starting 0.4 s in
             pic = os.path.join(tmp, f"{s['id']}-pic.mp4"); pd = seg(clip, pic, True)

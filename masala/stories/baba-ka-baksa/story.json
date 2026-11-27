@@ -820,7 +820,11 @@
       "narrator": {
         "line": "विक्रम, तेरी स्कॉलरशिप… असल में मेरी ज़मीन थी।",
         "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
-        "speaker": "babuji"
+        "speaker": "babuji",
+        "tts": "sarvam",
+        "sarvam_speaker": "shubh",
+        "pace": 0.8,
+        "pitch": 0.9
       },
       "caption_en": "Vikram, your scholarship… was really my land.",
       "cast": [],
@@ -840,7 +844,11 @@
       "narrator": {
         "line": "Sunny, तेरी दुकान का कर्ज़ मैंने चुपचाप चुकाया था।",
         "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
-        "speaker": "babuji"
+        "speaker": "babuji",
+        "tts": "sarvam",
+        "sarvam_speaker": "shubh",
+        "pace": 0.8,
+        "pitch": 0.9
       },
       "caption_en": "Sunny, I quietly paid off your shop's loan.",
       "cast": [],
@@ -904,7 +912,11 @@
       "narrator": {
         "line": "मेरी असली जमापूंजी पैसे नहीं… तुम दोनों हो।",
         "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
-        "speaker": "babuji"
+        "speaker": "babuji",
+        "tts": "sarvam",
+        "sarvam_speaker": "shubh",
+        "pace": 0.8,
+        "pitch": 0.9
       },
       "caption_en": "My real savings aren't money… they're you two.",
       "cast": [],
@@ -923,7 +935,11 @@
       "narrator": {
         "line": "बस एक-दूसरे का हाथ मत छोड़ना।",
         "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
-        "speaker": "babuji"
+        "speaker": "babuji",
+        "tts": "sarvam",
+        "sarvam_speaker": "shubh",
+        "pace": 0.8,
+        "pitch": 0.9
       },
       "caption_en": "Just never let go of each other's hand.",
       "cast": [],
