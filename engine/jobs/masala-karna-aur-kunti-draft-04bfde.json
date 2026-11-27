@@ -1,0 +1,52 @@
+{
+  "run_id": "masala-karna-aur-kunti-draft-04bfde",
+  "purpose": "Masala Short (draft): युद्ध से एक दिन पहले माँ ने बताया सच… कर्ण और कुंती 😢 | Mahabharat Emotional Story #shorts",
+  "scenes": [
+    {
+      "id": "s01-05ac33",
+      "kind": "scene",
+      "seed": 461734392,
+      "scene": "Wide shot at eye level showing the whole place. Setting: the bank of the river Ganga at dawn in ancient India, stone steps going down into the misty water, the sun rising over the river. What happens: Wide shot: the misty river Ganga at dawn, the sun rising over the water, empty stone ghat steps in the foreground, a few oil lamps floating on the water; no people, no hands, no body parts anywhere in the frame. Nobody speaks and nobody's lips move; no voices at all. There are no people, no faces and no heads anywhere in this shot, only what is described. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Film look: Photorealistic live-action epic Indian historical drama set in ancient India, shot on a cinema camera, golden dawn light, soft mist over the river, natural skin texture, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, the subject in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Gentle river water, soft temple bells far away, no voices",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s01-05ac33-v",
+      "kind": "scene",
+      "seed": 673683427,
+      "language": "Hindi",
+      "scene": "Medium close-up of an Indian storyteller with a deep, warm Indian male storyteller's voice, sitting in a quiet dim room, looking at someone just off-screen, speaking clearly in Hindi with feeling, at a natural pace without long pauses, finishing the whole line by the sixth second. Voice: a deep, warm Indian male storyteller's voice. Only this one person, nobody else. Photorealistic.",
+      "dialogue": "महाभारत युद्ध से एक दिन पहले… एक माँ अपने बेटे से मिलने आई।",
+      "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "384p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "takes": 3
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "checks": [
+    {
+      "id": "s01-05ac33-v",
+      "line": "महाभारत युद्ध से एक दिन पहले… एक माँ अपने बेटे से मिलने आई।",
+      "lang": "hi",
+      "takes": "auto"
+    }
+  ],
+  "check_pass": 0.75,
+  "scene_time_limit_min": 77
+}
