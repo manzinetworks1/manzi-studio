@@ -83,6 +83,12 @@ def main():
                                  + (f", upscale {s['upscale_s']}s" if 'upscale_s' in s else ""))
                 else:
                     notes.append(f"- ❌ {s['id']}: {s.get('error', '')[:200]}")
+        if base == "check.json":
+            c = json.load(open(f))
+            notes += ["", f"## Listen check (Whisper, pass mark {c.get('pass_mark')})"]
+            for r in c.get("checks", []):
+                notes.append(f"- {'✅' if r['pass'] else '❌'} {r['id']}: {r['score']} · heard: "
+                             f"{next((t.get('heard', '') for t in r['takes'] if t['file'] == r['best']), '')[:120]}")
         if base.startswith("voice_") and base.endswith(".json"):
             v = json.load(open(f))
             notes += ["", f"## Narration — {v['engine']}",

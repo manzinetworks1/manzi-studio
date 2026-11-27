@@ -1,0 +1,478 @@
+{
+  "run_id": "audit-films-20261127",
+  "purpose": "Listen check: baba-ka-baksa + karna-aur-kunti",
+  "scenes": [],
+  "inputs": [
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s04-0cf634_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s05-d4c541_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s06-ffc6f1_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s07-64c59b_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s08-baa71e_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s09-f6a553_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s10-8fdbc5_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s11-ed7c0a_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s13-ad869f_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s18-bc988b_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s19-5bd793_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s20-b6c13a_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-bc0efe-20261127-0825",
+      "file": "s20b-cdcfbd_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-bc0efe-20261127-0825",
+      "file": "s20c-b071ba_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s23-c2f81c_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s25-fdc472_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s27-e238e4_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-5ea9fb-20261127-0318",
+      "file": "s30-83440f_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-05d47d-20261127-0520",
+      "file": "s37-c5d648_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-05d47d-20261127-0520",
+      "file": "s38-646c00_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-05d47d-20261127-0520",
+      "file": "s41-11e6aa_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-05d47d-20261127-0520",
+      "file": "s44-ef5bc4_544p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-990964-20261127-0621",
+      "file": "s31-4f4fce-v_384p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-990964-20261127-0621",
+      "file": "s32-d6d939-v_384p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-990964-20261127-0621",
+      "file": "s35-01ce42-v_384p.mp4"
+    },
+    {
+      "release": "engine-masala-baba-ka-baksa-draft-990964-20261127-0621",
+      "file": "s36-220162-v_384p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s03-2b516e_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s04-9f3f9e_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s06-337dd8_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s07-0d7d40_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s08-c62543_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s09-47c019_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7ddb58-20261127-0736",
+      "file": "s10-d135fa_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7de4f0-20261126-2056",
+      "file": "s11-2f8814_544p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7ddb58-20261127-0736",
+      "file": "s01-39057a-v_384p.mp4"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-7ddb58-20261127-0736",
+      "file": "s12-4eae9f-v_384p.mp4"
+    }
+  ],
+  "checks": [
+    {
+      "id": "baba-ka-baksa:s04",
+      "line": "अब आए हो? अंतिम संस्कार तो कल ही हो गया।",
+      "lang": "hi",
+      "takes": [
+        "s04-0cf634_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s05",
+      "line": "फ़्लाइट नहीं मिली, Sunny… मैं कोशिश कर रहा था।",
+      "lang": "hi",
+      "takes": [
+        "s05-d4c541_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s06",
+      "line": "आठ साल से कोशिश ही तो कर रहे हो।",
+      "lang": "hi",
+      "takes": [
+        "s06-ffc6f1_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s07",
+      "line": "बेटा, कम से कम आज तो मत लड़ो।",
+      "lang": "hi",
+      "takes": [
+        "s07-64c59b_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s08",
+      "line": "बाबूजी की सारी जमापूंजी इसी बक्से में है।",
+      "lang": "hi",
+      "takes": [
+        "s08-baa71e_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s09",
+      "line": "तुम्हें बाबूजी नहीं, उनका पैसा याद आया।",
+      "lang": "hi",
+      "takes": [
+        "s09-f6a553_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s10",
+      "line": "मकान बेचेंगे, आधा-आधा। मुझे Mumbai वापस जाना है।",
+      "lang": "hi",
+      "takes": [
+        "s10-8fdbc5_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s11",
+      "line": "ये मकान नहीं बिकेगा। बाबूजी की सांसें हैं इसमें।",
+      "lang": "hi",
+      "takes": [
+        "s11-ed7c0a_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s13",
+      "line": "हाँ, ब्रोकर से बात करो, Sunday तक डील पक्की।",
+      "lang": "hi",
+      "takes": [
+        "s13-ad869f_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s18",
+      "line": "चोर की तरह रात में? शर्म नहीं आती?",
+      "lang": "hi",
+      "takes": [
+        "s18-bc988b_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s19",
+      "line": "मैंने कभी कुछ नहीं माँगा। पढ़ाई भी स्कॉलरशिप से की।",
+      "lang": "hi",
+      "takes": [
+        "s19-5bd793_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s20",
+      "line": "और मैंने दुकान अपने दम पर खड़ी की है!",
+      "lang": "hi",
+      "takes": [
+        "s20-b6c13a_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s20b",
+      "line": "चाबी कहाँ है? तुमने ही छुपाई है ना?",
+      "lang": "hi",
+      "takes": [
+        "s20b-cdcfbd_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s20c",
+      "line": "झूठ! बाबूजी ने चाबी किसी को नहीं दी।",
+      "lang": "hi",
+      "takes": [
+        "s20c-b071ba_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s23",
+      "line": "बस! तुम्हारे बाबूजी यही देखने के लिए जिए थे?",
+      "lang": "hi",
+      "takes": [
+        "s23-c2f81c_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s25",
+      "line": "चाबी हमेशा यहीं थी… Sunny के खिलौने में।",
+      "lang": "hi",
+      "takes": [
+        "s25-fdc472_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s27",
+      "line": "इसीलिए बाबूजी ने इसे कभी फेंकने नहीं दिया…",
+      "lang": "hi",
+      "takes": [
+        "s27-e238e4_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s30",
+      "line": "पैसे… पैसे तो हैं ही नहीं।",
+      "lang": "hi",
+      "takes": [
+        "s30-83440f_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s37",
+      "line": "मुझे माफ़ कर दे, छोटे… मैं बहुत दूर चला गया था।",
+      "lang": "hi",
+      "takes": [
+        "s37-c5d648_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s38",
+      "line": "भैया… घर आ गए, बस यही काफ़ी है।",
+      "lang": "hi",
+      "takes": [
+        "s38-646c00_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s41",
+      "line": "डील कैंसल करो। ये घर नहीं बिकेगा।",
+      "lang": "hi",
+      "takes": [
+        "s41-11e6aa_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s44",
+      "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+      "lang": "hi",
+      "takes": [
+        "s44-ef5bc4_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s31-voice",
+      "line": "विक्रम, तेरी स्कॉलरशिप… असल में मेरी ज़मीन थी।",
+      "lang": "hi",
+      "takes": [
+        "s31-4f4fce-v_384p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s32-voice",
+      "line": "Sunny, तेरी दुकान का कर्ज़ मैंने चुपचाप चुकाया था।",
+      "lang": "hi",
+      "takes": [
+        "s32-d6d939-v_384p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s35-voice",
+      "line": "मेरी असली जमापूंजी पैसे नहीं… तुम दोनों हो।",
+      "lang": "hi",
+      "takes": [
+        "s35-01ce42-v_384p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "baba-ka-baksa:s36-voice",
+      "line": "बस एक-दूसरे का हाथ मत छोड़ना।",
+      "lang": "hi",
+      "takes": [
+        "s36-220162-v_384p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s03",
+      "line": "राजमाता कुंती? सूतपुत्र कर्ण आपको प्रणाम करता है।",
+      "lang": "hi",
+      "takes": [
+        "s03-2b516e_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s04",
+      "line": "सूतपुत्र नहीं… तुम मेरे पुत्र हो, कर्ण।",
+      "lang": "hi",
+      "takes": [
+        "s04-9f3f9e_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s06",
+      "line": "तुम मेरे पहले पुत्र हो… सूर्यदेव के पुत्र।",
+      "lang": "hi",
+      "takes": [
+        "s06-337dd8_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s07",
+      "line": "जब नदी में बहाया था, तब याद नहीं आई, माँ?",
+      "lang": "hi",
+      "takes": [
+        "s07-0d7d40_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s08",
+      "line": "अपने भाइयों के पास आ जाओ… पांडवों का साथ दो।",
+      "lang": "hi",
+      "takes": [
+        "s08-c62543_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s09",
+      "line": "दुर्योधन ने तब साथ दिया, जब सबने मुझे ठुकराया।",
+      "lang": "hi",
+      "takes": [
+        "s09-47c019_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s10",
+      "line": "पर वचन देता हूँ… अर्जुन के सिवा किसी भाई को नहीं मारूँगा।",
+      "lang": "hi",
+      "takes": [
+        "s10-d135fa_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s11",
+      "line": "तुम्हारे पाँच पुत्र ही रहेंगे, माँ… अर्जुन या कर्ण।",
+      "lang": "hi",
+      "takes": [
+        "s11-2f8814_544p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s01-voice",
+      "line": "महाभारत युद्ध से एक दिन पहले… एक माँ अपने बेटे से मिलने आई।",
+      "lang": "hi",
+      "takes": [
+        "s01-39057a-v_384p.mp4"
+      ],
+      "base": null
+    },
+    {
+      "id": "karna-aur-kunti:s12-voice",
+      "line": "कर्ण के लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
+      "lang": "hi",
+      "takes": [
+        "s12-4eae9f-v_384p.mp4"
+      ],
+      "base": null
+    }
+  ],
+  "scene_time_limit_min": 30
+}

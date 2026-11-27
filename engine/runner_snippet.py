@@ -129,7 +129,8 @@ def _mz_run_job():
                 _min_tail = float(_sc.get("min_end_silence", 0.4)) if _sc.get("dialogue") else 0.0
                 _seed0 = int(_sc.get("seed", -1))
                 _best, _takes = None, []
-                for _try in range(1 + (int(_sc.get("retries", 0)) if _min_tail else 0)):
+                _ntakes = int(_sc.get("takes", 1))  # several takes, all kept: the check stage listens and picks one
+                for _try in range(max(_ntakes, 1 + (int(_sc.get("retries", 0)) if _min_tail else 0))):
                     _seed = _seed0 + _try if _seed0 >= 0 else -1
                     # a size that does not fit the T4s' memory (e.g. a long upright clip) falls back to the next smaller one
                     _sizes = [_sc["preview"]] + [p for p in _sc.get("preview_fallback", []) if p != _sc["preview"]]
@@ -152,11 +153,19 @@ def _mz_run_job():
                     _sc["preview"] = _size
                     _tail, _len = _mz_speech_tail(_path) if _min_tail else (None, None)
                     _takes.append({"seed_status": _status.splitlines()[0], "end_silence_s": _tail, "clip_s": _len})
+                    if _ntakes > 1:
+                        _tk = f"{_sid}_{_size}_t{_try + 1}"
+                        _mz_shutil.copy(_path, os.path.join(_MZ_OUT, _tk + ".mp4"))
+                        if _sc.get("keep_latents"):
+                            for _src, _ext in zip(_preview_files(_name), (".pt", ".json")):
+                                if os.path.exists(_src):
+                                    _mz_shutil.copy(_src, os.path.join(_MZ_OUT, _tk + _ext))
+                        _takes[-1]["file"] = _tk + ".mp4"
                     print(f"   🗣️ take {_try + 1}: silence after the last word {_tail}s (need {_min_tail}s)")
                     sys.stdout.flush()
                     if _best is None or (_tail or 0) > (_best[3] or 0):
                         _best = (_path, _status, _name, _tail)
-                    if not _min_tail or (_tail or 0) >= _min_tail:
+                    if _try + 1 >= _ntakes and (not _min_tail or (_tail or 0) >= _min_tail):
                         break
                 _path, _status, _name, _tail = _best
                 _rec["takes"] = _takes

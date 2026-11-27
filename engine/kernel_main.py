@@ -23,6 +23,7 @@ JOB = json.loads(base64.b64decode("__JOB_B64__").decode())
 STEP1 = base64.b64decode("__STEP1_B64__").decode()
 ENGINE = base64.b64decode("__ENGINE_B64__").decode()
 VOICE_STAGE = base64.b64decode("__VOICE_B64__").decode()
+CHECK_STAGE = base64.b64decode("__CHECK_B64__").decode()
 CAST = json.loads(base64.b64decode("__CAST_B64__").decode())  # {file name: base64} e.g. the Professor's voice
 
 OUT = "/kaggle/working/manzi_out"
@@ -148,6 +149,26 @@ if JOB.get("scenes"):
     if rc not in (0, "timeout"):
         SUMMARY["errors"].append(f"scene engine exit code {rc}")
     done("scenes", t, rc == 0)
+
+# ---- 2b. Check stage: Whisper (Hindi) listens to every spoken take and keeps the best ----
+if JOB.get("checks"):
+    t = stage("2b. Check: Whisper listens to every spoken clip")
+    env_dir = "/kaggle/tmp/check_env"
+    py = os.path.join(env_dir, "bin", "python")
+    try:
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "uv"], check=True)
+        subprocess.run(["uv", "venv", "-q", "-p", "3.11", env_dir], check=True)
+        subprocess.run(["uv", "pip", "install", "-q", "--python", py, "faster-whisper", "nvidia-cublas-cu12",
+                        "nvidia-cudnn-cu12==9.*"], check=True, timeout=1200)
+        with open(os.path.join(WORK, "check_stage.py"), "w", encoding="utf-8") as f:
+            f.write(CHECK_STAGE)
+        rc = subprocess.call([py, "-u", os.path.join(WORK, "check_stage.py"), job_file, OUT], timeout=2400)
+        if rc != 0:
+            SUMMARY["errors"].append(f"check stage: exit code {rc}")
+        done("check", t, rc == 0)
+    except Exception as e:
+        SUMMARY["errors"].append(f"check stage: {e!r}")
+        done("check", t, False)
 
 # ---- 3. Voice stage: narration in the cloned Professor voice, Whisper-checked ----
 if JOB.get("narration"):

@@ -56,6 +56,8 @@ def main():
         engine += "\n" + f.read()
     with open(os.path.join(ROOT, "voice_stage.py"), encoding="utf-8") as f:
         voice = f.read()
+    with open(os.path.join(ROOT, "check_stage.py"), encoding="utf-8") as f:
+        check = f.read()
     with open(os.path.join(ROOT, "kernel_main.py"), encoding="utf-8") as f:
         script = f.read()
     cast = {}
@@ -64,7 +66,8 @@ def main():
         with open(ref_file, "rb") as f:
             cast[job["narration"]["ref_audio"]] = base64.b64encode(f.read()).decode("ascii")
     for key, value in (("__CAST_B64__", b64(json.dumps(cast))), ("__JOB_B64__", b64(json.dumps(job))), ("__STEP1_B64__", b64(step1)),
-                       ("__ENGINE_B64__", b64(engine)), ("__VOICE_B64__", b64(voice))):
+                       ("__ENGINE_B64__", b64(engine)), ("__VOICE_B64__", b64(voice)),
+                       ("__CHECK_B64__", b64(check))):
         script = script.replace(key, value)
     compile(script, "manzi_engine.py", "exec")  # syntax check of the whole package
     compile(engine, "run_manzi.py", "exec")

@@ -266,12 +266,37 @@ def build_job(st, mode, have):
     for sc in scenes:
         if sc["id"] in feeds and "upscale_from" not in sc:
             sc.update(save_frame=True, frame_time="end")
+    checks = []
+    if mode == "draft":   # every spoken clip: several takes, Whisper on Kaggle keeps the one that says the line best
+        for sc in scenes:
+            if sc.get("dialogue") and not sc.get("save_frame"):
+                sc["takes"] = int(SETTINGS.get("voice_takes", 3)) if sc["id"].endswith("-v") else int(SETTINGS.get("takes", 2))
+                checks.append({"id": sc["id"], "line": sc["dialogue"], "lang": "hi", "takes": "auto"})
     if not scenes:
         return None, needed
-    limit = sum(13 if mode == "draft" else (11 if "upscale_from" in sc else 22) for sc in scenes) + 15
+    limit = sum((13 * int(sc.get("takes", 1))) if mode == "draft" else (11 if "upscale_from" in sc else 22)
+                for sc in scenes) + 15 + (10 if checks else 0)
     key = hashlib.sha1(json.dumps([sc["id"] for sc in scenes]).encode()).hexdigest()[:6]
     return ({"run_id": f"masala-{st['slug']}-{mode}-{key}", "purpose": f"Masala Short ({mode}): {st['title']}",
-             "scenes": scenes, "inputs": inputs, "frames": frames, "scene_time_limit_min": min(330, limit)}, needed)
+             "scenes": scenes, "inputs": inputs, "frames": frames, "checks": checks,
+             "scene_time_limit_min": min(330, limit)}, needed)
+
+
+def audit_job(st, have):
+    """A Kaggle job that only listens: every spoken clip already made for this story goes through Whisper."""
+    checks, inputs = [], []
+    for s, cid, f, _ in plan(st):
+        if f.get("dialogue") and f"{cid}_544p.mp4" in have:
+            checks.append({"id": s["id"], "line": f["dialogue"], "lang": "hi", "takes": [f"{cid}_544p.mp4"], "base": None})
+            inputs.append({"release": have[f"{cid}_544p.mp4"], "file": f"{cid}_544p.mp4"})
+    for s, vid, fv in voice_plan(st):
+        if f"{vid}_384p.mp4" in have:
+            checks.append({"id": s["id"] + "-voice", "line": fv["dialogue"], "lang": "hi",
+                           "takes": [f"{vid}_384p.mp4"], "base": None})
+            inputs.append({"release": have[f"{vid}_384p.mp4"], "file": f"{vid}_384p.mp4"})
+    key = hashlib.sha1(json.dumps(inputs).encode()).hexdigest()[:6]
+    return {"run_id": f"audit-{st['slug']}-{key}", "purpose": f"Listen check: {st['title']}", "scenes": [],
+            "inputs": inputs, "checks": checks, "scene_time_limit_min": 30}
 
 
 def download(needed, dest):
@@ -295,6 +320,7 @@ def main():
     ap.add_argument("--mode", choices=["draft", "final", "final-544p"], default="draft",
                     help="final-544p: the Short from the approved 544p draft clips, no GPU")
     ap.add_argument("--build-only", action="store_true", help="write the job file and stop (for checking)")
+    ap.add_argument("--audit", action="store_true", help="queue a listen-only Kaggle run over the story's spoken clips")
     a = ap.parse_args()
     out = os.environ.get("GITHUB_OUTPUT")
 
@@ -308,6 +334,13 @@ def main():
     if errs:
         raise SystemExit("The story has problems:\n" + "\n".join(errs))
     have = {} if a.build_only else assets(a.story)
+    if a.audit:
+        job = audit_job(st, have)
+        name = f"{job['run_id']}.json"
+        json.dump(job, open(os.path.join(ROOT, "engine", "jobs", name), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        json.dump({"job": name, "week": "", "created_at": "2000-01-01T00:00:00Z"},   # first in the queue
+                  open(os.path.join(ROOT, "engine", "state", f"waiting-{job['run_id']}.json"), "w"), indent=2)
+        return log(f"audit queued: {len(job['checks'])} clips -> {name}")
     job, needed = build_job(st, a.mode, have)
     if a.build_only:
         path = os.path.join(ROOT, "engine", "jobs", f"{job['run_id']}.json")
