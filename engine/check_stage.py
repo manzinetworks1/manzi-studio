@@ -85,6 +85,8 @@ for ck in JOB.get("checks", []):
     if names == "auto":  # takes made in this run: <id>_<size>_t<n>.mp4
         names = sorted(os.path.basename(p) for p in glob.glob(os.path.join(OUT, f"{ck['id']}_*_t[0-9].mp4")))
         ck["base"] = names[0].rsplit("_t", 1)[0] if names else None
+        if not names:   # a single take: listen to the clip itself
+            names = sorted(os.path.basename(p) for p in glob.glob(os.path.join(OUT, f"{ck['id']}_*.mp4")))[:1]
     for name in names:
         path = find(name)
         if not path:
