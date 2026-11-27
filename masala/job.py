@@ -192,8 +192,8 @@ def voice_plan(st):
     chars = {c["id"]: c for c in st["characters"]}
     out = []
     for s, cid, f, _ in plan(st):
-        if not voiced(st, s) or s["narrator"].get("tts"):
-            continue   # a "tts" narrator is voiced at build time (Sarvam), no voice clip on Kaggle
+        if not voiced(st, s):
+            continue
         n = s["narrator"]
         c = chars.get(n.get("speaker", ""))
         person = (f"{c['name']}, {c['age']}-year-old {c['gender']}: {c['face']}" if c else

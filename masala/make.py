@@ -322,7 +322,10 @@ def main():
         out = os.path.join(tmp, f"{s['id']}.mp4")
         vclip = os.path.join(engine_dir, f"{cids[s['id']]}-v_384p.mp4") if voiced(st, s) else None
         if voiced(st, s) and (s.get("narrator") or {}).get("tts") == "sarvam":
-            vclip = tts_line(s, tmp)   # a clean studio voice: H3 voice clips came out with gaps and missing words
+            if os.environ.get("SARVAM_API_KEY", "").strip():
+                vclip = tts_line(s, tmp)
+            else:
+                log(f"  {s['id']}: no SARVAM_API_KEY yet, using the H3 voice clip")   # a clean studio voice: H3 voice clips came out with gaps and missing words
         if vclip and os.path.exists(vclip):
             # the silent picture with the narration taken from its voice clip, starting 0.4 s in
             pic = os.path.join(tmp, f"{s['id']}-pic.mp4"); pd = seg(clip, pic, True)
