@@ -15,7 +15,7 @@ sends the missing scenes to "3 - Manzi Engine" (in the 11 am-3 pm IST slot, or s
 prints ai=sent or ai=waiting; "3b - Collect" starts "M - Make masala short" again when Kaggle is done.
 Writes "ai=<ready|sent|waiting>" to $GITHUB_OUTPUT when run in GitHub Actions.
 """
-import argparse, datetime, hashlib, json, os, subprocess, sys
+import argparse, datetime, hashlib, json, os, re, subprocess, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "pipeline"))
@@ -139,7 +139,10 @@ def scene_prompt(st, s):
                          f"({', '.join(seen)}); each appears only once; nobody else.")
     if not any(p.get("to_camera") for p in people.values()):
         parts.append("Nobody looks into the camera lens: the camera is an invisible observer that nobody notices.")
-    if not people or any(not is_animal(chars[x]) for x in people) or sh:
+    if not people and v2(st, s):   # no people: never mention faces or actors (H3 then adds a person)
+        if re.search(r"\bhands?\b", re.sub(r"no (people, no )?hands?", "", s.get("action", ""), flags=re.I), re.I):
+            parts.append("Any hands shown are a real Indian person's hands with brown skin: exactly two hands, never more.")
+    elif not people or any(not is_animal(chars[x]) for x in people) or sh:
         parts.append("Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV "
                      "serial; never cartoon, anime or plastic-looking.")
     else:
@@ -147,7 +150,8 @@ def scene_prompt(st, s):
     parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Upright, normal orientation (never rotated "
                  "or upside down). " + ("Widescreen 16:9 cinematic film frame, composed like a feature film, "
                  "faces at eye level. " if st.get("format") == "film" else "Vertical 9:16 frame for a phone screen, "
-                 "faces in the upper-middle of the picture. ") + "No text, no captions, no logos, no watermarks, no signboards, "
+                 + ("the subject in the upper-middle of the picture. " if not people and v2(st, s) else
+                    "faces in the upper-middle of the picture. ")) + "No text, no captions, no logos, no watermarks, no signboards, "
                  "no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.")
     return " ".join(parts)
 
@@ -161,6 +165,8 @@ def sound_for(st, s):
     if (s.get("line") or "").strip():
         sp = next(c for c in st["characters"] if c["id"] == s["speaker"])
         return f"{base}, and {sp['name']}'s voice: {sp['voice'].strip().rstrip('.')}, speaking Hindi."
+    if s.get("narrator") and voiced(st, s):   # the narration is a separate voice clip; asking for it here adds a person
+        return base if "no voices" in base.lower() else f"{base}, no voices."
     if s.get("narrator"):
         return (f"{base}, and an off-screen narrator's voice-over: {s['narrator']['voice'].strip().rstrip('.')}, "
                 "speaking Hindi warmly and playfully, close to the microphone.")
