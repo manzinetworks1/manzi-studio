@@ -226,6 +226,8 @@ def build_job(st, mode, have):
     needed, scenes, inputs, frames = [], [], [], {}
     todo = {cid for _, cid, _, _ in p if f"{cid}_{want}.mp4" not in have}
     for s, cid, f, cont in p:
+        if s.get("still_of"):   # shows another scene's last picture: no clip of its own
+            continue
         clip = f"{cid}_{want}.mp4"
         if clip in have:
             needed.append((cid, have[clip], clip))

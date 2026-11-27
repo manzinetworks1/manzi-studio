@@ -283,8 +283,19 @@ def main():
     # 1. one segment per scene, in order
     segs, cues, hi_cues, missing, timing, t, starts = [], [], [], [], [], 0.0, {}
     for s in st["scenes"]:
-        clip = next((os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
-                     if os.path.exists(os.path.join(engine_dir, f"{cids[s['id']]}_{q}.mp4"))), None)
+        src_id = s.get("still_of") or s["id"]   # "still_of": this scene shows the last picture of another scene
+        clip = next((os.path.join(engine_dir, f"{cids[src_id]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
+                     if os.path.exists(os.path.join(engine_dir, f"{cids[src_id]}_{q}.mp4"))), None)
+        if clip and s.get("still_of"):
+            png = os.path.join(tmp, f"{s['id']}-still.png")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-sseof", "-0.3", "-i", clip, "-frames:v", "1", png])
+            held = os.path.join(tmp, f"{s['id']}-held.mp4")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-t", "8", "-i", png, "-f", "lavfi", "-t", "8",
+                 "-i", "anullsrc=r=48000:cl=stereo", "-vf",
+                 f"scale={W * 2}:{H * 2}:force_original_aspect_ratio=increase,crop={W * 2}:{H * 2},"
+                 f"zoompan=z='1+0.0006*on':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS},format=yuv420p",
+                 "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-shortest", held])
+            clip = held
         if not clip:
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
