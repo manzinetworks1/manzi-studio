@@ -364,13 +364,14 @@
       "id": "s12",
       "day": 1,
       "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Extreme close-up: two pairs of men's hands pull the handle of the green tin trunk in opposite directions in lantern light",
+      "action": "Extreme close-up: two pairs of men's hands grip the handle of the closed green tin trunk and pull it in opposite directions; the big iron padlock stays locked and the lid stays firmly shut the whole time",
       "stage": {
         "shot": "insert",
         "people": {}
       },
       "sound": "A loud thunderclap, dramatic music hit, no voices",
-      "cast": []
+      "cast": [],
+      "take": 2
     },
     {
       "id": "s13",
@@ -559,6 +560,52 @@
       "cast": [
         "sunny"
       ]
+    },
+    {
+      "id": "s20b",
+      "day": 2,
+      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
+      "take": 2,
+      "action": "Vikram points angrily at the locked trunk and accuses his brother of hiding the key",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "vikram": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "sunny",
+            "does": "points at the locked trunk",
+            "expression": "furious, accusing"
+          }
+        }
+      },
+      "speaker": "vikram",
+      "line": "चाबी कहाँ है? तुमने ही छुपाई है ना?",
+      "caption_en": "Where's the key? You hid it, didn't you?",
+      "sound": "Night crickets, no other voices"
+    },
+    {
+      "id": "s20c",
+      "day": 2,
+      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
+      "take": 2,
+      "action": "Sunny shouts back that Babuji never gave the key to anyone",
+      "stage": {
+        "shot": "close-up",
+        "people": {
+          "sunny": {
+            "where": "centre",
+            "faces": "camera-left",
+            "eyes": "vikram",
+            "does": "shouts back, fists clenched",
+            "expression": "furious, hurt"
+          }
+        }
+      },
+      "speaker": "sunny",
+      "line": "झूठ! बाबूजी ने चाबी किसी को नहीं दी।",
+      "caption_en": "Liar! Babuji never gave the key to anyone.",
+      "sound": "Night crickets, no other voices"
     },
     {
       "id": "s21",

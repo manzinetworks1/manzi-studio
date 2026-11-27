@@ -176,13 +176,14 @@ def chunks(text, most=3):
     return out
 
 
-def speech_span(clip, d):
-    """(start, end) of the loud part of a clip's sound, where the voice is; the whole clip when unsure."""
+def speech_span(clip, d, floor=-32):
+    """(start, end) of the loud part of a clip's sound, where the voice is; the whole clip when unsure. A voice clip
+    uses a lower floor (-45 dB): a soft, slow line ending ("...असल में मेरी ज़मीन थी") fell under -32 and was cut."""
     r = subprocess.run(["ffmpeg", "-hide_banner", "-i", clip, "-af",
                         "asetnsamples=4800,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level",
                         "-f", "null", "-"], capture_output=True, text=True).stderr
     lv = [float(x) if x not in ("-inf", "inf") else -99 for x in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", r)]
-    loud = [i for i, x in enumerate(lv) if x > -32]
+    loud = [i for i, x in enumerate(lv) if x > floor]
     if not loud:
         return 0.2, d - 0.3
     a, b = loud[0] * 0.1, (loud[-1] + 1) * 0.1
@@ -292,23 +293,23 @@ def main():
         if vclip and os.path.exists(vclip):
             # the silent picture with the narration taken from its voice clip, starting 0.4 s in
             pic = os.path.join(tmp, f"{s['id']}-pic.mp4"); pd = seg(clip, pic, True)
-            v0, v1 = speech_span(vclip, ai_assemble.duration(vclip))
-            v0, v1 = max(0.0, v0 - 0.15), v1 + 0.35
-            dd = min(pd, max(3.0, (v1 - v0) + 0.9))
+            vd = ai_assemble.duration(vclip)
+            v0, v1 = speech_span(vclip, vd, floor=-45)
+            v0, v1 = max(0.0, v0 - 0.15), min(vd, v1 + 0.35)
+            dd = max(3.0, (v1 - v0) + 0.9)          # the whole line plays; the picture holds if it is shorter
             src = os.path.join(tmp, f"{s['id']}-full.mp4")
             run(["ffmpeg", "-y", "-loglevel", "error", "-i", pic, "-ss", f"{v0:.2f}", "-to", f"{v1:.2f}", "-i", vclip,
-                 "-filter_complex", "[1:a]aresample=48000,aformat=channel_layouts=stereo,adelay=400|400,apad[a]",
-                 "-map", "0:v", "-map", "[a]", "-t", f"{dd:.2f}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", src])
-            if mode == "draft" or not SETTINGS.get("trim", True):
-                shutil.copy(src, out); d = ai_assemble.duration(out)
-            else:
-                d = pace(src, out, spoken)
+                 "-filter_complex", f"[0:v]tpad=stop_mode=clone:stop_duration={max(0.0, dd - pd) + 0.1:.2f}[v];"
+                 "[1:a]aresample=48000,aformat=channel_layouts=stereo,adelay=400|400,apad[a]",
+                 "-map", "[v]", "-map", "[a]", "-t", f"{dd:.2f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
+                 "-c:a", "aac", "-b:a", "192k", src])
+            shutil.copy(src, out); d = ai_assemble.duration(out)   # never trimmed: the line must not be cut
         elif vclip:
             missing.append(s["id"]); log(f"  {s['id']}: no voice clip for the narration, left out"); continue
         elif mode == "draft" or not SETTINGS.get("trim", True):
-            d = seg(clip, out, s.get("mute"))
+            d = seg(clip, out, s.get("mute") or (film and not spoken))
         else:
-            full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute"))
+            full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute") or (film and not spoken))
             d = pace(full, out, spoken)
         segs.append(out); starts[s["id"]] = (t, d)
         a0, a1 = speech_span(out, d)

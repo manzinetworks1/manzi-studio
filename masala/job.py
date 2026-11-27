@@ -200,7 +200,7 @@ def voice_plan(st):
                   f"an Indian storyteller with {n['voice'].strip().rstrip('.')}")
         fv = {"seed": seed_for(st["slug"], f"{s['id']}-voice"), "language": SETTINGS["language"],
               "scene": (f"Medium close-up of {person}, sitting in a quiet dim room, looking at someone just off-screen, "
-                        f"speaking slowly and clearly in Hindi with feeling. Voice: {n['voice'].strip().rstrip('.')}. "
+                        f"speaking clearly in Hindi with feeling, at a natural pace without long pauses, finishing the whole line by the sixth second. Voice: {n['voice'].strip().rstrip('.')}. "
                         "Only this one person, nobody else. Photorealistic."),
               "dialogue": n["line"].strip(), "sound": "A quiet room, only the spoken voice, no music, no other sounds",
               "aspect": f["aspect"], "duration": f["duration"], "preview": "384p"}
