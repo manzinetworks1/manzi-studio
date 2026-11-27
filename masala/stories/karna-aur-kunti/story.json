@@ -37,8 +37,8 @@
     {
       "id": "s01",
       "day": 1,
-      "place": "the bank of the river Ganga at dawn in ancient India, stone steps going down into the misty water, the sun rising over the river",
-      "action": "Wide shot: the misty river Ganga at dawn, the sun rising over the water, empty stone ghat steps in the foreground, a few oil lamps floating on the water; no people, no hands, no body parts anywhere in the frame",
+      "place": "the wide river Ganga at dawn, seen from far away, mist on the water",
+      "action": "Landscape only: the golden sun rising over the wide misty river, small oil lamps floating on the calm water, birds flying low; an empty landscape",
       "stage": {
         "shot": "wide",
         "people": {}
@@ -50,7 +50,7 @@
       "caption_en": "One day before the Mahabharata war… a mother came to meet her son.",
       "sound": "Gentle river water, soft temple bells far away, no voices",
       "cast": [],
-      "take": 3
+      "take": 4
     },
     {
       "id": "s02",
