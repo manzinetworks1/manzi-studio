@@ -198,9 +198,11 @@ def tts_line(s, tmp):
 
 def speech_span(clip, d, floor=-32):
     """(start, end) of the loud part of a clip's sound, where the voice is; the whole clip when unsure. A voice clip
-    uses a lower floor (-45 dB): a soft, slow line ending ("...असल में मेरी ज़मीन थी") fell under -32 and was cut."""
+    uses a lower floor (-45 dB): a soft, slow line ending ("...असल में मेरी ज़मीन थी") fell under -32 and was cut.
+    The sound is resampled to 48 kHz first, so 4800 samples are exactly 0.1 s: H3 clips are 32 kHz, which made every
+    window 0.15 s and every time 1/3 too early (lines cut before their end, 27 Nov 2026)."""
     r = subprocess.run(["ffmpeg", "-hide_banner", "-i", clip, "-af",
-                        "asetnsamples=4800,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level",
+                        "aresample=48000,asetnsamples=4800,astats=metadata=1:reset=1,ametadata=print:key=lavfi.astats.Overall.RMS_level",
                         "-f", "null", "-"], capture_output=True, text=True).stderr
     lv = [float(x) if x not in ("-inf", "inf") else -99 for x in re.findall(r"RMS_level=(-?[\d.]+|-?inf)", r)]
     loud = [i for i, x in enumerate(lv) if x > floor]

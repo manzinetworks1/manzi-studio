@@ -278,7 +278,7 @@ def build_job(st, mode, have):
                 for sc in scenes) + 15 + (10 if checks else 0)
     key = hashlib.sha1(json.dumps([sc["id"] for sc in scenes]).encode()).hexdigest()[:6]
     return ({"run_id": f"masala-{st['slug']}-{mode}-{key}", "purpose": f"Masala Short ({mode}): {st['title']}",
-             "scenes": scenes, "inputs": inputs, "frames": frames, "checks": checks,
+             "scenes": scenes, "inputs": inputs, "frames": frames, "checks": checks, "check_pass": 0.75,
              "scene_time_limit_min": min(330, limit)}, needed)
 
 

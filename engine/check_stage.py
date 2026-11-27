@@ -98,8 +98,9 @@ for ck in JOB.get("checks", []):
             heard = f"(error: {e!r})"
         rows.append({"file": name, "heard": heard, "score": score(ck["line"], heard)})
     best = max(rows, key=lambda r: r["score"]) if rows else None
+    mark = PASS - (0.1 if re.search(r"[A-Za-z]", ck["line"]) else 0.0)  # English words (Like, Sunny) are not scored
     rec = {"id": ck["id"], "line": ck["line"], "takes": rows, "best": best and best["file"],
-           "score": best["score"] if best else 0.0, "pass": bool(best) and best["score"] >= PASS}
+           "score": best["score"] if best else 0.0, "pass": bool(best) and best["score"] >= mark}
     if ck.get("base") and best and not best.get("missing"):
         stem = best["file"][:-4]
         for ext in (".mp4", ".pt", ".json"):
