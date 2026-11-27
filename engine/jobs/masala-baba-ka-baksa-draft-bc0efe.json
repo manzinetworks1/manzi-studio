@@ -1,0 +1,60 @@
+{
+  "run_id": "masala-baba-ka-baksa-draft-bc0efe",
+  "purpose": "Masala Short (draft): बाबा का बक्सा | पिता के बक्से में क्या था? 😢 | Emotional Hindi Short Film",
+  "scenes": [
+    {
+      "id": "s12-36a47b",
+      "kind": "scene",
+      "seed": 148929874,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light. What happens: Extreme close-up: two pairs of men's hands grip the handle of the closed green tin trunk and pull it in opposite directions; the big iron padlock stays locked and the lid stays firmly shut the whole time. Nobody speaks. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, faces at eye level. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "A loud thunderclap, dramatic music hit, no voices, no voices.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s20b-cdcfbd",
+      "kind": "scene",
+      "seed": 562134156,
+      "scene": "Close-up of one face at eye level, filling the upper half of the frame; anyone else is off-screen. Setting: Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light. In the CENTRE of the frame: Vikram (a 42-year-old Indian man: sharp oval face with a straight nose and a clean-shaven chin, intelligent dark-brown eyes behind thin rimless glasses, fair wheatish skin, short neat black hair greying at the temples, a fit slim build, about 5 feet 10 inches tall; wearing a navy-blue formal shirt with rolled sleeves and grey trousers), turned three-quarters towards the camera, angled to the right of the frame, eyes on someone standing just outside the frame to the right (that person is NOT in the picture) the whole time; points at the locked trunk, furious, accusing. What happens: Vikram points angrily at the locked trunk and accuses his brother of hiding the key. Only Vikram speaks, in Hindi, clearly, looking at Sunny while speaking, with natural, well-synchronised lip movements; Vikram finishes speaking a moment before the shot ends. Exactly 1 figure fully in the frame (Vikram); each appears only once; nobody else. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, faces at eye level. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "चाबी कहाँ है? तुमने ही छुपाई है ना?",
+      "language": "Hindi",
+      "sound": "Night crickets, no other voices, and Vikram's voice: a measured, educated, tired middle-aged male voice, speaking Hindi.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s20c-b071ba",
+      "kind": "scene",
+      "seed": 733705303,
+      "scene": "Close-up of one face at eye level, filling the upper half of the frame; anyone else is off-screen. Setting: Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light. In the CENTRE of the frame: Sunny (a 34-year-old Indian man: round friendly face with a short thick black beard, bright dark-brown eyes, sun-darkened brown skin, thick wavy black hair, broad shoulders and strong arms, a sturdy build, about 5 feet 8 inches tall; wearing a faded brown kurta with rolled sleeves and grease stains), turned three-quarters towards the camera, angled to the left of the frame, eyes on someone standing just outside the frame to the left (that person is NOT in the picture) the whole time; shouts back, fists clenched, furious, hurt. What happens: Sunny shouts back that Babuji never gave the key to anyone. Only Sunny speaks, in Hindi, clearly, looking at Vikram while speaking, with natural, well-synchronised lip movements; Sunny finishes speaking a moment before the shot ends. Exactly 1 figure fully in the frame (Sunny); each appears only once; nobody else. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, faces at eye level. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "झूठ! बाबूजी ने चाबी किसी को नहीं दी।",
+      "language": "Hindi",
+      "sound": "Night crickets, no other voices, and Sunny's voice: a rough, warm, emotional young male voice with a village accent, speaking Hindi.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "scene_time_limit_min": 54
+}
