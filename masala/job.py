@@ -171,6 +171,8 @@ def plan(st):
     """[(scene, clip id, engine fields, clip id it continues from)] in story order."""
     out, prev = [], None
     for s in st["scenes"]:
+        if s.get("reaction"):     # cut from a camera setup's clip at build time
+            continue
         take = int(s.get("take", 1))  # "take": 2 -> a new seed for a remake that came out wrong
         f = {"seed": seed_for(st["slug"], s["id"] if take == 1 else f"{s['id']}#{take}"), "scene": scene_prompt(st, s),
              "dialogue": "" if voiced(st, s) else ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
@@ -247,6 +249,9 @@ def build_job(st, mode, have):
             sc["keep_latents"] = True
         if cont and cont.startswith("still-") and not sc.get("upscale_from"):
             sid = cont[len("still-"):]
+            if not os.path.exists(os.path.join(ROOT, "masala", "stories", st["slug"], "stills", f"{sid}.png")):
+                log(f"  {s['id']}: waits for the still of {sid} (made from that camera setup's clip)")
+                continue
             fname = f"{st['slug']}-{sid}-still.png"
             sc["start_image"] = cont
             frames[cont] = fname
@@ -266,11 +271,16 @@ def build_job(st, mode, have):
     for sc in scenes:
         if sc["id"] in feeds and "upscale_from" not in sc:
             sc.update(save_frame=True, frame_time="end")
+    setup_ids = {cid for s_, cid, _, _ in p if s_.get("setup")}
+    for sc in scenes:   # camera setups: two takes kept, the best picture becomes the still every line starts from
+        if sc["id"] in setup_ids and mode == "draft":
+            sc["takes"] = int(SETTINGS.get("setup_takes", 2))
     checks = []
     if mode == "draft":   # every spoken clip: several takes, Whisper on Kaggle keeps the one that says the line best
         for sc in scenes:
             if sc.get("dialogue") and not sc.get("save_frame"):
-                sc["takes"] = int(SETTINGS.get("voice_takes", 3)) if sc["id"].endswith("-v") else int(SETTINGS.get("takes", 2))
+                sc["takes"] = (int(SETTINGS.get("voice_takes", 3)) if sc["id"].endswith("-v") else
+                               int(st.get("takes", SETTINGS.get("takes", 2))))
                 checks.append({"id": sc["id"], "line": sc["dialogue"], "lang": "hi", "takes": "auto"})
     if not scenes:
         return None, needed

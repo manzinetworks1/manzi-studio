@@ -3,17 +3,9 @@
   "format": "film",
   "slug": "baba-ka-baksa",
   "title": "बाबा का बक्सा | पिता के बक्से में क्या था? 😢 | Emotional Hindi Short Film",
-  "duration": "6:00",
+  "duration": "5:00",
   "category": "Family drama short film",
-  "captions": "en",
-  "end_text": "Like 👍 Subscribe 🔔",
-  "look": "Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain",
-  "title_card": {
-    "after": "s03",
-    "text": "बाबा का बक्सा",
-    "sub": "Baba's Trunk",
-    "seconds": 4.5
-  },
+  "look": "Photorealistic live-action Indian feature film, a single small room at night lit only by a hanging lantern, shot on a cinema camera with anamorphic lenses, warm amber light and deep shadows, natural skin texture, shallow depth of field, subtle film grain",
   "credits": [
     "बाबा का बक्सा · Baba's Trunk",
     "A film by Entertainment With Manzi",
@@ -59,11 +51,28 @@
       "voice": "a gentle, slow, slightly raspy old man's voice"
     }
   ],
+  "youtube": {
+    "description": "पिता के अंतिम संस्कार के बाद दो भाई उनके पुराने बक्से के लिए लड़ पड़े… दोनों को लगा उसमें बाबूजी की सारी जमापूंजी है। पर जब बक्सा खुला… 😢\nAfter their father's funeral, two estranged brothers fight over his locked tin trunk, sure it hides his life savings. When it finally opens, there is no money, only proof of what he secretly gave up for each of them.\n\nअपने पापा को एक बार \"धन्यवाद\" ज़रूर बोलिए। ❤️\n\nA fictional story. AI-generated short film.\n\n#ShortFilm #HindiShortFilm #FatherLove #EmotionalStory #Papa #FamilyDrama",
+    "tags": [
+      "hindi short film",
+      "emotional short film",
+      "father son story",
+      "papa",
+      "baba ka baksa",
+      "family drama",
+      "brothers",
+      "emotional hindi story",
+      "indian short film",
+      "ai short film",
+      "entertainment with manzi"
+    ]
+  },
+  "coverage": true,
   "wardrobe": {
     "1": {
-      "vikram": "a navy-blue formal shirt, grey trousers and a leather wristwatch, damp from the rain",
-      "sunny": "a plain white kurta and pyjama of mourning",
-      "amma": "a plain white cotton widow's saree"
+      "vikram": "a navy-blue formal shirt with rolled sleeves and grey trousers",
+      "sunny": "a faded brown kurta with rolled sleeves and grease stains",
+      "amma": "a plain white cotton widow's saree with a grey woollen shawl"
     },
     "2": {
       "vikram": "a navy-blue formal shirt with rolled sleeves and grey trousers",
@@ -72,293 +81,362 @@
     },
     "3": {
       "babuji": "a cream khadi kurta, a white dhoti and a white Nehru cap"
-    },
-    "4": {
-      "vikram": "a simple white kurta and pyjama",
-      "sunny": "a simple white kurta and pyjama",
-      "amma": "a plain white cotton widow's saree"
     }
+  },
+  "takes": 1,
+  "captions": "en",
+  "title_card": {
+    "after": "s01",
+    "text": "बाबा का बक्सा",
+    "sub": "Baba's Trunk",
+    "seconds": 4.0
+  },
+  "thumbnail": {
+    "scene": "s29",
+    "text": "बक्से में क्या था?"
   },
   "scenes": [
     {
-      "id": "s01",
+      "id": "s00a",
+      "setup": true,
       "day": 1,
-      "place": "a muddy village road between bright green paddy fields in heavy monsoon rain, grey sky",
-      "action": "A white SUV with no number plate drives slowly along the muddy road through the rain, seen from high above",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "The family sits in silence around the locked trunk after the funeral",
       "stage": {
-        "shot": "wide",
-        "people": {}
-      },
-      "sound": "Heavy rain, distant thunder, no voices",
-      "cast": []
-    },
-    {
-      "id": "s02",
-      "day": 1,
-      "place": "inside a white SUV parked at the gate of an old brick village house, heavy rain on the windscreen",
-      "action": "Vikram sits at the wheel and stares through the rain-streaked windscreen at the old house, wipers beating",
-      "stage": {
-        "shot": "close-up",
+        "shot": "group",
         "people": {
           "vikram": {
-            "where": "centre",
+            "where": "left",
+            "faces": "right",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk",
+            "expression": "tired, guarded"
+          },
+          "amma": {
+            "where": "background",
             "faces": "camera-left",
-            "eyes": "the old house outside",
-            "does": "grips the steering wheel with both hands",
-            "expression": "tired, guilty, no smile at all"
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, hands folded",
+            "expression": "grieving, quiet"
+          },
+          "sunny": {
+            "where": "right",
+            "faces": "left",
+            "eyes": "vikram",
+            "does": "sits on the floor against the wall, arms on his knees",
+            "expression": "resentful"
           }
         }
       },
-      "sound": "Rain drumming on the car roof, wipers, no voices",
-      "cast": [
-        "vikram"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "seconds": 8
+    },
+    {
+      "id": "s00b",
+      "setup": true,
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram, seen over his brother's shoulder, listens",
+      "stage": {
+        "shot": "clean-over-shoulder",
+        "people": {
+          "vikram": {
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, breathing slowly",
+            "expression": "tired, guarded"
+          }
+        },
+        "shoulder": "sunny"
+      },
+      "sound": "Night crickets outside, a quiet room, no music",
+      "seconds": 8
+    },
+    {
+      "id": "s00c",
+      "setup": true,
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny, seen over his brother's shoulder, listens",
+      "stage": {
+        "shot": "clean-over-shoulder",
+        "people": {
+          "sunny": {
+            "where": "left",
+            "faces": "camera-right",
+            "eyes": "vikram",
+            "does": "sits on the floor against the wall, jaw tight",
+            "expression": "resentful"
+          }
+        },
+        "shoulder": "vikram"
+      },
+      "sound": "Night crickets outside, a quiet room, no music",
+      "seconds": 8
+    },
+    {
+      "id": "s00d",
+      "setup": true,
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma sits on the edge of the iron bed and watches her sons",
+      "stage": {
+        "shot": "medium",
+        "people": {
+          "amma": {
+            "where": "centre",
+            "faces": "camera-right",
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, hands folded in her lap",
+            "expression": "grieving, worried"
+          }
+        }
+      },
+      "sound": "Night crickets outside, a quiet room, no music",
+      "seconds": 8
+    },
+    {
+      "id": "s01",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Extreme close-up: the big iron padlock of the green tin trunk in amber lantern light, a moth circling",
+      "stage": {
+        "shot": "insert",
+        "people": {}
+      },
+      "sound": "Night crickets outside, a quiet room, no music",
+      "music": true
+    },
+    {
+      "id": "s02",
+      "reaction": "s00a",
+      "secs": 4.0,
+      "music": true
     },
     {
       "id": "s03",
       "day": 1,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, in heavy rain, white sheets spread on the veranda floor",
-      "action": "Amma sits alone on the veranda beside a garlanded framed photograph, staring at the rain",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma speaks",
       "stage": {
-        "shot": "wide",
+        "shot": "medium",
         "people": {
           "amma": {
             "where": "centre",
             "faces": "camera-right",
-            "eyes": "the rain",
-            "does": "sits on a white sheet beside a framed photograph with a marigold garland",
-            "expression": "numb grief, no smile at all"
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, speaking",
+            "expression": "grieving, worried"
           }
         }
       },
-      "sound": "Heavy rain, no voices",
-      "cast": [
-        "amma"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "amma",
+      "line": "तेरह दिन हो गए… आज बाबूजी का बक्सा खोलना है।",
+      "caption_en": "Thirteen days now… today we open Babuji's trunk.",
+      "start_from": "s00d"
     },
     {
       "id": "s04",
       "day": 1,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, in rain",
-      "action": "Sunny, sitting on the veranda steps, stands up slowly as Vikram comes in at the gate with an umbrella",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "two-shot-profile",
+        "shot": "clean-over-shoulder",
         "people": {
-          "sunny": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "vikram",
-            "does": "stands up from the steps",
-            "expression": "cold anger"
-          },
           "vikram": {
             "where": "right",
-            "faces": "left",
+            "faces": "camera-left",
             "eyes": "sunny",
-            "does": "stands at the gate holding a black umbrella",
-            "expression": "guilty"
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Rain, no other voices",
-      "speaker": "sunny",
-      "line": "अब आए हो? अंतिम संस्कार तो कल ही हो गया।",
-      "caption_en": "Now you come? The funeral was yesterday.",
-      "cast": [
-        "sunny",
-        "vikram"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "vikram",
+      "line": "चाबी कहाँ है, अम्मा?",
+      "caption_en": "Where is the key, Amma?",
+      "start_from": "s00b"
     },
     {
       "id": "s05",
       "day": 1,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, in rain",
-      "action": "Vikram answers, rain drops on his glasses",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma speaks",
       "stage": {
-        "shot": "close-up",
+        "shot": "medium",
         "people": {
-          "vikram": {
+          "amma": {
             "where": "centre",
-            "faces": "camera-left",
-            "eyes": "sunny",
-            "does": "lowers the umbrella",
-            "expression": "ashamed, eyes wet"
+            "faces": "camera-right",
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, speaking",
+            "expression": "grieving, worried"
           }
         }
       },
-      "sound": "Rain, no other voices",
-      "speaker": "vikram",
-      "line": "फ़्लाइट नहीं मिली, Sunny… मैं कोशिश कर रहा था।",
-      "caption_en": "Couldn't get a flight, Sunny… I was trying.",
-      "cast": [
-        "vikram"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "amma",
+      "line": "उन्होंने किसी को नहीं दी।",
+      "caption_en": "He never gave it to anyone.",
+      "start_from": "s00d"
     },
     {
       "id": "s06",
-      "day": 1,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, in rain",
-      "action": "Sunny turns his face away from his brother",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "sunny": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the ground",
-            "does": "turns his face away",
-            "expression": "bitter, jaw tight"
-          }
-        }
-      },
-      "sound": "Rain, no other voices",
-      "speaker": "sunny",
-      "line": "आठ साल से कोशिश ही तो कर रहे हो।",
-      "caption_en": "You've been \"trying\" for eight years.",
-      "cast": [
-        "sunny"
-      ]
+      "reaction": "s00c",
+      "secs": 1.5
     },
     {
       "id": "s07",
       "day": 1,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, on the dry veranda, rain behind",
-      "action": "Amma holds Vikram's face in both hands",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "two-shot-three-quarter",
+        "shot": "clean-over-shoulder",
         "people": {
-          "amma": {
+          "sunny": {
             "where": "left",
-            "faces": "right",
+            "faces": "camera-right",
             "eyes": "vikram",
-            "does": "holds his face in both her hands",
-            "expression": "sad, loving"
-          },
-          "vikram": {
-            "where": "right",
-            "faces": "left",
-            "eyes": "amma",
-            "does": "bends his head down to her",
-            "expression": "crying silently"
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Soft rain, no other voices",
-      "speaker": "amma",
-      "line": "बेटा, कम से कम आज तो मत लड़ो।",
-      "caption_en": "Son, at least today, don't fight.",
-      "cast": [
-        "amma",
-        "vikram"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "sunny",
+      "line": "तुम्हें बाबूजी नहीं, उनका पैसा याद आया।",
+      "caption_en": "You didn't miss Babuji, only his money.",
+      "start_from": "s00c"
     },
     {
       "id": "s08",
       "day": 1,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram kneels and drags a green tin trunk from under the iron bed and rattles its big padlock",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "low-angle",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the padlock",
-            "does": "pulls the green tin trunk out and shakes its big iron padlock",
-            "expression": "eager, tense"
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Night crickets, rain outside, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "vikram",
-      "line": "बाबूजी की सारी जमापूंजी इसी बक्से में है।",
-      "caption_en": "All of Babuji's savings are in this trunk.",
-      "cast": [
-        "vikram"
-      ]
+      "line": "आठ साल बाद आया हूँ, ताने सुनने नहीं।",
+      "caption_en": "I came after eight years, not to hear taunts.",
+      "start_from": "s00b"
     },
     {
       "id": "s09",
       "day": 1,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny leans in the doorway with a lantern and looks at his brother with contempt",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "medium",
+        "shot": "clean-over-shoulder",
         "people": {
           "sunny": {
-            "where": "centre",
-            "faces": "camera-left",
+            "where": "left",
+            "faces": "camera-right",
             "eyes": "vikram",
-            "does": "leans in the doorway holding a lantern",
-            "expression": "contempt"
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Night crickets, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "sunny",
-      "line": "तुम्हें बाबूजी नहीं, उनका पैसा याद आया।",
-      "caption_en": "You didn't miss Babuji, only his money.",
-      "cast": [
-        "sunny"
-      ]
+      "line": "आठ साल से कोशिश ही तो कर रहे हो।",
+      "caption_en": "Eight years of 'trying', right?",
+      "start_from": "s00c"
     },
     {
       "id": "s10",
       "day": 1,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram stands up beside the trunk to face his brother",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "two-shot-profile",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "sunny",
-            "does": "stands up beside the trunk",
-            "expression": "hard, defensive"
-          },
-          "sunny": {
             "where": "right",
-            "faces": "left",
-            "eyes": "vikram",
-            "does": "holds the lantern",
-            "expression": "angry"
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Night crickets, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "vikram",
       "line": "मकान बेचेंगे, आधा-आधा। मुझे Mumbai वापस जाना है।",
       "caption_en": "We sell the house, half each. I have to go back to Mumbai.",
-      "cast": [
-        "vikram",
-        "sunny"
-      ]
+      "start_from": "s00b"
     },
     {
       "id": "s11",
+      "reaction": "s00d",
+      "secs": 1.6
+    },
+    {
+      "id": "s13",
       "day": 1,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny answers, the lantern light on his face",
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "close-up",
+        "shot": "clean-over-shoulder",
         "people": {
           "sunny": {
-            "where": "centre",
-            "faces": "camera-left",
+            "where": "left",
+            "faces": "camera-right",
             "eyes": "vikram",
-            "does": "raises the lantern",
-            "expression": "fierce, eyes wet"
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Night crickets, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "sunny",
       "line": "ये मकान नहीं बिकेगा। बाबूजी की सांसें हैं इसमें।",
       "caption_en": "This house won't be sold. Babuji's breath is in it.",
-      "cast": [
-        "sunny"
-      ]
+      "start_from": "s00c"
+    },
+    {
+      "id": "s14",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
+      "stage": {
+        "shot": "clean-over-shoulder",
+        "people": {
+          "vikram": {
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
+          }
+        },
+        "shoulder": "sunny"
+      },
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "vikram",
+      "line": "बाबूजी की सारी जमापूंजी इसी बक्से में है।",
+      "caption_en": "All of Babuji's savings are in this trunk.",
+      "start_from": "s00b"
     },
     {
       "id": "s12",
@@ -370,319 +448,141 @@
         "people": {}
       },
       "sound": "A loud thunderclap, dramatic music hit, no voices",
-      "cast": [],
-      "take": 2
-    },
-    {
-      "id": "s13",
-      "day": 2,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, bright morning after rain",
-      "action": "Vikram paces the courtyard with a mobile phone at his ear, its screen never visible",
-      "stage": {
-        "shot": "medium",
-        "people": {
-          "vikram": {
-            "where": "centre",
-            "faces": "camera-left",
-            "eyes": "the gate",
-            "does": "walks slowly with a phone at his ear",
-            "expression": "businesslike, cold"
-          }
-        }
-      },
-      "sound": "Morning birds, no other voices",
-      "speaker": "vikram",
-      "line": "हाँ, ब्रोकर से बात करो, Sunday तक डील पक्की।",
-      "caption_en": "Yes, talk to the broker, deal done by Sunday.",
-      "cast": [
-        "vikram"
-      ]
-    },
-    {
-      "id": "s14",
-      "day": 2,
-      "place": "a smoky village kitchen with a clay stove and brass pots, morning light through a small window",
-      "action": "Amma at the clay stove overhears and stops stirring the pot",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "amma": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the doorway",
-            "does": "stops stirring a brass pot",
-            "expression": "hurt, worried"
-          }
-        }
-      },
-      "sound": "A crackling clay stove, birds outside, no voices",
-      "cast": [
-        "amma"
-      ]
+      "clip": "s12-36a47b"
     },
     {
       "id": "s15",
-      "day": 2,
-      "place": "a small roadside tractor-repair workshop in a village, an old red tractor, tools and tyres",
-      "action": "Sunny hammers a bolt on a tractor wheel in anger, grease on his arms",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "medium",
+        "shot": "clean-over-shoulder",
         "people": {
-          "sunny": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the tractor wheel",
-            "does": "hammers a bolt hard with a spanner",
-            "expression": "angry"
+          "vikram": {
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Metal clanging, no voices",
-      "cast": [
-        "sunny"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "vikram",
+      "line": "चाबी तुमने ही छुपाई है ना?",
+      "caption_en": "You hid the key, didn't you?",
+      "start_from": "s00b"
     },
     {
       "id": "s16",
-      "day": 3,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light, in a warm golden glow of memory",
-      "action": "Babuji kneels at the green tin trunk, slips a folded paper inside and smiles to himself",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "medium",
+        "shot": "clean-over-shoulder",
         "people": {
-          "babuji": {
-            "where": "centre",
+          "sunny": {
+            "where": "left",
             "faces": "camera-right",
-            "eyes": "the open trunk",
-            "does": "slips a folded paper into the trunk",
-            "expression": "gentle secret smile"
+            "eyes": "vikram",
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Soft nostalgic music, no voices",
-      "cast": [
-        "babuji"
-      ]
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "sunny",
+      "line": "झूठ! बाबूजी ने चाबी किसी को नहीं दी।",
+      "caption_en": "Lie! Babuji gave the key to no one.",
+      "start_from": "s00c"
     },
     {
       "id": "s17",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram kneels and tries to pick the trunk's padlock with a hairpin; it will not open",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "low-angle",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the padlock",
-            "does": "pokes a hairpin into the padlock",
-            "expression": "frustrated, sweating"
-          }
-        }
-      },
-      "sound": "Night crickets, metal clicking, no voices",
-      "cast": [
-        "vikram"
-      ]
-    },
-    {
-      "id": "s18",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny lifts the lantern in the doorway and catches him",
-      "stage": {
-        "shot": "medium",
-        "people": {
-          "sunny": {
-            "where": "centre",
+            "where": "right",
             "faces": "camera-left",
-            "eyes": "vikram",
-            "does": "raises the lantern high in the doorway",
-            "expression": "disgusted"
-          }
-        }
-      },
-      "sound": "Night crickets, no other voices",
-      "speaker": "sunny",
-      "line": "चोर की तरह रात में? शर्म नहीं आती?",
-      "caption_en": "Like a thief at night? Have you no shame?",
-      "cast": [
-        "sunny"
-      ]
-    },
-    {
-      "id": "s19",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram stands up, his pride hurt",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
             "eyes": "sunny",
-            "does": "stands up straight, chest out",
-            "expression": "hurt pride"
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Night crickets, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "vikram",
       "line": "मैंने कभी कुछ नहीं माँगा। पढ़ाई भी स्कॉलरशिप से की।",
       "caption_en": "I never asked for anything. I studied on a scholarship.",
-      "cast": [
-        "vikram"
-      ]
+      "start_from": "s00b"
     },
     {
-      "id": "s20",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny steps in close, eyes burning",
+      "id": "s18",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "close-up",
+        "shot": "clean-over-shoulder",
         "people": {
           "sunny": {
-            "where": "centre",
-            "faces": "camera-left",
+            "where": "left",
+            "faces": "camera-right",
             "eyes": "vikram",
-            "does": "steps closer, finger pointed",
-            "expression": "furious"
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Night crickets, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "sunny",
       "line": "और मैंने दुकान अपने दम पर खड़ी की है!",
       "caption_en": "And I built my shop on my own!",
-      "cast": [
-        "sunny"
-      ]
+      "start_from": "s00c"
     },
     {
-      "id": "s20b",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "take": 2,
-      "action": "Vikram points angrily at the locked trunk and accuses his brother of hiding the key",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "sunny",
-            "does": "points at the locked trunk",
-            "expression": "furious, accusing"
-          }
-        }
-      },
-      "speaker": "vikram",
-      "line": "चाबी कहाँ है? तुमने ही छुपाई है ना?",
-      "caption_en": "Where's the key? You hid it, didn't you?",
-      "sound": "Night crickets, no other voices"
+      "id": "s19",
+      "reaction": "s00d",
+      "secs": 1.4
     },
     {
-      "id": "s20c",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "take": 2,
-      "action": "Sunny shouts back that Babuji never gave the key to anyone",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "sunny": {
-            "where": "centre",
-            "faces": "camera-left",
-            "eyes": "vikram",
-            "does": "shouts back, fists clenched",
-            "expression": "furious, hurt"
-          }
-        }
-      },
-      "speaker": "sunny",
-      "line": "झूठ! बाबूजी ने चाबी किसी को नहीं दी।",
-      "caption_en": "Liar! Babuji never gave the key to anyone.",
-      "sound": "Night crickets, no other voices"
-    },
-    {
-      "id": "s21",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "The two brothers grab each other by the collar",
-      "stage": {
-        "shot": "two-shot-profile",
-        "people": {
-          "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "sunny",
-            "does": "grabs Sunny's collar with both fists",
-            "expression": "rage"
-          },
-          "sunny": {
-            "where": "right",
-            "faces": "left",
-            "eyes": "vikram",
-            "does": "grabs Vikram's collar",
-            "expression": "rage"
-          }
-        }
-      },
-      "sound": "Heavy breathing, a dramatic music hit, no voices",
-      "cast": [
-        "vikram",
-        "sunny"
-      ]
-    },
-    {
-      "id": "s22",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Amma in the doorway drops a steel glass that clangs on the floor",
+      "id": "s20",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma speaks",
       "stage": {
         "shot": "medium",
         "people": {
           "amma": {
             "where": "centre",
-            "faces": "camera-left",
-            "eyes": "her two sons",
-            "does": "drops a steel tumbler from her hand",
-            "expression": "shocked"
+            "faces": "camera-right",
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, speaking",
+            "expression": "grieving, worried"
           }
         }
       },
-      "sound": "A steel glass clanging on the floor, then silence, no voices",
-      "cast": [
-        "amma"
-      ]
-    },
-    {
-      "id": "s23",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Amma, tears running, scolds her sons",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "amma": {
-            "where": "centre",
-            "faces": "camera-left",
-            "eyes": "her two sons",
-            "does": "clutches her shawl to her chest",
-            "expression": "heartbroken, crying"
-          }
-        }
-      },
-      "sound": "Silence, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "amma",
       "line": "बस! तुम्हारे बाबूजी यही देखने के लिए जिए थे?",
       "caption_en": "Enough! Did your Babuji live to see this?",
-      "cast": [
-        "amma"
-      ]
+      "start_from": "s00d"
+    },
+    {
+      "id": "s21",
+      "reaction": "s00b",
+      "secs": 1.5
+    },
+    {
+      "id": "s22",
+      "reaction": "s00c",
+      "secs": 1.5
     },
     {
       "id": "s24",
@@ -694,32 +594,31 @@
         "people": {}
       },
       "sound": "Silence, a soft music note, no voices",
-      "cast": []
+      "clip": "s24-1237fc",
+      "music": true
     },
     {
       "id": "s25",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Amma holds the wooden toy horse out towards Sunny",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma speaks",
       "stage": {
         "shot": "medium",
         "people": {
           "amma": {
             "where": "centre",
             "faces": "camera-right",
-            "eyes": "sunny",
-            "does": "holds out a small wooden toy horse",
-            "expression": "tearful, calm"
+            "eyes": "vikram",
+            "does": "sits on the edge of the iron bed, speaking",
+            "expression": "grieving, worried"
           }
         }
       },
-      "sound": "Silence, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "amma",
       "line": "चाबी हमेशा यहीं थी… Sunny के खिलौने में।",
       "caption_en": "The key was always here… in Sunny's toy.",
-      "cast": [
-        "amma"
-      ]
+      "start_from": "s00d"
     },
     {
       "id": "s26",
@@ -731,32 +630,32 @@
         "people": {}
       },
       "sound": "Soft nostalgic music, no voices",
-      "cast": []
+      "clip": "s26-d42c72",
+      "music": true
     },
     {
       "id": "s27",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny takes the toy horse in both hands, his voice breaking",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "close-up",
+        "shot": "clean-over-shoulder",
         "people": {
           "sunny": {
-            "where": "centre",
+            "where": "left",
             "faces": "camera-right",
-            "eyes": "the toy horse in his hands",
-            "does": "holds the toy horse to his chest",
-            "expression": "crying"
+            "eyes": "vikram",
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Silence, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "sunny",
       "line": "इसीलिए बाबूजी ने इसे कभी फेंकने नहीं दिया…",
       "caption_en": "That's why Babuji never let me throw it away…",
-      "cast": [
-        "sunny"
-      ]
+      "start_from": "s00c"
     },
     {
       "id": "s28",
@@ -768,7 +667,8 @@
         "people": {}
       },
       "sound": "A heartbeat, a padlock clicking open, no voices",
-      "cast": []
+      "clip": "s28-6ee23f",
+      "music": true
     },
     {
       "id": "s29",
@@ -780,32 +680,32 @@
         "people": {}
       },
       "sound": "Creaking hinges, soft music, no voices",
-      "cast": []
+      "clip": "s29-fbb917",
+      "music": true
     },
     {
       "id": "s30",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram looks into the trunk, lost",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "close-up",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the open trunk",
-            "does": "stares down into the open trunk",
-            "expression": "confused, stunned"
+            "where": "right",
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Silence, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "vikram",
       "line": "पैसे… पैसे तो हैं ही नहीं।",
       "caption_en": "Money… there's no money at all.",
-      "cast": [
-        "vikram"
-      ]
+      "start_from": "s00b"
     },
     {
       "id": "s31",
@@ -827,9 +727,8 @@
         "pitch": 0.9
       },
       "caption_en": "Vikram, your scholarship… was really my land.",
-      "cast": [],
-      "take": 2,
-      "clip": "s31-4f4fce"
+      "clip": "s31-4f4fce",
+      "music": true
     },
     {
       "id": "s32",
@@ -851,53 +750,20 @@
         "pitch": 0.9
       },
       "caption_en": "Sunny, I quietly paid off your shop's loan.",
-      "cast": [],
-      "take": 2,
-      "clip": "s32-d6d939"
+      "clip": "s32-d6d939",
+      "music": true
     },
     {
       "id": "s33",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram slowly takes off his glasses as tears fall",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "vikram": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the paper in his hand",
-            "does": "takes off his glasses",
-            "expression": "broken, crying"
-          }
-        }
-      },
-      "sound": "Soft emotional music, no voices",
-      "cast": [
-        "vikram"
-      ]
+      "reaction": "s00b",
+      "secs": 1.8,
+      "music": true
     },
     {
       "id": "s34",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny breaks down, a hand over his mouth",
-      "stage": {
-        "shot": "close-up",
-        "people": {
-          "sunny": {
-            "where": "centre",
-            "faces": "camera-left",
-            "eyes": "the receipt",
-            "does": "presses a hand over his mouth",
-            "expression": "sobbing"
-          }
-        }
-      },
-      "sound": "Soft emotional music, no voices",
-      "cast": [
-        "sunny"
-      ]
+      "reaction": "s00c",
+      "secs": 1.8,
+      "music": true
     },
     {
       "id": "s35",
@@ -919,8 +785,8 @@
         "pitch": 0.9
       },
       "caption_en": "My real savings aren't money… they're you two.",
-      "cast": [],
-      "take": 2
+      "clip": "s35-01ce42",
+      "music": true
     },
     {
       "id": "s36",
@@ -942,215 +808,95 @@
         "pitch": 0.9
       },
       "caption_en": "Just never let go of each other's hand.",
-      "cast": [],
-      "take": 2
+      "clip": "s36-220162",
+      "music": true
     },
     {
       "id": "s37",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Vikram turns to his younger brother",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "two-shot-profile",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "sunny",
-            "does": "turns to face his brother",
-            "expression": "crying, ashamed"
-          },
-          "sunny": {
             "where": "right",
-            "faces": "left",
-            "eyes": "vikram",
-            "does": "listens",
-            "expression": "crying"
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Soft music, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "vikram",
       "line": "मुझे माफ़ कर दे, छोटे… मैं बहुत दूर चला गया था।",
       "caption_en": "Forgive me, little brother… I went too far away.",
-      "cast": [
-        "vikram",
-        "sunny"
-      ]
+      "start_from": "s00b",
+      "music": true
     },
     {
       "id": "s38",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Sunny smiles through his tears",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Sunny speaks",
       "stage": {
-        "shot": "two-shot-profile",
+        "shot": "clean-over-shoulder",
         "people": {
-          "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "sunny",
-            "does": "waits",
-            "expression": "crying"
-          },
           "sunny": {
-            "where": "right",
-            "faces": "left",
+            "where": "left",
+            "faces": "camera-right",
             "eyes": "vikram",
-            "does": "smiles through his tears",
-            "expression": "loving"
+            "does": "sits on the floor against the wall, speaking",
+            "expression": "resentful"
           }
-        }
+        },
+        "shoulder": "vikram"
       },
-      "sound": "Soft music, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "sunny",
       "line": "भैया… घर आ गए, बस यही काफ़ी है।",
       "caption_en": "Bhaiya… you came home, that's enough.",
-      "cast": [
-        "vikram",
-        "sunny"
-      ]
+      "start_from": "s00c",
+      "music": true
     },
     {
       "id": "s39",
-      "day": 2,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "The two brothers hug tightly while Amma watches behind them with a hand on her heart",
-      "stage": {
-        "shot": "group",
-        "people": {
-          "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "sunny",
-            "does": "hugs his brother tightly",
-            "expression": "crying with relief"
-          },
-          "sunny": {
-            "where": "right",
-            "faces": "left",
-            "eyes": "vikram",
-            "does": "hugs his brother",
-            "expression": "crying with relief"
-          },
-          "amma": {
-            "where": "background",
-            "faces": "camera-left",
-            "eyes": "her sons",
-            "does": "stands behind them with a hand on her heart",
-            "expression": "smiling through tears"
-          }
-        }
-      },
-      "sound": "Music swells, no voices",
-      "cast": [
-        "vikram",
-        "sunny",
-        "amma"
-      ]
+      "reaction": "s00d",
+      "secs": 2.2,
+      "music": true
     },
     {
       "id": "s40",
-      "day": 3,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, at sunset, in a warm golden glow of memory",
-      "action": "Babuji sits on the charpai under the neem tree, smiling at a small wooden toy horse in his hands",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Vikram speaks",
       "stage": {
-        "shot": "medium",
-        "people": {
-          "babuji": {
-            "where": "centre",
-            "faces": "camera-right",
-            "eyes": "the toy horse",
-            "does": "turns a small wooden toy horse in his hands",
-            "expression": "peaceful, loving smile"
-          }
-        }
-      },
-      "sound": "Evening birds, soft nostalgic music, no voices",
-      "cast": [
-        "babuji"
-      ]
-    },
-    {
-      "id": "s41",
-      "day": 4,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, bright sunny morning, everything wet and fresh after the rain",
-      "action": "Vikram stands in the courtyard with a phone at his ear, calm, its screen never visible",
-      "stage": {
-        "shot": "medium",
+        "shot": "clean-over-shoulder",
         "people": {
           "vikram": {
-            "where": "centre",
-            "faces": "camera-left",
-            "eyes": "the neem tree",
-            "does": "holds a phone to his ear and smiles slightly",
-            "expression": "calm, at peace"
-          }
-        }
-      },
-      "sound": "Morning birds, no other voices",
-      "speaker": "vikram",
-      "line": "डील कैंसल करो। ये घर नहीं बिकेगा।",
-      "caption_en": "Cancel the deal. This house is not for sale.",
-      "cast": [
-        "vikram"
-      ]
-    },
-    {
-      "id": "s42",
-      "day": 4,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, bright sunny morning",
-      "action": "The two brothers paint the old courtyard wall together with brushes; Amma watches from the steps",
-      "stage": {
-        "shot": "wide",
-        "people": {
-          "vikram": {
-            "where": "left",
-            "faces": "right",
-            "eyes": "the wall",
-            "does": "paints the wall with a brush",
-            "expression": "happy"
-          },
-          "sunny": {
-            "where": "centre",
-            "faces": "left",
-            "eyes": "vikram",
-            "does": "paints and laughs",
-            "expression": "happy"
-          },
-          "amma": {
             "where": "right",
-            "faces": "left",
-            "eyes": "her sons",
-            "does": "sits on the steps watching",
-            "expression": "content smile"
+            "faces": "camera-left",
+            "eyes": "sunny",
+            "does": "sits on a low wooden stool beside the trunk, speaking",
+            "expression": "tired, guarded"
           }
-        }
+        },
+        "shoulder": "sunny"
       },
-      "sound": "Birds, gentle happy music, no voices",
-      "cast": [
-        "vikram",
-        "sunny",
-        "amma"
-      ]
-    },
-    {
-      "id": "s43",
-      "day": 4,
-      "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light, in soft morning light",
-      "action": "Close-up: the small wooden toy horse is placed on the closed green tin trunk beside a pair of thick old glasses",
-      "stage": {
-        "shot": "insert",
-        "people": {}
-      },
-      "sound": "Soft music, no voices",
-      "cast": []
+      "sound": "Night crickets outside, a quiet room, no music",
+      "speaker": "vikram",
+      "line": "ये घर नहीं बिकेगा।",
+      "caption_en": "This house will not be sold.",
+      "start_from": "s00b",
+      "music": true
     },
     {
       "id": "s44",
-      "day": 4,
-      "place": "the courtyard of an old brick village house in Uttar Pradesh with a big neem tree, a hand pump and a wooden charpai, bright sunny morning",
-      "action": "Amma, the heart of the story, sits on the steps and smiles straight into the camera, talking to the viewer",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Amma speaks",
       "stage": {
         "shot": "medium",
         "people": {
@@ -1158,39 +904,18 @@
             "where": "centre",
             "faces": "camera",
             "eyes": "camera",
-            "does": "sits on the veranda steps and smiles warmly into the camera lens",
-            "expression": "warm, peaceful smile",
+            "does": "sits on the edge of the iron bed, speaking",
+            "expression": "warm smile through tears",
             "to_camera": true
           }
         }
       },
-      "sound": "Soft happy music, no other voices",
+      "sound": "Night crickets outside, a quiet room, no music",
       "speaker": "amma",
       "line": "मेरे लिए एक Like तो बनता है… और Subscribe करना मत भूलिए!",
-      "caption_en": "I deserve at least one like… and don't forget to subscribe!",
-      "cast": [
-        "amma"
-      ]
+      "caption_en": "I deserve a Like… and don't forget to Subscribe!",
+      "start_from": "s00d",
+      "music": true
     }
-  ],
-  "thumbnail": {
-    "scene": "s29",
-    "text": "बक्से में क्या था?"
-  },
-  "youtube": {
-    "description": "पिता के अंतिम संस्कार के बाद दो भाई उनके पुराने बक्से के लिए लड़ पड़े… दोनों को लगा उसमें बाबूजी की सारी जमापूंजी है। पर जब बक्सा खुला… 😢\nAfter their father's funeral, two estranged brothers fight over his locked tin trunk, sure it hides his life savings. When it finally opens, there is no money, only proof of what he secretly gave up for each of them.\n\nअपने पापा को एक बार \"धन्यवाद\" ज़रूर बोलिए। ❤️\n\nA fictional story. AI-generated short film.\n\n#ShortFilm #HindiShortFilm #FatherLove #EmotionalStory #Papa #FamilyDrama",
-    "tags": [
-      "hindi short film",
-      "emotional short film",
-      "father son story",
-      "papa",
-      "baba ka baksa",
-      "family drama",
-      "brothers",
-      "emotional hindi story",
-      "indian short film",
-      "ai short film",
-      "entertainment with manzi"
-    ]
-  }
+  ]
 }

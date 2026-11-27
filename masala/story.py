@@ -84,6 +84,19 @@ def check(st):
                      "longer, specific descriptions keep the face the same from clip to clip.")
     wardrobe = {str(k): v for k, v in st["wardrobe"].items()}
     scenes, ids = st["scenes"], set()
+    if st.get("coverage"):   # coverage films: camera setups ("setup": true) and reaction cutaways do not count as shots
+        table = SETTINGS["film"]["lines_for_duration"]
+        rng = table.get(st["duration"])
+        n_lines = len([s for s in scenes if not s.get("setup") and not s.get("reaction")])
+        if rng and not rng[0] <= n_lines <= rng[1]:
+            E.append(f"{n_lines} line shots for {st['duration']}: it needs {rng[0]}-{rng[1]}.")
+        setups = {s.get("id") for s in scenes if s.get("setup")}
+        for s in scenes:
+            if s.get("reaction") and s["reaction"] not in setups:
+                E.append(f"{s.get('id')}: \"reaction\" must name a camera setup (one of {', '.join(sorted(setups))}).")
+            if s.get("start_from") and s["start_from"] not in setups and not s.get("setup"):
+                W.append(f"{s.get('id')}: starts from {s['start_from']}, which is not a camera setup.")
+        rng = None
     if rng and not rng[0] <= len(scenes) <= rng[1]:
         E.append(f"{len(scenes)} scenes for {st['duration']}: it needs {rng[0]}-{rng[1]} "
                  f"(each scene is one {SETTINGS['clip_seconds']} s clip).")
@@ -91,6 +104,11 @@ def check(st):
     prev = None
     for i, s in enumerate(scenes, 1):
         sid = s.get("id") or f"scene {i}"
+        if s.get("reaction"):   # a silent cutaway cut from a camera setup's clip: no clip of its own
+            if s.get("id") in ids:
+                E.append(f"{sid}: id used twice.")
+            ids.add(s.get("id"))
+            continue
         if not re.match(r"^s\d{2}[a-z]?$", str(s.get("id", ""))):
             E.append(f"{sid}: \"id\" must look like s01, s02... (or s06b for a shot added between s06 and s07)")
         if s.get("id") in ids:

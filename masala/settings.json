@@ -64,6 +64,28 @@
     "tail": 0.6,
     "silent_max": 5.0,
     "music_volume": 0.09,
-    "_note": "\"format\": \"film\" in a story: a widescreen (16:9) short film for the main channel feed, played at normal speed, with a title card and end credits."
+    "_note": "\"format\": \"film\" in a story: a widescreen (16:9) short film for the main channel feed, played at normal speed, with a title card and end credits.",
+    "lines_for_duration": {
+      "4:00": [
+        18,
+        40
+      ],
+      "5:00": [
+        22,
+        50
+      ],
+      "6:00": [
+        28,
+        60
+      ]
+    },
+    "coverage": {
+      "lead": 0.25,
+      "tail": 0.45,
+      "silent_max": 3.0,
+      "reaction_secs": 1.6,
+      "music_volume": 0.12,
+      "room_tone": 0.0025
+    }
   }
 }

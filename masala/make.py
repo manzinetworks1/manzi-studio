@@ -114,6 +114,9 @@ html, body { width: 1920px; height: 1080px; }
 .en { font-size: 40px; -webkit-text-stroke: 6px #000; }
 .end { top: 60px; font-size: 64px; }
 .thumb .box { top: 700px; font-size: 110px; }
+.sub { position: absolute; left: 200px; right: 200px; bottom: 70px; text-align: center; color: #fff; font-size: 44px;
+       font-family: 'Noto Sans Devanagari', Pop, sans-serif; font-weight: 500; line-height: 1.3;
+       text-shadow: 0 0 6px #000, 0 2px 4px #000, 0 0 14px rgba(0,0,0,.8); }
 .card { position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center;
         justify-content: center; color: #f4efe4; font-family: Pop, 'Noto Sans Devanagari', sans-serif; text-align: center; }
 .card h1 { margin: 0; font-size: 150px; letter-spacing: 4px; color: #f2c14e; text-shadow: 0 0 40px rgba(242,193,78,.35); }
@@ -297,6 +300,10 @@ def main():
         W, H = 1920, 1080
         SETTINGS.update({k: v for k, v in SETTINGS["film"].items() if k in ("speed", "lead", "tail", "silent_max",
                                                                              "music_volume")})
+    cover = film and bool(st.get("coverage"))   # setups + reactions + cut to the line (like a filmed short)
+    if cover:
+        SETTINGS.update(SETTINGS["film"]["coverage"])
+    music_win = []
     info = json.load(open(os.path.join(engine_dir, "clips.json"))) if os.path.exists(os.path.join(engine_dir, "clips.json")) else {}
     mode = a.mode or info.get("mode", "final")
     cids = {s["id"]: cid for s, cid, _, _ in clip_plan(st)}
@@ -304,7 +311,27 @@ def main():
 
     # 1. one segment per scene, in order
     segs, cues, hi_cues, missing, timing, t, starts = [], [], [], [], [], 0.0, {}
-    for s in st["scenes"]:
+    for k_s, s in enumerate(st["scenes"]):
+        if s.get("setup"):   # a camera setup: only its picture is used (stills, reaction cutaways)
+            continue
+        if s.get("reaction"):   # the listener's face, cut silently from that setup's clip
+            rc = next((os.path.join(engine_dir, f"{cids[s['reaction']]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
+                       if os.path.exists(os.path.join(engine_dir, f"{cids[s['reaction']]}_{q}.mp4"))), None)
+            if not rc:
+                missing.append(s["id"]); log(f"  {s['id']}: no clip for setup {s['reaction']}, left out"); continue
+            full = os.path.join(tmp, f"{s['id']}-full.mp4"); fd = seg(rc, full, True)
+            secs = float(s.get("secs", SETTINGS.get("reaction_secs", 1.6)))
+            room = max(0.0, fd - secs - 0.4)
+            x0 = 0.2 + (k_s * 1.37) % room if room > 0.2 else 0.0   # different moments of the setup for each cutaway
+            out = os.path.join(tmp, f"{s['id']}.mp4")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{x0:.2f}", "-t", f"{secs:.2f}", "-i", full,
+                 "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", out])
+            d = ai_assemble.duration(out)
+            segs.append(out); starts[s["id"]] = (t, d)
+            if s.get("music"):
+                music_win.append((t, t + d))
+            t += d; log(f"  {s['id']}: reaction {d:.1f}s (total {t:.1f}s)")
+            continue
         src_id = s.get("still_of") or s["id"]   # "still_of": this scene shows the last picture of another scene
         clip = next((os.path.join(engine_dir, f"{cids[src_id]}_{q}.mp4") for q in ("720p", "544p", "480p", "384p")
                      if os.path.exists(os.path.join(engine_dir, f"{cids[src_id]}_{q}.mp4"))), None)
@@ -344,7 +371,7 @@ def main():
             shutil.copy(src, out); d = ai_assemble.duration(out)   # never trimmed: the line must not be cut
         elif vclip:
             missing.append(s["id"]); log(f"  {s['id']}: no voice clip for the narration, left out"); continue
-        elif mode == "draft" or not SETTINGS.get("trim", True):
+        elif (mode == "draft" and not cover) or not SETTINGS.get("trim", True):
             d = seg(clip, out, s.get("mute") or (film and not spoken))
         else:
             full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute") or (film and not spoken))
@@ -353,7 +380,11 @@ def main():
         a0, a1 = speech_span(out, d)
         if spoken:
             hi_cues.append((spoken, t + a0, t + a1))
-        if st.get("captions") == "en":
+        if s.get("music"):
+            music_win.append((t, t + d))
+        if cover:   # film subtitles: the whole line, small, at the bottom
+            parts = [(s.get("caption_en") if st.get("captions") == "en" else None) or spoken] if spoken else []
+        elif st.get("captions") == "en":
             text = (s.get("caption_en") or "").strip()
             parts = chunks(text) if text else []
         else:
@@ -374,6 +405,7 @@ def main():
                      + (f"<p>{html.escape(tc['sub'])}</p>" if tc.get("sub") else "") + "</div>", png, False)])
             out = os.path.join(tmp, "title_card.mp4")
             d = card_seg(png, float(tc.get("seconds", 4.5)), out)
+            music_win.append((max(0.0, t - 3.0), t + d))
             segs.append(out); t += d
     if not segs:
         raise SystemExit("No clips came back from Kaggle: nothing to put together.")
@@ -383,6 +415,7 @@ def main():
         render([("<div class='card'><p class='small'>" + "<br>".join(html.escape(x) for x in st["credits"])
                  + "</p></div>", png, False)])
         out = os.path.join(tmp, "credits.mp4")
+        music_win.append((max(0.0, t - 4.0), t + 7.0))
         segs.append(out); t += card_seg(png, 7.0, out)
     if mode == "draft" and not film:  # draft: the clips one by one, not joined
         return deliver_draft(a, cfg, st, out_dir, tmp, missing, starts, cids, t_all)
@@ -395,7 +428,9 @@ def main():
         overlays.append((png, 0.0, min(3.0, t)))
     for k, (text, x, y) in enumerate(cues):
         png = os.path.join(tmp, f"cap{k:03d}.png")
-        if st.get("captions") == "en":  # bold upper-case words, the longest one in yellow
+        if cover:
+            jobs.append((f"<div class='sub'>{html.escape(text)}</div>", png, True))
+        elif st.get("captions") == "en":  # bold upper-case words, the longest one in yellow
             ws = [html.escape(w) for w in text.split()]
             raw = text.split()
             key = max(range(len(raw)), key=lambda i: len(re.sub(r"[^\w]", "", raw[i]))) if raw else -1  # longest word
@@ -448,8 +483,17 @@ def main():
         from render import make_music
         mus = os.path.join(tmp, "music.wav"); make_music(mus, t + 1)
         inputs += ["-i", mus]
-        graph += (f";[{m}:a]aresample=48000,aformat=channel_layouts=stereo,volume={SETTINGS.get('music_volume', 0.06)}[m]"
-                  f";[a0][m]amix=inputs=2:duration=first:normalize=0[mix]")
+        vol = f"{SETTINGS.get('music_volume', 0.06)}"
+        if cover:   # music only at the title, the marked moments and the end, with 2 s fades; room tone under all
+            on = "+".join(f"clip((t-{a - 2:.2f})/2,0,1)*clip(({b + 2:.2f}-t)/2,0,1)" for a, b in music_win) or "0"
+            vol = f"'{SETTINGS.get('music_volume', 0.12)}*min(1,{on})':eval=frame"
+        graph += (f";[{m}:a]aresample=48000,aformat=channel_layouts=stereo,volume={vol}[m]"
+                  f";[a0][m]amix=inputs=2:duration=first:normalize=0[mix0]")
+        if cover:
+            graph += (f";anoisesrc=color=brown:amplitude={SETTINGS.get('room_tone', 0.0025)}:sample_rate=48000:duration={t + 1:.2f},"
+                      "lowpass=f=900,aformat=channel_layouts=stereo[room];[mix0][room]amix=inputs=2:duration=first:normalize=0[mix]")
+        else:
+            graph += ";[mix0]anull[mix]"
     else:
         graph += ";[a0]anull[mix]"
     graph += ";[mix]loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000[a]"
