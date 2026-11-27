@@ -1,0 +1,107 @@
+{
+  "run_id": "masala-baba-ka-baksa-draft-990964",
+  "purpose": "Masala Short (draft): बाबा का बक्सा | पिता के बक्से में क्या था? 😢 | Emotional Hindi Short Film",
+  "scenes": [
+    {
+      "id": "s35-01ce42",
+      "kind": "scene",
+      "seed": 832614381,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light. What happens: Extreme close-up of an old woman's wrinkled hands only, in a white saree, unfolding a folded letter whose writing cannot be read; her face is not in the shot. Nobody speaks and nobody's lips move; no voices at all. There are no people, no faces and no heads anywhere in this shot, only what is described. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, faces at eye level. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Soft emotional music, no other voices, and an off-screen narrator's voice-over: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice, speaking Hindi warmly and playfully, close to the microphone.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s36-220162",
+      "kind": "scene",
+      "seed": 362245848,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light. What happens: Slow push-in on the empty iron bed with an old white Nehru cap and thick glasses resting on the pillow. Nobody speaks and nobody's lips move; no voices at all. There are no people, no faces and no heads anywhere in this shot, only what is described. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action Indian feature film set in a North Indian village, shot on a cinema camera with anamorphic lenses, warm natural light, monsoon atmosphere, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, faces at eye level. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Soft emotional music, no other voices, and an off-screen narrator's voice-over: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice, speaking Hindi warmly and playfully, close to the microphone.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s31-4f4fce-v",
+      "kind": "scene",
+      "seed": 794184426,
+      "language": "Hindi",
+      "scene": "Medium close-up of Babuji (Ramnath), 70-year-old man: thin long face with hollow cheeks, a thick white moustache, kind tired eyes behind thick black-framed glasses, dark brown wrinkled skin, short white hair, a thin frail build, about 5 feet 7 inches tall, sitting in a quiet dim room, looking at someone just off-screen, speaking slowly and clearly in Hindi with feeling. Voice: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice. Only this one person, nobody else. Photorealistic.",
+      "dialogue": "विक्रम, तेरी स्कॉलरशिप… असल में मेरी ज़मीन थी।",
+      "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "384p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ]
+    },
+    {
+      "id": "s32-d6d939-v",
+      "kind": "scene",
+      "seed": 371759709,
+      "language": "Hindi",
+      "scene": "Medium close-up of Babuji (Ramnath), 70-year-old man: thin long face with hollow cheeks, a thick white moustache, kind tired eyes behind thick black-framed glasses, dark brown wrinkled skin, short white hair, a thin frail build, about 5 feet 7 inches tall, sitting in a quiet dim room, looking at someone just off-screen, speaking slowly and clearly in Hindi with feeling. Voice: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice. Only this one person, nobody else. Photorealistic.",
+      "dialogue": "Sunny, तेरी दुकान का कर्ज़ मैंने चुपचाप चुकाया था।",
+      "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "384p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ]
+    },
+    {
+      "id": "s35-01ce42-v",
+      "kind": "scene",
+      "seed": 740999822,
+      "language": "Hindi",
+      "scene": "Medium close-up of Babuji (Ramnath), 70-year-old man: thin long face with hollow cheeks, a thick white moustache, kind tired eyes behind thick black-framed glasses, dark brown wrinkled skin, short white hair, a thin frail build, about 5 feet 7 inches tall, sitting in a quiet dim room, looking at someone just off-screen, speaking slowly and clearly in Hindi with feeling. Voice: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice. Only this one person, nobody else. Photorealistic.",
+      "dialogue": "मेरी असली जमापूंजी पैसे नहीं… तुम दोनों हो।",
+      "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "384p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ]
+    },
+    {
+      "id": "s36-220162-v",
+      "kind": "scene",
+      "seed": 448333642,
+      "language": "Hindi",
+      "scene": "Medium close-up of Babuji (Ramnath), 70-year-old man: thin long face with hollow cheeks, a thick white moustache, kind tired eyes behind thick black-framed glasses, dark brown wrinkled skin, short white hair, a thin frail build, about 5 feet 7 inches tall, sitting in a quiet dim room, looking at someone just off-screen, speaking slowly and clearly in Hindi with feeling. Voice: Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice. Only this one person, nobody else. Photorealistic.",
+      "dialogue": "बस एक-दूसरे का हाथ मत छोड़ना।",
+      "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "384p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ]
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "scene_time_limit_min": 93
+}
