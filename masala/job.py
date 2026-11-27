@@ -46,6 +46,18 @@ def who(c, outfit=None, face=None):
     return d + (f"; wearing {outfit.strip().rstrip('.')})" if outfit else ")")
 
 
+def v2(st, s):
+    """Prompt rules learnt on 27 Nov 2026 (Karna-Kunti): used for new stories (prompt_version 2) and for any remake
+    (take 2+), so clips that were already approved keep their ids."""
+    return int(s.get("take", 1)) >= 2 or int(st.get("prompt_version", 1)) >= 2
+
+
+def voiced(st, s):
+    """A narrated scene under the new rules: its picture is made silent, and the narration comes from a separate
+    voice clip (H3 draws a face to speak any line it is given, even in a hands-only shot)."""
+    return bool(s.get("narrator")) and v2(st, s)
+
+
 def scene_prompt(st, s):
     """The whole scene as plain, ordered sentences: frame, then every person with place, direction, eyes and action,
     then who speaks, then a head count, then the look. Nothing is left for the AI to guess."""
@@ -63,9 +75,15 @@ def scene_prompt(st, s):
                      f"{chars[sh]['name']}'s face is NOT visible.")
     for pid, p in people.items():
         eyes = p["eyes"]
+        off = eyes in chars and eyes not in people and eyes != sh
+        if off and v2(st, s):  # naming the off-screen person made H3 draw them into the shot (a second Kunti)
+            side = "left" if "left" in p.get("faces", "") else "right"
+            target = f"someone standing just outside the frame to the {side} (that person is NOT in the picture)"
+        else:
+            target = name(eyes)
         line = (f"{SPOT.get(p['where'], p['where'])}: {who(chars[pid], wear[pid], p.get("face"))}, {TURN.get(p['faces'], p['faces'])}, "
-                f"eyes on {name(eyes)} the whole time")
-        if eyes in chars and eyes not in people and eyes != sh:
+                f"eyes on {target} the whole time")
+        if off and not v2(st, s):
             line += " (who is off-screen)"
         line += f"; {p['does'].strip().rstrip('.')}"
         if p.get("expression"):
@@ -89,6 +107,10 @@ def scene_prompt(st, s):
                 txt += (f" {name(x)} {people[x]['sound'].strip().rstrip('.')}, and is quiet while "
                         f"{sp['name']} speaks.")
         parts.append(txt)
+    elif voiced(st, s):
+        parts.append("Nobody speaks and nobody's lips move; no voices at all." + (
+            " There are no people, no faces and no heads anywhere in this shot, only what is described."
+            if not people else ""))
     elif s.get("narrator"):
         nv = s["narrator"]["voice"].strip().rstrip(".")
         parts.append(f"Nobody on screen speaks: the only voice is an unseen narrator ({nv}) speaking a voice-over "
@@ -151,14 +173,38 @@ def plan(st):
     for s in st["scenes"]:
         take = int(s.get("take", 1))  # "take": 2 -> a new seed for a remake that came out wrong
         f = {"seed": seed_for(st["slug"], s["id"] if take == 1 else f"{s['id']}#{take}"), "scene": scene_prompt(st, s),
-             "dialogue": ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
+             "dialogue": "" if voiced(st, s) else ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip(),
              "language": SETTINGS["language"], "sound": sound_for(st, s), "aspect": SETTINGS["film"]["aspect"] if st.get("format") == "film" else SETTINGS["aspect"],
              "duration": f"{s.get('seconds', SETTINGS['clip_seconds'])} s", "preview": SETTINGS["preview"]}
         cont = prev if (s.get("continue") and prev) else None
+        if s.get("start_from"):   # starts from an approved still (stories/<slug>/stills/<scene>.png) to pin the faces
+            cont = f"still-{s['start_from']}"
         key = hashlib.sha1(json.dumps([f, cont], sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:6]
         cid = s.get("clip") or f"{s['id']}-{key}"  # "clip": an approved clip, kept even if the prompt rules change
         out.append((s, cid, f, cont))
         prev = cid
+    return out
+
+
+def voice_plan(st):
+    """[(scene, voice clip id, engine fields)] for voiced scenes: the narrator (or the character named in
+    narrator.speaker) says the line in a plain face-to-camera shot; only its sound is used."""
+    chars = {c["id"]: c for c in st["characters"]}
+    out = []
+    for s, cid, f, _ in plan(st):
+        if not voiced(st, s):
+            continue
+        n = s["narrator"]
+        c = chars.get(n.get("speaker", ""))
+        person = (f"{c['name']}, {c['age']}-year-old {c['gender']}: {c['face']}" if c else
+                  f"an Indian storyteller with {n['voice'].strip().rstrip('.')}")
+        fv = {"seed": seed_for(st["slug"], f"{s['id']}-voice"), "language": SETTINGS["language"],
+              "scene": (f"Medium close-up of {person}, sitting in a quiet dim room, looking at someone just off-screen, "
+                        f"speaking slowly and clearly in Hindi with feeling. Voice: {n['voice'].strip().rstrip('.')}. "
+                        "Only this one person, nobody else. Photorealistic."),
+              "dialogue": n["line"].strip(), "sound": "A quiet room, only the spoken voice, no music, no other sounds",
+              "aspect": f["aspect"], "duration": f["duration"], "preview": "384p"}
+        out.append((s, f"{cid}-v", fv))
     return out
 
 
@@ -197,13 +243,24 @@ def build_job(st, mode, have):
                     inputs.append({"release": have[f"{draft}.mp4"], "file": f"{draft}.mp4"})
         else:
             sc["keep_latents"] = True
-        if cont and not sc.get("upscale_from"):
+        if cont and cont.startswith("still-") and not sc.get("upscale_from"):
+            sid = cont[len("still-"):]
+            fname = f"{st['slug']}-{sid}-still.png"
+            sc["start_image"] = cont
+            frames[cont] = fname
+            inputs.append({"repo_file": f"masala/stories/{st['slug']}/stills/{sid}.png", "file": fname})
+        elif cont and not sc.get("upscale_from"):
             sc["start_image"] = cont
             if cont not in todo and f"{cont}_frame.png" in have:  # the scene before was made in an earlier run
                 frames[cont] = f"{cont}_frame.png"
                 inputs.append({"release": have[f"{cont}_frame.png"], "file": f"{cont}_frame.png"})
         scenes.append(sc)
-    feeds = {cont for _, _, _, cont in p if cont}  # scenes that a later scene continues from keep their last picture
+    for s_, vid, fv in voice_plan(st):          # voice clips: made once, small; only their sound is used
+        if f"{vid}_384p.mp4" in have:
+            needed.append((vid, have[f"{vid}_384p.mp4"], f"{vid}_384p.mp4"))
+        else:
+            scenes.append({"id": vid, "kind": "scene", **fv, "preview_fallback": SETTINGS["preview_fallback"]})
+    feeds = {cont for _, _, _, cont in p if cont and not cont.startswith("still-")}  # scenes continued from keep their last picture
     for sc in scenes:
         if sc["id"] in feeds and "upscale_from" not in sc:
             sc.update(save_frame=True, frame_time="end")

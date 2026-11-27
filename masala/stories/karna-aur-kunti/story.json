@@ -49,7 +49,8 @@
       },
       "caption_en": "One day before the Mahabharata war… a mother came to meet her son.",
       "sound": "Gentle river water, soft temple bells far away, no voices",
-      "cast": []
+      "cast": [],
+      "take": 2
     },
     {
       "id": "s02",
@@ -151,7 +152,8 @@
       "sound": "A heartbeat, the river, no voices",
       "cast": [
         "karna"
-      ]
+      ],
+      "take": 2
     },
     {
       "id": "s06",
@@ -293,7 +295,8 @@
         "karna",
         "kunti"
       ],
-      "take": 2
+      "take": 3,
+      "start_from": "s03"
     },
     {
       "id": "s11",

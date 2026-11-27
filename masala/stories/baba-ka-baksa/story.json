@@ -772,10 +772,13 @@
       "sound": "Soft emotional music, no other voices",
       "narrator": {
         "line": "विक्रम, तेरी स्कॉलरशिप… असल में मेरी ज़मीन थी।",
-        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice"
+        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
+        "speaker": "babuji"
       },
       "caption_en": "Vikram, your scholarship… was really my land.",
-      "cast": []
+      "cast": [],
+      "take": 2,
+      "clip": "s31-4f4fce"
     },
     {
       "id": "s32",
@@ -789,10 +792,13 @@
       "sound": "Soft emotional music, no other voices",
       "narrator": {
         "line": "Sunny, तेरी दुकान का कर्ज़ मैंने चुपचाप चुकाया था।",
-        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice"
+        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
+        "speaker": "babuji"
       },
       "caption_en": "Sunny, I quietly paid off your shop's loan.",
-      "cast": []
+      "cast": [],
+      "take": 2,
+      "clip": "s32-d6d939"
     },
     {
       "id": "s33",
@@ -842,7 +848,7 @@
       "id": "s35",
       "day": 2,
       "place": "Babuji's small dark room at night in an old village house: an iron bed, whitewashed walls, a hanging lantern giving warm light",
-      "action": "Extreme close-up: an old woman's hands in a white saree open a folded letter whose writing cannot be read",
+      "action": "Extreme close-up of an old woman's wrinkled hands only, in a white saree, unfolding a folded letter whose writing cannot be read; her face is not in the shot",
       "stage": {
         "shot": "insert",
         "people": {}
@@ -850,10 +856,12 @@
       "sound": "Soft emotional music, no other voices",
       "narrator": {
         "line": "मेरी असली जमापूंजी पैसे नहीं… तुम दोनों हो।",
-        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice"
+        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
+        "speaker": "babuji"
       },
       "caption_en": "My real savings aren't money… they're you two.",
-      "cast": []
+      "cast": [],
+      "take": 2
     },
     {
       "id": "s36",
@@ -867,10 +875,12 @@
       "sound": "Soft emotional music, no other voices",
       "narrator": {
         "line": "बस एक-दूसरे का हाथ मत छोड़ना।",
-        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice"
+        "voice": "Babuji's voice: a gentle, slow, slightly raspy old Indian man's voice",
+        "speaker": "babuji"
       },
       "caption_en": "Just never let go of each other's hand.",
-      "cast": []
+      "cast": [],
+      "take": 2
     },
     {
       "id": "s37",

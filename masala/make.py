@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.join(REPO, "pipeline")); sys.path.insert(0, os.path.j
 from common import ROOT, config, log  # noqa: E402
 import ai_assemble, deliver, mail  # noqa: E402
 from story import SETTINGS, check, load  # noqa: E402
-from job import plan as clip_plan  # noqa: E402
+from job import plan as clip_plan, voiced  # noqa: E402
 
 W, H, FPS = 1080, 1920, 30
 FONTS = os.path.join(REPO, "render", "fonts")
@@ -288,7 +288,24 @@ def main():
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
         out = os.path.join(tmp, f"{s['id']}.mp4")
-        if mode == "draft" or not SETTINGS.get("trim", True):
+        vclip = os.path.join(engine_dir, f"{cids[s['id']]}-v_384p.mp4") if voiced(st, s) else None
+        if vclip and os.path.exists(vclip):
+            # the silent picture with the narration taken from its voice clip, starting 0.4 s in
+            pic = os.path.join(tmp, f"{s['id']}-pic.mp4"); pd = seg(clip, pic, True)
+            v0, v1 = speech_span(vclip, ai_assemble.duration(vclip))
+            v0, v1 = max(0.0, v0 - 0.15), v1 + 0.35
+            dd = min(pd, max(3.0, (v1 - v0) + 0.9))
+            src = os.path.join(tmp, f"{s['id']}-full.mp4")
+            run(["ffmpeg", "-y", "-loglevel", "error", "-i", pic, "-ss", f"{v0:.2f}", "-to", f"{v1:.2f}", "-i", vclip,
+                 "-filter_complex", "[1:a]aresample=48000,aformat=channel_layouts=stereo,adelay=400|400,apad[a]",
+                 "-map", "0:v", "-map", "[a]", "-t", f"{dd:.2f}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", src])
+            if mode == "draft" or not SETTINGS.get("trim", True):
+                shutil.copy(src, out); d = ai_assemble.duration(out)
+            else:
+                d = pace(src, out, spoken)
+        elif vclip:
+            missing.append(s["id"]); log(f"  {s['id']}: no voice clip for the narration, left out"); continue
+        elif mode == "draft" or not SETTINGS.get("trim", True):
             d = seg(clip, out, s.get("mute"))
         else:
             full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute"))
