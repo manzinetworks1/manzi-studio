@@ -67,8 +67,12 @@ def score(line, heard):
     return round(max(0.0, cover - 0.5 * extra) * (0.7 + 0.3 * tail), 3)
 
 
+TMP = "/kaggle/tmp/check_wav" if os.path.isdir("/kaggle") else os.path.join(OUT, "_wav")
+os.makedirs(TMP, exist_ok=True)
+
+
 def wav(mp4):
-    w = mp4 + ".16k.wav"
+    w = os.path.join(TMP, os.path.basename(mp4) + ".16k.wav")   # /kaggle/input is read-only
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp4, "-vn", "-ac", "1", "-ar", "16000", w], check=True)
     return w
 
@@ -113,7 +117,6 @@ for ck in JOB.get("checks", []):
           f"{best.get('heard') if best else '-'}", flush=True)
     with open(os.path.join(OUT, "check.json"), "w", encoding="utf-8") as f:
         json.dump({"pass_mark": PASS, "checks": report}, f, ensure_ascii=False, indent=2)
-for w in glob.glob(os.path.join(OUT, "*.16k.wav")):
-    os.remove(w)
+shutil.rmtree(TMP, ignore_errors=True)
 print(f"✅ checked {len(report)} clip(s) in {time.time() - t0:.0f}s: "
       f"{sum(r['pass'] for r in report)} pass, {sum(not r['pass'] for r in report)} to remake", flush=True)
