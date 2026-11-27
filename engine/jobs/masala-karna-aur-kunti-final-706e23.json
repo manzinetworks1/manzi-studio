@@ -1,0 +1,43 @@
+{
+  "run_id": "masala-karna-aur-kunti-final-706e23",
+  "purpose": "Masala Short (final): युद्ध से एक दिन पहले माँ ने बताया सच… कर्ण और कुंती 😢 | Mahabharat Emotional Story #shorts",
+  "scenes": [
+    {
+      "id": "s01-316732",
+      "kind": "scene",
+      "seed": 83755333,
+      "scene": "Wide shot at eye level showing the whole place. Setting: the wide river Ganga at dawn, seen from far away, mist on the water. What happens: Landscape only: the golden sun rising over the wide misty river, small oil lamps floating on the calm water, birds flying low; an empty landscape. Nobody speaks and nobody's lips move; no voices at all. There are no people, no faces and no heads anywhere in this shot, only what is described. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Film look: Photorealistic live-action epic Indian historical drama set in ancient India, shot on a cinema camera, golden dawn light, soft mist over the river, natural skin texture, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, the subject in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Gentle river water, soft temple bells far away, no voices",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "output": "720p",
+      "preset": "Fast",
+      "upscale_from": "s01-316732_544p"
+    }
+  ],
+  "inputs": [
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-436b15-20261127-2313",
+      "file": "s01-316732_544p.pt"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-436b15-20261127-2313",
+      "file": "s01-316732_544p.json"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-436b15-20261127-2313",
+      "file": "s01-316732_544p.mp4"
+    }
+  ],
+  "frames": {},
+  "checks": [],
+  "check_pass": 0.75,
+  "scene_time_limit_min": 26
+}
