@@ -1,0 +1,43 @@
+{
+  "run_id": "masala-karna-aur-kunti-final-db8424",
+  "purpose": "Masala Short (final): युद्ध से एक दिन पहले माँ ने बताया सच… कर्ण और कुंती 😢 | Mahabharat Emotional Story #shorts",
+  "scenes": [
+    {
+      "id": "s06-a4f6e1",
+      "kind": "scene",
+      "seed": 679238001,
+      "scene": "Medium two-shot at eye level, the camera slightly to one side, so one figure is seen in three-quarter view and the other in near-profile. Setting: the bank of the river Ganga at dawn in ancient India, the rising sun behind the mist. On the LEFT of the frame: Kunti (a 60-year-old Indian woman: graceful oval face with fine wrinkles around the eyes and lips, large sorrowful dark-brown eyes, fair wheatish skin, long silver-grey hair parted in the middle, a slim upright regal build, about 5 feet 4 inches tall; wearing a plain white silk saree with a thin gold border, its end drawn over her head as a veil, no jewellery), body and face turned towards the right of the frame, eyes on Karna the whole time; steps one step down towards him with her hands half raised, pleading, crying. On the RIGHT of the frame: Karna (a 38-year-old Indian man: strong noble oval face with a straight nose and a firm square jaw, calm deep-set dark-brown eyes, warm golden-brown skin, a short neat black beard, long wavy black hair tied in a loose knot at the back of his head, a tall broad-shouldered muscular warrior's build, about 6 feet 1 inch tall; wearing a saffron silk dhoti, a white cotton cloth draped over one shoulder, a sacred thread across his bare chest, plain gold armbands, no armour and no earrings), body and face turned towards the left of the frame, eyes on Kunti the whole time; stands still, listening, shocked, eyes wet. What happens: Kunti steps closer and tells him who his father is. Only Kunti speaks, in Hindi, clearly, looking at Karna while speaking, with natural, well-synchronised lip movements; Kunti finishes speaking a moment before the shot ends. Karna stays silent, lips closed, only reacting. Exactly 2 figures fully in the frame (Kunti, Karna); each appears only once; nobody else. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Everyone is clearly Indian, with brown skin and Indian features, like real actors in an Indian TV serial; never cartoon, anime or plastic-looking. Film look: Photorealistic live-action epic Indian historical drama set in ancient India, shot on a cinema camera, golden dawn light, soft mist over the river, natural skin texture, shallow depth of field. Upright, normal orientation (never rotated or upside down). Vertical 9:16 frame for a phone screen, faces in the upper-middle of the picture. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "तुम मेरे पहले पुत्र हो… सूर्यदेव के पुत्र।",
+      "language": "Hindi",
+      "sound": "Gentle river water, no other voices, and Kunti's voice: a soft, trembling, regal older woman's voice, speaking Hindi.",
+      "aspect": "9:16 Portrait",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "output": "720p",
+      "preset": "Fast",
+      "upscale_from": "s06-a4f6e1_544p"
+    }
+  ],
+  "inputs": [
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-db8424-20261127-1355",
+      "file": "s06-a4f6e1_544p.pt"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-db8424-20261127-1355",
+      "file": "s06-a4f6e1_544p.json"
+    },
+    {
+      "release": "engine-masala-karna-aur-kunti-draft-db8424-20261127-1355",
+      "file": "s06-a4f6e1_544p.mp4"
+    }
+  ],
+  "frames": {},
+  "checks": [],
+  "check_pass": 0.75,
+  "scene_time_limit_min": 26
+}
