@@ -971,32 +971,34 @@
         "still": "s00d",
         "hi": "अम्मा",
         "en": "AMMA",
-        "zoom": 240,
+        "zoom": 480,
         "pos": "48% 18%"
       },
       {
         "still": "s00b",
         "hi": "विक्रम",
         "en": "VIKRAM",
-        "zoom": 240,
+        "zoom": 480,
         "pos": "90% 12%"
       },
       {
         "still": "s00c",
         "hi": "सनी",
         "en": "SUNNY",
-        "zoom": 240,
+        "zoom": 480,
         "pos": "25% 8%"
       }
     ],
     "cast_foot": "और बाबूजी की आवाज़",
     "credits": [
       [
-        "लेखन व निर्देशन · WRITTEN & DIRECTED BY",
+        "लेखन व निर्देशन",
+        "WRITTEN & DIRECTED BY",
         "Manzi"
       ],
       [
-        "निर्माता · PRODUCED BY",
+        "निर्माता",
+        "PRODUCED BY",
         "Manzi Studio"
       ]
     ],

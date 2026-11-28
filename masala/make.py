@@ -218,9 +218,10 @@ def end_cards(st, tmp, last_clip):
                  f"color:#999'>{foot}</div></div>", png, False)])
         out.append((png, 6.0, True))
     if e.get("credits"):
-        rows = "".join(f"<div style='margin:14px 0'><span class='dim' style='font-size:30px;letter-spacing:6px'>"
-                       f"{html.escape(r)}</span><br><span style='font-size:48px'>{html.escape(v)}</span></div>"
-                       for r, v in e["credits"])
+        rows = "".join(f"<div style='margin:18px 0'><span class='dim hi' style='font-size:30px'>{html.escape(rh)}</span>"
+                       f"<span class='dim' style='font-size:28px;letter-spacing:6px'> · {html.escape(re_)}</span><br>"
+                       f"<span style='font-size:52px'>{html.escape(v)}</span></div>"
+                       for rh, re_, v in e["credits"])
         png = os.path.join(tmp, "end-credits.png")
         render([(f"<div class='fp' style='display:flex;flex-direction:column;align-items:center;justify-content:center;"
                  f"text-align:center'>{rows}<div style='margin-top:50px;font-size:44px;letter-spacing:14px;color:#d9a441'>"
