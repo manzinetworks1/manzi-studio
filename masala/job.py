@@ -66,7 +66,10 @@ def scene_prompt(st, s):
     stg = s["stage"]
     people = stg.get("people") or {}
     name = lambda x: chars[x]["name"] if x in chars else x
-    parts = [SHOTS[stg["shot"]][1] + ".", f"Setting: {s['place'].strip().rstrip('.')}."]
+    shot_text = SHOTS[stg["shot"]][1]
+    if stg["shot"] == "insert" and v2(st, s) and not re.search(r"\bhands?\b", s.get("action", ""), re.I):
+        shot_text = "Extreme close-up insert shot of an object only; no people, no hands, no face anywhere in the frame"
+    parts = [shot_text + ".", f"Setting: {s['place'].strip().rstrip('.')}."]
     sh = stg.get("shoulder")
     if sh:
         side = "right" if any("left" in p.get("where", "") for p in people.values()) else "left"
