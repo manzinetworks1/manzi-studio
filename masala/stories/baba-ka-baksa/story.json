@@ -786,7 +786,8 @@
       },
       "caption_en": "My real savings aren't money… they're you two.",
       "clip": "s35-01ce42",
-      "music": true
+      "music": true,
+      "take": 2
     },
     {
       "id": "s36",
@@ -809,7 +810,8 @@
       },
       "caption_en": "Just never let go of each other's hand.",
       "clip": "s36-220162",
-      "music": true
+      "music": true,
+      "take": 2
     },
     {
       "id": "s37",
