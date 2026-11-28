@@ -1,0 +1,45 @@
+{
+  "run_id": "masala-baba-ka-baksa-draft-0852a3",
+  "purpose": "Masala Short (draft): बाबा का बक्सा | पिता के बक्से में क्या था? 😢 | Emotional Hindi Short Film",
+  "scenes": [
+    {
+      "id": "s01a-777aa1",
+      "kind": "scene",
+      "seed": 597354998,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room. What happens: Extreme close-up of an old brass hanging lantern swaying very gently, its flame flickering warm amber against a dark whitewashed wall; an object close-up, nothing else in the frame. Nobody speaks. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Film look: Photorealistic live-action Indian feature film, a single small room at night lit only by a hanging lantern, shot on a cinema camera with anamorphic lenses, warm amber light and deep shadows, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, the subject sharp in the foreground. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Night crickets outside, a quiet room, no music, no voices, no voices.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    },
+    {
+      "id": "s01b-d97189",
+      "kind": "scene",
+      "seed": 263971325,
+      "scene": "Extreme close-up insert shot of hands and objects only; no face is visible anywhere in the frame. Setting: Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room. What happens: Macro close-up of a big old iron padlock on a dusty green tin trunk, lantern light trembling on the rusty metal, dust floating in the air; an object close-up, nothing else in the frame. Nobody speaks. Nobody looks into the camera lens: the camera is an invisible observer that nobody notices. Film look: Photorealistic live-action Indian feature film, a single small room at night lit only by a hanging lantern, shot on a cinema camera with anamorphic lenses, warm amber light and deep shadows, natural skin texture, shallow depth of field, subtle film grain. Upright, normal orientation (never rotated or upside down). Widescreen 16:9 cinematic film frame, composed like a feature film, the subject sharp in the foreground. No text, no captions, no logos, no watermarks, no signboards, no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.",
+      "dialogue": "",
+      "language": "Hindi",
+      "sound": "Night crickets outside, a quiet room, no music, no voices, no voices.",
+      "aspect": "16:9 Landscape",
+      "duration": "8 s",
+      "preview": "544p",
+      "preview_fallback": [
+        "480p",
+        "384p"
+      ],
+      "keep_latents": true
+    }
+  ],
+  "inputs": [],
+  "frames": {},
+  "checks": [],
+  "check_pass": 0.75,
+  "scene_time_limit_min": 41
+}
