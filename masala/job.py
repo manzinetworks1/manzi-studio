@@ -292,6 +292,12 @@ def build_job(st, mode, have):
                 sc["takes"] = (int(SETTINGS.get("voice_takes", 3)) if sc["id"].endswith("-v") else
                                int(st.get("takes", SETTINGS.get("takes", 2))))
                 checks.append({"id": sc["id"], "line": sc["dialogue"], "lang": "hi", "takes": "auto"})
+    if mode == "final" and len(scenes) > int(SETTINGS.get("final_batch", 18)):
+        # one Kaggle run sharpens at most this many clips (37 in one run ran past 8 h); the next M final sends the rest
+        keep = {sc["id"] for sc in scenes[:int(SETTINGS.get("final_batch", 18))]}
+        log(f"  final: {len(scenes)} clips to sharpen, sending the first {len(keep)} now")
+        scenes = [sc for sc in scenes if sc["id"] in keep]
+        inputs = [i for i in inputs if any(i.get("file", "").startswith(k.split("_")[0]) for k in keep)] or inputs
     if not scenes:
         return None, needed
     limit = sum((13 * int(sc.get("takes", 1))) if mode == "draft" else (11 if "upscale_from" in sc else 22)
