@@ -149,7 +149,8 @@ def scene_prompt(st, s):
         parts.append("A real, photographed animal; never cartoon, anime or plastic-looking.")
     parts.append(f"Film look: {(st.get('look') or LOOK).strip().rstrip('.')}. Upright, normal orientation (never rotated "
                  "or upside down). " + ("Widescreen 16:9 cinematic film frame, composed like a feature film, "
-                 "faces at eye level. " if st.get("format") == "film" else "Vertical 9:16 frame for a phone screen, "
+                 + ("the subject sharp in the foreground. " if not people and v2(st, s) else "faces at eye level. ")
+                 if st.get("format") == "film" else "Vertical 9:16 frame for a phone screen, "
                  + ("the subject in the upper-middle of the picture. " if not people and v2(st, s) else
                     "faces in the upper-middle of the picture. ")) + "No text, no captions, no logos, no watermarks, no signboards, "
                  "no shop signs, no posters, no name plates, no vehicle number plates, no readable letters anywhere.")

@@ -80,6 +80,7 @@ def _font(name):
 
 CSS = f"""
 @font-face {{ font-family: Pop; src: url('{_font('Poppins-Bold.ttf')}'); }}
+@font-face {{ font-family: Lora; src: url('{_font('Lora-Variable.ttf')}'); }}
 @font-face {{ font-family: MzAnton; src: url('{_font('Anton-Regular.ttf')}'); }}
 html, body {{ margin: 0; width: {W}px; height: {H}px; background: transparent; overflow: hidden; }}
 .box {{ position: absolute; left: 60px; right: 60px; text-align: center;
@@ -114,6 +115,9 @@ html, body { width: 1920px; height: 1080px; }
 .en { font-size: 40px; -webkit-text-stroke: 6px #000; }
 .end { top: 60px; font-size: 64px; }
 .thumb .box { top: 700px; font-size: 110px; }
+.fp { position: absolute; inset: 0; background: #000; color: #f4e6c4; font-family: Lora, 'Noto Serif Devanagari', 'Noto Sans Devanagari', serif; }
+.fp .hi { font-family: 'Noto Serif Devanagari', 'Noto Sans Devanagari', serif; font-weight: 700; letter-spacing: 0; }
+.fp .gold { color: #f2d58c; } .fp .dim { color: #bfa77a; }
 .sub { position: absolute; left: 200px; right: 200px; bottom: 70px; text-align: center; color: #fff; font-size: 44px;
        font-family: 'Noto Sans Devanagari', Pop, sans-serif; font-weight: 500; line-height: 1.3;
        text-shadow: 0 0 6px #000, 0 2px 4px #000, 0 0 14px rgba(0,0,0,.8); }
@@ -132,6 +136,111 @@ def card_seg(png, secs, out):
          f"scale={W}:{H},setsar=1,fps={FPS},fade=t=in:st=0:d=0.8,fade=t=out:st={secs - 0.8:.2f}:d=0.8,format=yuv420p",
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-shortest", out])
     return ai_assemble.duration(out)
+
+
+def frame_url(clip, at, tmp, name):
+    """One frame of a clip as a data: URL (for a card drawn over the picture)."""
+    import base64
+    png = os.path.join(tmp, f"{name}.png")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{max(0.0, at):.2f}", "-i", clip, "-frames:v", "1",
+         "-vf", f"scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H}", png])
+    return "data:image/png;base64," + base64.b64encode(open(png, "rb").read()).decode()
+
+
+def still_seg(png, secs, out, zoom=True, fade=True):
+    """A drawn card as a clip: a very slow push-in, optional fades, silence (room tone and music are added later)."""
+    vf = (f"scale={W * 2}:{H * 2},zoompan=z='1+0.0004*on':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s={W}x{H}:fps={FPS}"
+          if zoom else f"scale={W}:{H},fps={FPS}")
+    if fade:
+        vf += f",fade=t=in:st=0:d=0.6,fade=t=out:st={secs - 0.6:.2f}:d=0.6"
+    run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-t", f"{secs:.2f}", "-i", png, "-f", "lavfi", "-t",
+         f"{secs:.2f}", "-i", "anullsrc=r=48000:cl=stereo", "-vf", vf + ",setsar=1,format=yuv420p",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-shortest", out])
+    return ai_assemble.duration(out)
+
+
+def ident_seg(out):
+    """The animated MANZI STUDIO · PRESENTS card (render/assets, made by render/make_ident.py)."""
+    src = os.path.join(REPO, "render", "assets", "manzi-studio-ident.mp4")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-vf", f"scale={W}:{H},fps={FPS},setsar=1,format=yuv420p",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "18", "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2", out])
+    return ai_assemble.duration(out)
+
+
+def intro_card(st, s, clip, tmp):
+    """The first time a character appears: the opening frame, slightly faded, with the name and one line about them."""
+    it = s["intro"]
+    bg = frame_url(clip, 0.4, tmp, f"{s['id']}-introbg")
+    side = it.get("side", "left")
+    grad = "90deg" if side == "left" else "270deg"
+    body = (f"<div class='fp'><img src='{bg}' style='position:absolute;inset:0;width:{W}px;height:{H}px;object-fit:cover;"
+            f"filter:saturate(.5) contrast(1.05)'><div style='position:absolute;inset:0;background:linear-gradient({grad},"
+            f"rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 38%,rgba(0,0,0,0) 60%)'></div>"
+            f"<div style='position:absolute;{side}:120px;top:600px;text-align:{side}'>"
+            f"<div class='hi gold' style='font-size:130px;line-height:1.1'>{html.escape(it['hi'])}</div>"
+            f"<div style='font-size:34px;letter-spacing:12px;color:#ddd;margin-top:6px'>{html.escape(it['en'])}</div>"
+            f"<div style='width:420px;height:3px;background:#d9a441;margin:22px 0;display:inline-block'></div>"
+            f"<div class='hi' style='font-size:40px;color:#eee'>{html.escape(it.get('about', ''))}</div></div></div>")
+    png = os.path.join(tmp, f"{s['id']}-intro.png"); render([(body, png, False)])
+    return png
+
+
+def end_cards(st, tmp, last_clip):
+    """After the last scene of the story: a beat of black, the closing thought, the cast and the credits."""
+    e = st["end"]; out = []
+    blk = os.path.join(tmp, "end-black.png")
+    render([("<div class='fp'></div>", blk, False)])
+    out.append((blk, float(e.get("black", 1.2)), False))
+    if e.get("thought"):
+        png = os.path.join(tmp, "end-thought.png")
+        render([(f"<div class='fp' style='display:flex;align-items:center;justify-content:center;text-align:center'>"
+                 f"<div class='hi' style='font-size:68px;line-height:1.6;color:#f1e4c4'>"
+                 f"{'<br>'.join(html.escape(x) for x in e['thought'].split('|'))}</div></div>", png, False)])
+        out.append((png, 5.5, True))
+    if e.get("cast"):
+        import base64
+        n = len(e["cast"]); size = 480 if n <= 3 else 380; gap = (W - n * size) / (n + 1)
+        items = ""
+        for k, c in enumerate(e["cast"]):
+            src = os.path.join(REPO, "masala", "stories", st["slug"], "stills", f"{c['still']}.png")
+            url = "data:image/png;base64," + base64.b64encode(open(src, "rb").read()).decode()
+            x = gap + k * (size + gap)
+            items += (f"<div style='position:absolute;top:250px;left:{x:.0f}px;width:{size}px;text-align:center'>"
+                      f"<div style='width:{size}px;height:{size}px;border-radius:50%;border:4px solid #d9a441;"
+                      f"background:url({url});background-size:{c.get('zoom', 240)}% auto;background-position:{c.get('pos', '50% 20%')}'></div>"
+                      f"<div class='hi gold' style='font-size:64px;margin-top:28px'>{html.escape(c['hi'])}</div>"
+                      f"<div style='font-size:30px;color:#bbb;letter-spacing:8px'>{html.escape(c['en'])}</div></div>")
+        foot = html.escape(e.get("cast_foot", ""))
+        png = os.path.join(tmp, "end-cast.png")
+        render([(f"<div class='fp'><div style='position:absolute;top:110px;width:100%;text-align:center;font-size:40px;"
+                 f"color:#d9a441'><span class='hi'>किरदार</span><span style='letter-spacing:14px'> · THE FAMILY</span></div>"
+                 f"{items}<div class='hi' style='position:absolute;top:960px;width:100%;text-align:center;font-size:30px;"
+                 f"color:#999'>{foot}</div></div>", png, False)])
+        out.append((png, 6.0, True))
+    if e.get("credits"):
+        rows = "".join(f"<div style='margin:14px 0'><span class='dim' style='font-size:30px;letter-spacing:6px'>"
+                       f"{html.escape(r)}</span><br><span style='font-size:48px'>{html.escape(v)}</span></div>"
+                       for r, v in e["credits"])
+        png = os.path.join(tmp, "end-credits.png")
+        render([(f"<div class='fp' style='display:flex;flex-direction:column;align-items:center;justify-content:center;"
+                 f"text-align:center'>{rows}<div style='margin-top:50px;font-size:44px;letter-spacing:14px;color:#d9a441'>"
+                 f"A MANZI STUDIO FILM</div></div>", png, False)])
+        out.append((png, 6.0, True))
+    return out
+
+
+def question_card(st, tmp, clip):
+    q = st["end"]["question"]
+    bg = frame_url(clip, 1.0, tmp, "question-bg") if clip else ""
+    png = os.path.join(tmp, "end-question.png")
+    render([(f"<div class='fp'>" + (f"<img src='{bg}' style='position:absolute;inset:0;width:{W}px;height:{H}px;"
+             "object-fit:cover;filter:brightness(.35) blur(3px)'>" if bg else "") +
+             f"<div style='position:absolute;top:0;bottom:0;left:160px;right:160px;display:flex;flex-direction:column;"
+             f"align-items:center;justify-content:center;text-align:center'>"
+             f"<div class='hi' style='font-size:76px;line-height:1.5;color:#fff'>{html.escape(q['hi'])}</div>"
+             f"<div class='hi gold' style='font-size:56px;margin-top:30px'>{html.escape(q.get('cta', 'कमेंट में बताइए 👇'))}</div>"
+             f"</div></div>", png, False)])
+    return png
 
 
 def render(jobs):
@@ -311,7 +420,19 @@ def main():
 
     # 1. one segment per scene, in order
     segs, cues, hi_cues, missing, timing, t, starts = [], [], [], [], [], 0.0, {}
+    early_ov = []   # (png, from, to) drawn over the picture: the opening credit
+    if cover and st.get("studio_ident", True) and os.path.exists(os.path.join(REPO, "render", "assets", "manzi-studio-ident.mp4")):
+        out = os.path.join(tmp, "ident.mp4"); d = ident_seg(out); segs.append(out); t += d
+        log(f"  studio card: {d:.1f}s")
+    last_clip = None
     for k_s, s in enumerate(st["scenes"]):
+        if cover and (st.get("end") or {}).get("before") == s["id"]:   # the story is over: black, thought, cast, credits
+            for png, secs, mus in end_cards(st, tmp, last_clip):
+                out = os.path.join(tmp, os.path.basename(png)[:-4] + ".mp4"); d = still_seg(png, secs, out, zoom=False)
+                if mus:
+                    music_win.append((t, t + d))
+                segs.append(out); t += d
+            log(f"  end cards (total {t:.1f}s)")
         if s.get("setup"):   # a camera setup: only its picture is used (stills, reaction cutaways)
             continue
         if s.get("reaction"):   # the listener's face, cut silently from that setup's clip
@@ -347,6 +468,11 @@ def main():
             clip = held
         if not clip:
             missing.append(s["id"]); log(f"  {s['id']}: no clip, left out"); continue
+        if cover and s.get("intro"):   # the character's introduction: a held, faded frame with the name
+            png = intro_card(st, s, clip, tmp)
+            out = os.path.join(tmp, f"{s['id']}-intro.mp4"); d = still_seg(png, float(s["intro"].get("secs", 2.6)), out, fade=False)
+            segs.append(out); t += d; log(f"  {s['id']}: introduces {s['intro']['en']}")
+        last_clip = clip
         spoken = ((s.get("narrator") or {}).get("line") or s.get("line") or "").strip()
         out = os.path.join(tmp, f"{s['id']}.mp4")
         vclip = os.path.join(engine_dir, f"{cids[s['id']]}-v_384p.mp4") if voiced(st, s) else None
@@ -377,6 +503,15 @@ def main():
             full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute") or (film and not spoken))
             d = pace(full, out, spoken)
         segs.append(out); starts[s["id"]] = (t, d)
+        oc = st.get("opening_credit") or {}
+        if cover and oc.get("over") == s["id"]:
+            png = os.path.join(tmp, "opening-credit.png")
+            render([(f"<div class='fp' style='background:transparent'><div style='position:absolute;bottom:90px;width:100%;"
+                     f"text-align:center;text-shadow:0 0 12px #000,0 0 4px #000'><div style='font-size:30px;color:#d8c49a'>"
+                     f"<span class='hi'>{html.escape(oc.get('hi', 'लेखन'))}</span><span style='letter-spacing:6px'>&nbsp;·&nbsp;"
+                     f"{html.escape(oc.get('en', 'WRITTEN BY'))}</span></div><div style='font-size:60px;color:#f4e6c4;"
+                     f"letter-spacing:8px;margin-top:6px'>{html.escape(oc.get('name', 'MANZI'))}</div></div></div>", png, True)])
+            early_ov.append((png, t + 0.6, t + min(d - 0.3, 0.6 + float(oc.get("secs", 3.2)))))
         a0, a1 = speech_span(out, d)
         if spoken:
             hi_cues.append((spoken, t + a0, t + a1))
@@ -401,16 +536,30 @@ def main():
         tc = st.get("title_card") or {}
         if film and tc.get("after") == s["id"]:
             png = os.path.join(tmp, "title_card.png")
-            render([(f"<div class='card'><h1>{html.escape(tc.get('text', st['title']))}</h1>"
-                     + (f"<p>{html.escape(tc['sub'])}</p>" if tc.get("sub") else "") + "</div>", png, False)])
+            if cover:
+                bg = frame_url(out, max(0.0, d - 0.2), tmp, "title-bg")
+                render([(f"<div class='fp'><img src='{bg}' style='position:absolute;inset:0;width:{W}px;height:{H}px;"
+                         f"object-fit:cover;filter:brightness(.55)'><div style='position:absolute;top:380px;width:100%;text-align:center'>"
+                         f"<div class='hi' style='font-size:170px;color:#f4dc9b;text-shadow:0 0 40px rgba(0,0,0,.9)'>"
+                         f"{html.escape(tc.get('text', st['title']))}</div><div style='font-style:italic;font-size:44px;"
+                         f"color:#e8dcc0;letter-spacing:6px;margin-top:10px'>{html.escape(tc.get('sub', ''))}</div></div></div>",
+                         png, False)])
+            else:
+                render([(f"<div class='card'><h1>{html.escape(tc.get('text', st['title']))}</h1>"
+                         + (f"<p>{html.escape(tc['sub'])}</p>" if tc.get("sub") else "") + "</div>", png, False)])
             out = os.path.join(tmp, "title_card.mp4")
-            d = card_seg(png, float(tc.get("seconds", 4.5)), out)
+            d = (still_seg(png, float(tc.get("seconds", 4.5)), out) if cover
+                 else card_seg(png, float(tc.get("seconds", 4.5)), out))
             music_win.append((max(0.0, t - 3.0), t + d))
             segs.append(out); t += d
     if not segs:
         raise SystemExit("No clips came back from Kaggle: nothing to put together.")
 
-    if film and st.get("credits"):
+    if cover and (st.get("end") or {}).get("question"):
+        png = question_card(st, tmp, last_clip)
+        out = os.path.join(tmp, "end-question.mp4"); d = still_seg(png, 5.0, out)
+        music_win.append((t, t + d)); segs.append(out); t += d
+    if film and st.get("credits") and not cover:
         png = os.path.join(tmp, "credits.png")
         render([("<div class='card'><p class='small'>" + "<br>".join(html.escape(x) for x in st["credits"])
                  + "</p></div>", png, False)])
@@ -421,7 +570,7 @@ def main():
         return deliver_draft(a, cfg, st, out_dir, tmp, missing, starts, cids, t_all)
 
     # 2. text pictures: hook, captions, end line
-    jobs, overlays = [], []
+    jobs, overlays = [], list(early_ov)
     if st.get("hook_text"):
         png = os.path.join(tmp, "hook.png")
         jobs.append((f"<div class='box hook'><span>{html.escape(st['hook_text'])}</span></div>", png, True))

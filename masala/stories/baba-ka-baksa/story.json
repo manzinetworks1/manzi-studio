@@ -6,13 +6,6 @@
   "duration": "5:00",
   "category": "Family drama short film",
   "look": "Photorealistic live-action Indian feature film, a single small room at night lit only by a hanging lantern, shot on a cinema camera with anamorphic lenses, warm amber light and deep shadows, natural skin texture, shallow depth of field, subtle film grain",
-  "credits": [
-    "बाबा का बक्सा · Baba's Trunk",
-    "A film by Entertainment With Manzi",
-    "Story, direction and production: Manzi Studio",
-    "A fictional story. All characters and scenes are AI-generated.",
-    "AI scenes: MiniMax H3 · Wan2GP · AIQUEST Academy's Kaggle engine"
-  ],
   "characters": [
     {
       "id": "vikram",
@@ -89,7 +82,7 @@
     "after": "s01",
     "text": "बाबा का बक्सा",
     "sub": "Baba's Trunk",
-    "seconds": 4.0
+    "seconds": 4.5
   },
   "thumbnail": {
     "scene": "s29",
@@ -197,6 +190,30 @@
       "seconds": 8
     },
     {
+      "id": "s01a",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Extreme close-up of an old brass hanging lantern swaying very gently, its flame flickering warm amber against a dark whitewashed wall; an object close-up, nothing else in the frame",
+      "stage": {
+        "shot": "insert",
+        "people": {}
+      },
+      "sound": "Night crickets outside, a quiet room, no music, no voices",
+      "take": 2
+    },
+    {
+      "id": "s01b",
+      "day": 1,
+      "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
+      "action": "Macro close-up of a big old iron padlock on a dusty green tin trunk, lantern light trembling on the rusty metal, dust floating in the air; an object close-up, nothing else in the frame",
+      "stage": {
+        "shot": "insert",
+        "people": {}
+      },
+      "sound": "Night crickets outside, a quiet room, no music, no voices",
+      "take": 2
+    },
+    {
       "id": "s01",
       "day": 1,
       "place": "Babuji's small room at night in an old North Indian village house: whitewashed walls with damp patches, an old iron bed with a thin cotton mattress against the back wall, a wooden shelf with a few brass pots, a hanging lantern giving warm amber light, a green tin trunk with a big iron padlock on the floor in the middle of the room",
@@ -205,8 +222,7 @@
         "shot": "insert",
         "people": {}
       },
-      "sound": "Night crickets outside, a quiet room, no music",
-      "music": true
+      "sound": "Night crickets outside, a quiet room, no music"
     },
     {
       "id": "s02",
@@ -235,7 +251,13 @@
       "speaker": "amma",
       "line": "तेरह दिन हो गए… आज बाबूजी का बक्सा खोलना है।",
       "caption_en": "Thirteen days now… today we open Babuji's trunk.",
-      "start_from": "s00d"
+      "start_from": "s00d",
+      "intro": {
+        "hi": "अम्मा",
+        "en": "AMMA",
+        "about": "तेरह दिन से अकेली",
+        "side": "left"
+      }
     },
     {
       "id": "s04",
@@ -259,7 +281,13 @@
       "speaker": "vikram",
       "line": "चाबी कहाँ है, अम्मा?",
       "caption_en": "Where is the key, Amma?",
-      "start_from": "s00b"
+      "start_from": "s00b",
+      "intro": {
+        "hi": "विक्रम",
+        "en": "VIKRAM",
+        "about": "बड़ा बेटा · आठ साल बाद मुंबई से लौटा",
+        "side": "left"
+      }
     },
     {
       "id": "s05",
@@ -311,7 +339,13 @@
       "speaker": "sunny",
       "line": "तुम्हें बाबूजी नहीं, उनका पैसा याद आया।",
       "caption_en": "You didn't miss Babuji, only his money.",
-      "start_from": "s00c"
+      "start_from": "s00c",
+      "intro": {
+        "hi": "सनी",
+        "en": "SUNNY",
+        "about": "छोटा बेटा · गाँव में दुकान चलाता है",
+        "side": "right"
+      }
     },
     {
       "id": "s08",
@@ -919,5 +953,56 @@
       "start_from": "s00d",
       "music": true
     }
-  ]
+  ],
+  "studio_ident": true,
+  "opening_credit": {
+    "over": "s01a",
+    "hi": "लेखन",
+    "en": "WRITTEN BY",
+    "name": "MANZI",
+    "secs": 3.4
+  },
+  "end": {
+    "before": "s44",
+    "black": 1.2,
+    "thought": "हर घर में एक बक्सा होता है…|उसे खोलिए, इससे पहले कि देर हो जाए।",
+    "cast": [
+      {
+        "still": "s00d",
+        "hi": "अम्मा",
+        "en": "AMMA",
+        "zoom": 240,
+        "pos": "48% 18%"
+      },
+      {
+        "still": "s00b",
+        "hi": "विक्रम",
+        "en": "VIKRAM",
+        "zoom": 240,
+        "pos": "90% 12%"
+      },
+      {
+        "still": "s00c",
+        "hi": "सनी",
+        "en": "SUNNY",
+        "zoom": 240,
+        "pos": "25% 8%"
+      }
+    ],
+    "cast_foot": "और बाबूजी की आवाज़",
+    "credits": [
+      [
+        "लेखन व निर्देशन · WRITTEN & DIRECTED BY",
+        "Manzi"
+      ],
+      [
+        "निर्माता · PRODUCED BY",
+        "Manzi Studio"
+      ]
+    ],
+    "question": {
+      "hi": "आपके बाबूजी ने आपके लिए क्या छुपाया था?",
+      "cta": "कमेंट में बताइए 👇"
+    }
+  }
 }
