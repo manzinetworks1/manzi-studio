@@ -199,7 +199,9 @@
         "people": {}
       },
       "sound": "Night crickets outside, a quiet room, no music, no voices",
-      "take": 2
+      "take": 2,
+      "clip": "s01a-777aa1",
+      "start": 0.6
     },
     {
       "id": "s01b",
@@ -211,7 +213,9 @@
         "people": {}
       },
       "sound": "Night crickets outside, a quiet room, no music, no voices",
-      "take": 2
+      "take": 2,
+      "clip": "s01b-d97189",
+      "start": 4.6
     },
     {
       "id": "s01",

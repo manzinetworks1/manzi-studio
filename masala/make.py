@@ -39,7 +39,7 @@ def has_audio(path):
                                 "-of", "csv=p=0", path], capture_output=True, text=True).stdout.strip())
 
 
-def pace(full, out, spoken):
+def pace(full, out, spoken, start=None):
     """Cuts the dead air (keeps a little before the first and after the last word; a scene without a line keeps its
     first few seconds) and plays the result a little faster. Returns the new length."""
     d = ai_assemble.duration(full)
@@ -48,7 +48,8 @@ def pace(full, out, spoken):
         a0, a1 = speech_span(full, d)
         a, b = max(0.0, a0 - lead), min(d, a1 + tail)
     else:
-        a, b = 0.3, min(d, 0.3 + SETTINGS.get("silent_max", 4.5))
+        a = 0.3 if start is None else float(start)   # "start": where a silent shot's best part begins
+        b = min(d, a + SETTINGS.get("silent_max", 4.5))
     if b - a < 2.0:
         a, b = 0.0, d
     run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.2f}", "-to", f"{b:.2f}", "-i", full,
@@ -502,7 +503,7 @@ def main():
             d = seg(clip, out, s.get("mute") or (film and not spoken))
         else:
             full = os.path.join(tmp, f"{s['id']}-full.mp4"); seg(clip, full, s.get("mute") or (film and not spoken))
-            d = pace(full, out, spoken)
+            d = pace(full, out, spoken, s.get("start"))
         segs.append(out); starts[s["id"]] = (t, d)
         oc = st.get("opening_credit") or {}
         if cover and oc.get("over") == s["id"]:
